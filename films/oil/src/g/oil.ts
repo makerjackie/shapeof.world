@@ -10,7 +10,6 @@ import { revealOf } from "./reveal7";
 
 const D = OD as unknown as { series: [number, number, Pt["kind"]][]; gold: number[]; cny: [number, number][]; shares: Record<string, [number, number][]> };
 export const SERIES: Pt[] = D.series.map(([y, v, kind]) => ({ y, v, kind }));
-export const GOLD_OZ = D.gold; // gold, US$ per ounce, on the same points as SERIES
 
 // ---------------- music (score_world8.wav, 130 BPM): loud 0-2, dip 3 (rewind), drop 4, dip 11 -> hit 12, quiet 17-19,
 // dip 27-28, mellow 35-43, big return 44, quiet 58-66, rise 67, big return 72, outro 83
@@ -30,78 +29,78 @@ const DY = (y: number, m: number, d: number) => {
 
 export type Fx = "bolt" | "shatter" | "fw" | "fwBig" | "bills" | "closed" | "snap" | "bw" | "solve";
 export type Icon = "oil" | "etf" | "virus" | "lock" | "stamp" | "rateUp" | "rateDown" | "vault" | "exchange" | "tariff" | "gavel" | "derrick" | "pump" | "strait" | "tank" | "flame";
-export type Ev5 = Ev & { fx?: Fx[]; icon?: Icon; lab?: string; fit?: number; alarm?: string };
-export type P5 = Placed & { fx?: Fx[]; icon?: Icon; lab?: string; fit?: number; alarm?: string };
+export type Ev5 = Ev & { fx?: Fx[]; icon?: Icon; lab?: string; fit?: number; alarm?: string; geo?: [number, number] };
+export type P5 = Placed & { fx?: Fx[]; icon?: Icon; lab?: string; fit?: number; alarm?: string; geo?: [number, number] };
 
 const EIA = "美国能源信息署：美国原油年均价";
 const EI = "Energy Institute《世界能源统计年鉴》";
 const EVS: Ev5[] = [
   // 第一幕 · 野蛮生长 (black and white)
-  { y: 1859.5, b: 4, k: "stat", tag: "1859 年 · 美国宾夕法尼亚", t: "第一口现代油井出油，1 桶卖", n: "16 美元", s: "1 桶 = 159 升", anchor: BAR(4), span: 40, icon: "derrick", src: EIA },
-  { y: 1861.5, b: 4, k: "crash", tag: "1861 年", t: "人人都去打井，油价跌到", n: "49 美分", s: "有时，油比装它的木桶还便宜", pct: "−97%", fx: ["bolt"], src: "丹尼尔·耶金《石油大博弈》" },
-  { y: 1864.5, b: 4, k: "peak", tag: "1864 年 · 南北战争", t: "战时投机，油价涨到", n: "8.06 美元", pct: "×16", lab: "暴涨" },
-  { y: 1879.5, b: 4, k: "turn", tag: "1879 年 · 洛克菲勒", t: "标准石油，控制了美国九成炼油", s: "第一个能左右油价的人", lab: "垄断", src: "丹尼尔·耶金《石油大博弈》" },
-  { y: 1900.5, b: 4, k: "stat", tag: "1900 年前后 · 俄国巴库", t: "俄国产油超过美国", s: "占了全世界一半", src: EI },
-  { y: 1911.4, b: 4, k: "policy", tag: "1911 年 · 美国最高法院", t: "标准石油被拆成 34 家公司", icon: "gavel", src: "美国最高法院判决" },
+  { y: 1859.5, geo: [-79.7, 41.6], b: 4, k: "stat", tag: "1859 年 · 美国宾夕法尼亚", t: "第一口现代油井出油，1 桶卖", n: "16 美元", s: "1 桶 = 159 升", anchor: BAR(4), span: 40, icon: "derrick", src: EIA },
+  { y: 1861.5, geo: [-79.7, 41.6], b: 4, k: "crash", tag: "1861 年", t: "人人都去打井，油价跌到", n: "49 美分", s: "有时，油比装它的木桶还便宜", pct: "−97%", fx: ["bolt"], src: "丹尼尔·耶金《石油大博弈》" },
+  { y: 1864.5, geo: [-79.7, 41.6], b: 4, k: "peak", tag: "1864 年 · 南北战争", t: "战时投机，油价涨到", n: "8.06 美元", pct: "×16", lab: "暴涨" },
+  { y: 1879.5, geo: [-81.7, 41.5], b: 4, k: "turn", tag: "1879 年 · 洛克菲勒", t: "标准石油，控制了美国九成炼油", s: "第一个能左右油价的人", lab: "垄断", src: "丹尼尔·耶金《石油大博弈》" },
+  { y: 1900.5, geo: [49.9, 40.4], b: 4, k: "stat", tag: "1900 年前后 · 俄国巴库", t: "俄国产油超过美国", s: "占了全世界一半", src: EI },
+  { y: 1911.4, geo: [-77, 38.9], b: 4, k: "policy", tag: "1911 年 · 美国最高法院", t: "标准石油被拆成 34 家公司", icon: "gavel", src: "美国最高法院判决" },
   // 第二幕 · 定价的人
-  { y: 1931.5, b: 6, k: "crash", tag: "1931 年 · 大萧条", t: "又挖出东得州大油田，油价跌到", n: "65 美分", s: "最低时，1 桶卖 10 美分", pct: "−45%", big: true, go: "slam", anchor: BAR(8), span: 40, fx: ["bolt"], src: EIA },
-  { y: 1931.75, b: 4, k: "policy", tag: "1931 年 8 月 · 得州", t: "州长派军队，关停油井", s: "此后，得州给每口井定产量", src: "得州州史协会" },
-  { y: 1955.5, b: 4, k: "policy", tag: "1930—1960 年代", t: "得州定产量，七大石油公司定牌价", s: "油价 20 多年几乎不动", lab: "定价" },
-  { y: 1960.7, b: 4, k: "turn", tag: "1960 年 9 月 · 巴格达", t: "5 个产油国成立 OPEC", s: "不满石油公司压价", src: "石油输出国组织" },
-  { y: 1970.6, b: 4, k: "turn", tag: "1970 年 · 美国", t: "美国石油产量见顶", s: "得州再也没有多余的油", src: "美国能源信息署" },
+  { y: 1931.5, geo: [-95, 32.3], b: 6, k: "crash", tag: "1931 年 · 大萧条", t: "又挖出东得州大油田，油价跌到", n: "65 美分", s: "最低时，1 桶卖 10 美分", pct: "−45%", big: true, go: "slam", anchor: BAR(8), span: 40, fx: ["bolt"], src: EIA },
+  { y: 1931.75, geo: [-95, 32.3], b: 4, k: "policy", tag: "1931 年 8 月 · 得州", t: "州长派军队，关停油井", s: "此后，得州给每口井定产量", src: "得州州史协会" },
+  { y: 1955.5, geo: [-95, 32.3], b: 4, k: "policy", tag: "1930—1960 年代", t: "得州定产量，七大石油公司定牌价", s: "油价 20 多年几乎不动", lab: "定价" },
+  { y: 1960.7, geo: [44.4, 33.3], b: 4, k: "turn", tag: "1960 年 9 月 · 巴格达", t: "5 个产油国成立 OPEC", s: "不满石油公司压价", src: "石油输出国组织" },
+  { y: 1970.6, geo: [-95, 32.3], b: 4, k: "turn", tag: "1970 年 · 美国", t: "美国石油产量见顶", s: "得州再也没有多余的油", src: "美国能源信息署" },
   // 第三幕 · OPEC (colour)
-  { y: DY(1973, 10, 17), b: 8, k: "split", tag: "1973 年 10 月 · 第四次中东战争", t: "阿拉伯产油国：对美国禁运", s: "中东油价：3 美元 → 11.65 美元", big: true, go: "slam", anchor: BAR(12), span: 14, fx: ["snap"], icon: "lock", lab: "禁运", src: "沙特阿拉伯轻质原油官价" },
-  { y: 1974.05, b: 4, k: "peak", tag: "1974 年 1 月", t: "美国油价涨到", n: "10.11 美元", pct: "×2.8", lab: "暴涨" },
-  { y: 1974.4, b: 4, k: "note", tag: "1974 年 · 美国", t: "加油站排长队，单双号加油", icon: "pump" },
-  { y: 1975.95, b: 4, k: "policy", tag: "1975 年 · 美国", t: "建立战略石油储备", s: "以后出事，就开仓放油", icon: "tank", src: "美国《能源政策和节约法》" },
-  { y: 1977.6, b: 4, k: "note", tag: "1977 年", t: "阿拉斯加、北海的新油田出油", s: "高油价，逼出了新油田" },
-  { y: 1979.05, b: 6, k: "war", tag: "1979 年 · 伊朗革命", t: "伊朗石油停产", s: "第二次石油危机", icon: "flame" },
+  { y: DY(1973, 10, 17), geo: [49.6, 25.9], b: 8, k: "split", tag: "1973 年 10 月 · 第四次中东战争", t: "阿拉伯产油国：对美国禁运", s: "中东油价：3 美元 → 11.65 美元", big: true, go: "slam", anchor: BAR(12), span: 14, fx: ["snap"], icon: "lock", lab: "禁运", src: "沙特阿拉伯轻质原油官价" },
+  { y: 1974.05, geo: [-77, 38.9], b: 4, k: "peak", tag: "1974 年 1 月", t: "美国油价涨到", n: "10.11 美元", pct: "×2.8", lab: "暴涨" },
+  { y: 1974.4, geo: [-77, 38.9], b: 4, k: "note", tag: "1974 年 · 美国", t: "加油站排长队，单双号加油", icon: "pump" },
+  { y: 1975.95, geo: [-93.5, 29.8], b: 4, k: "policy", tag: "1975 年 · 美国", t: "建立战略石油储备", s: "以后出事，就开仓放油", icon: "tank", src: "美国《能源政策和节约法》" },
+  { y: 1977.6, geo: [-148.5, 70.3], b: 4, k: "note", tag: "1977 年", t: "阿拉斯加、北海的新油田出油", s: "高油价，逼出了新油田" },
+  { y: 1979.05, geo: [51.4, 35.7], b: 6, k: "war", tag: "1979 年 · 伊朗革命", t: "伊朗石油停产", s: "第二次石油危机", icon: "flame" },
   { y: 1980.29, b: 6, k: "peak", tag: "1980 年 4 月", t: "油价涨到", n: "39.50 美元", s: "不到 7 年，涨了 10 倍", pct: "×11", big: true, go: "slam", anchor: BAR(23), span: 20, fx: ["fwBig"], lab: "暴涨" },
-  { y: 1980.72, b: 4, k: "war", tag: "1980 年 9 月", t: "两伊战争爆发", s: "两大产油国，互炸油田", icon: "flame" },
-  { y: 1983.25, b: 4, k: "policy", tag: "1983 年 3 月 · 纽约", t: "原油期货开始交易", s: "油价，从此每秒都在变", icon: "exchange", src: "纽约商品交易所" },
-  { y: 1985.3, b: 6, k: "turn", tag: "1981—1985 年 · 沙特", t: "沙特一再减产，独自撑油价", s: "产量砍掉了三分之二", lab: "减产", src: EI },
-  { y: 1986.55, b: 6, k: "crash", tag: "1986 年 · 沙特不再减产", t: "开闸放油，油价跌到", n: "11.58 美元", pct: "−62%", big: true, go: "slam", anchor: BAR(29), span: 14, fx: ["bolt"] },
+  { y: 1980.72, geo: [48.2, 30.4], b: 4, k: "war", tag: "1980 年 9 月", t: "两伊战争爆发", s: "两大产油国，互炸油田", icon: "flame" },
+  { y: 1983.25, geo: [-74, 40.7], b: 4, k: "policy", tag: "1983 年 3 月 · 纽约", t: "原油期货开始交易", s: "油价，从此每秒都在变", icon: "exchange", src: "纽约商品交易所" },
+  { y: 1985.3, geo: [49.6, 25.9], b: 6, k: "turn", tag: "1981—1985 年 · 沙特", t: "沙特一再减产，独自撑油价", s: "产量砍掉了三分之二", lab: "减产", src: EI },
+  { y: 1986.55, geo: [49.6, 25.9], b: 6, k: "crash", tag: "1986 年 · 沙特不再减产", t: "开闸放油，油价跌到", n: "11.58 美元", pct: "−62%", big: true, go: "slam", anchor: BAR(29), span: 14, fx: ["bolt"] },
   // 第四幕 · 交易所里的油价
-  { y: 1990.79, b: 6, k: "war", tag: "1990 年 8 月 · 伊拉克入侵科威特", t: "两个月，油价涨到", n: "35.92 美元", pct: "+93%", icon: "flame", span: 10 },
-  { y: 1991.05, b: 4, k: "crash", tag: "1991 年 1 月 17 日 · 海湾战争", t: "美军开打，油价一天跌了", n: "33%", s: "沙特开足马力，补上了缺口", fx: ["bolt"], src: "WTI 现货价" },
-  { y: 1998.95, b: 6, k: "crash", tag: "1998 年 · 亚洲金融危机", t: "需求骤降，油价跌到", n: "11.28 美元", s: "OPEC 偏偏刚加了产" },
-  { y: 1999.4, b: 4, k: "policy", tag: "1999 年 3 月", t: "OPEC 联手减产", s: "一年后，油价回到 30 美元", lab: "减产" },
-  { y: DY(2003, 3, 20), b: 4, k: "war", tag: "2003 年 3 月", t: "伊拉克战争", icon: "flame", span: 6 },
-  { y: 2004.6, b: 6, k: "stat", tag: "2004 年 · OPEC", t: "多余的产能，只剩", n: "约 120 万桶/天", s: "30 年来最少", anchor: BAR(37), span: 6, src: "国际能源署" },
-  { y: 2006.5, b: 6, k: "stat", tag: "2002—2008 年 · 中国", t: "全世界新增的石油需求", n: "近四成", s: "来自中国", span: 5, src: EI },
-  { y: DY(2008, 2, 19), b: 4, k: "peak", tag: "2008 年 2 月 19 日", t: "收盘第一次突破", n: "100 美元", fx: ["fw"], span: 3, lab: "破百" },
+  { y: 1990.79, geo: [47.9, 29.4], b: 6, k: "war", tag: "1990 年 8 月 · 伊拉克入侵科威特", t: "两个月，油价涨到", n: "35.92 美元", pct: "+93%", icon: "flame", span: 10 },
+  { y: 1991.05, geo: [47.9, 29.4], b: 4, k: "crash", tag: "1991 年 1 月 17 日 · 海湾战争", t: "美军开打，油价一天跌了", n: "33%", s: "沙特开足马力，补上了缺口", fx: ["bolt"], src: "WTI 现货价" },
+  { y: 1998.95, geo: [105, 12], b: 6, k: "crash", tag: "1998 年 · 亚洲金融危机", t: "需求骤降，油价跌到", n: "11.28 美元", s: "OPEC 偏偏刚加了产" },
+  { y: 1999.4, geo: [16.4, 48.2], b: 4, k: "policy", tag: "1999 年 3 月", t: "OPEC 联手减产", s: "一年后，油价回到 30 美元", lab: "减产" },
+  { y: DY(2003, 3, 20), geo: [44.4, 33.3], b: 4, k: "war", tag: "2003 年 3 月", t: "伊拉克战争", icon: "flame", span: 6 },
+  { y: 2004.6, geo: [49.6, 25.9], b: 6, k: "stat", tag: "2004 年 · OPEC", t: "多余的产能，只剩", n: "约 120 万桶/天", s: "30 年来最少", anchor: BAR(37), span: 6, src: "国际能源署" },
+  { y: 2006.5, geo: [116.4, 39.9], b: 6, k: "stat", tag: "2002—2008 年 · 中国", t: "全世界新增的石油需求", n: "近四成", s: "来自中国", span: 5, src: EI },
+  { y: DY(2008, 2, 19), geo: [-74, 40.7], b: 4, k: "peak", tag: "2008 年 2 月 19 日", t: "收盘第一次突破", n: "100 美元", fx: ["fw"], span: 3, lab: "破百" },
   { y: DY(2008, 7, 3), b: 6, k: "peak", tag: "2008 年 7 月 3 日", t: "历史最高", n: "145.29 美元", s: "2001 年底，还只有 17 美元", big: true, go: "slam", anchor: BAR(44), span: 2, fx: ["fwBig"], lab: "新高", src: "收盘价；盘中最高 147.27 美元（7 月 11 日）" },
-  { y: DY(2008, 9, 15), b: 4, k: "war", tag: "2008 年 9 月 15 日", t: "雷曼兄弟破产", s: "全球金融危机爆发", lab: "危机", fx: ["shatter"], span: 1.2 },
+  { y: DY(2008, 9, 15), geo: [-74, 40.7], b: 4, k: "war", tag: "2008 年 9 月 15 日", t: "雷曼兄弟破产", s: "全球金融危机爆发", lab: "危机", fx: ["shatter"], span: 1.2 },
   { y: DY(2008, 12, 19), b: 6, k: "crash", tag: "2008 年 7 月 → 12 月", t: "不到半年，油价跌到", n: "33.87 美元", pct: "−77%", fx: ["bolt"], span: 2 },
-  { y: 2009.3, b: 4, k: "policy", tag: "2008 年 12 月 · OPEC", t: "史上最大减产", n: "420 万桶/天", s: "一年后，油价翻了一倍", lab: "减产", span: 3, src: "石油输出国组织" },
-  { y: DY(2011, 4, 29), b: 6, k: "war", tag: "2011 年 · 阿拉伯之春", t: "利比亚内战，油价回到", n: "113.93 美元", anchor: BAR(50), span: 5, icon: "flame" },
-  { y: 2013.4, b: 6, k: "stat", tag: "2008—2014 年 · 美国页岩油", t: "水平钻井 + 压裂", s: "美国产量 6 年涨了七成", icon: "derrick", span: 6, src: EI },
-  { y: DY(2014, 11, 28), b: 6, k: "crash", tag: "2014 年 11 月 27 日 · OPEC", t: "沙特拒绝减产，一天暴跌", n: "10%", s: "要用低油价，挤垮页岩油", big: true, go: "slam", anchor: BAR(52), span: 2.5, fx: ["bolt"], src: "路透社" },
+  { y: 2009.3, geo: [-0.6, 35.7], b: 4, k: "policy", tag: "2008 年 12 月 · OPEC", t: "史上最大减产", n: "420 万桶/天", s: "一年后，油价翻了一倍", lab: "减产", span: 3, src: "石油输出国组织" },
+  { y: DY(2011, 4, 29), geo: [13.2, 32.9], b: 6, k: "war", tag: "2011 年 · 阿拉伯之春", t: "利比亚内战，油价回到", n: "113.93 美元", anchor: BAR(50), span: 5, icon: "flame" },
+  { y: 2013.4, geo: [-102.5, 31.8], b: 6, k: "stat", tag: "2008—2014 年 · 美国页岩油", t: "水平钻井 + 压裂", s: "美国产量 6 年涨了七成", icon: "derrick", span: 6, src: EI },
+  { y: DY(2014, 11, 28), geo: [16.4, 48.2], b: 6, k: "crash", tag: "2014 年 11 月 27 日 · OPEC", t: "沙特拒绝减产，一天暴跌", n: "10%", s: "要用低油价，挤垮页岩油", big: true, go: "slam", anchor: BAR(52), span: 2.5, fx: ["bolt"], src: "路透社" },
   { y: DY(2016, 2, 11), b: 6, k: "crash", tag: "2016 年 2 月 11 日", t: "油价跌到", n: "26.21 美元", s: "页岩油熬了过来", pct: "−76%", span: 4 },
-  { y: DY(2016, 12, 12), b: 4, k: "policy", tag: "2016 年 12 月", t: "OPEC 拉上俄罗斯，组成 OPEC+", s: "一起减产", lab: "联手", span: 4, src: "石油输出国组织" },
-  { y: DY(2019, 9, 16), b: 4, k: "war", tag: "2019 年 9 月 14 日", t: "沙特最大的石油设施遇袭", s: "一半产量停摆，油价一天 +15%", icon: "flame", span: 2, src: "路透社" },
+  { y: DY(2016, 12, 12), geo: [16.4, 48.2], b: 4, k: "policy", tag: "2016 年 12 月", t: "OPEC 拉上俄罗斯，组成 OPEC+", s: "一起减产", lab: "联手", span: 4, src: "石油输出国组织" },
+  { y: DY(2019, 9, 16), geo: [49.7, 25.9], b: 4, k: "war", tag: "2019 年 9 月 14 日", t: "沙特最大的石油设施遇袭", s: "一半产量停摆，油价一天 +15%", icon: "flame", span: 2, src: "路透社" },
   // 第五幕 · 页岩、OPEC+ 和海峡
-  { y: DY(2020, 3, 9), b: 6, k: "crash", tag: "2020 年 3 月 · 新冠 + 价格战", t: "沙特、俄罗斯谈崩，一天暴跌", n: "25%", anchor: BAR(58), span: 0.6, icon: "virus", fx: ["bw"] },
-  { y: DY(2020, 4, 13), b: 4, k: "policy", tag: "2020 年 4 月 12 日 · OPEC+", t: "减产 970 万桶/天，史上最多", s: "可全世界都封城了", lab: "减产", span: 0.3, src: "石油输出国组织" },
-  { y: DY(2020, 4, 20), b: 8, k: "crash", tag: "2020 年 4 月 20 日", t: "油价跌成负数", n: "−37.63 美元", s: "油库快满了，卖油的倒贴钱", big: true, go: "slam", span: 0.25, fx: ["shatter"], src: "5 月 WTI 期货合约到期前一天" },
-  { y: DY(2020, 4, 21), b: 2, k: "note", tag: "第二天", t: "油价回到 10 美元", s: "负油价，只有一天", span: 0.25 },
+  { y: DY(2020, 3, 9), geo: [46.7, 24.7], b: 6, k: "crash", tag: "2020 年 3 月 · 新冠 + 价格战", t: "沙特、俄罗斯谈崩，一天暴跌", n: "25%", anchor: BAR(58), span: 0.6, icon: "virus", fx: ["bw"] },
+  { y: DY(2020, 4, 13), geo: [16.4, 48.2], b: 4, k: "policy", tag: "2020 年 4 月 12 日 · OPEC+", t: "减产 970 万桶/天，史上最多", s: "可全世界都封城了", lab: "减产", span: 0.3, src: "石油输出国组织" },
+  { y: DY(2020, 4, 20), geo: [-96.8, 36.0], b: 8, k: "crash", tag: "2020 年 4 月 20 日", t: "油价跌成负数", n: "−37.63 美元", s: "油库快满了，卖油的倒贴钱", big: true, go: "slam", span: 0.25, fx: ["shatter"], src: "5 月 WTI 期货合约到期前一天" },
+  { y: DY(2020, 4, 21), geo: [-96.8, 36.0], b: 2, k: "note", tag: "第二天", t: "油价回到 10 美元", s: "负油价，只有一天", span: 0.25 },
   { y: 2021.55, b: 4, k: "note", tag: "2021 年", t: "疫情退潮，油价涨回 70 美元", s: "OPEC+ 每月只多放一点油", span: 3 },
-  { y: DY(2022, 3, 8), b: 6, k: "war", tag: "2022 年 2 月 24 日 · 俄乌冲突", t: "制裁俄罗斯，油价冲到", n: "123.70 美元", anchor: BAR(63), span: 1.5, fx: ["fw"], icon: "lock" },
-  { y: DY(2022, 3, 31), b: 4, k: "policy", tag: "2022 年 3 月 31 日 · 美国", t: "开仓放出 1.8 亿桶储备", s: "当时史上最多", icon: "tank", span: 2, src: "白宫" },
-  { y: DY(2023, 4, 3), b: 4, k: "policy", tag: "2023 年 4 月 · OPEC+", t: "突然宣布减产，油价一天 +6%", lab: "减产", span: 3, src: "路透社" },
-  { y: 2024.9, b: 6, k: "stat", tag: "2025 年 · 美国", t: "原油产量创纪录", n: "1,360 万桶/天", s: "比俄罗斯、沙特都多四成", anchor: BAR(67), span: 4, icon: "derrick", src: "美国能源信息署" },
-  { y: DY(2025, 6, 24), b: 4, k: "war", tag: "2025 年 6 月 · 以色列空袭伊朗", t: "12 天战争，油价先涨后跌", s: "霍尔木兹海峡，没被封", span: 2, icon: "flame" },
+  { y: DY(2022, 3, 8), geo: [37.6, 55.8], b: 6, k: "war", tag: "2022 年 2 月 24 日 · 俄乌冲突", t: "制裁俄罗斯，油价冲到", n: "123.70 美元", anchor: BAR(63), span: 1.5, fx: ["fw"], icon: "lock" },
+  { y: DY(2022, 3, 31), geo: [-77, 38.9], b: 4, k: "policy", tag: "2022 年 3 月 31 日 · 美国", t: "开仓放出 1.8 亿桶储备", s: "当时史上最多", icon: "tank", span: 2, src: "白宫" },
+  { y: DY(2023, 4, 3), geo: [16.4, 48.2], b: 4, k: "policy", tag: "2023 年 4 月 · OPEC+", t: "突然宣布减产，油价一天 +6%", lab: "减产", span: 3, src: "路透社" },
+  { y: 2024.9, geo: [-102.5, 31.8], b: 6, k: "stat", tag: "2025 年 · 美国", t: "原油产量创纪录", n: "1,360 万桶/天", s: "比俄罗斯、沙特都多四成", anchor: BAR(67), span: 4, icon: "derrick", src: "美国能源信息署" },
+  { y: DY(2025, 6, 24), geo: [51.4, 35.7], b: 4, k: "war", tag: "2025 年 6 月 · 以色列空袭伊朗", t: "12 天战争，油价先涨后跌", s: "霍尔木兹海峡，没被封", span: 2, icon: "flame" },
   { y: DY(2025, 12, 16), b: 4, k: "crash", tag: "2025 年 12 月 · OPEC+ 加产", t: "油价跌到", n: "55.27 美元", s: "近 5 年最低", span: 2 },
-  { y: DY(2026, 3, 2), b: 6, k: "war", tag: "2026 年 2 月 28 日", t: "美国、以色列空袭伊朗", big: true, go: "slam", anchor: BAR(72), span: 0.8, icon: "flame", lab: "战争" },
-  { y: DY(2026, 3, 4), b: 6, k: "war", tag: "2026 年 3 月 · 霍尔木兹海峡", t: "伊朗封锁海峡", s: "全世界约五分之一的石油走这里", icon: "strait", fx: ["closed"], span: 0.5, lab: "封锁", alarm: "霍尔木兹 · 封锁", src: "美国能源信息署" },
-  { y: DY(2026, 3, 6), b: 4, k: "peak", tag: "2026 年 3 月 2 日 → 6 日", t: "一周暴涨", n: "36%", s: "有原油期货以来最大周涨幅", fx: ["fw"], span: 0.5, lab: "暴涨", src: "路透社" },
-  { y: DY(2026, 3, 11), b: 4, k: "policy", tag: "2026 年 3 月 11 日 · 国际能源署", t: "各国放出 4 亿桶储备", s: "史上最多，是 2022 年的两倍多", icon: "tank", span: 0.6, src: "国际能源署" },
+  { y: DY(2026, 3, 2), geo: [51.4, 35.7], b: 6, k: "war", tag: "2026 年 2 月 28 日", t: "美国、以色列空袭伊朗", big: true, go: "slam", anchor: BAR(72), span: 0.8, icon: "flame", lab: "战争" },
+  { y: DY(2026, 3, 4), geo: [56.3, 26.6], b: 6, k: "war", tag: "2026 年 3 月 · 霍尔木兹海峡", t: "伊朗封锁海峡", s: "全世界约五分之一的石油走这里", icon: "strait", fx: ["closed"], span: 0.5, lab: "封锁", alarm: "霍尔木兹 · 封锁", src: "美国能源信息署" },
+  { y: DY(2026, 3, 6), geo: [56.3, 26.6], b: 4, k: "peak", tag: "2026 年 3 月 2 日 → 6 日", t: "一周暴涨", n: "36%", s: "有原油期货以来最大周涨幅", fx: ["fw"], span: 0.5, lab: "暴涨", src: "路透社" },
+  { y: DY(2026, 3, 11), geo: [2.35, 48.86], b: 4, k: "policy", tag: "2026 年 3 月 11 日 · 国际能源署", t: "各国放出 4 亿桶储备", s: "史上最多，是 2022 年的两倍多", icon: "tank", span: 0.6, src: "国际能源署" },
   { y: DY(2026, 4, 7), b: 6, k: "peak", tag: "2026 年 4 月 7 日", t: "油价涨到", n: "112.95 美元", s: "战前是 67 美元", pct: "+69%", big: true, span: 1.2, fx: ["fwBig"], lab: "暴涨" },
-  { y: DY(2026, 4, 8), b: 4, k: "crash", tag: "2026 年 4 月 8 日", t: "美伊停火，一天暴跌", n: "16%", anchor: BAR(79), span: 0.3, fx: ["bolt"] },
-  { y: DY(2026, 4, 17), b: 4, k: "crash", tag: "2026 年 4 月 17 日", t: "伊朗宣布开放海峡，再跌 11%", s: "三天后，又收紧了", span: 0.6 },
-  { y: DY(2026, 6, 24), b: 4, k: "note", tag: "2026 年 6 月", t: "油轮重新通过海峡", s: "油价跌回 70 美元", span: 2 },
-  { y: DY(2026, 10, 16), b: 4, k: "war", tag: "2026 年 9—10 月", t: "战火又起，油价再过 100 美元", span: 2, icon: "flame" },
-  { y: DY(2026, 11, 4), b: 4, k: "stat", tag: "2026 年 11 月 4 日", t: "市场押注美伊和谈，一天跌 8%", n: "88.12 美元", span: 1.6, src: "CNBC" },
+  { y: DY(2026, 4, 8), geo: [56.3, 26.6], b: 4, k: "crash", tag: "2026 年 4 月 8 日", t: "美伊停火，一天暴跌", n: "16%", anchor: BAR(79), span: 0.3, fx: ["bolt"] },
+  { y: DY(2026, 4, 17), geo: [56.3, 26.6], b: 4, k: "crash", tag: "2026 年 4 月 17 日", t: "伊朗宣布开放海峡，再跌 11%", s: "三天后，又收紧了", span: 0.6 },
+  { y: DY(2026, 6, 24), geo: [56.3, 26.6], b: 4, k: "note", tag: "2026 年 6 月", t: "油轮重新通过海峡", s: "油价跌回 70 美元", span: 2 },
+  { y: DY(2026, 10, 16), geo: [56.3, 26.6], b: 4, k: "war", tag: "2026 年 9—10 月", t: "战火又起，油价再过 100 美元", span: 2, icon: "flame" },
+  { y: DY(2026, 11, 4), geo: [-77, 38.9], b: 4, k: "stat", tag: "2026 年 11 月 4 日", t: "市场押注美伊和谈，一天跌 8%", n: "88.12 美元", span: 1.6, src: "CNBC" },
 ];
 
 // the 2008 high, drawn across while the price is under it (never beaten since)
@@ -223,6 +222,9 @@ const resAt = (p: [number, number][], y: number) => {
 const TABLE = (y: number): TableRow[] => Object.entries(D.shares).map(([n, p]) => ({ n, v: resAt(p, y), c: RC[n] ?? "#9aa5b1" }));
 
 export const PLACED = schedule2(EVS, MUSIC, BAR(4), BAR(83));
+const tOf = (y: number) => PLACED.find((e) => Math.abs(e.y - y) < 1e-4)!.t0;
+// the floor map: in to the Gulf when the war starts, the strait shut (tankers stop) until they sail again in June
+export const MAPFX = { zIn: tOf(DY(2026, 3, 2)), zOut: tOf(DY(2026, 6, 24)) + 1.4, z: 5, lon: 54.5, lat: 26.5, close: tOf(DY(2026, 3, 4)), open: tOf(DY(2026, 6, 24)), closeY: DY(2026, 3, 4), openY: DY(2026, 6, 24) };
 export const REVEALS = PLACED.map((e) => ({ k: e.k, big: !!e.big, y: e.y, ...revealOf(e, MUSIC.beats) }));
 
 export const fwBursts = (t0: number, big: boolean) => (big ? [t0 + 0.16, t0 + 0.16 + BEAT * 0.5, t0 + 0.16 + BEAT] : [t0 + 0.16]);

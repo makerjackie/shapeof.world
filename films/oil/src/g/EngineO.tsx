@@ -14,7 +14,8 @@ import { BRUSH, SANS, SERIF, fontsReady } from "./fonts6";
 import type { Pt, Spec } from "./specG";
 import { revealOf } from "./reveal7";
 import OHLC_RAW from "./oil_ohlc.json";
-import { BW_UNTIL, COIN, COLD5, GOLD_OZ, NEXT, PEGS, RATES, SWEEP, WIRES, fwBursts } from "./oil";
+import { BW_UNTIL, COIN, COLD5, MAPFX, NEXT, PEGS, RATES, SWEEP, WIRES, fwBursts } from "./oil";
+import MAPJ from "./oil_map.json";
 import type { Icon, P5 } from "./oil";
 
 const OH = OHLC_RAW as unknown as [number, number, number, number, number][]; // year, open, high, low, close
@@ -487,15 +488,6 @@ export const createFilm5 = (S: Spec) => {
     return lo;
   };
   const kindAt = (y: number): Pt["kind"] => (y < 1946 ? "a" : y < 2000.64 ? "m" : "d");
-  // gold per barrel: how many barrels one ounce of gold buys (0 when oil is free or worse)
-  const goldAt = (y: number) => {
-    const i = segOf(y);
-    const a = SER[i];
-    const b = SER[i + 1];
-    if (!b || y <= a.y) return GOLD_OZ[i];
-    if (y >= b.y) return GOLD_OZ[i + 1];
-    return GOLD_OZ[i] + ((GOLD_OZ[i + 1] - GOLD_OZ[i]) * (y - a.y)) / (b.y - a.y);
-  };
   const TREND = new Int8Array(SER.length);
   {
     const piv: number[] = [0];
@@ -727,16 +719,82 @@ export const createFilm5 = (S: Spec) => {
   }
   const gradeAt = (t: number) => GR[clamp(Math.round(t * FPS), 0, NF - 1)];
 
-  // ---------- the floor: one ounce of gold, and the barrels of oil it buys (1 icon = 1 barrel)
-  const FL = { x0: 262, x1: SAFE_R, y0: 1088, y1: 1414, iw: 22, ih: 28, gx: 6, gy: 7 };
-  const COLS = Math.floor((FL.x1 - FL.x0 + FL.gx) / (FL.iw + FL.gx));
-  const ROWS = Math.floor((FL.y1 - FL.y0 + FL.gy) / (FL.ih + FL.gy));
-  const CAP = COLS * ROWS;
-  const BILLS = new Float32Array(NF); // barrels per ounce; CAP + 1 when oil costs nothing or less
-  for (let f = 0; f < NF; f++) {
-    const v = val(CAM[f].c);
-    BILLS[f] = v <= 0.05 ? CAP + 1 : Math.min(CAP + 1, goldAt(CAM[f].c) / v);
-  }
+  // ---------- the floor: a dot map of the world's oil. Each producer glows by its share of world output (the table's
+  // data), the top three named; every event pings where it happened; tankers run out of the Gulf through Hormuz.
+  // In 2026 the map pushes in to the Gulf, the strait is crossed out and the tankers stop until June.
+  const FM = { x0: 40, x1: SAFE_R, y0: 1075, y1: 1420 };
+  const MS = Math.min((FM.x1 - FM.x0) / 285, (FM.y1 - FM.y0) / 114);
+  const MCX = (FM.x0 + FM.x1) / 2;
+  const MCY = (FM.y0 + FM.y1) / 2;
+  const LAND = (() => {
+    const b64 = (s: string) => {
+      const bin = atob(s);
+      const u = new Uint8Array(bin.length);
+      for (let q = 0; q < bin.length; q++) u[q] = bin.charCodeAt(q);
+      return new Uint16Array(u.buffer);
+    };
+    const CI = b64(MAPJ.i);
+    const CJ = b64(MAPJ.j);
+    const out: [number, number][] = [];
+    for (let q = 0; q < CI.length; q++) {
+      const lon = MAPJ.lon0 + CI[q] * MAPJ.step;
+      const lat = MAPJ.lat0 + CJ[q] * MAPJ.step;
+      if (lat > -44 && lat < 74 && lon > -140 && lon < 155) out.push([lon, lat]);
+    }
+    return out;
+  })();
+  // where each producer's oil mostly comes from (the US moves from Pennsylvania to Texas, Russia from Baku to Siberia)
+  const PLACE: Record<string, [number, number]> = {
+    沙特: [49.5, 25.5], 伊朗: [49.5, 31.5], 伊拉克: [46.5, 31.5], 委内瑞拉: [-71.5, 10.5], 墨西哥: [-93, 19], 科威特: [47.8, 29.2],
+    阿联酋: [54, 24], 加拿大: [-113, 56.5], 中国: [122, 46], 挪威: [3, 60], 英国: [1, 57.5], 罗马尼亚: [25.5, 45], 印尼: [101, 1],
+    尼日利亚: [6, 5], 利比亚: [19, 29], 巴西: [-40, -22.5], 哈萨克斯坦: [53, 46], 卡塔尔: [51.3, 25.3], 阿尔及利亚: [6, 31],
+    安哥拉: [12.5, -7], 特立尼达: [-61.3, 10.4], 阿根廷: [-68, -38], 哥伦比亚: [-73, 5], 埃及: [32, 28], 阿曼: [56, 21],
+  };
+  const placeOf = (n: string, y: number): [number, number] => {
+    if (n === "美国") {
+      const k = clamp((y - 1900) / 30);
+      return [-79.7 + (-98 + 79.7) * k, 41.6 + (31.5 - 41.6) * k];
+    }
+    if (n === "俄罗斯") {
+      const k = clamp((y - 1955) / 15);
+      return [49.9 + (72 - 49.9) * k, 40.4 + (61 - 40.4) * k];
+    }
+    return PLACE[n] ?? [0, 0];
+  };
+  const HORMUZ: [number, number] = [56.3, 26.6];
+  const ROUTE: [number, number][] = [[48.6, 28.9], [50.6, 27.6], [52.6, 26.6], [54.6, 26.2], [55.8, 26.6], [56.6, 26.3], [57.4, 25.4], [58.8, 24.2], [61.5, 22.2], [66, 19.5], [72, 15.5]];
+  const RS = 4; // the strait sits at ROUTE[4..5]
+  const routeLen = (() => {
+    const L = [0];
+    for (let q = 1; q < ROUTE.length; q++) L.push(L[q - 1] + Math.hypot(ROUTE[q][0] - ROUTE[q - 1][0], ROUTE[q][1] - ROUTE[q - 1][1]));
+    return L;
+  })();
+  const routeAt = (u: number): [number, number] => {
+    const d = u * routeLen[routeLen.length - 1];
+    let q = 1;
+    while (q < routeLen.length - 1 && routeLen[q] < d) q++;
+    const k = (d - routeLen[q - 1]) / (routeLen[q] - routeLen[q - 1]);
+    return [ROUTE[q - 1][0] + (ROUTE[q][0] - ROUTE[q - 1][0]) * k, ROUTE[q - 1][1] + (ROUTE[q][1] - ROUTE[q - 1][1]) * k];
+  };
+  const U_STRAIT = (routeLen[RS] + 0.5 * (routeLen[RS + 1] - routeLen[RS])) / routeLen[routeLen.length - 1];
+  const zoomAt = (t: number) => {
+    const zi = ease(clamp((t - (MAPFX.zIn - 0.4)) / 0.9));
+    const zo = ease(clamp((t - MAPFX.zOut) / 1.0));
+    return zi * (1 - zo);
+  };
+  const mapProj = (t: number) => {
+    const zk = zoomAt(t);
+    const z = 1 + (MAPFX.z - 1) * zk;
+    const clon = 7.5 + (MAPFX.lon - 7.5) * zk;
+    const clat = 15 + (MAPFX.lat - 15) * zk;
+    return (lon: number, lat: number): [number, number] => {
+      const x = MCX + (lon - clon) * MS * z;
+      const y = MCY + (clat - lat) * MS * z;
+      // a slight tilt: the far (top) edge narrower
+      const v = clamp((y - FM.y0) / (FM.y1 - FM.y0));
+      return [MCX + (x - MCX) * (0.84 + 0.16 * v), y];
+    };
+  };
   const floorOn = (t: number) => (t < B0 - 0.5 ? 0 : t >= END ? 1 - clamp((t - END) / 0.5) : clamp((t - (B0 - 0.5)) / 0.5));
   const beatPulse = (t: number) => {
     let m = 0;
@@ -746,132 +804,142 @@ export const createFilm5 = (S: Spec) => {
     }
     return m;
   };
-  const ingot = (ctx: CanvasRenderingContext2D, cx: number, cy: number, s: number, shine: number) => {
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.scale(s, s);
-    const g0 = ctx.createRadialGradient(0, 0, 10, 0, 0, 150);
-    g0.addColorStop(0, `rgba(255,190,60,${0.32 + 0.3 * shine})`);
-    g0.addColorStop(1, "rgba(255,190,60,0)");
-    ctx.fillStyle = g0;
-    ctx.fillRect(-160, -150, 320, 300);
-    const front = [[-84, 30], [84, 30], [64, -18], [-64, -18]];
-    const top = [[-64, -18], [64, -18], [48, -44], [-48, -44]];
-    const poly = (p: number[][]) => {
-      ctx.beginPath();
-      p.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
-      ctx.closePath();
-    };
-    const gf = ctx.createLinearGradient(0, -18, 0, 30);
-    gf.addColorStop(0, "#ffe08a");
-    gf.addColorStop(0.45, "#e6a91f");
-    gf.addColorStop(1, "#8a5a08");
-    poly(front);
-    ctx.fillStyle = gf;
-    ctx.fill();
-    const gt = ctx.createLinearGradient(0, -44, 0, -18);
-    gt.addColorStop(0, "#fff6cf");
-    gt.addColorStop(1, "#f2c24a");
-    poly(top);
-    ctx.fillStyle = gt;
-    ctx.fill();
-    if (shine > 0.01) {
-      ctx.save();
-      poly(front);
-      ctx.clip();
-      const sx = -120 + 260 * (1 - shine);
-      const gs = ctx.createLinearGradient(sx - 30, 0, sx + 30, 0);
-      gs.addColorStop(0, "rgba(255,255,255,0)");
-      gs.addColorStop(0.5, `rgba(255,255,255,${0.75 * shine})`);
-      gs.addColorStop(1, "rgba(255,255,255,0)");
-      ctx.fillStyle = gs;
-      ctx.fillRect(-90, -50, 180, 90);
-      ctx.restore();
-    }
-    ctx.strokeStyle = "rgba(90,55,0,0.6)";
-    ctx.lineWidth = 1.5;
-    poly(front);
-    ctx.stroke();
-    text(ctx, "1 OZ", 0, 15, 22, 900, SANS, "rgba(110,66,0,0.85)", { align: "center", ls: 2 });
-    ctx.restore();
-  };
   const drawFloor = (ctx: CanvasRenderingContext2D, t: number) => {
     const a = floorOn(t);
     if (a <= 0.01) return;
-    const fi = clamp(Math.round(t * FPS), 0, NF - 1);
-    const n = BILLS[fi];
-    const was = BILLS[Math.max(0, fi - 12)];
-    const e = evAt(t);
-    const peakHit = HITS.reduce((m, h) => (h.kind === "peak" && t >= h.t ? Math.max(m, env(t, h.t, 0.01, 0.5)) : m), 0);
-    const pulse = beatPulse(t);
+    const c = camAt(t).c;
+    const P = mapProj(t);
+    const zk = zoomAt(t);
+    const z = 1 + (MAPFX.z - 1) * zk;
     ctx.save();
+    ctx.beginPath();
+    ctx.rect(FM.x0 - 10, FM.y0 - 10, FM.x1 - FM.x0 + 20, FM.y1 - FM.y0 + 20);
+    ctx.clip();
+    // land
     ctx.globalAlpha = a;
-    ingot(ctx, 140, 1150, 1 + 0.04 * pulse, clamp(peakHit));
-    text(ctx, tr("1 盎司黄金"), 140, 1230, 30, 900, SERIF, GOLD, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
-    text(ctx, tr("能换"), 140, 1266, 24, 700, SERIF, SOFT, { align: "center" });
-    ctx.globalAlpha = a;
-    text(ctx, "＝", 236, 1170, 44, 900, SANS, WHITE, { align: "center" });
-    const free = n > CAP;
-    if (free) {
-      // oil at zero or below: the gold buys every barrel there is
-      const s = 1 + 0.3 * env(t, Math.floor(t * 2) / 2, 0.01, 0.15);
-      text(ctx, "∞", 140, 1350, 64 * s, 900, SANS, RED, { align: "center", glow: "rgba(255,59,47,0.7)", glowBlur: 18 });
-      text(ctx, tr("油不要钱了"), 140, 1392, 22, 900, SERIF, RED, { align: "center" });
-    } else {
-      const cnt = Math.round(n);
-      const nw = measure(ctx, cnt.toLocaleString("en-US"), 50, 900, SANS) + 6 + measure(ctx, tr("桶油"), 28, 900, SERIF);
-      const x0 = 140 - nw / 2;
-      const w0 = tabular(ctx, cnt.toLocaleString("en-US"), x0, 1350, 50, WHITE, { glow: "rgba(0,0,0,0.9)" });
-      text(ctx, tr("桶油"), x0 + w0 + 6, 1350, 28, 900, SERIF, WHITE);
+    ctx.fillStyle = "rgba(205,212,220,0.24)";
+    const ds = 2.4 * Math.sqrt(z);
+    for (const [lon, lat] of LAND) {
+      const [x, y] = P(lon, lat);
+      if (x < FM.x0 - 8 || x > FM.x1 + 8 || y < FM.y0 - 8 || y > FM.y1 + 8) continue;
+      ctx.fillRect(x - ds / 2, y - ds / 2, ds, ds);
     }
-    text(ctx, tr("每格 1 桶"), 140, 1404, 19, 500, SERIF, MUTED, { align: "center" });
-    const top = Math.ceil(Math.max(Math.min(n, CAP), Math.min(was, CAP)));
-    const fresh = Math.max(0, n - was);
-    for (let i = 0; i < top; i++) {
-      const row = Math.floor(i / COLS);
-      if (row >= ROWS) break;
-      const col = i % COLS;
-      const x = FL.x0 + col * (FL.iw + FL.gx);
-      let y = FL.y1 - FL.ih - row * (FL.ih + FL.gy);
-      let al = 1;
-      let wood = "#8a5a2b";
-      let band = "#3a3f45";
-      if (free) {
-        al = 0.55 + 0.45 * Math.sin(t * 9 + i * 0.37);
-        wood = "#b8483c";
-        band = "#5a1c18";
-      } else if (i < n) {
-        al = clamp(n - i, 0.25, 1);
-        if (i >= was && fresh > 0.05) {
-          const k = clamp((i - was) / Math.max(1, fresh));
-          y -= 26 * k * k * k;
-          wood = k > 0.5 ? "#e9c45a" : "#b88a4a";
-        }
-      } else {
-        const k = clamp((i - n) / Math.max(1, was - n));
-        al = 0.85 * (1 - k);
-        y -= 30 * (1 - k * 0.5);
-        wood = e && e.k === "crash" ? "#b8483c" : "#7b8590";
-      }
-      ctx.globalAlpha = a * al;
-      // a small wooden barrel: bulging staves, two hoops
-      const w = FL.iw;
-      const h = FL.ih;
-      ctx.fillStyle = wood;
+    // producers: a glow per country, by share of world output
+    const rows = S.table ? S.table(c).filter((r) => r.v > 0.6).sort((p, q) => q.v - p.v) : [];
+    ctx.globalCompositeOperation = "lighter";
+    rows.forEach((r) => {
+      const [x, y] = P(...placeOf(r.n, c));
+      const R = (14 + 70 * Math.sqrt(r.v / 60)) * (0.75 + 0.25 * Math.sqrt(z));
+      const g = ctx.createRadialGradient(x, y, 0, x, y, R);
+      g.addColorStop(0, r.c + "cc");
+      g.addColorStop(0.35, r.c + "55");
+      g.addColorStop(1, r.c + "00");
+      ctx.globalAlpha = a * (zk > 0.5 ? 0.45 : 1);
+      ctx.fillStyle = g;
+      ctx.fillRect(x - R, y - R, 2 * R, 2 * R);
+      ctx.fillStyle = "#ffffff";
+      ctx.globalAlpha = a * 0.8;
       ctx.beginPath();
-      ctx.moveTo(x + 3, y);
-      ctx.lineTo(x + w - 3, y);
-      ctx.quadraticCurveTo(x + w + 2, y + h / 2, x + w - 3, y + h);
-      ctx.lineTo(x + 3, y + h);
-      ctx.quadraticCurveTo(x - 2, y + h / 2, x + 3, y);
-      ctx.closePath();
+      ctx.arc(x, y, 2.5 + 4 * Math.sqrt(r.v / 60), 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = band;
-      ctx.fillRect(x, y + h * 0.22, w, 2.5);
-      ctx.fillRect(x, y + h * 0.72, w, 2.5);
-      ctx.fillStyle = "rgba(255,235,200,0.28)";
-      ctx.fillRect(x + w * 0.28, y + 2, 2, h - 4);
+    });
+    ctx.globalCompositeOperation = "source-over";
+    if (zk < 0.3)
+      rows.slice(0, 3).forEach((r, i) => {
+        const [x, y] = P(...placeOf(r.n, c));
+        ctx.globalAlpha = a * (1 - zk / 0.3) * (i === 0 ? 1 : 0.85);
+        text(ctx, r.n, x + 12, y - 12, i === 0 ? 26 : 22, 900, SERIF, i === 0 ? WHITE : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+      });
+    // the Gulf's way out: tankers through Hormuz (from the 1950s), stopped while the strait is shut
+    const ra = clamp((c - 1950) / 8);
+    if (ra > 0) {
+      const closed = c >= MAPFX.closeY && c < MAPFX.openY;
+      const tShut = t >= MAPFX.close && t < MAPFX.open ? t - MAPFX.close : -1;
+      const te = t < MAPFX.close ? t : t < MAPFX.open ? MAPFX.close : t - (MAPFX.open - MAPFX.close);
+      ctx.globalAlpha = a * ra * (0.35 + 0.4 * zk);
+      ctx.strokeStyle = closed ? "rgba(255,90,70,0.8)" : "rgba(255,214,140,0.7)";
+      ctx.lineWidth = 1.5 + zk;
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath();
+      ROUTE.forEach((p, i) => {
+        const [x, y] = P(p[0], p[1]);
+        if (i) ctx.lineTo(x, y);
+        else ctx.moveTo(x, y);
+      });
+      ctx.stroke();
+      ctx.setLineDash([]);
+      const NT = 12;
+      for (let q = 0; q < NT; q++) {
+        let u = (((te * 0.07 + q / NT) % 1) + 1) % 1;
+        let al = 1;
+        if (tShut >= 0 && u > U_STRAIT) {
+          // ships already through keep going and leave; nothing follows them
+          u = Math.min(1, u + tShut * 0.07);
+          al = 1 - clamp((u - U_STRAIT) / (1 - U_STRAIT) + tShut * 0.4);
+        }
+        const [x, y] = P(...routeAt(u));
+        ctx.globalAlpha = a * ra * al * (0.55 + 0.45 * zk);
+        ctx.fillStyle = closed ? RED : "#ffd98a";
+        ctx.beginPath();
+        ctx.arc(x, y, 2.6 + 2.2 * zk, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      // the strait, named when the map is in; a red cross while it is shut
+      const [hx, hy] = P(...HORMUZ);
+      if (zk > 0.05) {
+        ctx.globalAlpha = a * zk;
+        text(ctx, tr("霍尔木兹海峡"), hx + 26, hy - 34, 28, 900, SERIF, closed ? RED : WHITE, { glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+        text(ctx, tr("最窄处约 33 公里"), hx + 26, hy - 4, 20, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+        text(ctx, tr("波斯湾"), P(50.5, 27.4)[0], P(50.5, 27.4)[1] + 6, 22, 700, SERIF, MUTED, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 6 });
+      }
+      if (closed) {
+        const d = t - MAPFX.close;
+        const s = 1 + 0.8 * (1 - eo3(d / 0.18));
+        const L = (14 + 10 * zk) * s;
+        ctx.globalAlpha = a * clamp(d / 0.05) * (0.8 + 0.2 * Math.sin(t * 10));
+        ctx.strokeStyle = RED;
+        ctx.lineWidth = 5 + 2 * zk;
+        ctx.shadowColor = RED;
+        ctx.shadowBlur = 14;
+        ctx.beginPath();
+        ctx.moveTo(hx - L, hy - L);
+        ctx.lineTo(hx + L, hy + L);
+        ctx.moveTo(hx + L, hy - L);
+        ctx.lineTo(hx - L, hy + L);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
     }
+    // the event: a ping where it happened
+    const e = evAt(t);
+    if (e && e.geo) {
+      const [x, y] = P(e.geo[0], e.geo[1]);
+      const col = toneCol(KIND_TONE[e.k]);
+      const d = t - e.t0;
+      for (const k0 of [0, 0.45]) {
+        const u = (d - k0) / 0.9;
+        if (u < 0 || u > 1) continue;
+        ctx.globalAlpha = a * (1 - u);
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(x, y, 6 + 54 * eo3(u), 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = a * clamp(d / 0.08);
+      ctx.fillStyle = col;
+      ctx.shadowColor = col;
+      ctx.shadowBlur = 16;
+      ctx.beginPath();
+      ctx.arc(x, y, 6 + 2 * beatPulse(t), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    ctx.restore();
+    // caption
+    ctx.save();
+    ctx.globalAlpha = a * 0.85;
+    text(ctx, zk > 0.5 ? tr("全世界约五分之一的石油，从这里运出") : tr("产油地图 · 越亮，产量占全世界越多"), FM.x0 + 4, FM.y1 + 24, 20, 700, SERIF, MUTED, { glow: "rgba(0,0,0,0.9)", glowBlur: 6 });
     ctx.restore();
   };
 
