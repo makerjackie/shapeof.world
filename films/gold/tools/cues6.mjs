@@ -24,6 +24,7 @@ const cues = {
   body: S.body,
   ending: S.ending.lines.map((l) => ({ t: l.t0, brush: !!l.brush })),
   card: S.ending.card,
+  fx: m.FXCUES || [],
   reveals: (m.REVEALS || []).flatMap((r) => [r.num > r.title + 0.01 ? { t: r.num, k: r.k, big: r.big, y: r.y ?? 0, w: "num" } : null, r.sub > r.title + 0.01 && r.sub > r.num + 0.01 ? { t: r.sub, k: r.k, big: r.big, y: r.y ?? 0, w: "sub" } : null]).filter(Boolean),
 };
 fs.writeFileSync(`out/cues6_${film}.json`, JSON.stringify(cues));

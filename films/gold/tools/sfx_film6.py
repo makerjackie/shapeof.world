@@ -167,6 +167,42 @@ def tick(g=1.0):
     return bp(rng.standard_normal(len(t)), 2500, 9000) * np.exp(-t / 0.008) * g
 
 
+
+def glass(g=1.0):
+    """breaking glass: a hard crack, then a shower of short bright pings"""
+    d = 1.6
+    t = tt(d)
+    out = bp(rng.standard_normal(len(t)), 2000, 11000) * np.exp(-t / 0.03) * 0.9
+    for _ in range(90):
+        at = rng.uniform(0, 0.9) ** 1.6
+        f = rng.uniform(2200, 9000)
+        dd = rng.uniform(0.02, 0.12)
+        a = int(at * SR)
+        n = int(min(d - at, dd * 6) * SR)
+        if n <= 0:
+            continue
+        tp = np.arange(n) / SR
+        out[a:a + n] += np.sin(2 * np.pi * f * tp) * np.exp(-tp / dd) * rng.uniform(0.08, 0.3) * np.exp(-at / 0.5)
+    low = np.sin(2 * np.pi * (50 + 70 * np.exp(-t / 0.05)) * t) * np.exp(-t / 0.25) * 0.7
+    return verb((out + low) * g, 0.35)
+
+
+def pop(g=1.0):
+    """a firework: a soft thump and a crackle that spreads"""
+    t = tt(1.6)
+    thump = lp(rng.standard_normal(len(t)), 220) * np.exp(-t / 0.09) * 1.4
+    cr = (rng.random(len(t)) < 0.0035 * np.exp(-((t - 0.45) / 0.35) ** 2)) * 1.0
+    crackle = bp(cr * rng.standard_normal(len(t)) * 8, 2500, 9000) * 0.5
+    return verb((thump + crackle) * g, 0.45)
+
+
+def clunk(g=1.0):
+    """a heavy lock closing"""
+    t = tt(0.8)
+    body = np.sin(2 * np.pi * (180 + 120 * np.exp(-t / 0.01)) * t) * np.exp(-t / 0.08)
+    click = bp(rng.standard_normal(len(t)), 2500, 8000) * np.exp(-t / 0.006) * 0.8
+    return verb((body * 0.8 + click) * g, 0.25)
+
 FILM = sys.argv[1] if len(sys.argv) > 1 else "china"
 CUES = json.load(open(os.path.join(ROOT, "out", f"cues6_{FILM}.json")))
 full = load(os.path.join(ROOT, "public", CUES.get("musicSrc", "ref_full.wav")))
@@ -297,6 +333,36 @@ for L in CUES["ending"]:
     else:
         put(swish(0.6), L["t"], 0.1)
 put(chime(), CUES["card"], 0.2)
+for c in CUES.get("fx", []):
+    at, f = c["t"], c["fx"]
+    if f == "pop":
+        put(pop(1.0), at, 0.42, pan=float(rng.uniform(-0.4, 0.4)))
+    elif f == "shatter":
+        put(glass(1.0), at, 0.6)
+        put(impact(1.0), at, 0.35)
+        duckat(at, 0.7, 0.25)
+    elif f == "bolt":
+        put(crack(1.0), at, 0.35)
+    elif f == "bills":
+        for q in range(3):
+            put(scroll(0.9), at + 0.12 + q * 0.31, 0.16, pan=(q - 1) * 0.5)
+    elif f == "closed":
+        put(bell(82, 5.0), at, 0.35)
+        put(stamp(1.0), at, 0.3)
+    elif f == "snap":
+        put(crack(1.0), at, 0.5)
+        put(bianzhong(440, 3.0, 0.7), at + 0.05, 0.25)
+    elif f == "solve":
+        put(bianzhong(660, 3.0, 0.7), at, 0.32)
+        put(stamp(1.0), at + 0.05, 0.28)
+    elif f == "lock":
+        put(clunk(1.0), at + 0.25, 0.45)
+    elif f == "stamp":
+        put(stamp(1.2), at, 0.4)
+    elif f == "icon":
+        put(swish(0.8), at, 0.14)
+    elif f == "bw":
+        put(ashwind(1.4, 0.8), at, 0.2)
 
 # hush (respect for the dead): the music sinks to a low, muffled bed and the SFX go quiet; one bell where it starts
 hw = np.zeros(N)
