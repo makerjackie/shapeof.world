@@ -15,7 +15,7 @@ import type { Pt, Spec } from "./specG";
 import { revealOf } from "./reveal7";
 import OHLC_RAW from "./oil_ohlc.json";
 import { BW_UNTIL, COIN, COLD5, MAPFX, NEXT, PEGS, RATES, SWEEP, WIRES, fwBursts } from "./oil";
-import MAPJ from "./oil_map.json";
+import LAND_RAW from "./oil_land.json";
 import type { Icon, P5 } from "./oil";
 
 const OH = OHLC_RAW as unknown as [number, number, number, number, number][]; // year, open, high, low, close
@@ -155,8 +155,52 @@ const rrect = (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h
   ctx.closePath();
 };
 
+// ---------------- images
+const IMGS: Record<string, HTMLImageElement> = {};
+let IMG_P: Promise<unknown> | null = null;
+const imagesReady = () =>
+  (IMG_P ??= Promise.all(
+    ["mark-disc.png", "art/field.png", "art/barrel.png", ...["pumpjack", "derrick", "tanker", "refinery", "barrel", "pipeline", "flame", "tank", "pump", "exchange", "gavel", "strait", "virus"].map((n) => `art/i_${n}.png`)].map(
+      (s) =>
+        new Promise<void>((res, rej) => {
+          const im = new Image();
+          im.onload = () => im.decode().then(() => res(), () => res());
+          im.onerror = () => rej(new Error("image " + s));
+          im.src = staticFile(s);
+          IMGS[s] = im;
+        }),
+    ),
+  ));
+
 // ---------------- icons: line glyphs on a dark badge (100-unit box), p = entrance 0..1
 const drawIcon = (ctx: CanvasRenderingContext2D, name: Icon, cx: number, cy: number, s: number, p: number, col: string, word = "关税") => {
+  const art = IMGS[`art/i_${name}.png`];
+  if (art) {
+    // the engraving, popping in, on a soft dark halo so it reads over the chart or the map
+    const pop = 1 + 0.35 * (1 - eo3(p / 0.4));
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(s * pop, s * pop);
+    ctx.globalAlpha *= clamp(p / 0.12);
+    const halo = ctx.createRadialGradient(0, 0, 20, 0, 0, 78);
+    halo.addColorStop(0, "rgba(8,6,4,0.75)");
+    halo.addColorStop(1, "rgba(8,6,4,0)");
+    ctx.fillStyle = halo;
+    ctx.fillRect(-80, -80, 160, 160);
+    if (p < 1) {
+      const a0 = ctx.globalAlpha;
+      ctx.globalAlpha = a0 * (1 - eo3(p)) * 0.8;
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, 60 + 60 * eo3(p), 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = a0;
+    }
+    ctx.drawImage(art, -64, -64, 128, 128);
+    ctx.restore();
+    return;
+  }
   const pop = 1 + 0.5 * (1 - eo3(p / 0.5));
   ctx.save();
   ctx.translate(cx, cy);
@@ -509,23 +553,6 @@ const drawIcon = (ctx: CanvasRenderingContext2D, name: Icon, cx: number, cy: num
   ctx.restore();
 };
 
-// ---------------- images
-const IMGS: Record<string, HTMLImageElement> = {};
-let IMG_P: Promise<unknown> | null = null;
-const imagesReady = () =>
-  (IMG_P ??= Promise.all(
-    ["mark-disc.png"].map(
-      (s) =>
-        new Promise<void>((res, rej) => {
-          const im = new Image();
-          im.onload = () => im.decode().then(() => res(), () => res());
-          im.onerror = () => rej(new Error("image " + s));
-          im.src = staticFile(s);
-          IMGS[s] = im;
-        }),
-    ),
-  ));
-
 // =====================================================================================================================
 export const createFilm5 = (S: Spec) => {
   const tr = (s: string) => S.i18n?.[s] ?? s;
@@ -808,26 +835,14 @@ export const createFilm5 = (S: Spec) => {
   }
   const gradeAt = (t: number) => GR[clamp(Math.round(t * FPS), 0, NF - 1)];
 
-  // ---------- the map: a dot map of the world under the whole picture (faint behind the chart, full below it).
-  // Producers glow by their share of world output; the camera flies to each event's place and pins it with an oil
-  // symbol and the place name; price-only beats pull back to the world. Tankers run out of the Gulf through Hormuz,
-  // stopping while the strait is shut in 2026. In the cold open an oil field of pumpjacks stands where the map will be.
-  const MS = 3.5;
+  // ---------- the map: real coastlines (Natural Earth) under the whole lower picture, faint behind the chart, down to
+  // the bottom edge. Producers glow by share of world output; the camera flies to each event's place and pins it with
+  // its engraving and a name tag; price-only beats pull back to the world. Tankers sail out of the Gulf through Hormuz
+  // and stop while it is shut in 2026. In the cold open an engraved oil field stands where the map will be.
+  const MS = 4.4;
   const FXc = 540;
-  const FYc = 1235;
-  const LAND = (() => {
-    const b64 = (s: string) => {
-      const bin = atob(s);
-      const u = new Uint8Array(bin.length);
-      for (let q = 0; q < bin.length; q++) u[q] = bin.charCodeAt(q);
-      return new Uint16Array(u.buffer);
-    };
-    const CI = b64(MAPJ.i);
-    const CJ = b64(MAPJ.j);
-    const out: [number, number][] = [];
-    for (let q = 0; q < CI.length; q++) out.push([MAPJ.lon0 + CI[q] * MAPJ.step, MAPJ.lat0 + CJ[q] * MAPJ.step]);
-    return out;
-  })();
+  const FYc = 1420;
+  const LJ = LAND_RAW as unknown as { world: number[][]; gulf: number[][] };
   const PLACE: Record<string, [number, number]> = {
     沙特: [49.5, 25.5], 伊朗: [49.5, 31.5], 伊拉克: [46.5, 31.5], 委内瑞拉: [-71.5, 10.5], 墨西哥: [-93, 19], 科威特: [47.8, 29.2],
     阿联酋: [54, 24], 加拿大: [-113, 56.5], 中国: [122, 46], 挪威: [3, 60], 英国: [1, 57.5], 罗马尼亚: [25.5, 45], 印尼: [101, 1],
@@ -846,41 +861,39 @@ export const createFilm5 = (S: Spec) => {
     return PLACE[n] ?? [0, 0];
   };
   const HORMUZ: [number, number] = [56.3, 26.6];
-  const ROUTE: [number, number][] = [[48.6, 28.9], [50.6, 27.6], [52.6, 26.6], [54.6, 26.2], [55.8, 26.6], [56.6, 26.3], [57.4, 25.4], [58.8, 24.2], [61.5, 22.2], [66, 19.5], [72, 15.5]];
+  const ROUTE: [number, number][] = [[48.6, 28.9], [50.6, 27.6], [52.6, 26.6], [54.6, 26.2], [55.8, 26.55], [56.55, 26.3], [57.3, 25.4], [58.8, 24.2], [61.5, 22.2], [66, 19.5], [72, 15.5]];
   const RS = 4;
   const routeLen = (() => {
     const L = [0];
     for (let q = 1; q < ROUTE.length; q++) L.push(L[q - 1] + Math.hypot(ROUTE[q][0] - ROUTE[q - 1][0], ROUTE[q][1] - ROUTE[q - 1][1]));
     return L;
   })();
-  const routeAt = (u: number): [number, number] => {
+  const routeAt = (u: number): [number, number, number] => {
     const d = u * routeLen[routeLen.length - 1];
     let q = 1;
     while (q < routeLen.length - 1 && routeLen[q] < d) q++;
     const k = (d - routeLen[q - 1]) / (routeLen[q] - routeLen[q - 1]);
-    return [ROUTE[q - 1][0] + (ROUTE[q][0] - ROUTE[q - 1][0]) * k, ROUTE[q - 1][1] + (ROUTE[q][1] - ROUTE[q - 1][1]) * k];
+    const ang = Math.atan2(-(ROUTE[q][1] - ROUTE[q - 1][1]), ROUTE[q][0] - ROUTE[q - 1][0]);
+    return [ROUTE[q - 1][0] + (ROUTE[q][0] - ROUTE[q - 1][0]) * k, ROUTE[q - 1][1] + (ROUTE[q][1] - ROUTE[q - 1][1]) * k, ang];
   };
   const U_STRAIT = (routeLen[RS] + 0.5 * (routeLen[RS + 1] - routeLen[RS])) / routeLen[routeLen.length - 1];
-  // the map camera, per frame: fly to the event's place (out a little on long hops), back to the world otherwise
-  const WORLD = { lon: 7.5, lat: 15, z: 1 };
+  const WORLD = { lon: 12, lat: 18, z: 1 };
   const MCAM: { lon: number; lat: number; z: number }[] = [];
   {
     let cur = { ...WORLD };
     for (let f = 0; f < NF; f++) {
       const t = f / FPS;
       const e = t >= B0 && t < END ? evAt(t) : null;
-      let tg = e && e.geo ? { lon: e.geo[0], lat: e.geo[1], z: e.mz ?? 3 } : WORLD;
+      const tg = e && e.geo ? { lon: e.geo[0], lat: e.geo[1], z: e.mz ?? 3 } : WORLD;
       const dist = Math.hypot(tg.lon - cur.lon, tg.lat - cur.lat);
       const zt = dist > 25 ? Math.min(tg.z, 1.25) : tg.z;
-      const k = f === 0 ? 1 : 0.075;
+      const k = f === 0 ? 1 : 0.07;
       cur = {
-        lon: cur.lon + (tg.lon - cur.lon) * k * 1.1,
-        lat: cur.lat + (tg.lat - cur.lat) * k * 1.1,
+        lon: cur.lon + (tg.lon - cur.lon) * Math.min(1, k * 1.15),
+        lat: cur.lat + (tg.lat - cur.lat) * Math.min(1, k * 1.15),
         z: Math.exp(Math.log(cur.z) + (Math.log(zt) - Math.log(cur.z)) * k),
       };
       MCAM.push(cur);
-      void tg;
-      tg = WORLD;
     }
   }
   const mcamAt = (t: number) => MCAM[clamp(Math.round(t * FPS), 0, NF - 1)];
@@ -889,13 +902,14 @@ export const createFilm5 = (S: Spec) => {
     return (lon: number, lat: number): [number, number] => {
       const x = FXc + (lon - m.lon) * MS * m.z;
       const y = FYc + (m.lat - lat) * MS * m.z;
-      const v = clamp((y - 700) / 740);
-      return [FXc + (x - FXc) * (0.86 + 0.14 * v), y];
+      const v = clamp((y - 900) / 1000);
+      return [FXc + (x - FXc) * (0.84 + 0.16 * v), y];
     };
   };
-  // how much of the map shows at a point: faint behind the chart, full under it, soft at every edge
+  const MASK_TOP = 700;
+  const MASK_BOT = 1990;
   const maskAt = (x: number, y: number) =>
-    clamp((y - 660) / 320) * (0.38 + 0.62 * clamp((y - 975) / 130)) * clamp((1495 - y) / 90) * clamp((x + 20) / 90) * clamp((1100 - x) / 90);
+    clamp((y - MASK_TOP) / 280) * (0.4 + 0.6 * clamp((y - 990) / 140)) * clamp((MASK_BOT - y) / 140) * clamp((x + 30) / 110) * clamp((1110 - x) / 110);
   const floorOn = (t: number) => (t < B0 - 0.5 ? 0 : t >= END ? 1 - clamp((t - END) / 0.5) : clamp((t - (B0 - 0.5)) / 0.5));
   const beatPulse = (t: number) => {
     let m = 0;
@@ -905,114 +919,125 @@ export const createFilm5 = (S: Spec) => {
     }
     return m;
   };
-  // a pumpjack in silhouette with a warm rim; ang = the walking beam's tilt
-  const pumpjack = (ctx: CanvasRenderingContext2D, x: number, y: number, s: number, ang: number, a: number) => {
+  // the cold open's oil field (an engraving), pushing in slowly, its horizon breathing on the beat
+  const drawField = (ctx: CanvasRenderingContext2D, t: number) => {
+    // the cold open, and again under the ending's whole line (smaller, lower) until the credits
+    const end = t >= END;
+    const CR0 = S.ending.credits?.t0 ?? S.ending.card;
+    const a = end ? 0.75 * clamp((t - END - 0.3) / 0.8) * (1 - clamp((t - CR0 + 0.2) / 0.4)) : t < RW0 ? 1 : 1 - clamp((t - RW0) / 0.45);
+    const im = IMGS["art/field.png"];
+    if (a <= 0.01 || !im) return;
+    const s = end ? 1 + 0.04 * clamp((t - END) / (CR0 - END)) : 1 + 0.06 * clamp(t / RW0);
+    const w = (end ? 1150 : 1420) * s;
+    const h = (w * im.height) / im.width;
+    const HZ = end ? 1640 : 1400;
     ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(s, s);
     ctx.globalAlpha = a;
-    const body = "#0a0806";
-    const rim = "rgba(255,196,110,0.95)";
-    ctx.lineJoin = "round";
-    ctx.lineCap = "round";
-    // skid
-    ctx.fillStyle = body;
-    ctx.fillRect(-120, -10, 250, 10);
-    // samson post (an A-frame)
-    ctx.strokeStyle = body;
-    ctx.lineWidth = 9;
-    ctx.beginPath();
-    ctx.moveTo(-30, -6);
-    ctx.lineTo(0, -128);
-    ctx.lineTo(28, -6);
-    ctx.stroke();
-    // crank and counterweight at the back, turning with the beam
-    const ph = Math.asin(clamp(ang / 0.24, -1, 1));
-    ctx.save();
-    ctx.translate(-88, -42);
-    ctx.rotate(ph * 2);
-    ctx.fillStyle = body;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.arc(0, 0, 30, -0.6, 0.6);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-    // the beam with the horsehead, pivoting on the post
-    ctx.save();
-    ctx.translate(0, -128);
-    ctx.rotate(ang);
-    ctx.fillStyle = body;
-    ctx.fillRect(-108, -7, 200, 14);
-    ctx.beginPath();
-    ctx.moveTo(88, -14);
-    ctx.quadraticCurveTo(122, -6, 120, 44);
-    ctx.lineTo(104, 44);
-    ctx.quadraticCurveTo(104, 4, 84, 8);
-    ctx.closePath();
-    ctx.fill();
-    ctx.strokeStyle = rim;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(-108, -7);
-    ctx.lineTo(88, -7);
-    ctx.quadraticCurveTo(122, -6, 120, 44);
-    ctx.stroke();
-    ctx.restore();
-    // pitman arm from the beam's tail to the crank, the polished rod from the horsehead down to the well
-    const tx = -100 * Math.cos(ang);
-    const ty = -128 - 100 * Math.sin(ang);
-    ctx.strokeStyle = body;
-    ctx.lineWidth = 6;
-    ctx.beginPath();
-    ctx.moveTo(tx, ty);
-    ctx.lineTo(-88, -42);
-    ctx.stroke();
-    const hx = 116 * Math.cos(ang) - 30 * Math.sin(ang);
-    const hy = -128 + 116 * Math.sin(ang) + 30 * Math.cos(ang);
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(hx, hy + 14);
-    ctx.lineTo(112, -14);
-    ctx.stroke();
-    ctx.fillStyle = body;
-    ctx.fillRect(100, -18, 24, 18);
-    // rim light on the post
-    ctx.strokeStyle = rim;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(0, -128);
-    ctx.lineTo(28, -6);
-    ctx.stroke();
+    ctx.drawImage(im, CX - w / 2, HZ - 0.585 * h, w, h);
+    const p = beatPulse(t);
+    const g = ctx.createLinearGradient(0, HZ - 90, 0, HZ + 40);
+    g.addColorStop(0, "rgba(255,170,70,0)");
+    g.addColorStop(0.7, `rgba(255,170,70,${0.1 + 0.12 * p})`);
+    g.addColorStop(1, "rgba(255,170,70,0)");
+    ctx.globalCompositeOperation = "lighter";
+    ctx.fillStyle = g;
+    ctx.fillRect(FULL[0], HZ - 90, FULL[2], 130);
     ctx.restore();
   };
-  const drawField = (ctx: CanvasRenderingContext2D, t: number) => {
-    const a = t < RW0 ? 1 : 1 - clamp((t - RW0) / 0.45);
-    if (a <= 0.01) return;
-    ctx.save();
-    // a low amber sky on the horizon, the ground below it
-    const HZ = 1462;
-    const g = ctx.createLinearGradient(0, HZ - 260, 0, HZ + 20);
-    g.addColorStop(0, "rgba(255,150,50,0)");
-    g.addColorStop(0.75, `rgba(255,150,50,${0.16 * a})`);
-    g.addColorStop(1, `rgba(255,190,90,${0.3 * a})`);
-    ctx.fillStyle = g;
-    ctx.fillRect(FULL[0], HZ - 260, FULL[2], 280);
-    ctx.fillStyle = `rgba(6,5,4,${0.96 * a})`;
-    ctx.fillRect(FULL[0], HZ, FULL[2], 200);
-    ctx.fillStyle = `rgba(255,190,90,${0.5 * a})`;
-    ctx.fillRect(FULL[0], HZ, FULL[2], 2);
-    // pumpjacks nodding on the beat (one stroke every two beats)
-    const JACKS: [number, number, number][] = [
-      [110, 1.15, 0],
-      [600, 2.1, 1.7],
-      [905, 1.45, 3.1],
-    ];
-    for (const [x, s, ph] of JACKS) {
-      const ang = 0.24 * Math.sin((2 * Math.PI * (t - 0.05)) / (2 * BEAT_S) + ph);
-      pumpjack(ctx, x, HZ, s, ang, a);
+  let MBUF: HTMLCanvasElement | null = null;
+  const drawLand = (t: number, a: number) => {
+    if (!MBUF) {
+      MBUF = document.createElement("canvas");
+      MBUF.width = W;
+      MBUF.height = H;
     }
-    ctx.restore();
+    const m = mcamAt(t);
+    const P = mapProj(t);
+    const g = MBUF.getContext("2d")!;
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, W, H);
+    g.setTransform(LS, 0, 0, LS, LX, LY);
+    // graticule
+    g.strokeStyle = "rgba(255,230,190,0.06)";
+    g.lineWidth = 1;
+    for (let lon = -180; lon <= 180; lon += 15) {
+      g.beginPath();
+      for (let lat = -60; lat <= 80; lat += 5) {
+        const [x, y] = P(lon, lat);
+        if (lat === -60) g.moveTo(x, y);
+        else g.lineTo(x, y);
+      }
+      g.stroke();
+    }
+    for (let lat = -60; lat <= 80; lat += 15) {
+      g.beginPath();
+      for (let lon = -180; lon <= 180; lon += 5) {
+        const [x, y] = P(lon, lat);
+        if (lon === -180) g.moveTo(x, y);
+        else g.lineTo(x, y);
+      }
+      g.stroke();
+    }
+    const rings = m.z > 4.2 && Math.abs(m.lon - 56) < 22 && Math.abs(m.lat - 27) < 14 ? LJ.gulf : LJ.world;
+    const path = new Path2D();
+    for (const r of rings) {
+      for (let q = 0; q < r.length; q += 2) {
+        const [x, y] = P(r[q], r[q + 1]);
+        if (q === 0) path.moveTo(x, y);
+        else path.lineTo(x, y);
+      }
+      path.closePath();
+    }
+    const fill = g.createLinearGradient(0, 900, 0, 1900);
+    fill.addColorStop(0, "#2b2419");
+    fill.addColorStop(1, "#1a150f");
+    g.fillStyle = fill;
+    g.fill(path);
+    g.strokeStyle = "rgba(255,206,130,0.55)";
+    g.lineWidth = 1.1 + 0.25 * Math.sqrt(m.z);
+    g.shadowColor = "rgba(255,180,80,0.6)";
+    g.shadowBlur = 6;
+    g.stroke(path);
+    g.shadowBlur = 0;
+    // fade: faint behind the chart, full below it, soft at every edge
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.globalCompositeOperation = "destination-in";
+    const vy = (y: number) => LY + LS * y;
+    const mv = g.createLinearGradient(0, vy(MASK_TOP), 0, vy(MASK_BOT));
+    const span = MASK_BOT - MASK_TOP;
+    const st = (y: number, v: number) => mv.addColorStop(clamp((y - MASK_TOP) / span), `rgba(0,0,0,${v})`);
+    st(MASK_TOP, 0);
+    st(MASK_TOP + 200, 0.36);
+    st(990, 0.42);
+    st(1130, 1);
+    st(MASK_BOT - 140, 1);
+    st(MASK_BOT, 0);
+    g.fillStyle = mv;
+    g.fillRect(0, 0, W, H);
+    const mh = g.createLinearGradient(0, 0, W, 0);
+    mh.addColorStop(0, "rgba(0,0,0,0)");
+    mh.addColorStop(0.08, "rgba(0,0,0,1)");
+    mh.addColorStop(0.92, "rgba(0,0,0,1)");
+    mh.addColorStop(1, "rgba(0,0,0,0)");
+    g.fillStyle = mh;
+    g.fillRect(0, 0, W, H);
+    g.globalCompositeOperation = "source-over";
+    return a;
+  };
+  // a name tag: dark glass with a gold edge
+  const tag = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number, right: boolean, a: number, col: string) => {
+    ctx.font = `900 30px ${SERIF}`;
+    const w = ctx.measureText(s).width + 36;
+    const x0 = right ? x : x - w;
+    ctx.globalAlpha = a;
+    ctx.fillStyle = "rgba(12,10,8,0.82)";
+    rrect(ctx, x0, y - 30, w, 46, 10);
+    ctx.fill();
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.5;
+    rrect(ctx, x0, y - 30, w, 46, 10);
+    ctx.stroke();
+    text(ctx, s, x0 + 18, y + 2, 30, 900, SERIF, WHITE);
   };
   const drawFloor = (ctx: CanvasRenderingContext2D, t: number) => {
     drawField(ctx, t);
@@ -1022,18 +1047,13 @@ export const createFilm5 = (S: Spec) => {
     const P = mapProj(t);
     const m = mcamAt(t);
     const z = m.z;
+    drawLand(t, a);
     ctx.save();
-    // land
-    const ds = 2.4 * Math.sqrt(z);
-    ctx.fillStyle = "rgb(205,212,220)";
-    for (const [lon, lat] of LAND) {
-      const [x, y] = P(lon, lat);
-      if (x < -30 || x > 1110 || y < 640 || y > 1500) continue;
-      const mk = maskAt(x, y);
-      if (mk <= 0.01) continue;
-      ctx.globalAlpha = a * 0.26 * mk;
-      ctx.fillRect(x - ds / 2, y - ds / 2, ds, ds);
-    }
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = a;
+    ctx.drawImage(MBUF!, 0, 0);
+    ctx.restore();
     // producers glow by share of world output
     const rows = S.table ? S.table(c).filter((r) => r.v > 0.6).sort((p, q) => q.v - p.v) : [];
     ctx.globalCompositeOperation = "lighter";
@@ -1041,16 +1061,16 @@ export const createFilm5 = (S: Spec) => {
       const [x, y] = P(...placeOf(r.n, c));
       const mk = maskAt(x, y);
       if (mk <= 0.01) return;
-      const R = (16 + 74 * Math.sqrt(r.v / 60)) * (0.7 + 0.3 * Math.sqrt(z));
-      const g = ctx.createRadialGradient(x, y, 0, x, y, R);
-      g.addColorStop(0, r.c + "cc");
-      g.addColorStop(0.35, r.c + "55");
-      g.addColorStop(1, r.c + "00");
-      ctx.globalAlpha = a * mk * (z > 2 ? 0.55 : 1);
-      ctx.fillStyle = g;
+      const R = (18 + 80 * Math.sqrt(r.v / 60)) * (0.75 + 0.25 * Math.sqrt(z));
+      const gl = ctx.createRadialGradient(x, y, 0, x, y, R);
+      gl.addColorStop(0, r.c + "dd");
+      gl.addColorStop(0.3, r.c + "55");
+      gl.addColorStop(1, r.c + "00");
+      ctx.globalAlpha = a * mk * (z > 2 ? 0.5 : 0.95);
+      ctx.fillStyle = gl;
       ctx.fillRect(x - R, y - R, 2 * R, 2 * R);
-      ctx.fillStyle = "#ffffff";
-      ctx.globalAlpha = a * mk * 0.8;
+      ctx.fillStyle = "#fff6e0";
+      ctx.globalAlpha = a * mk * 0.85;
       ctx.beginPath();
       ctx.arc(x, y, 2.5 + 4 * Math.sqrt(r.v / 60), 0, Math.PI * 2);
       ctx.fill();
@@ -1060,8 +1080,9 @@ export const createFilm5 = (S: Spec) => {
     if (wz > 0.01)
       rows.slice(0, 3).forEach((r, i) => {
         const [x, y] = P(...placeOf(r.n, c));
-        ctx.globalAlpha = a * wz * maskAt(x, y) * (i === 0 ? 1 : 0.85);
-        text(ctx, r.n, x + 12, y - 12, i === 0 ? 26 : 22, 900, SERIF, i === 0 ? WHITE : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+        ctx.globalAlpha = a * wz * maskAt(x, y);
+        text(ctx, r.n, x + 14, y - 14, i === 0 ? 28 : 24, 900, SERIF, i === 0 ? WHITE : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+        text(ctx, r.v.toFixed(0) + "%", x + 14, y + 14, 20, 700, SANS, r.c, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
       });
     // tankers out of the Gulf through Hormuz (from the 1950s); stopped while the strait is shut
     const ra = clamp((c - 1950) / 8);
@@ -1070,10 +1091,11 @@ export const createFilm5 = (S: Spec) => {
       const tShut = t >= MAPFX.close && t < MAPFX.open ? t - MAPFX.close : -1;
       const te = t < MAPFX.close ? t : t < MAPFX.open ? MAPFX.close : t - (MAPFX.open - MAPFX.close);
       const near = clamp((z - 2) / 2);
-      ctx.globalAlpha = a * ra * (0.3 + 0.5 * near);
-      ctx.strokeStyle = closed ? "rgba(255,90,70,0.8)" : "rgba(255,214,140,0.7)";
+      ctx.globalAlpha = a * ra * (0.25 + 0.45 * near);
+      ctx.strokeStyle = closed ? "rgba(255,90,70,0.85)" : "rgba(255,214,140,0.75)";
       ctx.lineWidth = 1.5 + 1.5 * near;
-      ctx.setLineDash([4, 6]);
+      ctx.setLineDash([5, 7]);
+      ctx.lineDashOffset = -t * 30;
       ctx.beginPath();
       ROUTE.forEach((p, i) => {
         const [x, y] = P(p[0], p[1]);
@@ -1082,36 +1104,51 @@ export const createFilm5 = (S: Spec) => {
       });
       ctx.stroke();
       ctx.setLineDash([]);
-      const NT = 12;
+      const NT = 10;
       for (let q = 0; q < NT; q++) {
-        let u = (((te * 0.07 + q / NT) % 1) + 1) % 1;
+        let u = (((te * 0.06 + q / NT) % 1) + 1) % 1;
         let al = 1;
         if (tShut >= 0 && u > U_STRAIT) {
-          u = Math.min(1, u + tShut * 0.07);
+          u = Math.min(1, u + tShut * 0.06);
           al = 1 - clamp((u - U_STRAIT) / (1 - U_STRAIT) + tShut * 0.4);
         }
-        const [x, y] = P(...routeAt(u));
-        ctx.globalAlpha = a * ra * al * maskAt(x, y) * (0.55 + 0.45 * near);
+        const [lo, la, ang] = routeAt(u);
+        const [x, y] = P(lo, la);
+        const L = 8 + 12 * near;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(ang);
+        ctx.globalAlpha = a * ra * al * maskAt(x, y);
         ctx.fillStyle = closed ? RED : "#ffd98a";
+        ctx.shadowColor = closed ? RED : "#ffb347";
+        ctx.shadowBlur = 8;
         ctx.beginPath();
-        ctx.arc(x, y, 2.6 + 3 * near, 0, Math.PI * 2);
+        ctx.moveTo(L, 0);
+        ctx.lineTo(L * 0.55, -L * 0.22);
+        ctx.lineTo(-L, -L * 0.22);
+        ctx.lineTo(-L, L * 0.22);
+        ctx.lineTo(L * 0.55, L * 0.22);
+        ctx.closePath();
         ctx.fill();
+        ctx.restore();
       }
       const [hx, hy] = P(...HORMUZ);
       const hz = near * clamp(1 - Math.hypot(m.lon - HORMUZ[0], m.lat - HORMUZ[1]) / 20);
       if (hz > 0.05) {
         ctx.globalAlpha = a * hz;
-        text(ctx, tr("最窄处约 33 公里"), hx + 30, hy + 46, 22, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
-        const [px, py] = P(50.5, 27.4);
+        text(ctx, tr("最窄处约 33 公里"), hx + 34, hy + 52, 22, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+        const [px, py] = P(51, 27.6);
         text(ctx, tr("波斯湾"), px, py + 6, 24, 700, SERIF, MUTED, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 6 });
+        const [ox, oy] = P(61, 23.6);
+        text(ctx, tr("阿拉伯海"), ox, oy + 30, 22, 700, SERIF, MUTED, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 6 });
       }
       if (closed) {
         const d = t - MAPFX.close;
         const s = 1 + 0.8 * (1 - eo3(d / 0.18));
-        const L = (14 + 4 * z) * s;
+        const L = (12 + 3.5 * z) * s;
         ctx.globalAlpha = a * clamp(d / 0.05) * (0.8 + 0.2 * Math.sin(t * 10));
         ctx.strokeStyle = RED;
-        ctx.lineWidth = 5 + 1.2 * z;
+        ctx.lineWidth = 5 + z;
         ctx.shadowColor = RED;
         ctx.shadowBlur = 14;
         ctx.beginPath();
@@ -1123,25 +1160,29 @@ export const createFilm5 = (S: Spec) => {
         ctx.shadowBlur = 0;
       }
     }
-    // the event's pin: rings where it happened, an oil symbol on a stem, the place name
+    // the event's pin: rings where it happened, its engraving on a stem, a name tag
     const e = evAt(t);
     if (e && e.geo) {
       const [x, y] = P(e.geo[0], e.geo[1]);
       const col = toneCol(KIND_TONE[e.k]);
       const d = t - e.t0;
-      for (const k0 of [0, 0.45, 0.9]) {
-        const u = (d - k0) / 0.9;
+      for (const k0 of [0, 0.5, 1.0]) {
+        const u = (d - k0) / 1.0;
         if (u < 0 || u > 1) continue;
-        ctx.globalAlpha = a * (1 - u);
+        ctx.globalAlpha = a * (1 - u) * 0.9;
         ctx.strokeStyle = col;
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2.5;
+        const R = 8 + 70 * eo3(u);
         ctx.beginPath();
-        ctx.ellipse(x, y, 6 + 60 * eo3(u), (6 + 60 * eo3(u)) * 0.55, 0, 0, Math.PI * 2);
+        ctx.ellipse(x, y, R, R * 0.5, 0, 0, Math.PI * 2);
         ctx.stroke();
       }
-      const up = 84 * eo3(d / 0.25);
+      const up = 96 * eo3(d / 0.28);
+      const sg = ctx.createLinearGradient(x, y, x, y - up);
+      sg.addColorStop(0, col);
+      sg.addColorStop(1, col + "00");
       ctx.globalAlpha = a;
-      ctx.strokeStyle = col;
+      ctx.strokeStyle = sg;
       ctx.lineWidth = 2.5;
       ctx.beginPath();
       ctx.moveTo(x, y);
@@ -1149,21 +1190,22 @@ export const createFilm5 = (S: Spec) => {
       ctx.stroke();
       ctx.fillStyle = col;
       ctx.shadowColor = col;
-      ctx.shadowBlur = 16;
+      ctx.shadowBlur = 18;
       ctx.beginPath();
-      ctx.ellipse(x, y, 7, 4, 0, 0, Math.PI * 2);
+      ctx.ellipse(x, y, 8, 4.5, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.shadowBlur = 0;
       if (e.pic) {
         ctx.save();
         ctx.globalAlpha = a;
-        drawIcon(ctx, e.pic, x, y - up - 6, 0.62, (t - e.t0) / 0.6, col, tr("关税"));
+        drawIcon(ctx, e.pic, x, y - up - 30, 0.82, (t - e.t0) / 0.6, col, tr("关税"));
         ctx.restore();
       }
-      if (e.place && d > 0.12) {
-        ctx.globalAlpha = a * clamp((d - 0.12) / 0.1);
-        const right = x < 760;
-        text(ctx, e.place, x + (right ? 48 : -48), y - up + 4, 30, 900, SERIF, WHITE, { align: right ? "left" : "right", glow: "rgba(0,0,0,0.95)", glowBlur: 12 });
+      if (e.place && d > 0.15) {
+        const right = x < 700;
+        ctx.save();
+        tag(ctx, e.place, x + (right ? 62 : -62), y - up - 26, right, a * clamp((d - 0.15) / 0.12), col);
+        ctx.restore();
       }
     }
     ctx.restore();
@@ -2398,105 +2440,35 @@ export const createFilm5 = (S: Spec) => {
   };
   const k_ca = (t: number) => camAt(t).ca;
 
-  // ---------- one barrel (159 litres), held up while the question is asked: a plain wooden barrel, the unit's origin
+  // ---------- one barrel (159 litres), held up while the question is asked: the engraved wooden barrel the unit came from
   const drawCoin = (ctx: CanvasRenderingContext2D, t: number) => {
+    const im = IMGS["art/barrel.png"];
+    if (!im) return;
     const d = t - COIN.t0;
-    const BW2 = 165; // half width at the belly
-    const BH2 = 215; // half height
+    const h = 440;
+    const w = (h * im.width) / im.height;
     const cx = CX;
-    const cy = 1010;
+    const cy = 1000;
     const sx = Math.max(0.02, Math.abs(Math.cos((1 - eo3(d / 0.32)) * Math.PI * 0.5)));
     const a = clamp(d / 0.08) * clamp((COIN.t1 + 0.12 - t) / 0.12);
     const lift = 30 * (1 - eo3(d / 0.32));
     ctx.save();
     ctx.globalAlpha = a;
-    const pool = ctx.createRadialGradient(cx, cy, BH2 * 0.7, cx, cy, BH2 * 1.8);
+    const pool = ctx.createRadialGradient(cx, cy, h * 0.35, cx, cy, h * 0.95);
     pool.addColorStop(0, "rgba(6,5,4,0.85)");
     pool.addColorStop(1, "rgba(6,5,4,0)");
     ctx.fillStyle = pool;
-    ctx.fillRect(cx - BH2 * 2, cy - BH2 * 2, BH2 * 4, BH2 * 4);
-    const glow = ctx.createRadialGradient(cx, cy, BH2 * 0.8, cx, cy, BH2 * 1.35);
-    glow.addColorStop(0, "rgba(255,170,70,0.3)");
-    glow.addColorStop(1, "rgba(255,170,70,0)");
-    ctx.fillStyle = glow;
-    ctx.fillRect(cx - BH2 * 1.5, cy - BH2 * 1.5, BH2 * 3, BH2 * 3);
+    ctx.fillRect(cx - h, cy - h, 2 * h, 2 * h);
+    ctx.save();
     ctx.translate(cx, cy + lift);
     ctx.scale(sx, 1);
-    const TOPW = BW2 * 0.82;
-    const body = () => {
-      ctx.beginPath();
-      ctx.moveTo(-TOPW, -BH2);
-      ctx.quadraticCurveTo(-BW2 * 1.18, 0, -TOPW, BH2);
-      ctx.lineTo(TOPW, BH2);
-      ctx.quadraticCurveTo(BW2 * 1.18, 0, TOPW, -BH2);
-      ctx.closePath();
-    };
-    const wood = ctx.createLinearGradient(-BW2, 0, BW2, 0);
-    wood.addColorStop(0, "#4a2a12");
-    wood.addColorStop(0.3, "#a8692e");
-    wood.addColorStop(0.45, "#c98a45");
-    wood.addColorStop(0.7, "#8a5424");
-    wood.addColorStop(1, "#3a200c");
-    body();
-    ctx.fillStyle = wood;
-    ctx.fill();
-    // staves
-    ctx.save();
-    body();
-    ctx.clip();
-    ctx.strokeStyle = "rgba(40,20,6,0.55)";
-    ctx.lineWidth = 2.5;
-    for (let i = -4; i <= 4; i++) {
-      const xt = (i / 4.6) * TOPW;
-      const xm = (i / 4.6) * BW2 * 1.06;
-      ctx.beginPath();
-      ctx.moveTo(xt, -BH2);
-      ctx.quadraticCurveTo(xm * 1.08, 0, xt, BH2);
-      ctx.stroke();
-    }
+    ctx.drawImage(im, -w / 2, -h / 2, w, h);
     ctx.restore();
-    // hoops
-    for (const hy of [-0.78, -0.5, 0.5, 0.78]) {
-      const yy = hy * BH2;
-      const half = TOPW + (BW2 * 1.06 - TOPW) * (1 - hy * hy);
-      const hg = ctx.createLinearGradient(-half, 0, half, 0);
-      hg.addColorStop(0, "#202326");
-      hg.addColorStop(0.4, "#8d949b");
-      hg.addColorStop(0.55, "#c9ced3");
-      hg.addColorStop(1, "#1a1c1f");
-      ctx.fillStyle = hg;
-      ctx.beginPath();
-      ctx.ellipse(0, yy, half, 12, 0, 0, Math.PI);
-      ctx.ellipse(0, yy - 14, half, 12, 0, Math.PI, 0, true);
-      ctx.closePath();
-      ctx.fill();
-    }
-    // the top rim
-    ctx.fillStyle = "#2a1709";
-    ctx.beginPath();
-    ctx.ellipse(0, -BH2, TOPW, 26, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = "#6b4520";
-    ctx.lineWidth = 4;
-    ctx.stroke();
-    // branded lettering
-    for (const [s0, y0, size, fam] of [[tr("1 桶"), 18, 104, SERIF], [tr("159 升"), 104, 46, SANS], [tr("原油"), -84, EN ? 30 : 36, SERIF]] as [string, number, number, string][]) {
-      text(ctx, s0, 2, y0 + 2, size, 900, fam, "rgba(255,226,180,0.35)", { align: "center" });
-      text(ctx, s0, 0, y0, size, 900, fam, "#2a1306", { align: "center" });
-    }
-    const gp = clamp((d - 0.3) / 0.5);
-    if (gp > 0 && gp < 1) {
-      ctx.save();
-      body();
-      ctx.clip();
-      const gx = -BW2 * 1.6 + gp * BW2 * 3.2;
-      const g = ctx.createLinearGradient(gx - 70, -BH2, gx + 70, BH2);
-      g.addColorStop(0, "rgba(255,255,255,0)");
-      g.addColorStop(0.5, "rgba(255,240,220,0.35)");
-      g.addColorStop(1, "rgba(255,255,255,0)");
-      ctx.fillStyle = g;
-      ctx.fillRect(-BW2 * 1.3, -BH2, BW2 * 2.6, 2 * BH2);
-      ctx.restore();
+    // its size, in plain words
+    const ta = clamp((d - 0.35) / 0.15);
+    if (ta > 0) {
+      ctx.globalAlpha = a * ta;
+      text(ctx, tr("1 桶 = 159 升"), cx, cy + h / 2 + 52, 44, 900, SERIF, GOLD, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 14 });
     }
     ctx.restore();
   };

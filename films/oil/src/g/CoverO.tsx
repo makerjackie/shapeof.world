@@ -46,13 +46,21 @@ const txt = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number, siz
   return ctx.measureText(s).width;
 };
 
-const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null, X0: Tx) => {
+const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null, X0: Tx, field: HTMLImageElement | null = null) => {
   const { W, H } = l;
   const bg = ctx.createRadialGradient(W * 0.55, H * 0.55, 50, W * 0.5, H * 0.5, Math.max(W, H) * 0.75);
   bg.addColorStop(0, "#1d160b");
   bg.addColorStop(1, "#050403");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
+  // the engraved oil field along the bottom, under the line
+  if (field) {
+    const fw = W * (W > H ? 0.95 : 1.15);
+    const fh = (fw * field.height) / field.width;
+    ctx.globalAlpha = 0.34;
+    ctx.drawImage(field, W / 2 - fw / 2, H - fh * 0.62, fw, fh);
+    ctx.globalAlpha = 1;
+  }
   // brand
   {
     ctx.font = `900 30px ${SANS}`;
@@ -194,9 +202,15 @@ const Cover: React.FC<{ l: L; x?: Tx }> = ({ l, x = ZH }) => {
       logo.onerror = () => res(null);
       logo.src = staticFile("mark-disc.png");
     });
-    Promise.all([fontsReady(), img]).then(
-      ([, im]) => {
-        draw(ref.current!.getContext("2d")!, l, im, x);
+    const fld = new Image();
+    const fimg = new Promise<HTMLImageElement | null>((res) => {
+      fld.onload = () => res(fld);
+      fld.onerror = () => res(null);
+      fld.src = staticFile("art/field.png");
+    });
+    Promise.all([fontsReady(), img, fimg]).then(
+      ([, im, fi]) => {
+        draw(ref.current!.getContext("2d")!, l, im, x, fi);
         continueRender(handle);
       },
       (e) => cancelRender(e),
