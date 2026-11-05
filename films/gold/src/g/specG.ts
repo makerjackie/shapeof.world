@@ -55,4 +55,6 @@ export type Spec = {
   rewindLabel?: string;
   musicSrc?: string; // the score in public/
   noRiser?: boolean; // the score carries the rewind itself
+  i18n?: Record<string, string>; // on-screen strings of the engine, translated (English cut)
+  en?: boolean; // English cut: English dates and number formats
 };

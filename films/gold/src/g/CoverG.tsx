@@ -13,6 +13,35 @@ const PEAK = { y: 2026.0767, v: 5318.4 };
 
 type L = { W: number; H: number; tx: number; ty: number; ts: number; align: CanvasTextAlign; cx0: number; cx1: number; cy0: number; cy1: number; sub: number; q: number };
 const L34: L = { W: 1200, H: 1600, tx: 600, ty: 330, ts: 200, align: "center", cx0: 90, cx1: 1080, cy0: 760, cy1: 1420, sub: 450, q: 540 };
+const L169: L = { W: 1920, H: 1080, tx: 110, ty: 230, ts: 150, align: "left", cx0: 110, cx1: 1800, cy0: 470, cy1: 940, sub: 340, q: 420 };
+type Tx = { brand: string; title: string; parts: [string, number, string][]; q: string; start: string; years: string };
+const ZH: Tx = {
+  brand: "世界的形状",
+  title: "金价两百年",
+  parts: [
+    ["1 盎司黄金：", 56, WHITE],
+    ["19", 72, WHITE],
+    [" 美元 → ", 56, WHITE],
+    ["5,318", 92, GOLD],
+    [" 美元", 56, WHITE],
+  ],
+  q: "金子没变，金价凭什么涨？",
+  start: "1792 年 · 19 美元",
+  years: "",
+};
+const ENX: Tx = {
+  brand: "Shape of the World",
+  title: "200 Years of Gold",
+  parts: [
+    ["1 oz of gold: ", 56, WHITE],
+    ["$19", 72, WHITE],
+    [" → ", 56, WHITE],
+    ["$5,318", 92, GOLD],
+  ],
+  q: "The gold hasn't changed. Why has its price?",
+  start: "1792 · $19",
+  years: "",
+};
 const L43: L = { W: 1600, H: 1200, tx: 110, ty: 250, ts: 180, align: "left", cx0: 110, cx1: 1470, cy0: 560, cy1: 1060, sub: 360, q: 440 };
 
 const txt = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number, size: number, w: number, fam: string, col: string, align: CanvasTextAlign = "left", glow?: string, blur = 0) => {
@@ -27,7 +56,7 @@ const txt = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number, siz
   return ctx.measureText(s).width;
 };
 
-const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null) => {
+const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null, X0: Tx) => {
   const { W, H } = l;
   const bg = ctx.createRadialGradient(W * 0.55, H * 0.55, 50, W * 0.5, H * 0.5, Math.max(W, H) * 0.75);
   bg.addColorStop(0, "#1d160b");
@@ -35,22 +64,23 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
   // brand
-  if (logo) ctx.drawImage(logo, l.align === "center" ? W / 2 - 150 : l.tx, 70, 44, 44);
-  txt(ctx, "世界的形状", l.align === "center" ? W / 2 - 96 : l.tx + 56, 104, 30, 900, SANS, "#e9ebee");
+  {
+    ctx.font = `900 30px ${SANS}`;
+    const bw = 56 + ctx.measureText(X0.brand).width;
+    const bx = l.align === "center" ? W / 2 - bw / 2 : l.tx;
+    if (logo) ctx.drawImage(logo, bx, 70, 44, 44);
+    txt(ctx, X0.brand, bx + 56, 104, 30, 900, SANS, "#e9ebee");
+  }
   // title, the price span, the question
   const tg = ctx.createLinearGradient(0, l.ty - l.ts, 0, l.ty);
   tg.addColorStop(0, "#fff1b8");
   tg.addColorStop(0.55, GOLD);
   tg.addColorStop(1, "#c98a12");
-  txt(ctx, "金价两百年", l.tx, l.ty, l.ts, 900, SERIF, tg as unknown as string, l.align, "rgba(255,190,60,0.55)", 40);
+  ctx.font = `900 ${l.ts}px ${SERIF}`;
+  const ts = Math.min(l.ts, (l.ts * (W - 2 * 90)) / ctx.measureText(X0.title).width);
+  txt(ctx, X0.title, l.tx, l.ty, ts, 900, SERIF, tg as unknown as string, l.align, "rgba(255,190,60,0.55)", 40);
   // 1 盎司黄金：19 美元 → 5,318 美元 (5,318 big and gold)
-  const parts: [string, number, string][] = [
-    ["1 盎司黄金：", 56, WHITE],
-    ["19", 72, WHITE],
-    [" 美元 → ", 56, WHITE],
-    ["5,318", 92, GOLD],
-    [" 美元", 56, WHITE],
-  ];
+  const parts = X0.parts;
   let tw = 0;
   for (const [s, size] of parts) {
     ctx.font = `900 ${size}px ${size > 60 ? SANS : SERIF}`;
@@ -58,7 +88,9 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
   }
   let x = l.align === "center" ? W / 2 - tw / 2 : l.tx;
   for (const [s, size, col] of parts) x += txt(ctx, s, x, l.sub, size, 900, size > 60 ? SANS : SERIF, col, "left", col === GOLD ? "rgba(255,201,77,0.5)" : undefined, col === GOLD ? 18 : 0);
-  txt(ctx, "金子没变，金价凭什么涨？", l.align === "center" ? W / 2 : l.tx, l.q, 58, 900, SERIF, SOFT, l.align);
+  ctx.font = `900 58px ${SERIF}`;
+  const qs = Math.min(58, (58 * (W - 2 * 90)) / ctx.measureText(X0.q).width);
+  txt(ctx, X0.q, l.align === "center" ? W / 2 : l.tx, l.q, qs, 900, SERIF, SOFT, l.align);
   // the line: log scale, 1792 to now
   const y0 = 1792.5;
   const y1 = SERIES[SERIES.length - 1].y;
@@ -128,7 +160,7 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
     ctx.shadowBlur = 0;
   };
   dot(1792.5, 19.39, WHITE, 9);
-  txt(ctx, "1792 年 · 19 美元", X(1792.5) + 4, Y(19.39) - 26, 34, 900, SERIF, WHITE, "left", "rgba(0,0,0,0.9)", 8);
+  txt(ctx, X0.start, X(1792.5) + 4, Y(19.39) - 26, 34, 900, SERIF, WHITE, "left", "rgba(0,0,0,0.9)", 8);
   dot(1980.055, 850, GOLD, 9);
   txt(ctx, "1980 · 850", X(1980.055) - 18, Y(850) - 24, 30, 900, SANS, GOLD, "right", "rgba(0,0,0,0.9)", 8);
   dot(2001.12, 255, RED, 9);
@@ -157,7 +189,7 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
   for (const yy of [1800, 1900, 2000]) txt(ctx, String(yy), X(yy), l.cy1 + 70, 28, 600, SANS, "rgba(255,255,255,0.45)", "center");
 };
 
-const Cover: React.FC<{ l: L }> = ({ l }) => {
+const Cover: React.FC<{ l: L; x?: Tx }> = ({ l, x = ZH }) => {
   const ref = useRef<HTMLCanvasElement>(null);
   const [handle] = useState(() => delayRender("cover fonts"));
   useLayoutEffect(() => {
@@ -169,12 +201,12 @@ const Cover: React.FC<{ l: L }> = ({ l }) => {
     });
     Promise.all([fontsReady(), img]).then(
       ([, im]) => {
-        draw(ref.current!.getContext("2d")!, l, im);
+        draw(ref.current!.getContext("2d")!, l, im, x);
         continueRender(handle);
       },
       (e) => cancelRender(e),
     );
-  }, [handle, l]);
+  }, [handle, l, x]);
   return (
     <AbsoluteFill style={{ background: "#060504" }}>
       <canvas ref={ref} width={l.W} height={l.H} />
@@ -183,3 +215,5 @@ const Cover: React.FC<{ l: L }> = ({ l }) => {
 };
 export const Cover34: React.FC = () => <Cover l={L34} />;
 export const Cover43: React.FC = () => <Cover l={L43} />;
+export const Cover34EN: React.FC = () => <Cover l={L34} x={ENX} />;
+export const Cover169EN: React.FC = () => <Cover l={L169} x={ENX} />;

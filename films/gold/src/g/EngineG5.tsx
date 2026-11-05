@@ -154,7 +154,7 @@ const rrect = (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h
 };
 
 // ---------------- icons: line glyphs on a dark badge (100-unit box), p = entrance 0..1
-const drawIcon = (ctx: CanvasRenderingContext2D, name: Icon, cx: number, cy: number, s: number, p: number, col: string) => {
+const drawIcon = (ctx: CanvasRenderingContext2D, name: Icon, cx: number, cy: number, s: number, p: number, col: string, word = "关税") => {
   const pop = 1 + 0.5 * (1 - eo3(p / 0.5));
   ctx.save();
   ctx.translate(cx, cy);
@@ -302,7 +302,7 @@ const drawIcon = (ctx: CanvasRenderingContext2D, name: Icon, cx: number, cy: num
       ctx.lineWidth = 3;
       rrect(ctx, -30, -17, 60, 34, 4);
       ctx.stroke();
-      text(ctx, "关税", 0, 10, 24, 900, SANS, col, { align: "center" });
+      text(ctx, word, 0, 10, word.length > 3 ? 15 : 24, 900, SANS, col, { align: "center" });
       ctx.restore();
     }
   } else if (name === "gavel") {
@@ -348,7 +348,9 @@ const imagesReady = () =>
 
 // =====================================================================================================================
 export const createFilm5 = (S: Spec) => {
-  const tr = (s: string) => s;
+  const tr = (s: string) => S.i18n?.[s] ?? s;
+  const EN = !!S.en;
+  const MON = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const DUR = S.music.dur;
   const NF = Math.ceil(DUR * FPS) + 2;
   const EV = S.events as P5[];
@@ -703,15 +705,15 @@ export const createFilm5 = (S: Spec) => {
     ctx.save();
     ctx.globalAlpha = a;
     ingot(ctx, 140, 1150, 1 + 0.04 * pulse, clamp(peakHit));
-    text(ctx, "1 盎司黄金", 140, 1230, 30, 900, SERIF, GOLD, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
-    text(ctx, "约 31.1 克", 140, 1264, 22, 600, SERIF, MUTED, { align: "center" });
+    text(ctx, tr("1 盎司黄金"), 140, 1230, 30, 900, SERIF, GOLD, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+    text(ctx, tr("约 31.1 克"), 140, 1264, 22, 600, SERIF, MUTED, { align: "center" });
     ctx.globalAlpha = a;
     text(ctx, "＝", 236, 1170, 44, 900, SANS, WHITE, { align: "center" });
     const cnt = Math.round(n * 10);
     const nw = tabular(ctx, cnt.toLocaleString("en-US"), 52, 1336, 50, WHITE, { glow: "rgba(0,0,0,0.9)" });
-    text(ctx, "张", 52 + nw + 6, 1336, 28, 900, SERIF, WHITE);
-    text(ctx, "1 美元钞票", 140, 1372, 24, 700, SERIF, SOFT, { align: "center" });
-    text(ctx, "每格 10 张", 140, 1404, 19, 500, SERIF, MUTED, { align: "center" });
+    text(ctx, tr("张"), 52 + nw + 6, 1336, 28, 900, SERIF, WHITE);
+    text(ctx, tr("1 美元钞票"), 140, 1372, 24, 700, SERIF, SOFT, { align: "center" });
+    text(ctx, tr("每格 10 张"), 140, 1404, 19, 500, SERIF, MUTED, { align: "center" });
     const top = Math.ceil(Math.max(n, was));
     const fresh = Math.max(0, n - was);
     for (let i = 0; i < top; i++) {
@@ -800,8 +802,8 @@ export const createFilm5 = (S: Spec) => {
       if (y > yR + 0.05) break;
       const [, m, d] = ymd(y);
       let lab = "";
-      if (m !== pm) lab = `${m} 月`;
-      else if (mid && d >= 15 && pmid !== m) lab = `${m} 月 ${d} 日`;
+      if (m !== pm) lab = EN ? MON[m] : `${m} 月`;
+      else if (mid && d >= 15 && pmid !== m) lab = EN ? `${MON[m]} ${d}` : `${m} 月 ${d} 日`;
       if (m !== pm) pm = m;
       if (d >= 15) pmid = m;
       if (!lab) continue;
@@ -1164,7 +1166,7 @@ export const createFilm5 = (S: Spec) => {
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(-4, -13, 4, 1.5);
         ctx.restore();
-        const plab = `法律钉死：${pg.v.toFixed(2)} 美元`;
+        const plab = EN ? `Fixed by law: $${pg.v.toFixed(2)}` : `法律钉死：${pg.v.toFixed(2)} 美元`;
         const pb = pctLayout(ctx, t)?.box;
         const clash = pb && hitsBox(pb, [x - 6, ny - 52, x + measure(ctx, plab, 25, 900, SERIF), ny - 18]);
         if (!labelled && fly < 0 && !clash) {
@@ -1188,7 +1190,7 @@ export const createFilm5 = (S: Spec) => {
   };
   const C80 = cpiAt(1980 + 0.5 / 12);
   const realV = (y: number) => (REAL.v0 * cpiAt(Math.max(y, REAL.y0))) / C80;
-  const REAL_EV = EV.find((e) => e.lab === "真解套")!;
+  const REAL_EV = EV.find((e) => e.fx?.includes("solve") && !WIRES.some((w) => w.v === e.fit))!;
   const REAL_SHOW = solveT(REAL.v0) + 1.1;
   const SILVER = "#d3dae2";
   // label boxes already on the chart this frame (the swing ticks keep clear of them)
@@ -1205,11 +1207,11 @@ export const createFilm5 = (S: Spec) => {
     ctx.fillRect(sx - 120, wy - 4, 140, 8);
     const s = 1 + 0.7 * (1 - eo3(d / 0.18));
     ctx.globalAlpha = on * clamp(d / 0.05);
+    const bw = measure(ctx, label, 58, 900, SERIF) + 70;
     ctx.save();
-    ctx.translate(sxStamp, wy - 70);
+    ctx.translate(clamp(sxStamp, bw / 2 + 30, SAFE_R - bw / 2), wy - 70);
     ctx.rotate(-0.1);
     ctx.scale(s, s);
-    const bw = measure(ctx, label, 58, 900, SERIF) + 70;
     ctx.fillStyle = "rgba(20,14,4,0.85)";
     rrect(ctx, -bw / 2, -50, bw, 76, 8);
     ctx.fill();
@@ -1262,8 +1264,8 @@ export const createFilm5 = (S: Spec) => {
         ctx.arc(X(k, w.y0), wy, 7, 0, Math.PI * 2);
         ctx.fill();
       }
-      text(ctx, w.name, xa + 10, wy - 14, 24, 700, SANS, solved ? GOLD : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
-      OCC.push([xa, wy - 40, xa + 20 + measure(ctx, w.name, 24, 700, SANS), wy - 8]);
+      text(ctx, tr(w.name), xa + 10, wy - 14, 24, 700, SANS, solved ? GOLD : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+      OCC.push([xa, wy - 40, xa + 20 + measure(ctx, tr(w.name), 24, 700, SANS), wy - 8]);
       if (!solved) {
         // the drop from the old high to the head, and how far and how long
         const dcol = gap < -0.2 ? RED : ASH;
@@ -1275,11 +1277,11 @@ export const createFilm5 = (S: Spec) => {
         ctx.lineTo(h.x, h.y - 14);
         ctx.stroke();
         ctx.setLineDash([]);
-        const lab = `较前高 ${gap < 0 ? "−" : "+"}${Math.round(Math.abs(gap) * 100)}%，${fmtN(days)} 天`;
+        const lab = EN ? `${gap < 0 ? "−" : "+"}${Math.round(Math.abs(gap) * 100)}% from the high · ${fmtN(days)} days` : `较前高 ${gap < 0 ? "−" : "+"}${Math.round(Math.abs(gap) * 100)}%，${fmtN(days)} 天`;
         const ly = clamp(wy + 46, k.top + 30, h.y - 30);
         text(ctx, lab, h.x - 14, ly, 32, 900, SANS, dcol, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 10, maxW: h.x - 60 });
         OCC.push([Math.max(40, h.x - 14 - measure(ctx, lab, 32, 900, SANS)), ly - 34, h.x - 6, ly + 8]);
-      } else solvedFx(ctx, xa, xb, wy, clamp(h.x - 150, 140, 700), t - ts, on, "解套");
+      } else solvedFx(ctx, xa, xb, wy, clamp(h.x - 150, 140, 700), t - ts, on, tr("解套"));
     }
     // the same 1980 high in later money: a silver line that climbs with prices, cleared only in 2025
     const tsR = REAL_EV.t0;
@@ -1314,7 +1316,7 @@ export const createFilm5 = (S: Spec) => {
         ctx.setLineDash([]);
         ctx.shadowBlur = 0;
         const xa = clamp(X(k, yL), 40, SAFE_R);
-        if (solved) solvedFx(ctx, xa, SAFE_R, wy, clamp(h.x - 150, 160, 700), t - tsR, on, "真解套");
+        if (solved) solvedFx(ctx, xa, SAFE_R, wy, clamp(h.x - 150, 160, 700), t - tsR, on, tr("真解套"));
       }
     }
     ctx.restore();
@@ -1584,7 +1586,8 @@ export const createFilm5 = (S: Spec) => {
   const drawIntro = (ctx: CanvasRenderingContext2D, t: number, hx: number) => {
     if (t < TIN - 0.01) return;
     const k = ease(clamp((t - TI0) / (TI1 - TI0)));
-    const big = 168;
+    ctx.font = `900 168px ${SERIF}`;
+    const big = Math.min(168, (168 * 940) / ctx.measureText(S.brand).width);
     const size = big + (30 - big) * k;
     ctx.font = `900 ${size}px ${SERIF}`;
     const w = ctx.measureText(S.brand).width;
@@ -1630,7 +1633,7 @@ export const createFilm5 = (S: Spec) => {
     ctx.globalAlpha = fade * nums;
     const c = k.c;
     const rw = t >= RW0 && t < B0;
-    text(ctx, rw ? S.rewindLabel ?? "倒回……" : t < RW0 ? "最近 25 年" : S.era(c), 58, 186, 30, 700, SERIF, SOFT, { maxW: 560 });
+    text(ctx, rw ? S.rewindLabel ?? "倒回……" : t < RW0 ? tr("最近 25 年") : S.era(c), 58, 186, 30, 700, SERIF, SOFT, { maxW: 560 });
     const yNum = Math.floor(c + 1e-6);
     // the price leads; the date sits under it (in the rewind, with no price, the year takes the top line)
     const YB = rw ? 300 : 392;
@@ -1638,12 +1641,20 @@ export const createFilm5 = (S: Spec) => {
     let x = 56;
     const blur = Math.min(4, k.sp / 900) * (YS / 116);
     if (blur > 0.4) ctx.filter = `blur(${blur.toFixed(1)}px)`;
-    x += tabular(ctx, String(yNum), x, YB, YS, WHITE);
-    ctx.filter = "none";
     const span = (W * 0.5) / k.ppy;
     const [, mo, dd] = ymd(c);
-    const tail = t >= B0 && k.ca > 0.5 ? `年 ${mo} 月 ${dd} 日` : t >= B0 && span < 40 && yNum >= 1968 ? `年 ${mo} 月` : t < RW0 ? `年 ${mo} 月` : "年";
-    text(ctx, tail, x + 6, YB, rw ? 46 : 32, 900, SERIF, WHITE);
+    const dayMode = t >= B0 && k.ca > 0.5;
+    const monMode = (t >= B0 && span < 40 && yNum >= 1968) || t < RW0;
+    if (EN && !rw && (dayMode || monMode)) {
+      // English: "Jan 29, 2026" / "Jan 2026"
+      ctx.filter = "none";
+      x += text(ctx, dayMode ? `${MON[mo]} ${dd}, ` : `${MON[mo]} `, x, YB, YS * 0.8, 900, SANS, WHITE);
+      if (blur > 0.4) ctx.filter = `blur(${blur.toFixed(1)}px)`;
+    }
+    x += tabular(ctx, String(yNum), x, YB, YS, WHITE);
+    ctx.filter = "none";
+    const tail = dayMode ? `年 ${mo} 月 ${dd} 日` : monMode ? `年 ${mo} 月` : "年";
+    if (!EN) text(ctx, tail, x + 6, YB, rw ? 46 : 32, 900, SERIF, WHITE);
     const v = val(c);
     const slope = val(c) - val(c - Math.max(0.0025, span / 200));
     const e = evAt(t);
@@ -1651,7 +1662,7 @@ export const createFilm5 = (S: Spec) => {
     const col = red ? RED : slope < -v * 0.002 ? ASH : GOLD;
     if (!rw) {
       const nw = tabular(ctx, fmtUsd(v), 56, 300, 116, col, { glow: col + "55" });
-      text(ctx, "美元 / 盎司", 56 + nw + 12, 300, 40, 900, SERIF, col);
+      text(ctx, tr("美元 / 盎司"), 56 + nw + 12, 300, 40, 900, SERIF, col);
       const rate = cnyAt(c);
       const chips = [S.kindLabel[kindAt(c)]];
       if (rate > 0) chips.unshift(`≈ ${Math.round((v * rate) / 31.1035).toLocaleString("en-US")} 元/克`);
@@ -1800,6 +1811,12 @@ export const createFilm5 = (S: Spec) => {
     if (measure(ctx, s, size, 900, SERIF) <= maxW) return [s];
     const cut = s.indexOf("，");
     if (cut > 0 && cut < s.length - 1) return [s.slice(0, cut + 1), s.slice(cut + 1)];
+    // English: after a comma or colon, else at the space nearest the middle
+    const c2 = Math.max(s.indexOf(", "), s.indexOf(": "));
+    if (c2 > 0) return [s.slice(0, c2 + 1), s.slice(c2 + 2)];
+    let best = -1;
+    for (let i = 0; i < s.length; i++) if (s[i] === " " && (best < 0 || Math.abs(i - s.length / 2) < Math.abs(best - s.length / 2))) best = i;
+    if (best > 0) return [s.slice(0, best), s.slice(best + 1)];
     return [s];
   };
   const cardBox = (ctx: CanvasRenderingContext2D, e: P5, maxW: number) => {
@@ -1826,14 +1843,14 @@ export const createFilm5 = (S: Spec) => {
     if (e.icon) {
       ctx.save();
       ctx.globalAlpha = fade;
-      drawIcon(ctx, e.icon, x0 + 58, y + 62, 1, (t - e.t0) / 0.6, e.icon === "stamp" ? RED : col);
+      drawIcon(ctx, e.icon, x0 + 58, y + 62, 1, (t - e.t0) / 0.6, e.icon === "stamp" ? RED : col, tr("关税"));
       ctx.restore();
       y += ICON_H;
     }
     ctx.globalAlpha = on(R.title);
     let tx = x0 + slide(R.title);
     y += 34;
-    const lab = e.lab ?? KIND_LABEL[e.k];
+    const lab = e.lab ?? tr(KIND_LABEL[e.k]);
     if (lab) {
       ctx.font = `900 24px ${SERIF}`;
       const cw = ctx.measureText(lab).width + 22;
@@ -1920,7 +1937,7 @@ export const createFilm5 = (S: Spec) => {
       ctx.stroke();
     }
     ctx.fillStyle = gold ? "rgba(255,201,77,0.95)" : "rgba(255,59,47,0.95)";
-    const lab = closed ? "伦敦金市 · 关闭" : gold ? (e.lab === "改价" ? "美元贬值" : "金价暴涨") : e.k === "crash" ? "金价暴跌" : e.k === "split" ? "脱钩" : e.lab ?? "战争";
+    const lab = closed ? tr("伦敦金市 · 关闭") : gold ? (e.lab === "改价" || e.lab === "REVALUED" ? tr("美元贬值") : tr("金价暴涨")) : e.k === "crash" ? tr("金价暴跌") : e.k === "split" ? tr("脱钩") : e.lab ?? tr("战争");
     ctx.font = `900 ${closed ? 30 : 26}px ${SERIF}`;
     const lw = ctx.measureText(lab).width + 44;
     ctx.fillRect(CX - lw / 2, closed ? 518 : 522, lw, closed ? 44 : 38);
@@ -1966,7 +1983,7 @@ export const createFilm5 = (S: Spec) => {
     }
     text(ctx, tr("倒回"), CX + 10 + jx, 482 + 80, 72, 900, SERIF, WHITE, { glow: "rgba(150,200,255,0.8)", glowBlur: 20 });
     const yNow = Math.max(Math.floor(FIRST), Math.floor(CUR(t)));
-    text(ctx, `${yNow} 年`, CX + jx, 640, 44, 900, SANS, "#cfe6ff", { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
+    text(ctx, EN ? String(yNow) : `${yNow} 年`, CX + jx, 640, 44, 900, SANS, "#cfe6ff", { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     ctx.restore();
   };
   const drawSource = (ctx: CanvasRenderingContext2D, t: number) => {
@@ -1974,7 +1991,7 @@ export const createFilm5 = (S: Spec) => {
     const c = camAt(t).c;
     const e = evAt(t);
     let line = tr("数据：") + S.src(t >= END ? LAST_REAL : c);
-    if (k_ca(t) > 0.5) line = "数据：COMEX 黄金期货日线（开盘、最高、最低、收盘）";
+    if (k_ca(t) > 0.5) line = EN ? "Data: COMEX gold futures, daily (open, high, low, close)" : "数据：COMEX 黄金期货日线（开盘、最高、最低、收盘）";
     if (t >= END) line = S.srcEnd ?? "";
     else if (e?.src) line += "　｜　" + e.src;
     const a = clamp((t - (B0 - 0.2)) / 0.3);
@@ -2056,7 +2073,7 @@ export const createFilm5 = (S: Spec) => {
     ctx.arc(1.5, 1.5, R * 0.78, 0, Math.PI * 2);
     ctx.stroke();
     // struck lettering: a light edge under a dark face
-    for (const [s0, y0, size, fam] of [["1 盎司", 22, 104, SERIF], ["31.1 克", 104, 40, SANS], ["纯金", -92, 34, SERIF]] as [string, number, number, string][]) {
+    for (const [s0, y0, size, fam] of [[tr("1 盎司"), 22, 104, SERIF], [tr("31.1 克"), 104, 40, SANS], [tr("纯金"), -92, EN ? 26 : 34, SERIF]] as [string, number, number, string][]) {
       text(ctx, s0, 2, y0 + 2, size, 900, fam, "rgba(255,248,215,0.75)", { align: "center" });
       text(ctx, s0, 0, y0, size, 900, fam, "#6e4504", { align: "center" });
     }
@@ -2091,8 +2108,8 @@ export const createFilm5 = (S: Spec) => {
       const xs = X(k, COLD5.startY);
       const ys = Yv(k, val(COLD5.startY));
       ctx.globalAlpha = fadeOut * quiet;
-      text(ctx, "2001 年", xs - 4, ys - 66, 24, 700, SERIF, SOFT);
-      text(ctx, `${fmtUsd(val(COLD5.startY))} 美元`, xs - 4, ys - 28, 34, 900, SANS, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      text(ctx, tr("2001 年"), xs - 4, ys - 66, 24, 700, SERIF, SOFT);
+      text(ctx, EN ? `$${fmtUsd(val(COLD5.startY))}` : `${fmtUsd(val(COLD5.startY))} 美元`, xs - 4, ys - 28, 34, 900, SANS, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
     }
     let newest = -1;
     COLD5.marks.forEach((m, i) => {
@@ -2119,8 +2136,8 @@ export const createFilm5 = (S: Spec) => {
       ctx.save();
       ctx.translate(lx, y - 24);
       ctx.scale(pop, pop);
-      text(ctx, m.b, 0, 0, sb, 900, SANS, GOLD, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 12 });
-      text(ctx, m.a, 0, -sb - 4, sa, 700, SERIF, isNew ? WHITE : SOFT, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+      text(ctx, tr(m.b), 0, 0, sb, 900, SANS, GOLD, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 12 });
+      text(ctx, tr(m.a), 0, -sb - 4, sa, 700, SERIF, isNew ? WHITE : SOFT, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
       ctx.restore();
     });
     // ×21 after the top
@@ -2140,7 +2157,7 @@ export const createFilm5 = (S: Spec) => {
     if (t >= cr.at) {
       const s = 1 + 0.45 * env(t, cr.at, 0.01, 0.12);
       ctx.globalAlpha = fadeOut * clamp((t - cr.at) / 0.05) * (1 - clamp((t - L.t0) / 0.2));
-      text(ctx, "2026 年 1 月 30 日，一天", CX + 40, 712, 32, 900, SERIF, WHITE, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      text(ctx, tr("2026 年 1 月 30 日，一天"), CX + 40, 712, 32, 900, SERIF, WHITE, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
       ctx.save();
       ctx.translate(CX + 40, 868);
       ctx.scale(s, s);
@@ -2252,11 +2269,11 @@ export const createFilm5 = (S: Spec) => {
         if (u >= 1) ctx.lineTo(x1, by - 14);
         ctx.stroke();
         const mx = (x0 + x1) / 2;
-        text(ctx, lab[0], mx, by + 38, 26, 700, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+        text(ctx, tr(lab[0]), mx, by + 38, 26, 700, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
         ctx.save();
         ctx.translate(mx, by + 84);
         ctx.scale(s, s);
-        text(ctx, lab[1], 0, 0, 40, 900, SANS, col, { align: "center", maxW: Math.max(200, x1 - x0) / s, glow: col === GOLD ? "rgba(255,201,77,0.5)" : "rgba(0,0,0,0.9)", glowBlur: 14 });
+        text(ctx, tr(lab[1]), 0, 0, 40, 900, SANS, col, { align: "center", maxW: Math.max(200, x1 - x0) / s, glow: col === GOLD ? "rgba(255,201,77,0.5)" : "rgba(0,0,0,0.9)", glowBlur: 14 });
         ctx.restore();
       }
       ctx.globalAlpha = 1 - Math.max(cardA, credA);
@@ -2348,8 +2365,8 @@ export const createFilm5 = (S: Spec) => {
         ctx.globalAlpha = cardA * na;
         ctx.fillStyle = "rgba(255,201,77,0.5)";
         ctx.fillRect(CX - 40, 1150, 80, 2);
-        text(ctx, NEXT.a, CX, 1214, 32, 700, SERIF, SOFT, { align: "center", ls: 4 });
-        text(ctx, NEXT.b, CX, 1280, 46, 900, SERIF, GOLD, { align: "center", glow: "rgba(255,201,77,0.4)", glowBlur: 16 });
+        text(ctx, tr(NEXT.a), CX, 1214, 32, 700, SERIF, SOFT, { align: "center", ls: 4 });
+        text(ctx, tr(NEXT.b), CX, 1280, EN ? 40 : 46, 900, SERIF, GOLD, { align: "center", glow: "rgba(255,201,77,0.4)", glowBlur: 16 });
       }
       ctx.restore();
     }
