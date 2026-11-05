@@ -276,6 +276,8 @@ export class Engine {
     // 1. shadow map
     if (opt.shadow) {
       this.setupShadow(opt.shadow.center, opt.shadow.radius, opt.shadow.depth);
+      // the depth texture being written must not also be bound for sampling (feedback loop → WebGL drops every draw)
+      G.uShadowMap.value = null;
       G.uShadowOn.value = 1;
       G.uPass.value = 1;
       r.setRenderTarget(this.rtShadow);
