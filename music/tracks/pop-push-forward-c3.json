@@ -47,7 +47,7 @@
     "zh": "高能 Phonk：强力牛铃旋律、失真 808、激进鼓组，加电影感弦乐和合唱；重音、加花、上扬、Drop 和急停。提示词要求 128 BPM，2:12 起提速到 140 BPM（未逐首核听）。"
   },
   "batch": "film-population-2026-11",
-  "status": "pending",
+  "status": "published",
   "rightsProfile": "lyria-gemini-api-2026-11",
   "usage": {
     "narrationFriendly": false,
@@ -98,5 +98,6 @@
       "bytes": 2788,
       "mimeType": "application/json"
     }
-  }
+  },
+  "verifiedAt": "2026-11-05T03:14:53.773596+00:00"
 }

@@ -138,7 +138,7 @@ def publish(it):
         return "already"
     subprocess.run(["node", str(ROOT / "music/scripts/upload-track.mjs"), it["id"], "v1"], check=True)
     for role, url in rec["assets"].items():
-        data = urllib.request.urlopen(url, timeout=120).read()
+        data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "shapeof-music-import/1.0"}), timeout=120).read()
         if hashlib.sha256(data).hexdigest() != rec["assetIntegrity"][role]["sha256"]:
             raise ValueError("CDN hash mismatch " + url)
     rec.update(status="published", verifiedAt=now())
