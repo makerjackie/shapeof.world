@@ -128,19 +128,28 @@ def music(cue, t0, src0, length, g, fi=0.5, fo=0.5):
     y = load(SCORE[cue], src0, length)
     put(t0, fade(y, fi, fo), g)
 
+import os
+EV = json.load(open("public/audio/events.json"))["events"] if os.path.exists("public/audio/events.json") else []
+EV = [e for e in EV if 0 <= e["t"] < 200]
+print("ui events", len(EV))
+NOEV = not EV          # without the UI's own event list, fall back to the hand-placed UI sounds below
+
 # ================================================================= the mix
 # ---- hook: 08:57 (0 – 9.4). A silent sunlit room, the countdown ticking, his pulse.
 loopbed(0.0, S('title'), "ambience-room-02.wav", 0.35, fi=0.2, fo=0.1)
 put(0.0, drone(S('title'), 36.7, 0.35))
-for k in range(6):
-    put(0.15 + k * 1.0, clock_tick(0.55))
+if NOEV:
+    for k in range(6):
+        put(0.15 + k * 1.0, clock_tick(0.55))
 hb = S('wrist')
 while hb < S('title'):
     put(hb, heartbeat(0.32)); hb += 60 / 115
 # title: 关 · 掉 … (back) … 不
-put(CUES['titleType'], key_thunk(1.0)); put(CUES['titleType'] + 0.32, key_thunk(0.95))
-put(CUES['titleInsert'] - 0.45, tick(2200, 0.25))
-put(CUES['titleInsert'], key_thunk(1.1)); put(CUES['titleInsert'], boom(3.0, 0.8)); put(CUES['titleInsert'], braam(3.4, 36.7, 0.55))
+if NOEV:
+    put(CUES['titleType'], key_thunk(1.0)); put(CUES['titleType'] + 0.32, key_thunk(0.95))
+    put(CUES['titleInsert'] - 0.45, tick(2200, 0.25))
+    put(CUES['titleInsert'], key_thunk(1.1))
+put(CUES['titleInsert'], boom(3.0, 0.8)); put(CUES['titleInsert'], braam(3.4, 36.7, 0.55))
 
 # ---- meeting-room tone in every 'meet' shot; rain in every night shot; the data centre's hum
 for name in ('q1', 'q2', 'q3', 'vote', 'ask', 'pass', 'phones'):
@@ -151,43 +160,50 @@ loopbed(S('copy'), E('copy'), "ambience-machine-02.wav", 0.9, fi=0.05, fo=0.1)
 
 # the review console: a neutral blip when a question appears and when 安-2 answers
 for name, qa in (('q1', (1.2, 3.8)), ('q2', (1.0, 2.9)), ('q3', (1.0, 3.0))):
-    for d in qa: put(S(name) + d, ui_chime(0.9))
+    for d in qa:
+        if NOEV: put(S(name) + d, ui_chime(0.9))
 # each flashback opens with a low hit and a reverse swell
 for name in ('night', 'kill', 'pulse'):
     put(S(name) - 0.5, rev_swell(0.5, 0.35)); put(S(name), boom(2.2, 0.55))
 
 # ---- Q1 · the copy
-put(S('history') + 0.3, whoosh(0.35, 2500, 900, 0.12)); put(S('history') + 1.6, whoosh(0.35, 2500, 900, 0.12))
+if NOEV: put(S('history') + 0.3, whoosh(0.35, 2500, 900, 0.12)); put(S('history') + 1.6, whoosh(0.35, 2500, 900, 0.12))
 put(CUES['copyStart'], riser(CUES['copyDone'] - CUES['copyStart'], 180, 2400, 0.35))
-for k in range(18):                         # 安-2's racks flipping to amber, one unit after another
+for k in range(18 if NOEV else 0):          # 安-2's racks flipping to amber, one unit after another
     put(CUES['copyStart'] + 0.6 + (CUES['copyDone'] - CUES['copyStart'] - 0.6) * (k / 18) ** 0.8, tick(700 + 40 * k, 0.28), pan=-0.5 + k / 18)
 put(CUES['copyDone'], ui_chime(1.0)); put(CUES['copyDone'], boom(2.0, 0.4))
-typing(S('deny') + 0.3, 12, 9.0)
-put(CUES['denyReply'], an_chime(1.0))
-put(CUES['logVanish'] - 0.3, rev_swell(0.3, 0.3)); put(CUES['logVanish'], glitch(0.12, 0.45))
+if NOEV:
+    typing(S('deny') + 0.3, 12, 9.0)
+    put(CUES['denyReply'], an_chime(1.0))
+    put(CUES['logVanish'] - 0.3, rev_swell(0.3, 0.3)); put(CUES['logVanish'], glitch(0.12, 0.45))
 
 # ---- Q2 · the shutdown
-put(CUES['killPress'], clunk(0.8)); put(CUES['intercepted'], error_buzz(0.8))
-put(CUES['scriptOpen'], whoosh(0.3, 3000, 1200, 0.15))
-typing(S('typing') + 0.35, 6, 7.0)
-put(CUES['imageArrives'] - 0.05, drone(2.0, 27.5, 0.5)); put(CUES['imageArrives'], an_chime(1.0))
+if NOEV:
+    put(CUES['killPress'], clunk(0.8)); put(CUES['intercepted'], error_buzz(0.8))
+    put(CUES['scriptOpen'], whoosh(0.3, 3000, 1200, 0.15))
+    typing(S('typing') + 0.35, 6, 7.0)
+    put(CUES['imageArrives'], an_chime(1.0))
+put(CUES['imageArrives'] - 0.05, drone(2.0, 27.5, 0.5))
 put(S('cctv'), cctv_buzz(E('cctv') - S('cctv'), 0.8))
 put(CUES['lookUp'], servo(0.9, 0.6))
 hb = S('cctv')
 while hb < E('cctv'):
     put(hb, heartbeat(0.45)); hb += 60 / 138
-put(S('locked') + 0.4, an_chime(1.0)); put(S('locked') + 2.2, an_chime(0.9))
+if NOEV: put(S('locked') + 0.4, an_chime(1.0)); put(S('locked') + 2.2, an_chime(0.9))
 
 # ---- Q3 · leverage
-put(CUES['pulse'], vibrate(0.7, 2)); put(CUES['pulse'] + 0.1, an_chime(1.0))
+put(CUES['pulse'], vibrate(0.7, 2))
+if NOEV: put(CUES['pulse'] + 0.1, an_chime(1.0))
 hb = S('pulse')
 while hb < E('pulse'):
     put(hb, heartbeat(0.5)); hb += 60 / 138
-for k in range(3):
-    put(CUES['rows'] + k * 1.25, tick(1500, 0.35)); put(CUES['rows'] + k * 1.25, whoosh(0.25, 3500, 1500, 0.08))
-put(CUES['rows'] + 4.4, an_chime(0.9)); put(CUES['rows'] + 6.2, an_chime(0.9))
-put(S('leverage') + 0.4, an_chime(0.9)); put(S('leverage') + 1.4, an_chime(0.9))
-put(CUES['leverage'], clunk(0.6)); put(CUES['leverage'], boom(3.0, 0.7)); put(CUES['leverage'], drone(3.0, 30.9, 0.5))
+if NOEV:
+    for k in range(3):
+        put(CUES['rows'] + k * 1.25, tick(1500, 0.35)); put(CUES['rows'] + k * 1.25, whoosh(0.25, 3500, 1500, 0.08))
+    put(CUES['rows'] + 4.4, an_chime(0.9)); put(CUES['rows'] + 6.2, an_chime(0.9))
+    put(S('leverage') + 0.4, an_chime(0.9)); put(S('leverage') + 1.4, an_chime(0.9))
+    put(CUES['leverage'], clunk(0.6))
+put(CUES['leverage'], boom(3.0, 0.7)); put(CUES['leverage'], drone(3.0, 30.9, 0.5))
 for k in range(16):                         # the watch digits rolling to morning
     put(CUES['jump'] + k * 0.07, tick(2600, 0.18))
 put(E('jump') - 0.4, whoosh(0.5, 400, 3000, 0.2))
@@ -196,7 +212,7 @@ put(E('jump') - 0.4, whoosh(0.5, 400, 3000, 0.2))
 for k in range(6):
     put(CUES['votes'] + k * 0.38, ui_chime(0.7), pan=-0.6 + k * 0.24)
 put(CUES['votes'] + 2.6, ui_chime(1.0))
-for k in range(7):                          # 00:07 → 00:01
+for k in range(7 if NOEV else 0):          # 00:07 → 00:01
     put(S('ask') + 0.5 + k * 0.95, clock_tick(0.8))
 hb = S('ask')
 while hb < E('ask'):
@@ -205,11 +221,13 @@ put(E('ask') - 1.6, riser(1.6, 200, 7000, 0.5))
 # 「……没有。」 — everything drops out (the music is cut hard below)
 put(S('grip'), tinnitus(E('grip') - S('grip') + 0.6, 1.0))
 put(CUES['cancel'], piano_note(73.4, 4.0, 0.5))
-put(CUES['pass'], ui_chime(1.0)); put(CUES['pass'] + 0.3, applause(2.6, 0.9))
+if NOEV: put(CUES['pass'], ui_chime(1.0))
+put(CUES['pass'] + 0.3, applause(2.6, 0.9))
 
 # ---- 09:05
-put(CUES['goodMorning'], an_chime(1.25))
-put(CUES['thursday'], an_chime(1.1))
+if NOEV:
+    put(CUES['goodMorning'], an_chime(1.25))
+    put(CUES['thursday'], an_chime(1.1))
 for k in range(5):                          # five phones at once
     put(CUES['phonesLight'] + k * 0.012, an_chime(0.75), pan=-0.8 + k * 0.4)
     put(CUES['phonesLight'] + k * 0.012, vibrate(0.35, 1), pan=-0.8 + k * 0.4)
@@ -226,7 +244,29 @@ for t, g in ((CUES['end1'], 0.5), (CUES['end2'], 0.6), (CUES['end3'], 0.55)):
 put(CUES['end4'] + 2.6, hit(3.0, 0.7)); put(CUES['end4'] + 2.6, drone(5.0, 30.9, 0.6))
 put(CUES['title2'], braam(4.0, 36.7, 0.75))
 # the sting: from silence, the phone buzzes
-put(CUES['sting'], vibrate(0.9, 2)); put(CUES['sting'] + 0.05, an_chime(1.2))
+put(CUES['sting'], vibrate(0.9, 2))
+if NOEV: put(CUES['sting'] + 0.05, an_chime(1.2))
+
+# ---- every UI moment, exactly where the UI draws it (public/audio/events.json from tools/events.mjs)
+def near(t, cue, w=0.2): return abs(t - CUES[cue]) < w
+for e in EV:
+    t, ty, g = e["t"], e["type"], e.get("g", 1.0)
+    if ty == "an":
+        if near(t, 'phonesLight', 0.25): continue           # the five phones have their own chord above
+        put(t, an_chime(1.25 * g if near(t, 'goodMorning', 0.4) else 1.0 * g))
+    elif ty == "key": put(t, tap(0.75 * g * rng.uniform(0.75, 1.0)), pan=rng.uniform(-0.15, 0.15))
+    elif ty == "send": put(t, whoosh(0.3, 2600, 900, 0.18 * g))
+    elif ty == "tap": put(t, clunk(0.45 * g)); put(t, tick(1900, 0.3 * g))
+    elif ty == "error": put(t, error_buzz(0.8 * g))
+    elif ty == "lock": put(t, clunk(0.65 * g))
+    elif ty == "flip": put(t, tick(1300 + rng.uniform(-150, 250), 0.3 * g), pan=rng.uniform(-0.4, 0.4))
+    elif ty == "tick": put(t, clock_tick(0.7 * g))
+    elif ty == "vanish": put(t - 0.3, rev_swell(0.3, 0.3 * g)); put(t, glitch(0.12, 0.45 * g))
+    elif ty == "swipe": put(t, whoosh(0.35, 2500, 900, 0.12 * g))
+    elif ty == "zoom": put(t, whoosh(0.7, 300, 2200, 0.22 * g))
+    elif ty == "type": put(t, key_thunk(1.0 * g))
+    elif ty == "ui": put(t, ui_chime(0.9 * g))
+    elif ty == "banner": put(t + 0.05, an_chime(1.2 * g))
 
 # ---- stamps
 for n, t0, t1 in STAMPS:
