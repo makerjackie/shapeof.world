@@ -112,6 +112,7 @@ export function createSky() {
     uData: { value: 0 },
     uDataWipe: { value: 0 },   // 0..1: the data look climbs the sky from the horizon
     uBreath: { value: 0 },
+    uSweepSky: { value: new THREE.Vector4(0, 0, -1, 0) },   // HQ x, z, sweep radius, on
     uCloudL: { value: new THREE.Vector3(0.3, 0.55, 0.78).normalize() },   // an anime cheat: the cumulus is lit from behind the viewer
   };
   const vs = /* glsl */ `
@@ -129,6 +130,7 @@ export function createSky() {
     uniform vec3 uZenith, uMid, uHorizonWarm, uHorizonCool, uCloudLit, uCloudMid, uCloudShade;
     uniform float uNTowers, uCloudDrift, uNight, uData, uDataWipe, uBreath;
     uniform vec3 uCloudL;
+    uniform vec4 uSweepSky;
     uniform sampler2D uPuffs;
     uniform vec4 uTower[${MAXT}];
     uniform vec4 uTowerI[${MAXT}];
@@ -279,10 +281,18 @@ export function createSky() {
       vec3 col = uNight > 0.999 ? vec3(0.0) : daySky(d, normalize(uSunDir));
       if(uNight > 0.001) col = mix(col, nightSky(d), uNight);
       if(uData > 0.001){
-        // the data look climbs from the horizon to the zenith
-        float h = asin(clamp(d.y, -1.0, 1.0)) / 1.5708;
-        float w = smoothstep(h - 0.04, h + 0.04, uDataWipe * 1.1 - 0.05);
-        col = mix(col, dataSky(d), uData * w);
+        // the sky turns where 安's sweep has passed: overhead first, the far horizon last (with the far city)
+        float k = uDataWipe;
+        float front = 0.0;
+        if(uSweepSky.w > 0.5){
+          float ce = max(d.y, 0.0);
+          vec2 Q = cameraPosition.xz + normalize(d.xz + 1e-5) * 6500.0 * (1.0 - ce) * (1.0 - ce);
+          float fr = uSweepSky.z - length(Q - uSweepSky.xy);
+          k = max(k, smoothstep(-350.0, 80.0, fr));
+          front = exp(-abs(fr) / 220.0);
+        }
+        col = mix(col, dataSky(d), uData * k);
+        col += vec3(1.0, 0.71, 0.28) * front * 0.18 * uData * (1.0 - uDataWipe);
       }
       writeOut(col, 1.0, vec3(0.0, 0.0, 1.0), 9000.0, 0.0);
     }

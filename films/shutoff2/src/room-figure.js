@@ -3,6 +3,7 @@
 // His face is never drawn: it carries a face mask that keeps it in shadow (sculptMaterial uFaceDark).
 import * as THREE from 'three';
 import { Rig, Prim, Sculpt, smin, smax, sdfAO, decoAttrs, sculptMaterial } from './hands-sdf.js';
+import { toonMaterial } from './materials.js';
 
 const V = (a) => new THREE.Vector3(...a);
 // joints, room-local, rest = the s05 pose
@@ -16,7 +17,7 @@ export const J = {
   anR: [0.185, 0.09, -1.12], anL: [-0.105, 0.09, -1.12],
 };
 const PARENT = { pelvis: null, spine: 'pelvis', chest: 'spine', neck: 'chest', head: 'neck', shR: 'chest', shL: 'chest', elR: 'shR', elL: 'shL', wrR: 'elR', wrL: 'elL', hipR: 'pelvis', hipL: 'pelvis', knR: 'hipR', knL: 'hipL', anR: 'knR', anL: 'knL' };
-const HEAD_PITCH = -30;     // the head bowed over the phone
+export const HEAD_PITCH = -30;     // the head bowed over the phone
 
 // the phone in his hands: centre, screen normal (toward his eyes), top direction
 export const PHONE = (() => {
@@ -214,8 +215,32 @@ export function makeFigure() {
     lock(Math.PI * 0.5 * sd, 0.85, Math.PI * 0.5 * sd + 0.12 * sd, -0.32, 0.024, 0.004, 1.06);
   }
   for (const [i, a] of [-0.95, -0.62, -0.3, 0.02, 0.33, 0.64, 0.95].entries()) lock(a * 0.55, 0.9 + (i % 2) * 0.12, a * 0.85 + (i % 3 - 1) * 0.05, -0.5 - ((i * 37) % 5) * 0.045, 0.02, 0.004, 1.07, 1.04);
-  lock(0.3, 1.25, 0.6, 0.95, 0.018, 0.003, 1.16, 1.12);
-  lock(-0.2, 1.3, -0.5, 1.05, 0.016, 0.003, 1.15, 1.12);
+  // outer layer: locks that break the silhouette (barely merged, so they read as separate clumps)
+  const outer = [];
+  const olock = (a0, e0, a1, e1, r0, r1, s1, sm) => {
+    const A = on(a0, e0, 0.98), Bp = on(a1, e1, s1), M = on((a0 + a1) / 2, (e0 + e1) / 2, sm);
+    outer.push(hc(A, M, r0, r0 * 0.65 + r1 * 0.35), hc(M, Bp, r0 * 0.65 + r1 * 0.35, r1));
+  };
+  // nape: pointed tips of different lengths, flicking out
+  for (const [i, a] of [-1.05, -0.7, -0.35, 0.0, 0.33, 0.68, 1.02].entries()) {
+    const len = [0.0, 0.12, 0.05, 0.16, 0.03, 0.1, 0.0][i];
+    olock(a * 0.8, -0.05, a * 0.95 + (i % 2 ? 0.08 : -0.08), -0.72 - len, 0.015, 0.0018, 1.13 + len * 0.3, 1.06);
+  }
+  // over the ears: flared locks
+  for (const sd of [-1, 1]) {
+    olock(sd * 1.25, 0.45, sd * 1.42, -0.42, 0.014, 0.002, 1.17, 1.08);
+    olock(sd * 0.95, 0.35, sd * 1.12, -0.55, 0.014, 0.002, 1.15, 1.07);
+  }
+  // crown whorl: a pinwheel of locks spiralling out from the crown
+  for (let i = 0; i < 6; i++) {
+    const a = 0.35 + i * 1.047;
+    olock(a, 1.42, a + 1.0, 0.98, 0.013, 0.0025, 1.08, 1.1);
+  }
+  // unruly tufts sticking up and back (he never went to bed)
+  for (const [a0, e0, da, de, sc, r] of [[0.25, 1.2, 0.45, -0.2, 1.2, 0.015], [-0.35, 1.18, -0.4, -0.22, 1.18, 0.014], [0.9, 1.0, 0.4, -0.18, 1.18, 0.012],
+    [-1.0, 0.95, -0.35, -0.2, 1.17, 0.012], [0.0, 1.05, 0.15, -0.3, 1.16, 0.013], [0.55, 0.85, 0.3, -0.3, 1.15, 0.012], [-0.6, 0.82, -0.3, -0.32, 1.15, 0.012]]) {
+    olock(a0, e0, a0 + da, e0 + de, r, 0.002, sc, 1.1);
+  }
   const hairN = V([0, -0.6, -0.8]).normalize();
   const skullF = (x, y, z) => { let d = skull[0].d(x, y, z); for (let i = 1; i < skull.length; i++) d = smin(d, skull[i].d(x, y, z), 0.016); return smin(d, neckTop.d(x, y, z), 0.02); };
   const tmp = [0, 0, 0];
@@ -224,10 +249,48 @@ export function makeFigure() {
     const hl = [tmp[0] + CC[0], tmp[1] + CC[1], tmp[2] + CC[2]];
     let d = smax(cap.d(x, y, z), hairN.x * hl[0] + hairN.y * hl[1] + hairN.z * hl[2] - 0.035, 0.012);
     for (const p of locks) d = smin(d, p.d(x, y, z), 0.014);
+    for (const p of outer) d = smin(d, p.d(x, y, z), 0.0045);
     return d;
   };
   const headF = (x, y, z) => smin(skullF(x, y, z), hairF(x, y, z), 0.003);
-  const H = [...skull, neckTop, cap, ...locks];
+  const H = [...skull, neckTop, cap, ...locks, ...outer];
+  // flyaway strands: thin tapered tubes off the hair surface, rim-lit against the window (no ink)
+  const strands = new THREE.Group();
+  {
+    const pos = [], nrm = [], idx = [];
+    const headPre = new THREE.Matrix4().makeRotationX(HEAD_PITCH * Math.PI / 180).setPosition(...J.head);
+    const fly = [[0.2, 1.15, 0.5, 0.25, 1.34], [-0.4, 1.1, -0.45, 0.3, 1.32], [1.1, 0.7, 0.35, -0.2, 1.28], [-1.15, 0.65, -0.4, -0.15, 1.3],
+      [0.6, 0.2, 0.25, -0.5, 1.22], [-0.65, 0.15, -0.3, -0.5, 1.22], [0.05, 1.3, 0.25, 0.1, 1.36], [1.4, 0.25, 0.2, -0.35, 1.25],
+      [-1.45, 0.3, -0.25, -0.3, 1.25], [0.35, 0.6, 0.45, -0.1, 1.26], [-0.2, 0.75, -0.5, 0.05, 1.3], [0.85, 1.05, 0.4, 0.15, 1.3],
+      [1.25, 0.55, 0.3, 0.1, 1.32], [-1.25, 0.5, -0.3, 0.12, 1.32], [0.5, 1.25, 0.2, 0.15, 1.38], [-0.55, 1.22, -0.25, 0.12, 1.36],
+      [1.5, 0.0, 0.25, -0.2, 1.24], [-1.5, -0.05, -0.25, -0.2, 1.24], [0.15, 0.9, 0.5, 0.3, 1.35], [-0.9, 0.9, -0.3, 0.35, 1.33]];
+    for (const [az, el, da, de, sc] of fly) {
+      const pts = [0, 0.33, 0.66, 1].map((u) => new THREE.Vector3(...on(az + da * u, el + de * u, 1.0 + (sc - 1.0) * u)).applyMatrix4(headPre));
+      const curve = new THREE.CatmullRomCurve3(pts);
+      const N = 16, R = 6, base = pos.length / 3;
+      const frames = curve.computeFrenetFrames(N, false);
+      for (let i = 0; i <= N; i++) {
+        const u = i / N, c = curve.getPointAt(u), r = 0.0019 * (1 - u) + 0.0003;
+        for (let j = 0; j < R; j++) {
+          const a = j / R * Math.PI * 2;
+          const n = frames.normals[i].clone().multiplyScalar(Math.cos(a)).addScaledVector(frames.binormals[i], Math.sin(a));
+          pos.push(c.x + n.x * r, c.y + n.y * r, c.z + n.z * r); nrm.push(n.x, n.y, n.z);
+        }
+      }
+      for (let i = 0; i < N; i++) for (let j = 0; j < R; j++) {
+        const a = base + i * R + j, b = base + i * R + (j + 1) % R, c2 = a + R, d2 = b + R;
+        idx.push(a, c2, b, b, c2, d2);
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3));
+    g.setIndex(idx);
+    const m = new THREE.Mesh(g, toonMaterial({ color: '#2a3048', id: 131, rim: 1.0 }));
+    m.frustumCulled = false;
+    strands.add(m);
+    strands.matrixAutoUpdate = false;
+  }
   const head = new Sculpt({ rig, prims: H, field: headF, bounds: 'auto', h: 0.0026, sigma: 0.02, margin: 1.5, smoothEps: 0.008 });
   head.decorate = (base) => {
     const n = base.count;
@@ -282,10 +345,12 @@ export function makeFigure() {
   // ---------------------------------------------------------------- meshes
   const common = { warmK: 0.25, rim: 1.0, rimW: 0.5, rimCol: '#b9c6ff', aoK: 0.9, lineCol: '#6a7390', smoothK: 0.85, crevT: 0.72 };
   const matBody = sculptMaterial({ ...common, lineW: 0.0035, region: { colP: COL[1], idP: ID[1], colN: COL[2], idN: ID[2], colB: COL[4], idB: ID[4], band: 0.028 } });
-  const matHead = sculptMaterial({ ...common, lineW: 0.002, sheen: 0.3, smoothK: 0.7, region: { colP: COL[3], idP: ID[3], colN: COL[6], idN: ID[6], hairNeg: true } });
+  const matHead = sculptMaterial({ ...common, lineW: 0.002, sheen: 0, smoothK: 0.7, rimW: 0.38, region: { colP: COL[3], idP: ID[3], colN: COL[6], idN: ID[6], hairNeg: true } });
   const matHands = sculptMaterial({ ...common, lineW: 0.002, region: { colP: COL[3], idP: ID[3], colN: COL[3], idN: ID[3] } });
   const group = new THREE.Group();
+  group.add(strands);
   let built = null;
+  let headRestInv = null;
   return {
     group, rig, mats: [matBody, matHead, matHands],
     build() {
@@ -300,6 +365,9 @@ export function makeFigure() {
     pose(over) {
       const b = this.build();
       const w = body.deform(b.bb, over); head.deform(b.hb, over); hands.deform(b.nb, over);
+      if (!headRestInv) headRestInv = rig.pose({})[rig.index.head].invert();
+      strands.matrix.multiplyMatrices(w[rig.index.head], headRestInv);
+      strands.matrixWorldNeedsUpdate = true;
       return w;
     },
   };

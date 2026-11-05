@@ -21,12 +21,13 @@ function mats() {
     face: meetToon({ ...base, id: 50, eye: 0.85 }),
     hair: meetToon({ ...base, id: 51, sheen: 0.18 }),
     suit: meetToon({ ...base, id: 52, sheen: 0.05 }),
-    shirt: meetToon({ ...base, id: 53 }),
+    shirt: meetToon({ ...base, id: 53, rimK: 0.45 }),
     tie: meetToon({ ...base, id: 54, sheen: 0.15 }),
     frame: meetToon({ ...base, id: 55, spec: 0.6 }),
     legs: meetToon({ ...base, id: 56 }),
     shoe: meetToon({ ...base, id: 57, spec: 0.5 }),
     lapel: meetToon({ ...base, id: 58, sheen: 0.08 }),
+    ink: meetToon({ id: 50, unlit: true, vc: true, color: '#000000', emissive: '#2a2236' }),
   };
   return MATS;
 }
@@ -111,7 +112,7 @@ function hairShell(H, st) {
     const nrm = new V(p.x / (H.A * H.A), p.y / (H.B * H.B), p.z / (H.C * H.C)).normalize();
     let t = st.thick(s, ph, th);
     // lock clumps: creases between locks
-    t *= 0.78 + 0.22 * sm(0.0, 0.45, lf);
+    t *= 0.48 + 0.52 * Math.pow(lf, 0.42);
     if (st.part != null) { const dp = Math.abs(wrapPi(ph - st.part)); t *= 1 - 0.55 * Math.exp(-((dp / 0.12) ** 2)) * sm(0.05, 0.4, s) * (1 - sm(0.6, 0.95, s)); }
     p.addScaledVector(nrm, t);
     if (st.skirt && th > eq) {
@@ -142,17 +143,24 @@ function glassesGeo(H, kind) {
   const zF = H.C * 1.04, y = H.B * 0.05;
   const parts = [];
   for (const sx of [-1, 1]) {
-    const g = loopTube(loop, 0.0019, 6);
+    const g = loopTube(loop, kind === 'round' ? 0.0022 : 0.0021, 6);
     g.rotateY(sx * 0.12);
     g.translate(sx * 0.031, y, zF - 0.004);
     parts.push(g);
     // temple arm back to the ear
     parts.push(sweep([[sx * 0.056, y + 0.006, zF - 0.008], [sx * (H.A + 0.006), y + 0.004, H.C * 0.35], [sx * (H.A + 0.004), y - 0.006, -H.C * 0.15]], [[0.0016, 0.0016], [0.0016, 0.0016]], { nu: 5, nv: 10 }));
   }
-  parts.push(sweep([[-0.008, y + 0.008, zF + 0.002], [0, y + 0.011, zF + 0.004], [0.008, y + 0.008, zF + 0.002]], [[0.0015, 0.0015], [0.0015, 0.0015]], { nu: 5, nv: 6 }));
+  parts.push(sweep([[-0.008, y + 0.008, zF + 0.002], [0, y + 0.011, zF + 0.004], [0.008, y + 0.008, zF + 0.002]], [[0.0016, 0.0016], [0.0016, 0.0016]], { nu: 5, nv: 6 }));
+  if (kind !== 'round') for (const sx of [-1, 1]) {
+    // browline: a heavier top bar
+    const bar = sweep([[sx * 0.008, y + h / 2 + 0.001, zF - 0.002], [sx * 0.031, y + h / 2 + 0.0015, zF - 0.004], [sx * 0.055, y + h / 2 - 0.001, zF - 0.008]], [[0.0028, 0.0022], [0.0028, 0.0022]], { nu: 6, nv: 8 });
+    parts.push(bar);
+  }
   const lens = [];
   for (const sx of [-1, 1]) {
     const g = flatPoly(loop);
+    const up = g.attributes.uv, pp = g.attributes.position;
+    for (let i = 0; i < up.count; i++) up.setXY(i, pp.getX(i) / w + 0.5, pp.getY(i) / h + 0.5);
     g.rotateY(sx * 0.12);
     g.translate(sx * 0.031, y, zF - 0.003);
     lens.push(g);
@@ -160,24 +168,84 @@ function glassesGeo(H, kind) {
   return { frame: parts, lens };
 }
 
-// ------------------------------------------------------------------------- hands
-function handGeo(side, skin) {
-  // mitten-like anime hand: palm + fingers block with knuckle line, separate thumb. Hangs along -Y, palm toward
-  // the body (-side * X), thumb forward (+Z).
-  const T = tube([[0.012, 0.022, 0.012, 0, 2.2], [0.0, 0.03, 0.014, 0, 2.6], [-0.045, 0.036, 0.0145, 0, 3.0], [-0.075, 0.036, 0.0125, 0, 3.0], [-0.1, 0.031, 0.01, 0.003, 2.6], [-0.112, 0.022, 0.008, 0.004, 2.2], [-0.117, 0.008, 0.005, 0.004, 2.0]]);
-  const palm = tubeGeo(T, { nu: 20, nv: 16 });
-  // fingers curl slightly toward the palm: bend the lower part
-  const p = palm.attributes.position;
-  for (let i = 0; i < p.count; i++) {
-    const y = p.getY(i);
-    if (y < -0.06) { const k = (-0.06 - y) / 0.06; p.setX(i, p.getX(i) - 0.015 * k * k); }
+
+// ------------------------------------------------------------------------- face ink (drawn strokes)
+// A brush stroke laid on the head surface: pts in unit front coordinates [x, y] (z derived) or explicit 3D head-space
+// points; width tapers at both ends like a pen line.
+function ribbon(P, w, out) {
+  const n = 14, pos = [], idx = [];
+  const A = P.map((p) => p.toArray());
+  const at = (t) => new V(...crSample(A, clamp(t)));
+  for (let i = 0; i <= n; i++) {
+    const t = i / n, c = at(t);
+    const tg = at(t + 0.02).sub(at(t - 0.02)).normalize();
+    const nr = out ? out(c) : c.clone().normalize();
+    const sd = new V().crossVectors(tg, nr).normalize();
+    const ww = w * (0.35 + 0.65 * Math.sin(Math.PI * clamp(t * 0.9 + 0.05)));
+    const b = c.clone().addScaledVector(nr, 0.0007);
+    pos.push(...b.clone().addScaledVector(sd, ww).toArray(), ...b.clone().addScaledVector(sd, -ww).toArray());
   }
-  palm.computeVertexNormals();
-  // rotate so the flat of the hand faces X (palm toward the body)
-  palm.rotateY(Math.PI / 2);
-  if (side < 0) palm.scale(-1, 1, 1);
-  const thumb = sweep([[0, -0.01, 0.024], [side * -0.006, -0.04, 0.034], [side * -0.012, -0.065, 0.03]], [[0.011, 0.009], [0.009, 0.008], [0.006, 0.005]], { nu: 8, nv: 10 });
-  return mergePainted([[palm, skin], [thumb, skin]]);
+  for (let i = 0; i < n; i++) { const a = 2 * i; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setIndex(idx); g.computeVertexNormals();
+  return g;
+}
+const onFace = (H, pts) => pts.map(([x, y]) => headPoint(new V(x, y, Math.sqrt(Math.max(0.03, 1 - x * x - y * y))).normalize(), H));
+function faceInk(H, o) {
+  const g = [];
+  const m = (pts) => pts.map(([x, y]) => [-x, y]);
+  const fem = o.fem;
+  // nose: a bridge line on one side and a small tick under the tip
+  g.push(ribbon(onFace(H, fem ? [[0.075, -0.06], [0.08, -0.13], [0.07, -0.2]] : [[0.07, 0.05], [0.088, -0.07], [0.08, -0.2]]), 0.0011));
+  g.push(ribbon(onFace(H, [[-0.03, -0.262], [0.02, -0.27], [0.07, -0.255]]), 0.00085));
+  // mouth: a firm straight line, the ends pressed down a hair
+  const mw = fem ? 0.17 : 0.22;
+  g.push(ribbon(onFace(H, [[-mw, -0.535], [-mw * 0.45, -0.495], [mw * 0.45, -0.495], [mw, -0.535]]), 0.0011));
+  // under-lip shadow
+  g.push(ribbon(onFace(H, [[-0.07, -0.615], [0.07, -0.615]]), 0.0008));
+  if (!fem) for (const pts of [[[0.5, -0.1], [0.46, -0.24], [0.4, -0.36]]]) { g.push(ribbon(onFace(H, pts), 0.0008)); g.push(ribbon(onFace(H, m(pts)), 0.0008)); }
+  if (o.age) for (const pts of [[[0.13, -0.29], [0.2, -0.4], [0.23, -0.5]]]) { g.push(ribbon(onFace(H, pts), 0.0008)); g.push(ribbon(onFace(H, m(pts)), 0.0008)); }
+  // ears: the inner C of the helix
+  for (const sx of [-1, 1]) {
+    const x = sx * (H.A * 0.97 + 0.0105);
+    const pts = [[x, 0.008, -0.004], [x, 0.016, -0.014], [x, 0.004, -0.025], [x, -0.016, -0.022], [x, -0.024, -0.012]].map((q) => new V(...q).add(new V(0, -0.012, -0.012)));
+    g.push(ribbon(pts, 0.0008, () => new V(sx, 0, 0)));
+  }
+  return g;
+}
+
+let GLINT = null;
+function glintTex() {
+  if (GLINT) return GLINT;
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const g = c.getContext('2d');
+  const gr = g.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, '#ffffff'); gr.addColorStop(0.55, '#e6f0ff'); gr.addColorStop(1, '#9fb8e6');
+  g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
+  g.fillStyle = 'rgba(255,255,255,1)';
+  g.save(); g.translate(64, 64); g.rotate(-0.7);
+  g.fillRect(-90, -30, 180, 20); g.fillRect(-90, 0, 180, 7);
+  g.restore();
+  GLINT = new THREE.CanvasTexture(c); GLINT.colorSpace = THREE.SRGBColorSpace;
+  return GLINT;
+}
+
+// ------------------------------------------------------------------------- hands
+function handGeo(side, skin, curl = 0.022) {
+  // anime hand with separate fingers. Hangs along -Y; the width runs along Z (index finger at +Z, beside the thumb),
+  // the palm faces -side * X (toward the body when the arm hangs).
+  const pal = -side;
+  const palm = tubeGeo(tube([[0.006, 0.0115, 0.026, 0, 2.2], [-0.012, 0.0135, 0.033, 0.002, 2.6], [-0.045, 0.0145, 0.037, 0.001, 3.0], [-0.07, 0.0128, 0.0375, 0, 3.0], [-0.08, 0.0105, 0.035, 0, 2.6]]), { nu: 22, nv: 12 });
+  const parts = [[palm, skin]];
+  const F = [[0.026, 0.07, 0.0082], [0.009, 0.079, 0.0086], [-0.009, 0.074, 0.0083], [-0.026, 0.058, 0.0074]];
+  for (const [zf, L, r] of F) {
+    const pts = [[pal * 0.001, -0.07, zf], [pal * curl * 0.25, -0.07 - L * 0.5, zf * 1.06], [pal * curl * 0.75, -0.07 - L * 0.88, zf * 1.1], [pal * curl, -0.07 - L, zf * 1.1]];
+    parts.push([sweep(pts, [[r, r * 0.9], [r * 0.92, r * 0.82], [r * 0.8, r * 0.72], [r * 0.55, r * 0.5]], { nu: 8, nv: 10 }), skin]);
+    // knuckle bump
+    parts.push([new THREE.SphereGeometry(r * 1.05, 8, 6).translate(-pal * 0.002, -0.068, zf), skin]);
+  }
+  parts.push([sweep([[pal * 0.004, -0.012, 0.028], [pal * 0.012, -0.036, 0.046], [pal * 0.016, -0.058, 0.05], [pal * 0.018, -0.07, 0.047]], [[0.0115, 0.0105], [0.0098, 0.009], [0.0082, 0.0075], [0.006, 0.0055]], { nu: 8, nv: 12 }), skin]);
+  return mergePainted(parts);
 }
 
 // ------------------------------------------------------------------------- the person
@@ -256,7 +324,7 @@ export function buildPerson(spec) {
     add(torso, mergePainted([[shirtG, col.shirt]]), M.shirt, 'shirtV');
     // lapels: a band beside each edge of the V, widening to the notch then narrowing to the collar
     const lw = (v) => { const k = sm(vB, vT, v); return mix(0.012, fem ? 0.036 : 0.044, sm(0, 0.7, k)) * (1 - 0.5 * sm(0.8, 1.0, k)); };
-    const notch = (v) => { const k = sm(vB, vT, v); return 1 - 0.35 * Math.exp(-(((k - 0.78) / 0.025) ** 2)); };
+    const notch = () => 1;
     for (const sg of [-1, 1]) {
       const inner = (v) => sg * (opening(v) + 0.002), outer = (v) => sg * (opening(v) + lw(v) * notch(v));
       const g = S(strip(TT, vB - 0.02, vT, sg < 0 ? outer : inner, sg < 0 ? inner : outer, { off: (v, q) => 0.0045 + 0.002 * (sg < 0 ? q : 1 - q), nu: 6, nv: 22 }));
@@ -342,11 +410,23 @@ export function buildPerson(spec) {
       ears.push([e, col.skin]);
     }
     add(head, mergePainted(ears), M.skin, 'ears');
+    const ink = faceInk(H, { fem, age: spec.age }).map((g) => { g.scale(s, s, s); g.translate(hc.x, hc.y, hc.z); return [g, '#ffffff']; });
+    add(head, mergePainted(ink), M.ink, 'faceInk');
   }
   // hair
   {
     const parts = spec.hair(H).map((g) => { g.scale(s, s, s); g.translate(hc.x, hc.y, hc.z); return [g, col.hair]; });
-    add(head, mergePainted(parts), M.hair, 'hair');
+    const hg = mergePainted(parts);
+    // anime hair shine: a zigzag band of lighter colour around the crown
+    const hp = hg.attributes.position, hcA = hg.attributes.aCol;
+    for (let i = 0; i < hp.count; i++) {
+      const x = (hp.getX(i) - hc.x) / s, y = (hp.getY(i) - hc.y) / s, z = (hp.getZ(i) - hc.z) / s;
+      const th = Math.acos(clamp(y / Math.hypot(x, y, z), -1, 1)), ph = Math.atan2(x, z);
+      const q = (ph / TAU) * 22; const tri = 1 - 2 * Math.abs(q - Math.floor(q) - 0.5);
+      const band = th > 0.5 + 0.07 * tri && th < 0.66 + 0.1 * tri ? 1 : 0;
+      if (band) { const k = spec.shine ?? 1.6; hcA.setXYZ(i, Math.min(1, hcA.getX(i) * k + 0.04), Math.min(1, hcA.getY(i) * k + 0.05), Math.min(1, hcA.getZ(i) * k + 0.07)); }
+    }
+    add(head, hg, M.hair, 'hair');
     if (spec.hairExtra) {
       const ex = spec.hairExtra(H).map(([g, c]) => { g.scale(s, s, s); g.translate(hc.x, hc.y, hc.z); return [g, c]; });
       add(head, mergePainted(ex), M.hair, 'hair2');
@@ -357,7 +437,7 @@ export function buildPerson(spec) {
   if (spec.glasses) {
     const gl = glassesGeo(H, spec.glasses);
     add(head, mergePainted(gl.frame.map((g) => { g.scale(s, s, s); g.translate(hc.x, hc.y, hc.z); return [g, col.frame ?? '#2a2b31']; })), M.frame, 'frames');
-    lensMat = meetToon({ vc: true, id: 103, unlit: true, emissive: '#ffffff', emissiveGain: 0 });
+    lensMat = meetToon({ vc: true, id: 103, unlit: true, emissive: '#000000', emissiveMap: glintTex(), emissiveGain: 0 });
     const lens = add(head, mergePainted(gl.lens.map((g) => { g.scale(s, s, s); g.translate(hc.x, hc.y, hc.z); return [g, '#000000']; })), lensMat, 'lens');
     lens.visible = false;
     lensMat.userData.mesh = lens;

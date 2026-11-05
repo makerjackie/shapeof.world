@@ -45,14 +45,14 @@ float ringFront(vec3 p, out float glow){
     glow += exp(-abs(fr) / band) * smoothstep(0.0, 0.25, age) * (0.35 + 0.65 * exp(-age / 2.6));
     // and then the ripples keep coming, like rain on a pond
     if(uRipple > 0.0){
-      float rp = mod(age * 230.0 - d, 380.0);
-      float rd = min(rp, 380.0 - rp);
-      glow += uRipple * exp(-rd / (2.5 + d * 0.006)) * exp(-d / 1300.0) * step(d, rad);
+      float rp = mod(age * 200.0 - d, 560.0);
+      float rd = min(rp, 560.0 - rp);
+      glow += uRipple * exp(-rd / (2.0 + d * 0.004)) * exp(-d / 900.0) * step(d, rad);
     }
     // ripples following the front
     for(int e = 1; e <= 3; e++){
       float lag = float(e) * (60.0 + rad * 0.12);
-      glow += 0.3 / float(e) * exp(-abs(fr - lag) / (band * 1.3)) * step(lag * 0.5, fr + lag * 0.5) * exp(-age / 3.5);
+      glow += 0.16 / float(e) * exp(-abs(fr - lag) / (band * 1.3)) * step(lag * 0.5, fr + lag * 0.5) * exp(-age / 3.5);
     }
   }
   if(uSweep.w > 0.0){

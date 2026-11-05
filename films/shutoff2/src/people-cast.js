@@ -28,7 +28,7 @@ export const CAST = {
   },
   // 张主任: senior, white swept-back hair, round gold glasses, charcoal suit, light blue shirt; stocky
   zhang: {
-    name: 'zhang', sex: 'm', scale: 0.98, width: 1.07, belly: 0.7, glasses: 'round',
+    name: 'zhang', sex: 'm', scale: 0.98, width: 1.07, belly: 0.7, glasses: 'round', age: true, shine: 1.06,
     colors: { suit: '#4a4d58', lapel: '#444752', shirt: '#d3e2f3', tie: '#56688c', skin: '#e4bd9f', hair: '#eceef3', frame: '#b39a62', legs: '#444752' },
     hair: (H) => [hairShellFor(H, {
       hem: [[0, 0.72], [0.35, 0.68], [0.7, 0.98], [1.05, 1.2], [1.4, 1.38], [1.65, 1.44], [2.0, 1.72], [2.6, 1.96], [Math.PI, 2.02]],
@@ -89,7 +89,7 @@ export const CAST = {
   },
   // heavy-set man, balding crown with a short horseshoe of hair, dark suit, white shirt, navy tie
   heavy: {
-    name: 'heavy', sex: 'm', scale: 1.0, width: 1.13, belly: 1.0,
+    name: 'heavy', sex: 'm', scale: 1.0, width: 1.13, belly: 1.0, age: true,
     colors: { suit: '#2d3038', lapel: '#2a2c34', shirt: '#f1f1f3', tie: '#3f5180', skin: '#dcb192', hair: '#3a3a41', legs: '#2a2c34' },
     hair: (H) => [hairShellFor(H, {
       top: [[0, 1.05], [0.8, 1.0], [1.5, 0.95], [2.3, 0.82], [Math.PI, 0.78]],

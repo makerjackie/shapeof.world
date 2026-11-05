@@ -40,10 +40,10 @@ export function createMeet(ctx) {
 
   // ---- light in the air: volumetric shafts + dust motes (overlay pass)
   const airBox = new THREE.Mesh(new THREE.BoxGeometry(ROOM.x1 - ROOM.x0 - 0.02, ROOM.h - 0.02, ROOM.z1 - ROOM.z0 - 0.02).translate(0, FLOOR + ROOM.h / 2, 0),
-    airMaterial({ min: [ROOM.x0 + 0.01, FLOOR + 0.01, ROOM.z0 + 0.01], max: [ROOM.x1 - 0.01, FLOOR + ROOM.h - 0.01, ROOM.z1 - 0.01], density: 0.14, dust: 0.6 }));
+    airMaterial({ min: [ROOM.x0 + 0.01, FLOOR + 0.01, ROOM.z0 + 0.01], max: [ROOM.x1 - 0.01, FLOOR + ROOM.h - 0.01, ROOM.z1 - 0.01], density: 0.8, dust: 0.75 }));
   airBox.frustumCulled = false;
   overlay.add(airBox);
-  const NDUST = 2400;
+  const NDUST = 5200;
   const dustGeo = new THREE.InstancedBufferGeometry();
   dustGeo.index = new THREE.PlaneGeometry(1, 1).index;
   dustGeo.setAttribute('position', new THREE.PlaneGeometry(1, 1).attributes.position);
@@ -52,12 +52,12 @@ export function createMeet(ctx) {
     const rng = new Rng(909), a = new Float32Array(NDUST * 4);
     for (let i = 0; i < NDUST; i++) {
       // concentrate dust around the table and in front of the windows
-      a[i * 4] = rng.range(-5, 8); a[i * 4 + 1] = FLOOR + rng.range(0.3, 3.8); a[i * 4 + 2] = rng.range(-6.8, 4); a[i * 4 + 3] = rng.next();
+      a[i * 4] = rng.range(-5, 8); a[i * 4 + 1] = FLOOR + rng.range(0.3, 3.8); a[i * 4 + 2] = rng.range(-6.4, 4); a[i * 4 + 3] = rng.next();
     }
     dustGeo.setAttribute('aSeed', new THREE.InstancedBufferAttribute(a, 4));
     dustGeo.instanceCount = NDUST;
   }
-  const dust = new THREE.Mesh(dustGeo, dustMaterial({ min: [-5, FLOOR + 0.3, -6.8], max: [8, FLOOR + 3.8, 4], size: 0.007, gain: 0.55 }));
+  const dust = new THREE.Mesh(dustGeo, dustMaterial({ min: [-5, FLOOR + 0.3, -6.8], max: [8, FLOOR + 3.8, 4], size: 0.014, gain: 2.4 }));
   dust.frustumCulled = false;
   overlay.add(dust);
 
@@ -191,7 +191,7 @@ export function createMeet(ctx) {
       gz = smooth(invLerp(CUES.ask + 1.35, CUES.ask + 1.55, t));
     }
     if (st.sid === 's25') {
-      gz = smooth(invLerp(CUES.phonesLight, CUES.phonesLight + 0.12, t)) * 0.9;
+      gz = smooth(invLerp(CUES.phonesLight, CUES.phonesLight + 0.12, t)) * 1.15;
       gc = gz * 0.7;
     }
     if (st.sid === 's14') gz = 0.0;
@@ -241,7 +241,7 @@ export function createMeet(ctx) {
       R.chairs.lin.visible = !['s01', 's09', 's19', 's20'].includes(st.sid);
       // s25: the room's light falls away from the faces; the phones light them from below
       const PM = peopleMats(), s25 = st.sid === 's25';
-      for (const k of ['face', 'skin', 'hair', 'suit', 'shirt', 'tie', 'lapel']) { const sk = k === 'face' || k === 'skin'; PM[k].uniforms.uPLGain.value = s25 ? (sk ? 1.9 : 1.4) : 1; PM[k].uniforms.uSil.value = s25 ? (sk ? 1.5 : 1.15) : 0.25; PM[k].uniforms.uUnder.value = s25 ? 1 : 0; }
+      for (const k of ['face', 'skin', 'hair', 'suit', 'shirt', 'tie', 'lapel']) { const sk = k === 'face' || k === 'skin'; PM[k].uniforms.uPLGain.value = s25 ? (sk ? 3.4 : 1.6) : 1; PM[k].uniforms.uSil.value = s25 ? (sk ? 1.5 : 1.15) : 0.25; PM[k].uniforms.uUnder.value = s25 ? 1 : 0; }
       poseAll(st);
       glints(st);
     },

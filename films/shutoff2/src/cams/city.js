@@ -73,7 +73,7 @@ const mixHex = (a, b, k) => hex(cA.set(a).lerp(cB.set(b), clamp(k)));
 // one continuous grade over s26–s30: morning until 安's last wave, then the dark data view, dimming under the texts
 export function cityLook(tr) {
   const D = CUES.cityData;
-  const k = smooth(invLerp(D + 1.6, D + 3.8, tr));                 // day → data
+  const k = smooth(invLerp(D + 2.2, D + 3.9, tr));                 // day → data, in step with 安's sweep reaching the far city
   const dim = smooth(invLerp(CUES.end1, CUES.end1 + 2.5, tr));       // settle under the end texts
   const inRoom = 1 - smooth(invLerp(CUES.cityOut + 1.2, CUES.cityOut + 2.2, tr));
   return {

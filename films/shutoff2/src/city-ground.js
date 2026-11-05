@@ -267,12 +267,12 @@ export function buildHills() {
         // data: dark, a single amber contour at the ridge
         float glow;
         float front = ringFront(vec3(vWorld.x, 0.0, vWorld.z), glow);
-        float rv = clamp(uDataAll + uHillData, 0.0, 1.0);
+        float rv = clamp(uDataAll + smoothstep(-250.0, 50.0, front), 0.0, 1.0);
         vec3 data = vec3(0.01, 0.012, 0.022);
         float fwT = fwidth(t);
         data += AMBER * (1.0 - smoothstep(fwT * 0.5, fwT * 1.5, 1.0 - t)) * (0.6 - 0.3 * far);
         col = mix(col, data, rv);
-        writeOut(col, 1.0, vec3(0.0, 0.0, 1.0), vDepth * mix(0.5, 0.42, far) * mix(1.0, 0.12, uHillData), 0.0);
+        writeOut(col, 1.0, vec3(0.0, 0.0, 1.0), vDepth * mix(0.5, 0.42, far) * mix(1.0, 0.12, rv), 0.0);
       }
     `,
   });

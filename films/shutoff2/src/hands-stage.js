@@ -45,7 +45,7 @@ function fingers(over, f, spread = {}) {
 export const STAGES = {
   // s02: 08:57, the meeting table. Forearm along the edge, the watch face up; the fingers tense as the pulse climbs.
   s02: {
-    mesh: 'rest', tendon: 0.55,
+    mesh: 'rest', tendon: 0.85, smoothK: 0.45,
     matrix() {
       const T = meetTable();
       return frame(V(T.x - 0.24, T.top + 0.0205, T.edgeZ - 0.06), V(0.906, -0.03, -0.423), V(0, 1, 0), -7);
@@ -58,7 +58,7 @@ export const STAGES = {
         m: [lerp(-8, -4, k) + tw(t, 2, 0.5 * k), lerp(-20, -40, k), lerp(-12, -28, k)],
         r: [lerp(-10, -6, k), lerp(-24, -44, k), lerp(-14, -30, k)],
         l: [lerp(-12, -8, k), lerp(-28, -48, k), lerp(-16, -32, k)],
-      }, { i: lerp(-2, -4, k), l: lerp(2, 4, k) });
+      }, { i: lerp(-6, -8, k), m: lerp(-1, -2, k), r: lerp(4, 5, k), l: lerp(9, 12, k) });
       o.hand = { r: [0, 26, lerp(-6, -1, k)] };
       o.t1 = { r: [0, lerp(0, 6, k), lerp(0, -4, k)] };
       o.t2 = { r: [0, 0, lerp(-6, -14, k)] };
@@ -94,7 +94,7 @@ export const STAGES = {
   },
   // s21: 「……没有。」 He grips the table edge: palm over the edge, fingers clawing the top, thumb hooked under, knuckles white.
   s21: {
-    mesh: 'grip', tendon: 1.0,
+    mesh: 'grip', tendon: 1.0, smoothK: 0.6,
     matrix() {
       const T = meetTable();
       return frame(V(T.x - 0.17, T.top + 0.026, T.edgeZ - 0.012), V(0.1, 0.17, -1), V(0, 1, 0.17), -4);
@@ -121,7 +121,7 @@ export const STAGES = {
 
 // the sculpt each mesh key is built from (base pose = the shot's pose at lt = 0 / its tension peak)
 export const MESHES = {
-  rest: { tendon: 0.55, pose: () => STAGES.s02.over(1.3, 2.6) },
+  rest: { tendon: 0.85, veins: 1, knuckle: 1.15, pose: () => STAGES.s02.over(1.3, 2.6) },
   desk: { tendon: 0.4, pose: () => STAGES.s15.over(0) },
-  grip: { tendon: 1.0, pose: () => STAGES.s21.over(1.0, 3.2) },
+  grip: { tendon: 1.0, veins: 1.2, knuckle: 1.1, pose: () => STAGES.s21.over(1.0, 3.2) },
 };

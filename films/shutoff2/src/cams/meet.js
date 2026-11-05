@@ -62,9 +62,10 @@ export const CAMS = {
   s25: (lt, d, t, st) => {
     const ph = seatFrame('zhang').at(0.2, 0.13);
     const k = smoother(invLerp(2.7, 4.9, lt));
-    const pos = mixA([ph[0] - 0.13, TOP + 0.26, ph[2] + 0.02], [-0.12, TOP + 0.27, -0.18], k);
-    const look = mixA([ph[0] + 0.02, TOP, ph[2]], [0.96, Y(1.04), -0.42], k);
-    return { pos, look, fov: lerp(40, 44, k), near: 0.02 };
+    // ends with 张主任 large on the right and 苏晴 (bob) further down the row, both lit from below by their phones
+    const pos = mixA([ph[0] - 0.13, TOP + 0.26, ph[2] + 0.02], [0.26, TOP + 0.3, 0.75], k);
+    const look = mixA([ph[0] + 0.02, TOP, ph[2]], [1.0, Y(1.0), -1.0], k);
+    return { pos, look, fov: lerp(40, 46, k), near: 0.02 };
   },
 };
 

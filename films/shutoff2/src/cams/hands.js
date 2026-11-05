@@ -64,7 +64,10 @@ const phoneLight = (sid, st, i) => {
 export const LOOKS = {
   s02: (lt, d) => {
     const w = watchFrame('s02');
-    return { preset: 'morning', sunElev: 22, sunAz: 120, shadow: { center: A(w.c), radius: 0.35, depth: 4 }, exposure: 1.1 };
+    // anime key cheat: a grazing key across the back of the hand so knuckles, tendons and veins catch the terminator
+    const el = 10 * Math.PI / 180, az = 128 * Math.PI / 180;
+    return { preset: 'morning', sunElev: 22, sunAz: 120, key: [Math.sin(az) * Math.cos(el), Math.sin(el), -Math.cos(az) * Math.cos(el)],
+      shadow: { center: A(w.c), radius: 0.4, depth: 4 }, exposure: 1.1 };
   },
   s15: (lt, d, t, st) => {
     const w = watchFrame('s15');
@@ -81,9 +84,10 @@ export const LOOKS = {
     // night → dawn → morning: blue, a rose-gold pass, then clean high-key gold-white
     const a = k < 0.55 ? { preset: 'night', to: 'dawn', k: k / 0.55 } : { preset: 'dawn', to: 'morning', k: (k - 0.55) / 0.45 };
     return {
-      ...a, sunElev: lerp(6, 14, k), sunAz: roomAz(0, -1) + lerp(-6, 34, k), sunStrength: lerp(0.26, 1.0, k),
+      // the low sun swings round so the window mullion's shadow sweeps across the wrist and watch mid-shot
+      ...a, sunElev: lerp(7, 13, k), sunAz: roomAz(0, -1) + lerp(-50, -8, smooth(invLerp(0.0, d, lt))), sunStrength: lerp(0.26, 1.0, k),
       lights: [phoneLight('s18', st, 0.8)], ambient: k < 0.5 ? '#0a0d1c' : '#100c12', fogDensity: 0.0007,
-      shadow: { center: A(w.c), radius: 0.35, depth: 4 },
+      shadow: { center: A(w.c), radius: 0.4, depth: 4 },
     };
   },
   s21: (lt, d) => {

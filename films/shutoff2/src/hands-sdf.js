@@ -387,6 +387,7 @@ export function sculptMaterial(o = {}) {
     uSmoothK: { value: o.smoothK ?? 0.8 },
     uFaceDark: { value: o.faceDark ?? 1 },
     uRimW: { value: o.rimW ?? 0.62 },
+    uFaceK: { value: o.faceK ?? 0.5 },
     // per-fragment regions from the signed value in aFx.y: >= 0 → colP/idP, < 0 → colN/idN, a band just below 0 → colB/idB
     uRegOn: { value: o.region ? 1 : 0 },
     uColP: { value: new THREE.Color(o.region?.colP ?? '#ffffff') }, uIdP: { value: o.region?.idP ?? 1 },
@@ -428,7 +429,7 @@ export function sculptMaterial(o = {}) {
     varying float vCrease;
     varying vec3 vSN;
     varying vec2 vFx;
-    uniform float uRimW;
+    uniform float uRimW, uFaceK;
     uniform float uSmoothK, uCrevT, uFaceDark, uRegOn, uIdP, uIdN, uIdB, uBand, uHairNeg;
     uniform vec3 uColP, uColN, uColB;
     void main(){
@@ -469,8 +470,9 @@ export function sculptMaterial(o = {}) {
       float deep = step(ndl, -0.55) * step(N.y, -0.35);
       outc = mix(outc, col * uDeepTint, deep * 0.6);
       outc *= 1.0 - crev * 0.18 - uExtraDark;
-      vec3 ll = localLights(vWorld, N) * uLocalK * (1.0 - 0.85 * face);
+      vec3 ll = localLights(vWorld, N) * uLocalK * (1.0 - 0.9 * face);
       outc += col * (uAmbient + ll * (1.0 - crev * 0.6));
+      outc *= 1.0 - uFaceK * face;
       vec3 V = normalize(cameraPosition - vWorld);
       // rim: strongest when the key is behind the subject
       float fres = 1.0 - max(dot(Nd, V), 0.0);

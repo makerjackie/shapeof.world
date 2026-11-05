@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { ROOM, ROOM_M } from './room-layout.js';
 import { buildSet } from './room-set.js';
-import { makeFigure, PHONE, J } from './room-figure.js';
+import { makeFigure, PHONE, J, HEAD_PITCH } from './room-figure.js';
 import { createRainGlass, createHalo } from './room-rain.js';
 import { onTwos, smoother, invLerp, clamp } from './util.js';
 
@@ -16,6 +16,7 @@ export function createRoom(ctx) {
   root.visible = false;
   ctx.scene.add(root);
   const set = buildSet(root);
+  ctx.shadowRoots.push(set.casters);     // the window frame, curtains, desk and chair cast the low sun's shadow (s18 sweep)
   const fig = makeFigure();
   fig.group.visible = false;
   root.add(fig.group);
@@ -37,17 +38,42 @@ export function createRoom(ctx) {
   const halo = createHalo(ctx);
   const _hp = new THREE.Vector3();
 
+  // s12: solve the chest / neck / head rotations that point his face straight into the dome camera's lens
+  const D2R = Math.PI / 180;
+  const FACE = new THREE.Vector3(0, Math.sin(HEAD_PITCH * D2R), -Math.cos(HEAD_PITCH * D2R));
+  const HC = new THREE.Vector3(0, 0.075, -0.02).applyAxisAngle(new THREE.Vector3(1, 0, 0), HEAD_PITCH * D2R);
+  const LENS = new THREE.Vector3(ROOM.cam.x - 0.03, ROOM.cam.y - 0.06, ROOM.cam.z + 0.03);
+  const lookOver = (Y, P, kY, kP, breath = 0) => ({
+    chest: { r: [breath + 0.12 * P * kP, 0.16 * Y * kY, 0] },
+    neck: { r: [0.33 * P * kP, 0.3 * Y * kY, 0] },
+    head: { r: [0.55 * P * kP, 0.54 * Y * kY, -0.06 * Y * kY] },
+  });
+  let solved = null;
+  function solveLook() {
+    if (solved) return solved;
+    let Y = -60, P = 60;
+    const c = new THREE.Vector3(), f = new THREE.Vector3(), t = new THREE.Vector3();
+    for (let it = 0; it < 16; it++) {
+      const w = fig.rig.pose(lookOver(Y, P, 1, 1));
+      const hm = w[fig.rig.index.head];
+      c.copy(HC).applyMatrix4(hm); f.copy(FACE).transformDirection(hm); t.copy(LENS).sub(c).normalize();
+      Y += (Math.atan2(-t.x, -t.z) - Math.atan2(-f.x, -f.z)) / D2R * 0.9;
+      P += (Math.asin(t.y) - Math.asin(f.y)) / D2R * 0.9;
+    }
+    solved = { Y, P };
+    return solved;
+  }
+
   function poseFor(st) {
     const t = onTwos(st.tr);
     const breath = Math.sin(t * Math.PI * 2 / 3.6) * 0.7;
     const o = { chest: { r: [breath, 0, 0] }, head: { r: [breath * 0.4, 0, 0] } };
     if (st.sid === 's12') {
-      // at CUES.lookUp he slowly lifts his head and turns toward the ceiling camera
-      const k = smoother(invLerp(st.cues.lookUp - 0.05, st.cues.lookUp + 1.25, t));
-      const k2 = smoother(invLerp(st.cues.lookUp + 0.1, st.cues.lookUp + 1.45, t));
-      o.chest = { r: [breath + 6 * k, -10 * k2, 0] };
-      o.neck = { r: [22 * k, -22 * k2, 0] };
-      o.head = { r: [42 * k, -38 * k2, -4 * k2] };
+      // at CUES.lookUp he slowly lifts his head, then turns it, straight into the lens; holds the last 0.6 s
+      const L = solveLook();
+      const kP = smoother(invLerp(st.cues.lookUp - 0.1, st.cues.lookUp + 0.85, t));
+      const kY = smoother(invLerp(st.cues.lookUp + 0.05, st.cues.lookUp + 1.0, t));
+      Object.assign(o, lookOver(L.Y, L.P, kY, kP, breath * (1 - kP)));
     }
     return o;
   }
@@ -61,6 +87,14 @@ export function createRoom(ctx) {
       halo.hide();
       if (!on) return;
       const showFig = FIGURE_SHOTS.has(st.sid);
+      // s12 is infrared video: hair and skin read light grey, so the shadowed face becomes a void
+      const ir = st.sid === 's12';
+      const [mB, mH, mN] = fig.mats;
+      mH.uniforms.uColN.value.set(ir ? '#8a90a0' : '#1f2330');
+      mH.uniforms.uColP.value.set(ir ? '#f4ece8' : '#ebd2c6');
+      mN.uniforms.uColP.value.set(ir ? '#f4ece8' : '#ebd2c6');
+      mH.uniforms.uFaceK.value = ir ? 0.85 : 0.5;
+      void mB;
       fig.group.visible = showFig;
       if (showFig) {
         const w = fig.pose(poseFor(st));

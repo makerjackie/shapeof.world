@@ -17,7 +17,8 @@ uniform vec2 uRes;
 uniform mat4 uInvProj, uCamWorld;
 uniform vec3 uCamPos, uGO, uGU, uGV, uGN;
 uniform vec2 uGSize;
-uniform float uTime, uGlass, uCCTV, uHaze, uFogDensity, uBlur, uDropK, uFall, uDropScale;
+uniform float uTime, uGlass, uCCTV, uHaze, uFogDensity, uBlur, uDropK, uFall, uDropScale, uZoom, uHunt;
+uniform vec2 uZoomOut;
 uniform vec3 uFogCool, uFogWarm, uTint;
 varying vec2 vUv;
 out vec4 oColor;
@@ -105,14 +106,25 @@ void main(){
   float S = uRes.x / 1080.0;
   // ---------------------------------------------------------------- CCTV (s12)
   if(uCCTV > 0.5){
-    vec2 c = (uv - 0.5) * vec2(uRes.x / uRes.y, 1.0);
+    float asp = uRes.x / uRes.y;
+    vec2 c = (uv - 0.5) * vec2(asp, 1.0);
     float r2 = dot(c, c);
-    vec2 src = 0.5 + c * (1.0 + 0.55 * r2 + 0.3 * r2 * r2) * 0.86 / vec2(uRes.x / uRes.y, 1.0);
+    vec2 src = 0.5 + c * (1.0 + 0.55 * r2 + 0.3 * r2 * r2) * 0.86 / vec2(asp, 1.0);
     float inside = step(0.0, src.x) * step(src.x, 1.0) * step(0.0, src.y) * step(src.y, 1.0);
-    vec3 col = sceneAt(src);
+    // digital push-in on the subject (the UI's recognition box), through the same lens
+    vec2 co = (uZoomOut - 0.5) * vec2(asp, 1.0);
+    float ro = dot(co, co);
+    vec2 zc = 0.5 + co * (1.0 + 0.55 * ro + 0.3 * ro * ro) * 0.86 / vec2(asp, 1.0);
+    vec2 sz = zc + (src - zc) / uZoom;
+    vec3 col = vec3(0.0);
+    // autofocus hunting: a brief soft blur
+    if(uHunt > 0.01){
+      for(int i = 0; i < 8; i++){ float a = float(i) * 0.785398; col += sceneAt(sz + vec2(cos(a), sin(a)) * uHunt * S / uRes); }
+      col /= 8.0;
+    } else col = sceneAt(sz);
     // slight lens smear and chroma fringe toward the rim
     vec2 ca = (src - 0.5) * 0.004;
-    col = vec3(sceneAt(src + ca).r, col.g, sceneAt(src - ca).b);
+    col = vec3(mix(col.r, sceneAt(sz + ca).r, 0.6), col.g, mix(col.b, sceneAt(sz - ca).b, 0.6));
     float l = dot(col, vec3(0.3, 0.59, 0.11));
     vec3 g = mix(vec3(l), col, 0.22) * uTint;
     g = (g - 0.03) * 1.18;
@@ -227,6 +239,7 @@ export function createRainGlass(ctx, glassZ) {
     uGSize: { value: new THREE.Vector2(x1 - x0, y1 - y0) },
     uTime: { value: 0 }, uGlass: { value: 0 }, uCCTV: { value: 0 },
     uHaze: { value: 0.55 }, uFogDensity: atm.uFogDensity, uBlur: { value: 9 }, uDropK: { value: 1 }, uFall: { value: 1 }, uDropScale: { value: 2.4 },
+    uZoom: { value: 1 }, uHunt: { value: 0 }, uZoomOut: { value: new THREE.Vector2(600 / 1080, 1 - 950 / 1920) },
     uFogCool: atm.uFogCool, uFogWarm: atm.uFogWarm, uTint: { value: new THREE.Color('#d6eee4') },
   };
   const mat = new THREE.ShaderMaterial({
@@ -258,6 +271,14 @@ export function createRainGlass(ctx, glassZ) {
       u.uDropK.value = L.rainDrop ?? 1;
       u.uFall.value = L.rainFall ?? 1;
       u.uDropScale.value = L.rainScale ?? 2.4;
+      if (cctv) {
+        // as he looks up, the camera "notices": a focus hunt, then a slow digital push-in that holds
+        const lu = st.cues.lookUp, tr = st.tr;
+        const kz = Math.min(1, Math.max(0, (tr - (lu + 0.25)) / 1.0));
+        u.uZoom.value = 1 + 0.3 * kz * kz * (3 - 2 * kz);
+        const kh = Math.min(1, Math.max(0, (tr - (lu - 0.05)) / 0.5));
+        u.uHunt.value = 3.0 * Math.sin(Math.PI * kh) * (kh < 1 ? 1 : 0);
+      } else { u.uZoom.value = 1; u.uHunt.value = 0; }
     },
   };
 }

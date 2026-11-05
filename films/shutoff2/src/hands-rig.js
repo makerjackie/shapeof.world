@@ -59,7 +59,8 @@ export function makeHandSculpt(opts = {}) {
   const hypo = add('hand', { kind: 'ell', t: [0.047, -0.0085, -0.0285], rad: [0.032, 0.0095, 0.0105] });
   const heel = add('hand', { kind: 'ell', t: [0.080, -0.0085, -0.001], rad: [0.012, 0.0075, 0.036] });
   const palm0 = unionOf(0.012, [carpal, meta, arch, thenar, hypo, heel]);
-  const knuck = FINGERS.map((f) => add('hand', { kind: 'ell', t: [f.mcp[0] - 0.002, 0.0062, f.mcp[2]], rad: [0.0088, 0.0072, f.rb * 0.92], tag: 1 }));
+  const kn = opts.knuckle ?? 1;
+  const knuck = FINGERS.map((f) => add('hand', { kind: 'ell', t: [f.mcp[0] - 0.002, 0.0062 + 0.0008 * (kn - 1), f.mcp[2]], rad: [0.0088 * kn, 0.0072 * kn, f.rb * 0.92 * kn], tag: 1 }));
   // dorsal surface height of the palm (for laying tendons on it)
   const ySurf = (x, z) => {
     const e1 = 1 - ((x - 0.054) / 0.036) ** 2 - (z / 0.0375) ** 2;
@@ -74,10 +75,24 @@ export function makeHandSculpt(opts = {}) {
     const yaw = Math.atan2(-dz, dx) * 180 / Math.PI, pitch = Math.atan2(dy, Math.hypot(dx, dz)) * 180 / Math.PI;
     return add('hand', { kind: 'cap', t: [ax, ay, az], r: [0, yaw, pitch], L, r0: r * 0.7, r1: r, sy: 0.8, sz: 1.3, noSkin: true });
   });
+  // dorsal veins: two branches across the back of the hand joined by an arch (raised a fraction of a millimetre)
+  const veins = [];
+  if (opts.veins) {
+    const vr = 0.00105 * opts.veins;
+    const vseg = (ax, az, bx, bz) => {
+      const ay = ySurf(ax, az) - 0.0011 + vr * 0.6, by = ySurf(bx, bz) - 0.0011 + vr * 0.6;
+      const dx = bx - ax, dy = by - ay, dz = bz - az, L = Math.hypot(dx, dy, dz);
+      veins.push(add('hand', { kind: 'cap', t: [ax, ay, az], r: [0, Math.atan2(-dz, dx) * 180 / Math.PI, Math.atan2(dy, Math.hypot(dx, dz)) * 180 / Math.PI], L, r0: vr, r1: vr * 0.8, sz: 1.2, noSkin: true }));
+    };
+    vseg(0.006, 0.019, 0.03, 0.012); vseg(0.03, 0.012, 0.052, 0.009); vseg(0.052, 0.009, 0.07, 0.016);
+    vseg(0.008, -0.02, 0.032, -0.014); vseg(0.032, -0.014, 0.05, -0.011); vseg(0.05, -0.011, 0.066, -0.017);
+    vseg(0.05, 0.009, 0.05, -0.011);
+  }
   const palmK = (x, y, z) => {
     let d = palm0(x, y, z);
     for (const k of knuck) d = smin(d, k.d(x, y, z), 0.006);
     for (const t of tendons) d = smin(d, t.d(x, y, z), 0.003);
+    for (const v of veins) d = smin(d, v.d(x, y, z), 0.0022);
     return d;
   };
   // ---- forearm and wrist

@@ -186,16 +186,17 @@ export async function createCity(ctx) {
         CU.uDataAll.value = tr > ctx.CUES.end1 ? 1 : 0;
         // 安's last wave: from the HQ, overtaking every ring, to the edge of the world by the end of s26
         const sw = tr - (ctx.CUES.cityData + 1.6);
-        CU.uSweep.value.set(0, 300, HQ.zc, sw > 0 && tr < ctx.CUES.end1 ? 600 * sw + 1400 * sw * sw : -1);
+        CU.uSweep.value.set(0, 300, HQ.zc, sw > 0 && tr < ctx.CUES.end1 ? 600 * sw + 1600 * sw * sw + 900 * sw * sw * sw : -1);
         CU.uBreath.value = smooth(invLerp(ctx.CUES.cityData + 1.5, ctx.CUES.end1, tr));
-        CU.uRipple.value = 0.55 * smooth(invLerp(ctx.CUES.cityData + 2.0, ctx.CUES.cityData + 3.5, tr)) * (1 - 0.45 * smooth(invLerp(ctx.CUES.end1, ctx.CUES.end1 + 2.5, tr)));
+        CU.uRipple.value = 0.24 * smooth(invLerp(ctx.CUES.cityData + 2.0, ctx.CUES.cityData + 3.5, tr)) * (1 - 0.45 * smooth(invLerp(ctx.CUES.end1, ctx.CUES.end1 + 2.5, tr)));
         // a slow pulse from 安's HQ every 6 s through the end texts
         const pt = tr - ctx.CUES.end1;
         CU.uPulse.value.set(0, 0, HQ.zc, pt > 0 ? ((pt % 6.5) * 700) : -1);
         // the sky and the hills turn with the grade (cams/city.js cityLook: day → data over cityData + 1.9 … + 4.4)
         const kLook = smooth(invLerp(ctx.CUES.cityData + 1.6, ctx.CUES.cityData + 3.8, tr));
         sky.u.uData.value = tr > ctx.CUES.cityData + 1.6 ? 1 : 0;
-        sky.u.uDataWipe.value = kLook;
+        sky.u.uDataWipe.value = tr >= ctx.CUES.end1 ? 1 : 0;
+        sky.u.uSweepSky.value.set(0, HQ.zc, CU.uSweep.value.w, CU.uSweep.value.w > 0 ? 1 : 0);
         sky.u.uBreath.value = 0.5 + 0.5 * Math.sin(tr * 0.9);
         hills.userData.u.uHillData.value = smooth(invLerp(0.0, 0.12, kLook));
       } else {

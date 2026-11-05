@@ -144,7 +144,8 @@ export function buildRoom(ctx) {
   {
     const parts = [];
     const fin = '#e8ebf0';
-    for (let x = ROOM.x0; x <= ROOM.x1 + 1e-3; x += 1.5) parts.push([box(0.05, Hh, 0.2, x, Hh / 2, ROOM.z0 + 0.1), fin]);
+    // deep blade fins on the CBD wall: the low ENE sun slants through them and cuts the light into shafts
+    for (let x = ROOM.x0; x <= ROOM.x1 + 1e-3; x += 1.5) parts.push([box(0.06, Hh, 0.84, x, Hh / 2, ROOM.z0 + 0.42), fin]);
     for (let z = ROOM.z0 + 1.5; z <= ROOM.z1 + 1e-3; z += 1.5) parts.push([box(0.2, Hh, 0.05, ROOM.x1 - 0.1, Hh / 2, z), fin]);
     // glazing beads at floor and head (thin frame lines)
     parts.push([box(W, 0.06, 0.06, 0, 0.03, ROOM.z0 + 0.02), '#cfd4dc']);
@@ -160,20 +161,33 @@ export function buildRoom(ctx) {
     gr.push([box(0.16, 0.004, D - 0.4, ROOM.x1 - 0.32, 0.003, 0), '#7c8290']);
     for (let x = ROOM.x0 + 0.2; x < ROOM.x1 - 0.2; x += 0.05) gr.push([box(0.012, 0.006, 0.13, x, 0.005, ROOM.z0 + 0.32), '#c9ced8']);
     mesh(mergePainted(gr), M.mull, plain);
-    // roller blinds: a few bays partly lowered (translucent-looking pale fabric with a bottom bar)
-    const bl = [];
+    // roller blinds. CBD wall: a few bays partly lowered. East wall (the sun side): sunscreen fabric down on most
+    // bays, glowing with the sun behind it; three bays left open let the sun in as broad shafts.
+    const bl = [], glowBl = [];
     const R = new Rng(19);
     for (let x = ROOM.x0 + 0.75; x < ROOM.x1; x += 1.5) {
       if (Math.abs(x) < 3.2) continue;            // keep the bays behind the screen clear
       const drop = R.range(0.25, 1.1);
-      bl.push([box(1.44, drop, 0.01, x, Hh - 0.14 - drop / 2, ROOM.z0 + 0.24), '#f1efe9']);
-      bl.push([box(1.44, 0.03, 0.025, x, Hh - 0.14 - drop, ROOM.z0 + 0.24), '#b8bcc6']);
+      bl.push([box(1.44, drop, 0.01, x, Hh - 0.14 - drop / 2, ROOM.z0 + 0.9), '#f1efe9']);
+      bl.push([box(1.44, 0.03, 0.025, x, Hh - 0.14 - drop, ROOM.z0 + 0.9), '#b8bcc6']);
     }
-    for (let z = ROOM.z0 + 0.75; z < ROOM.z1; z += 1.5) {
-      const drop = R.range(0.2, 0.8);
-      bl.push([box(0.01, drop, 1.44, ROOM.x1 - 0.24, Hh - 0.14 - drop / 2, z), '#f1efe9']);
+    let bay = 0;
+    for (let z = ROOM.z0 + 0.75; z < ROOM.z1; z += 1.5, bay++) {
+      const open = bay === 0 || bay === 2;
+      const drop = open ? 0.12 : Hh - 0.14 - R.range(0.12, 0.35);
+      if (open) {
+        // venetian blind in the open bays: tilted slats slice the sun into sheets of light
+        for (let y = 0.32; y < Hh - 0.3; y += 0.21) {
+          const g = new THREE.BoxGeometry(0.11, 0.008, 1.42).rotateZ(0.7).translate(ROOM.x1 - 0.3, y, z);
+          bl.push([g, '#e9e6df']);
+        }
+        for (const dz of [-0.45, 0.45]) bl.push([box(0.004, Hh - 0.4, 0.004, ROOM.x1 - 0.3, Hh / 2 - 0.05, z + dz), '#c9ccd2']);
+      }
+      glowBl.push([box(0.01, drop, 1.44, ROOM.x1 - 0.24, Hh - 0.14 - drop / 2, z), '#ffffff']);
       bl.push([box(0.025, 0.03, 1.44, ROOM.x1 - 0.24, Hh - 0.14 - drop, z), '#b8bcc6']);
     }
+    const fab = mesh(mergePainted(glowBl), meetToon({ id: 0, vc: true, unlit: true, emissive: '#f4ecdf', emissiveGain: 1.0 }));
+    void fab;
     mesh(mergePainted(bl), M.wall);
   }
 
@@ -362,10 +376,10 @@ export function buildRoom(ctx) {
       mesh(mergePainted(wood), M.trunk);
       mesh(mergePainted(leaves), M.leaf);
     };
-    tree(-3.05, -6.35, 1.9, 11);
-    tree(3.05, -6.35, 2.1, 12);
+    tree(-3.75, -5.75, 1.9, 11);
+    tree(3.75, -5.75, 2.1, 12);
     tree(8.1, 5.6, 2.0, 13);
-    tree(-8.2, -6.1, 1.7, 14);
+    tree(-8.25, -5.6, 1.7, 14);
     void R;
   }
 

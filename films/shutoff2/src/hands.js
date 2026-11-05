@@ -28,7 +28,7 @@ export function createHands(ctx) {
   function get(key) {
     if (built[key]) return built[key];
     const M = MESHES[key];
-    const hs = makeHandSculpt({ tendon: M.tendon, h: M.h ?? 0.0009 });
+    const hs = makeHandSculpt({ tendon: M.tendon, veins: M.veins, knuckle: M.knuckle, h: M.h ?? 0.0009 });
     const pose = M.pose();
     const hb = hs.sculpt.build(pose);
     const ss = makeSleeveSculpt(hs.rig, { loose: key === 'desk' ? 1 : 0 });
@@ -85,6 +85,7 @@ export function createHands(ctx) {
       b.hs.sculpt.deform(b.hb, over);
       b.ss.deform(b.sb, over);
       skinMat.uniforms.uPale.value = S.pale(st.lt, st.dur, st);
+      skinMat.uniforms.uSmoothK.value = S.smoothK ?? 0.8;
       const wc = ctx.ui?.screen?.('watch', st);
       watch.setScreen(wc || null, 1);
       if (S.phone) {

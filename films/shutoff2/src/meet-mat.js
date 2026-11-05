@@ -182,9 +182,12 @@ export function airMaterial(o = {}) {
       float sceneT = sd.b > 0.0 ? sd.b / cosv : 1e5;
       tb = min(tb, sceneT);
       if(tb <= ta) discard;
-      const int N = 40;
+      // never haze over the big screen (or the phone screens): keep the text crisp
+      float onScreen = (sd.a > 100.5 && sd.a < 102.5) ? 1.0 : 0.0;
+      const int N = 56;
       float dt = (tb - ta) / float(N);
-      float jit = h13(vec3(gl_FragCoord.xy, 3.7));
+      // interleaved gradient noise: an even, fine dither (no clumpy grain)
+      float jit = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
       float acc = 0.0;
       for(int i = 0; i < N; i++){
         vec3 p = ro + rd * (ta + (float(i) + jit) * dt);
@@ -197,7 +200,7 @@ export function airMaterial(o = {}) {
           acc += l * dens;
         }
       }
-      acc *= dt;
+      acc *= dt * mix(1.0, 0.1, onScreen);
       float toSun = dot(rd, uSunDir);
       float phase = 0.35 + 1.6 * pow(max(toSun, 0.0), 5.0) + 0.25 * max(toSun, 0.0);
       float a = 1.0 - exp(-acc * uDensity * phase);
