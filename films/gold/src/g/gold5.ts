@@ -169,33 +169,33 @@ const schedule2 = (evs: Ev5[], m: Music, startSrc: number, endSrc: number): P5[]
 // ---------------- cold open: 2001 -> 2026 on a fixed window; the title holds two beats, six highs on six beats,
 // the top with fireworks, the crash with lightning, the question, the rewind
 export const COLD5 = {
-  title: [A(2), A(2) + 0.42] as [number, number], // big until, in the header by
+  // the line is already climbing on the first frame; the title slams in on beat 2, holds, then flies into the header
+  titleIn: A(3),
+  title: [A(4.1), A(4.7)] as [number, number], // big until, in the header by
+  startY: 2001.1233,
   win: [2000.62, 2026.2] as [number, number],
   vmax: 4000, // the window tops out at $4,000: the line breaks through it
   ceil: 4000,
   keys: [
-    [A(0), 2001.1233],
-    [A(2), DY(2008, 3, 17)],
-    [A(3), DY(2011, 8, 22)],
-    [A(4), DY(2020, 8, 6)],
-    [A(5), DY(2025, 3, 13)],
-    [A(6), DY(2025, 10, 6)],
-    [A(7), DY(2026, 1, 29)],
-    [A(8), DY(2026, 1, 30)],
+    [0, 2025.62],
+    [A(1), DY(2025, 10, 6)],
+    [A(2), DY(2026, 1, 29)],
+    [A(4.6), DY(2026, 1, 29)],
+    [A(5), DY(2026, 1, 30)],
   ] as [number, number][],
   marks: [
-    { y: DY(2008, 3, 17), at: A(2), a: "2008 年", b: "破 1,000 美元" },
-    { y: DY(2011, 8, 22), at: A(3), a: "2011 年", b: "1,889 美元" },
-    { y: DY(2020, 8, 6), at: A(4), a: "2020 年", b: "2,069 美元" },
-    { y: DY(2025, 3, 13), at: A(5), a: "2025 年 3 月", b: "破 3,000 美元" },
-    { y: DY(2025, 10, 6), at: A(6), a: "2025 年 10 月", b: "破 4,000 美元" },
-    { y: DY(2026, 1, 29), at: A(7), a: "2026 年 1 月 29 日", b: "5,318 美元", top: true },
+    { y: DY(2008, 3, 17), at: -1, a: "2008 年", b: "破 1,000 美元" },
+    { y: DY(2011, 8, 22), at: -1, a: "2011 年", b: "1,889 美元" },
+    { y: DY(2020, 8, 6), at: -1, a: "2020 年", b: "2,069 美元" },
+    { y: DY(2025, 3, 13), at: -1, a: "2025 年 3 月", b: "破 3,000 美元" },
+    { y: DY(2025, 10, 6), at: A(1), a: "2025 年 10 月", b: "破 4,000 美元" },
+    { y: DY(2026, 1, 29), at: A(2), a: "2026 年 1 月 29 日", b: "5,318 美元", top: true },
   ],
-  crash: { y: DY(2026, 1, 30), at: A(8), a: "第二天", b: "−11%" },
+  crash: { y: DY(2026, 1, 30), at: A(5), a: "第二天", b: "−11%" },
   times: "25 年，×21",
 };
 // one ounce, held up while the question is asked
-export const COIN = { t0: A(9), t1: A(12) - 0.05 };
+export const COIN = { t0: A(6), t1: A(12) - 0.05 };
 // the old high in today's money: 850 dollars of January 1980, carried forward by the US CPI
 export const CPI = CPI_RAW as [number, number][];
 export const REAL = { v0: 850, y0: 1980.055, name: "1980 年最高 850 美元" };
@@ -203,7 +203,7 @@ export const REAL = { v0: 850, y0: 1980.055, name: "1980 年最高 850 美元" }
 export const RATES = { t0: BAR(83) + 0.1 + 4 * BEAT, t1: BAR(88), split: 1971.62, a: ["前 179 年", "年均 +0.3%"], b: ["后 55 年", "年均 +9%"] };
 export const NEXT = { a: "下一集 · 石油", b: "1 盎司黄金，能换几桶油？" };
 export const SWEEP = { t0: BAR(88), dur: 1.3 };
-const COLD_LINES = [{ t0: A(9), t1: A(12) - 0.05, a: "1792 年，1 盎司黄金只要 19 美元", b: "金子没变，金价凭什么涨？", bBeats: 1, tone: "white" as const }];
+const COLD_LINES = [{ t0: A(6), t1: A(12) - 0.05, a: "1792 年，1 盎司黄金只要 19 美元", b: "金子没变，金价凭什么涨？", bBeats: 2, tone: "white" as const }];
 
 const ERA_SRC: [number, string][] = [
   [0, "纽约市场年均价（MeasuringWorth）"],
@@ -247,7 +247,8 @@ export const FXCUES: { t: number; fx: string }[] = [
   ...fwBursts(COLD5.marks[5].at, true).map((t) => ({ t, fx: "pop" })),
   { t: COLD5.crash.at, fx: "bolt" },
   { t: COLD5.marks[4].at, fx: "ceil" },
-  { t: A(9), fx: "coin" },
+  { t: A(6), fx: "coin" },
+  { t: COLD5.titleIn, fx: "title" },
   { t: BAR(88), fx: "sweep" },
   ...PLACED.flatMap((e) => [
     ...(e.fx ?? []).flatMap((f) =>
@@ -265,7 +266,7 @@ export const GOLD5: Spec = {
   events: PLACED,
   cold: {
     keys: COLD5.keys.map(([t, y]) => ({ t, y, p: 1 })),
-    crashes: [...COLD5.marks.map((m) => ({ y: m.y, t: m.a, p: m.b, at: m.at, tone: "gold" as const })), { y: COLD5.crash.y, t: COLD5.crash.a, p: COLD5.crash.b, at: COLD5.crash.at, tone: "red" as const }],
+    crashes: [...COLD5.marks.filter((m) => m.at >= 0).map((m) => ({ y: m.y, t: m.a, p: m.b, at: m.at, tone: "gold" as const })), { y: COLD5.crash.y, t: COLD5.crash.a, p: COLD5.crash.b, at: COLD5.crash.at, tone: "red" as const }],
     lines: COLD_LINES,
     rewind: [A(12), A(16)],
     start: "1792 年",

@@ -558,7 +558,7 @@ export const createFilm5 = (S: Spec) => {
   // ---------- hits (one per event + the cold-open highs and the crash)
   type Hit = { t: number; kind: string; big: boolean; tone: string; e?: P5; fw?: boolean };
   const HITS: Hit[] = [
-    ...COLD5.marks.map((m) => ({ t: m.at, kind: "mile", big: !!m.top, tone: "gold", fw: !!m.top })),
+    ...COLD5.marks.filter((m) => m.at >= 0).map((m) => ({ t: m.at, kind: "mile", big: !!m.top, tone: "gold", fw: !!m.top })),
     { t: COLD5.crash.at, kind: "crash", big: true, tone: "red" },
     ...EV.map((e) => ({ t: e.t0, kind: e.k, big: !!e.big, tone: KIND_TONE[e.k], e, fw: !!e.fx?.some((f) => f === "fw" || f === "fwBig") })),
   ];
@@ -1553,19 +1553,31 @@ export const createFilm5 = (S: Spec) => {
     ctx.restore();
   };
 
-  // ---------- the title: it fills the first frame, then flies into the header
+  // ---------- the title: it slams in over the climbing line, holds, then flies into the header
   const [TI0, TI1] = COLD5.title;
+  const TIN = COLD5.titleIn;
   const drawIntro = (ctx: CanvasRenderingContext2D, t: number, hx: number) => {
+    if (t < TIN - 0.01) return;
     const k = ease(clamp((t - TI0) / (TI1 - TI0)));
     const big = 168;
     const size = big + (30 - big) * k;
     ctx.font = `900 ${size}px ${SERIF}`;
     const w = ctx.measureText(S.brand).width;
     const x = CX - w / 2 + (hx - (CX - w / 2)) * k;
-    const y = 560 + (127 - 560) * k;
-    const pop = 1 + 0.08 * env(t, 0.05, 0.01, 0.3);
+    const y = 668 + (127 - 668) * k;
+    const pop = 1 + 0.45 * (1 - eo3((t - TIN) / 0.16));
     ctx.save();
-    ctx.translate(x, y);
+    if (k < 1) {
+      // a dark band so the title reads over the chart
+      const back = ctx.createLinearGradient(0, 500, 0, 730);
+      back.addColorStop(0, "rgba(6,5,4,0)");
+      back.addColorStop(0.5, `rgba(6,5,4,${0.75 * (1 - k)})`);
+      back.addColorStop(1, "rgba(6,5,4,0)");
+      ctx.fillStyle = back;
+      ctx.fillRect(FULL[0], 500, FULL[2], 230);
+    }
+    ctx.globalAlpha *= clamp((t - TIN) / 0.05);
+    ctx.translate(x + (w / 2) * (1 - pop) * (1 - k), y);
     ctx.scale(pop, pop);
     text(ctx, S.brand, 0, 0, size, 900, SERIF, GOLD, { ls: 2 + 10 * (1 - k), glow: "rgba(255,201,77,0.55)", glowBlur: 40 * (1 - k) + 4 });
     ctx.restore();
@@ -1585,7 +1597,7 @@ export const createFilm5 = (S: Spec) => {
     ctx.fillRect(114 + w1 + 14, 104, 2, 26);
     if (t >= TI1) text(ctx, S.brand, 114 + w1 + 30, 127, 30, 900, SERIF, GOLD, { ls: 2 });
     else drawIntro(ctx, t, 114 + w1 + 30);
-    const nums = clamp((t - TI1 + 0.15) / 0.25);
+    const nums = 1;
     if (nums <= 0) {
       ctx.restore();
       return;
@@ -1595,23 +1607,26 @@ export const createFilm5 = (S: Spec) => {
     const rw = t >= RW0 && t < B0;
     text(ctx, rw ? S.rewindLabel ?? "倒回……" : t < RW0 ? "最近 25 年" : S.era(c), 58, 186, 30, 700, SERIF, SOFT, { maxW: 560 });
     const yNum = Math.floor(c + 1e-6);
+    // the price leads; the date sits under it (in the rewind, with no price, the year takes the top line)
+    const YB = rw ? 300 : 392;
+    const YS = rw ? 116 : 62;
     let x = 56;
-    const blur = Math.min(4, k.sp / 900);
+    const blur = Math.min(4, k.sp / 900) * (YS / 116);
     if (blur > 0.4) ctx.filter = `blur(${blur.toFixed(1)}px)`;
-    x += tabular(ctx, String(yNum), x, 300, 116, WHITE);
+    x += tabular(ctx, String(yNum), x, YB, YS, WHITE);
     ctx.filter = "none";
     const span = (W * 0.5) / k.ppy;
     const [, mo, dd] = ymd(c);
-    const tail = t >= B0 && k.ca > 0.5 ? `年 ${mo} 月 ${dd} 日` : t >= B0 && span < 40 && yNum >= 1968 ? `年 ${mo} 月` : t < RW0 && t >= COLD5.marks[4].at ? `年 ${mo} 月` : "年";
-    text(ctx, tail, x + 6, 300, 46, 900, SERIF, WHITE);
+    const tail = t >= B0 && k.ca > 0.5 ? `年 ${mo} 月 ${dd} 日` : t >= B0 && span < 40 && yNum >= 1968 ? `年 ${mo} 月` : t < RW0 ? `年 ${mo} 月` : "年";
+    text(ctx, tail, x + 6, YB, rw ? 46 : 32, 900, SERIF, WHITE);
     const v = val(c);
     const slope = val(c) - val(c - Math.max(0.0025, span / 200));
     const e = evAt(t);
     const red = (e && e.k === "crash" && slope < 0) || (t >= COLD5.crash.at && t < RW0);
     const col = red ? RED : slope < -v * 0.002 ? ASH : GOLD;
     if (!rw) {
-      const nw = tabular(ctx, fmtUsd(v), 58, 404, 86, col, { glow: col + "55" });
-      text(ctx, "美元 / 盎司", 58 + nw + 10, 404, 34, 900, SERIF, col);
+      const nw = tabular(ctx, fmtUsd(v), 56, 300, 116, col, { glow: col + "55" });
+      text(ctx, "美元 / 盎司", 56 + nw + 12, 300, 40, 900, SERIF, col);
       const rate = cnyAt(c);
       const chips = [S.kindLabel[kindAt(c)]];
       if (rate > 0) chips.unshift(`≈ ${Math.round((v * rate) / 31.1035).toLocaleString("en-US")} 元/克`);
@@ -1623,7 +1638,7 @@ export const createFilm5 = (S: Spec) => {
         ctx.font = `${hot ? 900 : 700} ${fs}px ${hot ? SANS : SERIF}`;
         const cw = ctx.measureText(chip).width + (hot ? 32 : 24);
         const ch = hot ? 54 : 36;
-        const cy0 = hot ? 422 : 431;
+        const cy0 = hot ? 418 : 427;
         if (hot) {
           ctx.fillStyle = "rgba(255,201,77,0.1)";
           ctx.fillRect(cx0, cy0, cw, ch);
@@ -2048,11 +2063,11 @@ export const createFilm5 = (S: Spec) => {
     ctx.save();
     // where it starts
     {
-      const xs = X(k, CK[0][1]);
-      const ys = Yv(k, val(CK[0][1]));
-      ctx.globalAlpha = fadeOut * quiet * clamp((t - TI1 + 0.2) / 0.3);
+      const xs = X(k, COLD5.startY);
+      const ys = Yv(k, val(COLD5.startY));
+      ctx.globalAlpha = fadeOut * quiet;
       text(ctx, "2001 年", xs - 4, ys - 66, 24, 700, SERIF, SOFT);
-      text(ctx, `${fmtUsd(val(CK[0][1]))} 美元`, xs - 4, ys - 28, 34, 900, SANS, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      text(ctx, `${fmtUsd(val(COLD5.startY))} 美元`, xs - 4, ys - 28, 34, 900, SANS, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
     }
     let newest = -1;
     COLD5.marks.forEach((m, i) => {
@@ -2088,9 +2103,9 @@ export const createFilm5 = (S: Spec) => {
     if (t >= top.at) {
       const s = 1 + 0.4 * env(t, top.at, 0.01, 0.14);
       ctx.globalAlpha = fadeOut * clamp((t - top.at) / 0.08) * (1 - clamp((t - COLD5.crash.at) / 0.12));
-      text(ctx, "2001 → 2026", 84, 712, 30, 700, SANS, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      text(ctx, "2001 → 2026", 84, 768, 30, 700, SANS, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
       ctx.save();
-      ctx.translate(76, 877);
+      ctx.translate(76, 925);
       ctx.scale(s, s);
       text(ctx, "×21", 0, 0, 170, 900, SANS, GOLD, { glow: "rgba(255,201,77,0.6)", glowBlur: 30 });
       ctx.restore();

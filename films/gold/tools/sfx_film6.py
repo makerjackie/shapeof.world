@@ -363,6 +363,9 @@ for c in CUES.get("fx", []):
         put(swish(0.8), at, 0.14)
     elif f == "bw":
         put(ashwind(1.4, 0.8), at, 0.2)
+    elif f == "title":
+        put(impact(1.0), at, 0.4)
+        put(stamp(1.2), at, 0.3)
     elif f == "ceil":
         put(glass(0.8), at, 0.32)
         put(crack(0.8), at, 0.22)
