@@ -332,7 +332,7 @@ for L in CUES["ending"]:
         put(impact(0.8), L["t"], 0.3)
     else:
         put(swish(0.6), L["t"], 0.1)
-put(chime(), CUES["card"], 0.2)
+# no chime on the end card
 for c in CUES.get("fx", []):
     at, f = c["t"], c["fx"]
     if f == "pop":

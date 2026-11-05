@@ -1226,9 +1226,6 @@ export const createFilm5 = (S: Spec) => {
     if (k.lg > 0.05) return;
     const c = k.c;
     const h = headAt(t);
-    let npin = 0;
-    // reminders at the top step aside while the head (and its card) is up there
-    const pinA = clamp((h.y - (k.top + 70)) / 90);
     ctx.save();
     for (const w of WIRES) {
       const ts = solveT(w.v);
@@ -1242,11 +1239,6 @@ export const createFilm5 = (S: Spec) => {
       const solved = t >= ts;
       const pinned = wy < k.top - 24;
       if (pinned && !solved) {
-        // the old high is above the frame: a reminder at the top
-        ctx.globalAlpha = on * 0.9 * pinA;
-        const py = k.top - 10 - 34 * npin++;
-        text(ctx, `▲ ${w.name} · 较前高 ${gap < 0 ? "−" : "+"}${Math.round(Math.abs(gap) * 100)}%，${fmtN(days)} 天`, 52, py, 24, 700, SANS, "#d6b6b0", { glow: "rgba(0,0,0,0.95)", glowBlur: 8, maxW: 880 });
-        OCC.push([40, py - 26, SAFE_R, py + 6]);
         continue;
       }
       const xa = clamp(X(k, w.y0), 40, SAFE_R);
@@ -1299,10 +1291,7 @@ export const createFilm5 = (S: Spec) => {
       const gap = 1 - val(c) / rv;
       const dim = 1 - 0.35 * k.ca;
       if (wy < k.top - 24 && !solved) {
-        ctx.globalAlpha = on * 0.9 * dim * pinA;
-        const py = k.top - 10 - 34 * npin++;
-        text(ctx, `▲ ${REAL.name}，扣掉通胀 ≈ ${fmtN(rv)} 美元 · 还差 ${Math.round(gap * 100)}%`, 52, py, 24, 700, SANS, SILVER, { glow: "rgba(0,0,0,0.95)", glowBlur: 8, maxW: 900 });
-        OCC.push([40, py - 26, SAFE_R, py + 6]);
+        // above the frame: nothing (no reminder text)
       } else if (on > 0.01) {
         const yL = Math.max(REAL.y0, k.cx - k.hxw / k.ppy - 0.5);
         const yR = k.cx + (SAFE_R - k.hxw) / k.ppy;
@@ -1325,17 +1314,6 @@ export const createFilm5 = (S: Spec) => {
         ctx.setLineDash([]);
         ctx.shadowBlur = 0;
         const xa = clamp(X(k, yL), 40, SAFE_R);
-        const ya = Yv(k, realV(yL));
-        // two short lines at the left, clear of the card at the head
-        const l1 = "1980 年高点，扣掉通胀";
-        const l2 = `≈ ${fmtN(rv)} 美元 · 还差 ${Math.max(0, Math.round(gap * 100))}%`;
-        const lb: [number, number, number, number] = [xa, ya - 68, xa + 20 + Math.max(measure(ctx, l1, 22, 700, SANS), measure(ctx, l2, 22, 700, SANS)), ya - 8];
-        const pb = pctLayout(ctx, t)?.box;
-        if (!solved && !(pb && hitsBox(pb, lb))) {
-          text(ctx, l1, xa + 10, ya - 44, 22, 700, SANS, SILVER, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
-          text(ctx, l2, xa + 10, ya - 14, 22, 700, SANS, SILVER, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
-          OCC.push([xa, ya - 68, xa + 20 + Math.max(measure(ctx, l1, 22, 700, SANS), measure(ctx, l2, 22, 700, SANS)), ya - 8]);
-        }
         if (solved) solvedFx(ctx, xa, SAFE_R, wy, clamp(h.x - 150, 160, 700), t - tsR, on, "真解套");
       }
     }
