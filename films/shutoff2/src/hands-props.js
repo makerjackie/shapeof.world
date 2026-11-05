@@ -37,7 +37,7 @@ export function screenMaterial(o = {}) {
   const u = {
     ...G,
     uTex: { value: null }, uHas: { value: 0 }, uGlow: { value: 1 }, uGain: { value: o.gain ?? 1.0 },
-    uOff: { value: new THREE.Color(o.off ?? '#07080c') }, uId: { value: o.id ?? 60 }, uSheen: { value: o.sheen ?? 0.06 },
+    uOff: { value: new THREE.Color(o.off ?? '#07080c') }, uId: { value: o.id ?? 60 }, uSheen: { value: o.sheen ?? 0.035 },
   };
   const vs = /* glsl */ `${VERT_STD}\n void main(){ stdVertex(position, normal); }`;
   const fs = /* glsl */ `
@@ -52,7 +52,7 @@ export function screenMaterial(o = {}) {
       if(uHas > 0.5) c = mix(uOff, texture(uTex, vUv).rgb * uGain, clamp(uGlow, 0.0, 1.0)) + texture(uTex, vUv).rgb * uGain * max(uGlow - 1.0, 0.0);
       vec3 V = normalize(cameraPosition - vWorld);
       vec3 R = reflect(-V, N);
-      float sheen = smoothstep(0.55, 0.9, dot(R, normalize(uKeyDir + vec3(0.0, 0.3, 0.0)))) * uSheen;
+      float sheen = smoothstep(0.86, 0.99, dot(R, normalize(uKeyDir + vec3(0.0, 0.3, 0.0)))) * uSheen;
       c += mix(uSkyTint, uSunColor, 0.5) * sheen * (1.0 - 0.6 * clamp(uGlow, 0.0, 1.0));
       writeOut(c, 1.0, NV, vDepth, uId);
     }

@@ -9,7 +9,7 @@ const SCR = [SCREEN.x, SCREEN.y, SCREEN.z];
 // shared morning look: low ENE sun through both glass walls, character shadow map over the whole room
 const SUN = { sunElev: 14, sunAz: 58 };
 const base = (o = {}) => ({
-  preset: 'morning', ...SUN, shafts: 0.3, ambient: '#707888',
+  preset: 'morning', ...SUN, shafts: 0.3, ambient: '#707888', fogCool: '#cfe2f2',
   shadow: { center: [0, Y(2.0), -0.5], radius: 12.5, depth: 26 },
   ...o,
 });
@@ -46,7 +46,7 @@ export const CAMS = {
   // s19 vote: low along the left row of vote units toward the screen
   s19: (lt, d) => {
     const k = smooth(lt / d);
-    return { pos: mixA([-0.22, TOP + 0.3, 2.62], [-0.2, TOP + 0.33, 2.3], k), look: mixA([-0.42, Y(1.5), -6], [-0.38, Y(1.6), -6], k), fov: 52, near: 0.03 };
+    return { pos: mixA([-0.3, TOP + 0.26, 2.55], [-0.29, TOP + 0.28, 2.25], k), look: mixA([-0.62, Y(1.0), -6], [-0.58, Y(1.05), -6], k), fov: 54, near: 0.03 };
   },
   // s20 ask (top band): 林工's eyeline down the table to the chair; heads turn toward us
   s20: (lt, d, t, st) => {
@@ -61,10 +61,10 @@ export const CAMS = {
   // s25 phones: open on 张主任's phone (readable), then tilt up to his under-lit face
   s25: (lt, d, t, st) => {
     const ph = seatFrame('zhang').at(0.2, 0.13);
-    const k = smoother(invLerp(1.7, 4.6, lt));
-    const pos = mixA([ph[0] - 0.13, TOP + 0.26, ph[2] + 0.02], [ph[0] - 0.62, TOP + 0.3, ph[2] + 0.1], k);
-    const look = mixA([ph[0] + 0.02, TOP, ph[2]], [ph[0] + 0.62, Y(1.12), ph[2] - 0.12], k);
-    return { pos, look, fov: lerp(40, 46, k), near: 0.02 };
+    const k = smoother(invLerp(2.7, 4.9, lt));
+    const pos = mixA([ph[0] - 0.13, TOP + 0.26, ph[2] + 0.02], [-0.12, TOP + 0.27, -0.18], k);
+    const look = mixA([ph[0] + 0.02, TOP, ph[2]], [0.96, Y(1.04), -0.42], k);
+    return { pos, look, fov: lerp(40, 44, k), near: 0.02 };
   },
 };
 
@@ -78,9 +78,10 @@ export const LOOKS = {
   s23: () => base({ shafts: 0.4 }),
   s25: (lt, d, t, st) => {
     // five phones as cold local lights, lit at the cue
-    const on = st.tr >= 109.0 ? smooth(invLerp(109.0, 109.08, st.tr)) : 0;
+    const c = st.cues.phonesLight;
+    const on = st.tr >= c ? smooth(invLerp(c, c + 0.08, st.tr)) : 0;
     const ids = ['bun', 'bob', 'zhang', 'heavy', 'young'];
-    const lights = ids.map((id) => ({ pos: phonePos(id), r: 0.62, color: '#bcd4ff', i: 0.4 * on }));
-    return base({ lights, exposure: 1.02, shafts: 0.25 });
+    const lights = ids.map((id) => ({ pos: phonePos(id), r: 0.85, color: '#a9c6ff', i: 0.95 * on }));
+    return base({ lights, exposure: 0.92, bloom: 0.35, threshold: 1.5, shafts: 0.0, ambient: '#3c4252' });
   },
 };

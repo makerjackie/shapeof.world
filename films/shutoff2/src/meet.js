@@ -3,7 +3,7 @@ import { airMaterial, dustMaterial, skyMaterial } from './meet-mat.js';
 import { buildRoom } from './meet-room.js';
 import { buildProps } from './meet-props.js';
 import { buildCast } from './people-cast.js';
-import { armIK, headLook, bodyPose } from './people.js';
+import { armIK, headLook, bodyPose, peopleMats } from './people.js';
 import { FLOOR, ROOM, TABLE, TOP, SCREEN, SEATS, PHONE_LIN, seatFrame } from './meet-layout.js';
 import { onTwos, smooth, invLerp, clamp, lerp, Rng, noise1 } from './util.js';
 
@@ -31,7 +31,8 @@ export function createMeet(ctx) {
   for (const [id, p] of Object.entries(cast)) {
     const s = SEATS[id];
     const fx = Math.sin(s.yaw), fz = Math.cos(s.yaw);
-    p.root.position.set(s.x - fx * 0.05, FLOOR, s.z - fz * 0.05);
+    const sit = id === 'lin' ? 0.02 : 0.07;   // sit forward on the chair, close to the table
+    p.root.position.set(s.x + fx * sit, FLOOR, s.z + fz * sit);
     p.root.rotation.y = s.yaw;
     people.add(p.root);
   }
@@ -87,7 +88,7 @@ export function createMeet(ctx) {
     // hands rest near the edge; elbows out and back
     for (let k = 0; k < 2; k++) {
       const side = k === 0 ? 1 : -1;     // +1 = person's left
-      const tgt = o.hand?.[k] ?? F.at(o.reach ?? 0.1, side * (o.spread ?? 0.13), TOP + 0.035);
+      const tgt = o.hand?.[k] ?? F.at(o.reach ?? 0.05, side * (o.spread ?? 0.15), TOP + 0.035);
       tmp.set(...tgt);
       pole.set(-F.fx * 0.6 + F.lx * side * 1.0, -0.7, -F.fz * 0.6 + F.lz * side * 1.0);
       armIK(rig, k, tmp, pole, side * (o.twist ?? 1.2));
@@ -113,8 +114,8 @@ export function createMeet(ctx) {
       // ---- shot-specific acting
       if (st.sid === 's20' && id !== 'lin') {
         // heads turn toward 林工, one after another; the chair is already looking at him
-        const t0 = id === 'chair' ? -1 : CUES.ask - 0.5 + [0, 0, 0.35, 0.15, 0.55, 0.25][i];
-        const k = smooth(invLerp(t0, t0 + 0.55, onTwos(t)));
+        const t0 = id === 'chair' ? -1 : CUES.ask + 0.6 + [0, 0.55, 0.15, 0.95, 0.35, 1.2][i];
+        const k = smooth(invLerp(t0, t0 + 0.75, onTwos(t)));
         const toLin = linHead.clone();
         look.lerp(toLin, k);
         if (id === 'chair') { look.copy(toLin); lean = 0.1; }
@@ -147,14 +148,14 @@ export function createMeet(ctx) {
           const side = k === 0 ? 1 : -1;
           const off = new V(side * (0.012 + 0.06 * clap), -0.02, 0).applyMatrix4(new THREE.Matrix4().extractRotation(rig.torso.matrixWorld));
           const tgtStand = chest.clone().add(off);
-          const tgtSeat = new V(...F.at(0.1, side * 0.13, TOP + 0.035));
+          const tgtSeat = new V(...F.at(0.05, side * 0.15, TOP + 0.035));
           const tg = tgtSeat.lerp(tgtStand, smooth(invLerp(0.3, 0.9, stand)));
           pole.set(-F.fx * 0.3 + F.lx * side, -1.0, -F.fz * 0.3 + F.lz * side);
           armIK(rig, k, tg, pole, side * lerp(1.2, 0.2, stand));
           rig.wrist[k].rotation.set(0.1, 0, 0);
         }
       } else if (id === 'lin') {
-        handsOnTable(id, p, { reach: 0.16, spread: 0.18 });
+        handsOnTable(id, p, { reach: 0.1, spread: 0.17 });
       } else {
         // s19: each member reaches for the vote key just before their light comes on
         let o = {};
@@ -164,7 +165,7 @@ export function createMeet(ctx) {
           const k = smooth(invLerp(tv - 0.45, tv - 0.05, onTwos(t))) * (1 - smooth(invLerp(tv + 0.25, tv + 0.7, onTwos(t))));
           if (k > 0) {
             const u = P.units.find((x) => x.id === id);
-            const rest = new V(...F.at(0.1, -0.13, TOP + 0.035));
+            const rest = new V(...F.at(0.05, -0.15, TOP + 0.035));
             const key = u.pos.clone(); key.y = TOP + 0.04;
             o.hand = [null, rest.lerp(key, k).toArray()];
           }
@@ -186,8 +187,8 @@ export function createMeet(ctx) {
     let gc = 0, gz = 0;
     const t = onTwos(st.tr);
     if (st.sid === 's20') {
-      gc = smooth(invLerp(CUES.ask + 0.6, CUES.ask + 0.9, t));
-      gz = smooth(invLerp(CUES.ask + 0.15, CUES.ask + 0.45, t));
+      gc = smooth(invLerp(CUES.ask + 0.1, CUES.ask + 0.3, t)) * (1 - 0.6 * smooth(invLerp(CUES.ask + 1.0, CUES.ask + 1.6, t)));
+      gz = smooth(invLerp(CUES.ask + 1.35, CUES.ask + 1.55, t));
     }
     if (st.sid === 's25') {
       gz = smooth(invLerp(CUES.phonesLight, CUES.phonesLight + 0.12, t)) * 0.9;
@@ -197,6 +198,9 @@ export function createMeet(ctx) {
     set('chair', gc * 1.6); set('zhang', gz * 1.6);
   }
 
+  // s26 starts inside this room and flies out through the window: keep the room for its first 3 s
+  const s26 = (ctx.SHOTS || []).find((x) => x.id === 's26');
+  const ROOM_UNTIL = s26 ? s26.start + 3 : 116;
   const seat = new V(SEATS.lin.x, FLOOR + 0.47, SEATS.lin.z);
   return {
     seat,
@@ -205,7 +209,7 @@ export function createMeet(ctx) {
     screen: new V(SCREEN.x, SCREEN.y, SCREEN.z),
     cast, props: P, room: R,
     update(st) {
-      const on = st.set === 'meet' || (st.sid === 's26' && st.tr < 116);
+      const on = st.set === 'meet' || (st.sid === 's26' && st.tr < ROOM_UNTIL);
       R.room.visible = P.group.visible = people.visible = on;
       airBox.visible = dust.visible = st.set === 'meet';
       if (sky) sky.visible = on;
@@ -226,7 +230,7 @@ export function createMeet(ctx) {
       for (const u of P.units) {
         const vi = VOTE_ORDER.indexOf(u.id);
         const tv = CUES.votes + vi * VOTE_STEP;
-        const k = st.tr >= 81.0 ? (st.tr >= tv ? 1 : 0) : 0;
+        const k = st.tr >= tv ? 1 : 0;
         const m = u.mat.uniforms;
         if (k) { m.uEmis.value.set('#46ff86'); m.uEmisGain.value = 2.4; }
         else { m.uEmis.value.set('#59606c'); m.uEmisGain.value = 0.6; }
@@ -235,6 +239,9 @@ export function createMeet(ctx) {
       const linOn = ['s04', 's14', 's23', 's25'].includes(st.sid);
       cast.lin.root.visible = linOn;
       R.chairs.lin.visible = !['s01', 's09', 's19', 's20'].includes(st.sid);
+      // s25: the room's light falls away from the faces; the phones light them from below
+      const PM = peopleMats(), s25 = st.sid === 's25';
+      for (const k of ['face', 'skin', 'hair', 'suit', 'shirt', 'tie', 'lapel']) { const sk = k === 'face' || k === 'skin'; PM[k].uniforms.uPLGain.value = s25 ? (sk ? 1.9 : 1.4) : 1; PM[k].uniforms.uSil.value = s25 ? (sk ? 1.5 : 1.15) : 0.25; PM[k].uniforms.uUnder.value = s25 ? 1 : 0; }
       poseAll(st);
       glints(st);
     },

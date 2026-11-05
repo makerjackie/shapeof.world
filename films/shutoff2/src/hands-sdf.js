@@ -42,6 +42,7 @@ export class Prim {
     this.kind = o.kind;               // 'cap' | 'ell' | 'box'
     this.tag = o.tag ?? 0;            // region tag (colour / id)
     this.local = new THREE.Matrix4().compose(_v.set(...(o.t ?? [0, 0, 0])), _q.setFromEuler(_e.set(...(o.r ?? [0, 0, 0]).map((x) => x * D2R), o.order ?? 'YZX')), _s);
+    if (o.pre) this.local.premultiply(o.pre);
     this.inv = new Float64Array(12);
     // cap: segment along +X from 0 to L, radius r0 → r1, cross-section squashed by sy (local y) / sz (local z)
     this.L = o.L ?? 0; this.r0 = o.r0 ?? 0.01; this.r1 = o.r1 ?? this.r0; this.sy = o.sy ?? 1; this.sz = o.sz ?? 1;
@@ -216,8 +217,8 @@ export function polygonize(f, min, max, h, opt = {}) {
 // A sculpt = rig + primitives + field + per-vertex decoration. build(pose) polygonises at that pose and derives
 // bone weights from the primitive distances; deform(pose) re-poses the mesh (linear blend skinning, top 4 bones).
 export class Sculpt {
-  constructor({ rig, prims, field, bounds, h, sigma = 0.004, decorate, margin, project }) {
-    Object.assign(this, { rig, prims, field, bounds, h, sigma, decorate, margin, project });
+  constructor({ rig, prims, field, bounds, h, sigma = 0.004, decorate, margin, project, smoothEps = 0 }) {
+    Object.assign(this, { rig, prims, field, bounds, h, sigma, decorate, margin, project, smoothEps });
   }
   setPose(worlds) { for (const p of this.prims) p.setPose(worlds); }
   build(over) {
@@ -276,7 +277,22 @@ export class Sculpt {
     geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(m.pos), 3));
     geo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(m.nrm), 3));
     geo.setIndex(new THREE.BufferAttribute(m.idx, 1));
-    const base = { pos: m.pos, nrm: m.nrm, W, BI, inv0, nearest, geo, count: nv };
+    // shading normals: the gradient of the field over a wide stencil, so cel shadow shapes stay broad and simple
+    const sn = new Float32Array(m.nrm);
+    if (this.smoothEps > 0) {
+      const f = this.field, e = this.smoothEps;
+      for (let v = 0; v < nv; v++) {
+        const x = m.pos[v * 3], y = m.pos[v * 3 + 1], z = m.pos[v * 3 + 2];
+        let gx = f(x + e, y, z) - f(x - e, y, z), gy = f(x, y + e, z) - f(x, y - e, z), gz = f(x, y, z + e) - f(x, y, z - e);
+        const l = Math.hypot(gx, gy, gz) || 1;
+        gx /= l; gy /= l; gz /= l;
+        // never let the shading normal face away from the true one
+        const d = gx * m.nrm[v * 3] + gy * m.nrm[v * 3 + 1] + gz * m.nrm[v * 3 + 2];
+        if (d > 0.2) { sn[v * 3] = gx; sn[v * 3 + 1] = gy; sn[v * 3 + 2] = gz; }
+      }
+    }
+    geo.setAttribute('aSN', new THREE.BufferAttribute(new Float32Array(sn), 3));
+    const base = { pos: m.pos, nrm: m.nrm, snrm: sn, W, BI, inv0, nearest, geo, count: nv };
     if (this.decorate) this.decorate(base, this);
     geo.boundingSphere = null; geo.computeBoundingSphere();
     base.ms = performance.now() - t0;
@@ -293,13 +309,14 @@ export class Sculpt {
       const e = tm.elements;
       S.set([e[0], e[1], e[2], e[4], e[5], e[6], e[8], e[9], e[10], e[12], e[13], e[14]], b * 12);
     }
-    const P0 = base.pos, N0 = base.nrm, W = base.W, BI = base.BI;
-    const pa = base.geo.attributes.position, na = base.geo.attributes.normal;
-    const P1 = pa.array, N1 = na.array;
+    const P0 = base.pos, N0 = base.nrm, SN0 = base.snrm, W = base.W, BI = base.BI;
+    const pa = base.geo.attributes.position, na = base.geo.attributes.normal, sa = base.geo.attributes.aSN;
+    const P1 = pa.array, N1 = na.array, SN1 = sa.array;
     for (let v = 0; v < base.count; v++) {
       const x = P0[v * 3], y = P0[v * 3 + 1], z = P0[v * 3 + 2];
       const nx = N0[v * 3], ny = N0[v * 3 + 1], nz = N0[v * 3 + 2];
-      let px = 0, py = 0, pz = 0, qx = 0, qy = 0, qz = 0;
+      const sx = SN0[v * 3], sy = SN0[v * 3 + 1], sz = SN0[v * 3 + 2];
+      let px = 0, py = 0, pz = 0, qx = 0, qy = 0, qz = 0, rx = 0, ry = 0, rz = 0;
       for (let i = 0; i < 4; i++) {
         const w = W[v * 4 + i];
         if (w <= 0) continue;
@@ -310,12 +327,17 @@ export class Sculpt {
         qx += w * (S[o] * nx + S[o + 3] * ny + S[o + 6] * nz);
         qy += w * (S[o + 1] * nx + S[o + 4] * ny + S[o + 7] * nz);
         qz += w * (S[o + 2] * nx + S[o + 5] * ny + S[o + 8] * nz);
+        rx += w * (S[o] * sx + S[o + 3] * sy + S[o + 6] * sz);
+        ry += w * (S[o + 1] * sx + S[o + 4] * sy + S[o + 7] * sz);
+        rz += w * (S[o + 2] * sx + S[o + 5] * sy + S[o + 8] * sz);
       }
+      const ls = Math.hypot(rx, ry, rz) || 1;
+      SN1[v * 3] = rx / ls; SN1[v * 3 + 1] = ry / ls; SN1[v * 3 + 2] = rz / ls;
       const l = Math.hypot(qx, qy, qz) || 1;
       P1[v * 3] = px; P1[v * 3 + 1] = py; P1[v * 3 + 2] = pz;
       N1[v * 3] = qx / l; N1[v * 3 + 1] = qy / l; N1[v * 3 + 2] = qz / l;
     }
-    pa.needsUpdate = true; na.needsUpdate = true;
+    pa.needsUpdate = true; na.needsUpdate = true; sa.needsUpdate = true;
     return worlds;
   }
 }
@@ -362,19 +384,33 @@ export function sculptMaterial(o = {}) {
     uSheenAxis: { value: new THREE.Vector3(0, 1, 0) },
     uExtraDark: { value: o.extraDark ?? 0 },
     uLocalK: { value: o.localK ?? 1 },
+    uSmoothK: { value: o.smoothK ?? 0.8 },
+    uFaceDark: { value: o.faceDark ?? 1 },
+    uRimW: { value: o.rimW ?? 0.62 },
+    // per-fragment regions from the signed value in aFx.y: >= 0 → colP/idP, < 0 → colN/idN, a band just below 0 → colB/idB
+    uRegOn: { value: o.region ? 1 : 0 },
+    uColP: { value: new THREE.Color(o.region?.colP ?? '#ffffff') }, uIdP: { value: o.region?.idP ?? 1 },
+    uColN: { value: new THREE.Color(o.region?.colN ?? '#000000') }, uIdN: { value: o.region?.idN ?? 2 },
+    uColB: { value: new THREE.Color(o.region?.colB ?? '#000000') }, uIdB: { value: o.region?.idB ?? 3 }, uBand: { value: o.region?.band ?? 0 },
+    uHairNeg: { value: o.region?.hairNeg ? 1 : 0 },
+    uCrevT: { value: o.crevT ?? 0.62 },
   };
   const vs = /* glsl */ `
     attribute vec3 aCol;
     attribute vec4 aMat;
     attribute vec3 aNail;
     attribute float aCrease;
+    attribute vec3 aSN;
+    attribute vec2 aFx;
+    varying vec3 vSN;
+    varying vec2 vFx;
     varying vec3 vCol;
     flat varying float vId;
     varying vec4 vMat;
     varying vec3 vNail;
     varying float vCrease;
     ${VERT_STD}
-    void main(){ vCol = aCol; vId = aMat.x; vMat = aMat; vNail = aNail; vCrease = aCrease; stdVertex(position, normal); }
+    void main(){ vCol = aCol; vId = aMat.x; vMat = aMat; vNail = aNail; vCrease = aCrease; vSN = normalize(mat3(modelMatrix) * aSN); vFx = aFx; stdVertex(position, normal); }
   `;
   const fs = /* glsl */ `
     ${COMMON}
@@ -390,12 +426,26 @@ export function sculptMaterial(o = {}) {
     varying vec4 vMat;
     varying vec3 vNail;
     varying float vCrease;
+    varying vec3 vSN;
+    varying vec2 vFx;
+    uniform float uRimW;
+    uniform float uSmoothK, uCrevT, uFaceDark, uRegOn, uIdP, uIdN, uIdB, uBand, uHairNeg;
+    uniform vec3 uColP, uColN, uColB;
     void main(){
       if(uPass > 0.5 && uPass < 1.5){ oColor = vec4(1); oData = vec4(0); return; }
-      vec3 N = normalize(vNormalW); vec3 NV = normalize(vNormalV);
-      if(!gl_FrontFacing){ N = -N; NV = -NV; }
+      vec3 Nd = normalize(vNormalW); vec3 NV = normalize(vNormalV);
+      vec3 Ns = normalize(vSN);
+      if(!gl_FrontFacing){ Nd = -Nd; NV = -NV; Ns = -Ns; }
+      vec3 N = normalize(mix(Nd, Ns, uSmoothK));
       vec3 col = vCol;
       float id = vId;
+      float hairM = step(0.5, vFx.y);
+      if(uRegOn > 0.5){
+        float rg = vFx.y;
+        if(rg >= 0.0){ col = uColP; id = uIdP; hairM = 0.0; }
+        else if(rg > -uBand){ col = uColB; id = uIdB; hairM = 0.0; }
+        else { col = uColN; id = uIdN; hairM = uHairNeg; }
+      }
       // nail plate: crisp ellipse from interpolated nail coordinates
       float nr = length(vNail.xy);
       float nail = step(0.5, vNail.z) * (1.0 - step(1.0, nr));
@@ -407,7 +457,9 @@ export function sculptMaterial(o = {}) {
       float ndl = dot(N, uKeyDir);
       float sh = sunShadow(vWorld, N);
       float lit = smoothstep(-0.02, 0.04, ndl) * sh;
-      float crev = step(0.42, vMat.y * uAOK);
+      float face = step(0.5, vFx.x) * uFaceDark;     // faces stay in shadow: never lit, barely touched by local light
+      lit *= 1.0 - face;
+      float crev = step(uCrevT, vMat.y * uAOK);
       lit *= 1.0 - crev;
       vec3 litCol = col * mix(uSkyTint, uSunColor * 1.06, uSunStrength);
       float up = smoothstep(-0.7, 0.6, N.y);
@@ -417,13 +469,13 @@ export function sculptMaterial(o = {}) {
       float deep = step(ndl, -0.55) * step(N.y, -0.35);
       outc = mix(outc, col * uDeepTint, deep * 0.6);
       outc *= 1.0 - crev * 0.18 - uExtraDark;
-      vec3 ll = localLights(vWorld, N) * uLocalK;
+      vec3 ll = localLights(vWorld, N) * uLocalK * (1.0 - 0.85 * face);
       outc += col * (uAmbient + ll * (1.0 - crev * 0.6));
       vec3 V = normalize(cameraPosition - vWorld);
       // rim: strongest when the key is behind the subject
-      float fres = 1.0 - max(dot(N, V), 0.0);
+      float fres = 1.0 - max(dot(Nd, V), 0.0);
       float back = smoothstep(-0.2, 0.5, dot(-V, uKeyDir));
-      float rimL = smoothstep(0.62, 0.7, fres) * smoothstep(-0.25, 0.1, ndl) * back * uRimK;
+      float rimL = smoothstep(uRimW, uRimW + 0.08, fres) * smoothstep(-0.25, 0.1, ndl) * back * uRimK;
       vec3 rimC = uRimUseSun > 0.5 ? uSunColor * 1.25 : uRimCol;
       outc = mix(outc, rimC * mix(1.0, length(col) * 0.7 + 0.4, 0.5), clamp(rimL, 0.0, 1.0));
       // hard highlight (nails always; elsewhere by gloss)
@@ -433,16 +485,19 @@ export function sculptMaterial(o = {}) {
       outc = mix(outc, mix(vec3(1.0), uSunColor, 0.35) * 1.1, spec * 0.85);
       // local-light highlight on nails (phone glow catching the nail)
       // hair sheen band
-      if(uSheen > 0.0){
-        float band = abs(dot(normalize(cross(N, uSheenAxis)), V));
-        outc += col * uSheen * step(0.92, band) * (0.3 + lit);
+      if(uSheen > 0.0 && hairM > 0.5){
+        // hair: a broken highlight band ("angel ring") across the locks, brighter where lit
+        float band = dot(N, normalize(V + uKeyDir * 0.3));
+        float ring = step(0.58, band) * step(band, 0.7);
+        outc += mix(uSkyTint, vec3(1.0), 0.5) * uSheen * ring * (0.35 + lit * 0.65) + ll * col * 0.6 * ring;
       }
       // drawn creases / folds
-      float fw = max(fwidth(vCrease), 1e-6);
-      float lw = uLineW;
-      float line = 1.0 - smoothstep(lw, lw + fw * 1.2, vCrease);
-      float vis = 1.0 - smoothstep(lw * 0.9, lw * 2.2, fw * 1.6);
-      outc = mix(outc, mix(uLineCol, outc * 0.3, 0.3), line * vis * 0.85);
+      // pen lines ~1.3 px wide; drawn only while a pixel covers less than uLineW metres (close enough to read)
+      float fw = max(fwidth(vCrease), 1e-7);
+      float lw = fw * 1.1;
+      float line = 1.0 - smoothstep(lw, lw + fw, vCrease);
+      float vis = 1.0 - smoothstep(uLineW * 0.6, uLineW * 1.2, fw);
+      outc = mix(outc, mix(outc * 0.42, uLineCol * 0.6, 0.25), line * vis * 0.8);
       writeOut(outc, 1.0, NV, vDepth, id);
     }
   `;
@@ -450,7 +505,7 @@ export function sculptMaterial(o = {}) {
 }
 
 // Fill the decoration attributes with defaults (colour, id) so a sculpt can override only what it needs.
-export function decoAttrs(base, { col, id, ao, pale, gloss, nail, crease }) {
+export function decoAttrs(base, { col, id, ao, pale, gloss, nail, crease, fx }) {
   const n = base.count, geo = base.geo;
   geo.setAttribute('aCol', new THREE.BufferAttribute(col ?? new Float32Array(n * 3).fill(0.8), 3));
   const m = new Float32Array(n * 4);
@@ -460,4 +515,5 @@ export function decoAttrs(base, { col, id, ao, pale, gloss, nail, crease }) {
   geo.setAttribute('aMat', new THREE.BufferAttribute(m, 4));
   geo.setAttribute('aNail', new THREE.BufferAttribute(nail ?? new Float32Array(n * 3), 3));
   geo.setAttribute('aCrease', new THREE.BufferAttribute(crease ?? new Float32Array(n).fill(1), 1));
+  geo.setAttribute('aFx', new THREE.BufferAttribute(fx ?? new Float32Array(n * 2), 2));
 }

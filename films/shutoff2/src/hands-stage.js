@@ -2,16 +2,17 @@
 import * as THREE from 'three';
 import { ROOM, ROOM_M } from './room-layout.js';
 import { onTwos, noise1, smooth, invLerp, clamp, lerp } from './util.js';
+import * as ML from './meet-layout.js';
 
 let CTX = null;
 export function bindCtx(ctx) { CTX = ctx; }
 
 // The meeting-room table edge on 林工's side (+Z). The Meet department may expose ctx.meet.table =
 // { top (world y of the table top), edgeZ (world z of 林工's edge), x (world x of his seat centre) }.
-const STANDIN = { top: 150.74, edgeZ: 1.3, x: 0.0 };
+// Read from the Meet department's layout module (src/meet-layout.js: TOP, EDGE_LIN, SEATS.lin).
+const STANDIN = { top: 150.74, edgeZ: 2.4, x: 0.0 };
 export function meetTable() {
-  const t = CTX?.meet?.table;
-  if (t && Number.isFinite(t.top) && Number.isFinite(t.edgeZ)) return { top: t.top, edgeZ: t.edgeZ, x: t.x ?? 0, real: true };
+  if (Number.isFinite(ML.TOP) && Number.isFinite(ML.EDGE_LIN)) return { top: ML.TOP, edgeZ: ML.EDGE_LIN, x: ML.SEATS?.lin?.x ?? 0, real: true };
   return { ...STANDIN, real: false };
 }
 
@@ -47,7 +48,7 @@ export const STAGES = {
     mesh: 'rest', tendon: 0.55,
     matrix() {
       const T = meetTable();
-      return frame(V(T.x - 0.2, T.top + 0.0205, T.edgeZ - 0.075), V(1, -0.035, -0.12), V(0, 1, 0), -7);
+      return frame(V(T.x - 0.24, T.top + 0.0205, T.edgeZ - 0.06), V(0.906, -0.03, -0.423), V(0, 1, 0), -7);
     },
     over(lt, d) {
       const k = smooth(invLerp(0.3, d - 0.4, onTwos(lt)));           // tension builds through the shot
@@ -58,7 +59,7 @@ export const STAGES = {
         r: [lerp(-10, -6, k), lerp(-24, -44, k), lerp(-14, -30, k)],
         l: [lerp(-12, -8, k), lerp(-28, -48, k), lerp(-16, -32, k)],
       }, { i: lerp(-2, -4, k), l: lerp(2, 4, k) });
-      o.hand = { r: [0, 0, lerp(-6, -1, k)] };
+      o.hand = { r: [0, 26, lerp(-6, -1, k)] };
       o.t1 = { r: [0, lerp(0, 6, k), lerp(0, -4, k)] };
       o.t2 = { r: [0, 0, lerp(-6, -14, k)] };
       o.t3 = { r: [0, 0, lerp(-8, -22, k)] };
@@ -74,14 +75,14 @@ export const STAGES = {
       const t = onTwos(lt);
       const twitch = smooth(invLerp(1.5, 1.75, t)) * (1 - smooth(invLerp(2.1, 2.6, t)));   // the index finger lifts when the phone lights
       const o = fingers({}, {
-        i: [-8 + 9 * twitch, -22 + 6 * twitch, -12], m: [-10, -26, -14], r: [-12, -30, -16], l: [-14, -34, -18],
-      }, { i: -3, l: 4 });
+        i: [-12 + 10 * twitch, -36 + 8 * twitch, -22], m: [-14, -40, -24], r: [-16, -44, -26], l: [-18, -46, -26],
+      }, { i: -1, m: 0, r: 1, l: 2 });
       o.hand = { r: [0, 0, -5] };
       o.t2 = { r: [0, 0, -6] }; o.t3 = { r: [0, 0, -10] };
       return o;
     },
     pale: () => 0.1,
-    phone: { pos: [0.02, ROOM.desk.top, -1.64], yaw: -6, canvas: 'phone-lin', glow: (lt, d, st) => 0.25 + 0.75 * smooth(invLerp(st.cues.pulse - 0.05, st.cues.pulse + 0.25, st.tr)) },
+    phone: { pos: [-0.05, ROOM.desk.top, -1.6], yaw: -8, canvas: 'phone-lin', glow: (lt, d, st) => 0.25 + 0.75 * smooth(invLerp(st.cues.pulse - 0.05, st.cues.pulse + 0.25, st.tr)) },
   },
   // s18: the watch rolls 03:12 → 08:59 (same pose as s15, a still hand)
   s18: {
@@ -89,29 +90,29 @@ export const STAGES = {
     matrix() { return STAGES.s15.matrix(); },
     over() { return STAGES.s15.over(0); },
     pale: () => 0.1,
-    phone: { pos: [0.02, ROOM.desk.top, -1.64], yaw: -6, canvas: 'phone-lin', glow: (lt, d) => 0.25 * (1 - smooth(invLerp(0.2, 1.4, lt))) },
+    phone: { pos: [-0.05, ROOM.desk.top, -1.6], yaw: -8, canvas: 'phone-lin', glow: (lt, d) => 0.25 * (1 - smooth(invLerp(0.2, 1.4, lt))) },
   },
   // s21: 「……没有。」 He grips the table edge: palm over the edge, fingers clawing the top, thumb hooked under, knuckles white.
   s21: {
     mesh: 'grip', tendon: 1.0,
     matrix() {
       const T = meetTable();
-      return frame(V(T.x - 0.18, T.top + 0.03, T.edgeZ + 0.035), V(0.12, -0.32, -1), V(0, 1, -0.3), -4);
+      return frame(V(T.x - 0.17, T.top + 0.026, T.edgeZ - 0.012), V(0.1, 0.17, -1), V(0, 1, 0.17), -4);
     },
     over(lt, d) {
       const t = onTwos(lt);
       const k = smooth(invLerp(0.0, 0.6, t));
       const tr = (s) => tw(t, s, 0.7);
       const o = fingers({}, {
-        i: [lerp(-14, -20, k) + tr(3), lerp(-60, -78, k), lerp(-30, -42, k)],
-        m: [lerp(-16, -22, k) + tr(4), lerp(-64, -82, k), lerp(-32, -44, k)],
-        r: [lerp(-18, -24, k) + tr(5), lerp(-66, -84, k), lerp(-34, -46, k)],
-        l: [lerp(-20, -26, k) + tr(6), lerp(-66, -84, k), lerp(-34, -46, k)],
-      }, { i: -2, l: 3 });
-      o.hand = { r: [tr(7) * 0.5, 0, lerp(16, 22, k) + tr(8) * 0.5] };
-      o.t1 = { r: [10, 8, -34] };
-      o.t2 = { r: [0, 0, -24] };
-      o.t3 = { r: [0, 0, -18] };
+        i: [lerp(2, 6, k) + tr(3), lerp(-60, -72, k), lerp(-30, -38, k)],
+        m: [lerp(0, 4, k) + tr(4), lerp(-62, -74, k), lerp(-30, -38, k)],
+        r: [lerp(-2, 2, k) + tr(5), lerp(-62, -74, k), lerp(-30, -38, k)],
+        l: [lerp(-4, 0, k) + tr(6), lerp(-60, -72, k), lerp(-28, -36, k)],
+      }, { i: -3, l: 5 });
+      o.hand = { r: [tr(7) * 0.5, 0, lerp(2, 5, k) + tr(8) * 0.5] };
+      o.t1 = { r: [6, 4, -24] };
+      o.t2 = { r: [0, 0, -12] };
+      o.t3 = { r: [0, 0, -14] };
       return o;
     },
     pale: (lt) => 0.6 + 0.4 * smooth(invLerp(0.0, 0.8, lt)),

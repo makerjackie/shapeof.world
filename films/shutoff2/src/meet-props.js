@@ -135,8 +135,8 @@ export function buildProps(ctx) {
     up.push([tubeGeo(tube([[0, 0.008, 0.008, 0, 2], [0.045, 0.01, 0.01, 0, 2], [0.05, 0.007, 0.007, 0, 2]]), { nu: 14, nv: 4 }).rotateX(Math.PI / 2 - 0.5).translate(0, 0.36, 0.06), '#26282e']);
     add(mergePainted(up), M.unit, u);
     const lightM = meetToon({ id: 105, unlit: true, color: '#000000', emissive: '#ffffff', emissiveGain: 1 });
-    const bar = add(mergePainted([[rbox(0.11, 0.006, 0.008, 0.003, 0, 0.018, 0.049), '#ffffff'], [rbox(0.12, 0.004, 0.014, 0.002, 0, 0.0245, -0.03), '#ffffff'],
-      [new THREE.SphereGeometry(0.0085, 12, 8).translate(0, 0.362, 0.063), '#ffffff']]), lightM, u);
+    const bar = add(mergePainted([[rbox(0.11, 0.006, 0.008, 0.003, 0, 0.018, 0.049), '#ffffff'], [rbox(0.124, 0.005, 0.03, 0.0024, 0, 0.0245, -0.022), '#ffffff'],
+      [new THREE.SphereGeometry(0.011, 12, 8).translate(0, 0.362, 0.063), '#ffffff']]), lightM, u);
     bar.userData.noShadow = true;
     g.add(u);
     units.push({ id, mat: lightM, group: u, pos: new THREE.Vector3(ux, uy + 0.02, uz) });
@@ -177,7 +177,7 @@ export function buildProps(ctx) {
       const ph = makePhone();
       const [px, py, pz] = F.at(0.2, 0.13);
       ph.root.position.set(px, py, pz);
-      ph.root.rotation.y = yawP + R.range(-0.18, 0.18);
+      ph.root.rotation.y = yawP + R.range(-0.18, 0.18) + (id === 'zhang' ? Math.PI + 0.25 : 0);   // 张主任's lies the other way round (readable from across the table)
       g.add(ph.root);
       phones[s.phone] = { ...ph, id, pos: new THREE.Vector3(px, py + 0.01, pz) };
     } else {

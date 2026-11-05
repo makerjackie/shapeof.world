@@ -88,7 +88,7 @@ export function buildScreens(vols, targets, uiTex) {
       for (let k = 0; k < ring.length; k++) {
         const [x0, z0] = ring[k], [x1, z1] = ring[(k + 1) % ring.length];
         const len = Math.hypot(x1 - x0, z1 - z0);
-        if (len < 26) continue;
+        if (len < 32) continue;
         const nx = (z1 - z0) / len, nz = -(x1 - x0) / len;
         const mx = (x0 + x1) / 2, mz = (z0 + z1) / 2;
         const tx = T.p.x - mx, tz = T.p.z - mz, tl = Math.hypot(tx, tz);
@@ -123,7 +123,7 @@ export function buildScreens(vols, targets, uiTex) {
   });
   void bezelMat;
   picked.forEach((c, i) => {
-    const sw = Math.min(c.len * 0.78, 64);
+    const sw = Math.min(c.len * 0.82, 88);
     const sh = sw / 2;
     const y = Math.max(sh / 2 + 30, Math.min(c.V.y1 - sh / 2 - 8, c.V.y1 * (0.55 + 0.25 * rng.next())));
     const mat = screenMaterial(ads[i % ads.length], uiTex);
@@ -138,4 +138,91 @@ export function buildScreens(vols, targets, uiTex) {
     screens.push({ m, mat, p: m.position.clone(), n: new THREE.Vector3(c.nx, 0, c.nz), w: sw });
   });
   return { grp, screens };
+}
+
+// Rooftop name signs on the towers (the city's own, never amber): red, white and blue characters on the crowns.
+// Lit at night; by day they are plain coloured letters on the facade.
+const SIGNS = [['福田中心', '#ff4a3d'], ['国际大厦', '#f4f6ff'], ['金融中心', '#ff4a3d'], ['科技大厦', '#6fb6ff'], ['商务中心', '#f4f6ff'], ['湾区广场', '#ff5ab4'], ['信息港', '#6fb6ff'], ['大酒店', '#ff4a3d']];
+export function buildRoofSigns(vols, targets) {
+  const cv = document.createElement('canvas');
+  cv.width = 1024; cv.height = 128 * SIGNS.length;
+  const c = cv.getContext('2d');
+  c.clearRect(0, 0, cv.width, cv.height);
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+  SIGNS.forEach(([t, col], i) => {
+    c.font = '800 104px "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif';
+    c.fillStyle = col;
+    c.fillText(t, 512, i * 128 + 66, 980);
+  });
+  const tex = new THREE.CanvasTexture(cv);
+  tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  const rng = new Rng(8812);
+  const P = [], UV = [], I = [];
+  const used = new Set();
+  for (const T of targets) {
+    const cand = [];
+    for (const V of vols) {
+      if (V.part !== 0 || V.y1 < T.hmin || V.y1 < V.top - 16 || used.has(V)) continue;
+      const d = Math.hypot(V.cx - T.p.x, V.cz - T.p.z);
+      if (d < T.dmin || d > T.dmax) continue;
+      if (T.dir && ((V.cx - T.p.x) * T.dir[0] + (V.cz - T.p.z) * T.dir[1]) / d < Math.cos(T.cone)) continue;
+      for (let k = 0; k < V.ring.length; k++) {
+        const [x0, z0] = V.ring[k], [x1, z1] = V.ring[(k + 1) % V.ring.length];
+        const len = Math.hypot(x1 - x0, z1 - z0);
+        if (len < 22) continue;
+        const nx = (z1 - z0) / len, nz = -(x1 - x0) / len;
+        const mx = (x0 + x1) / 2, mz = (z0 + z1) / 2;
+        const tl = Math.hypot(T.p.x - mx, T.p.z - mz);
+        if ((nx * (T.p.x - mx) + nz * (T.p.z - mz)) / tl < 0.75) continue;
+        cand.push({ V, mx, mz, nx, nz, len, score: len * (0.5 + rng.next()) });
+      }
+    }
+    cand.sort((a, b) => b.score - a.score);
+    let n = 0;
+    for (const cd of cand) {
+      if (n >= T.n) break;
+      used.add(cd.V); n++;
+      const k = Math.floor(rng.next() * SIGNS.length);
+      const w = Math.min(cd.len * 0.8, 46), h = w / 8;
+      const y = cd.V.y1 - h * 0.5 - 2.5;
+      const cx = cd.mx + cd.nx * 0.7, cz = cd.mz + cd.nz * 0.7;
+      const tx = -cd.nz, tz = cd.nx;          // along the wall, left → right seen from outside
+      const base = P.length / 3;
+      P.push(cx - tx * w / 2, y - h / 2, cz - tz * w / 2, cx + tx * w / 2, y - h / 2, cz + tz * w / 2, cx + tx * w / 2, y + h / 2, cz + tz * w / 2, cx - tx * w / 2, y + h / 2, cz - tz * w / 2);
+      const v0 = 1 - (k + 1) / SIGNS.length, v1 = 1 - k / SIGNS.length;
+      UV.push(0, v0, 1, v0, 1, v1, 0, v1);
+      I.push(base, base + 1, base + 2, base, base + 2, base + 3);
+    }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(UV, 2));
+  g.setIndex(I);
+  const u = { ...G, ...CU, uMap: { value: tex } };
+  const mat = new THREE.ShaderMaterial({
+    glslVersion: THREE.GLSL3, uniforms: u, side: THREE.DoubleSide,
+    vertexShader: /* glsl */ `varying vec2 vUv; varying float vDepth; varying vec3 vWorld; void main(){ vUv = uv; vec4 wp = modelMatrix * vec4(position, 1.0); vWorld = wp.xyz; vec4 mv = viewMatrix * wp; vDepth = -mv.z; gl_Position = projectionMatrix * mv; }`,
+    fragmentShader: /* glsl */ `
+      ${COMMON}
+      ${MRT_OUT}
+      ${CITY_GLSL}
+      uniform sampler2D uMap;
+      varying vec2 vUv; varying float vDepth; varying vec3 vWorld;
+      void main(){
+        vec4 t = texture(uMap, vUv);
+        if(t.a < 0.4) discard;
+        if(uPass > 0.5 && uPass < 1.5){ oColor = vec4(1); oData = vec4(0); return; }
+        vec3 day = t.rgb * mix(uShadeTint, vec3(1.0), 0.5) * 0.85;
+        vec3 night = t.rgb * 2.3;
+        vec3 col = mix(day, night, uNight);
+        float glow; float front = ringFront(vWorld, glow);
+        float rv = clamp(step(0.0, front), 0.0, 1.0);
+        col = mix(col, vec3(1.0, 0.71, 0.278) * 1.6, rv);
+        writeOut(col, 1.0, vec3(0.0, 0.0, 1.0), vDepth < 150.0 ? vDepth : 150.0 + (vDepth - 150.0) * mix(0.62, 0.3, uNight), 160.0);
+      }
+    `,
+  });
+  const m = new THREE.Mesh(g, mat);
+  m.frustumCulled = false;
+  return m;
 }

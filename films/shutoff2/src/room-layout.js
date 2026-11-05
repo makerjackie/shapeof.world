@@ -9,7 +9,7 @@ export const ROOM = {
   win: { x0: -1.78, x1: 1.78, y0: 0.6, y1: 2.46, frame: 0.055, mull: [-0.6, 0.6] },
   desk: { x0: -0.82, x1: 0.82, z0: -1.93, z1: -1.27, top: 0.752 },
   seat: new THREE.Vector3(0.04, 0.0, -0.78),      // chair centre on the floor
-  cam: new THREE.Vector3(1.72, 2.6, 0.55),        // the ceiling dome camera (lens centre)
+  cam: new THREE.Vector3(1.8, 2.6, -1.78),        // the ceiling dome camera (lens centre), corner of the window wall
 };
 export const ROOM_Q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), ROOM.yaw);
 export const ROOM_M = new THREE.Matrix4().compose(ROOM.origin, ROOM_Q, new THREE.Vector3(1, 1, 1));

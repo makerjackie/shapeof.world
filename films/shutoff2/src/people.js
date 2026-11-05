@@ -12,6 +12,7 @@ const wrapPi = (a) => { a = ((a + Math.PI) % TAU + TAU) % TAU - Math.PI; return 
 
 // shared materials (one per ink id; colours ride on vertices)
 let MATS = null;
+export function peopleMats() { return mats(); }
 function mats() {
   if (MATS) return MATS;
   const base = { vc: true, sil: 0.25, rimK: 1.0 };
@@ -250,11 +251,11 @@ export function buildPerson(spec) {
   // front: shirt V, lapels, tie, buttons
   if (kind !== 'shirt') {
     const vB = vY(fem ? 0.08 : 0.06), vT = vY(0.39);
-    const opening = (v) => mix(0.0, fem ? 0.066 : 0.056, sm(vB, vT, v) ** 0.9);       // half-width of the V in turns
+    const opening = (v) => mix(0.0, fem ? 0.05 : 0.04, sm(vB, vT, v) ** 0.85);       // half-width of the V in turns
     const shirtG = S(strip(TT, vB - 0.01, vT + 0.005, (v) => -opening(v) - 0.006, (v) => opening(v) + 0.006, { off: 0.0025, nu: 10, nv: 18 }));
     add(torso, mergePainted([[shirtG, col.shirt]]), M.shirt, 'shirtV');
     // lapels: a band beside each edge of the V, widening to the notch then narrowing to the collar
-    const lw = (v) => { const k = sm(vB, vT, v); return mix(0.01, fem ? 0.034 : 0.04, sm(0, 0.7, k)) * (1 - 0.5 * sm(0.8, 1.0, k)); };
+    const lw = (v) => { const k = sm(vB, vT, v); return mix(0.012, fem ? 0.036 : 0.044, sm(0, 0.7, k)) * (1 - 0.5 * sm(0.8, 1.0, k)); };
     const notch = (v) => { const k = sm(vB, vT, v); return 1 - 0.35 * Math.exp(-(((k - 0.78) / 0.025) ** 2)); };
     for (const sg of [-1, 1]) {
       const inner = (v) => sg * (opening(v) + 0.002), outer = (v) => sg * (opening(v) + lw(v) * notch(v));
@@ -262,7 +263,7 @@ export function buildPerson(spec) {
       add(torso, mergePainted([[g, col.lapel ?? col.suit]]), M.lapel, 'lapel');
     }
     if (col.tie) {
-      const tieG = S(strip(TT, vY(-0.05), vT - 0.01, (v) => -mix(0.017, 0.012, sm(vY(-0.05), vT, v)) * (v > vT - 0.05 ? 1.25 : 1), (v) => mix(0.017, 0.012, sm(vY(-0.05), vT, v)) * (v > vT - 0.05 ? 1.25 : 1), { off: 0.0055, nu: 4, nv: 16 }));
+      const tieG = S(strip(TT, vY(-0.05), vT - 0.01, (v) => -mix(0.0085, 0.0055, sm(vY(-0.05), vT, v)) * (v > vT - 0.04 ? 1.35 : 1), (v) => mix(0.0085, 0.0055, sm(vY(-0.05), vT, v)) * (v > vT - 0.04 ? 1.35 : 1), { off: 0.0055, nu: 4, nv: 16 }));
       add(torso, mergePainted([[tieG, col.tie]]), M.tie, 'tie');
     }
     // buttons

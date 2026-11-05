@@ -36,7 +36,7 @@ function inradius(ring, cx, cz) {
 const shrink = (ring, cx, cz, f) => ring.map(([x, z]) => [cx + (x - cx) * f, cz + (z - cz) * f]);
 
 // excl: [[x, z, r], ...] — clear these discs (the HQ site, 林工's own block)
-export function buildBuildings(B, excl, rects = []) {
+export function buildBuildings(B, excl, rects = [], lowers = []) {
   const vols = [];   // { ring, y0, y1, kind, seed, style, top, part, cx, cz }
   const keep = [];
   for (let i = 0; i < B.n; i++) {
@@ -54,6 +54,9 @@ export function buildBuildings(B, excl, rects = []) {
     const cx = B.info[i * 7 + 4], cz = B.info[i * 7 + 5];
     // the view corridor north of the HQ: towers there become low podiums (malls, a library), so the window sees the CBD
     if (rects.some(([x0, z0, x1, z1]) => cx > x0 && cx < x1 && cz > z0 && cz < z1)) { if (base > 1) continue; h = Math.min(h, 16 + 14 * ((seed * 5.77) % 1)); if (kind === 4) kind = 0; }
+    // 林工's neighbours: kept under his eye line so his window sees over their roofs to the CBD
+    for (const [lx, lz, lr, lh] of lowers) if (Math.hypot(cx - lx, cz - lz) < lr && h > lh) { if (base > 1) h = -1; else h = lh - 6 * ((seed * 3.3) % 1); }
+    if (h < 0) continue;
     const r1 = (seed * 7.31) % 1, r2 = (seed * 13.7) % 1, r3 = (seed * 3.17) % 1;
     let style;
     if (kind === 0 || kind === 4) style = h > 140 ? (r1 < 0.45 ? 0 : r1 < 0.8 ? 1 : 2) : (r1 < 0.3 ? 0 : r1 < 0.5 ? 1 : r1 < 0.72 ? 2 : 3);
@@ -397,14 +400,14 @@ export function facadeMaterial() {
         vec3 R = reflect(-V, N);
         float pj = hash12(F.cell + floor(seed * 10.0));
         float flo = hash12(vec2(floor(Y / 4.2), seed * 7.0));
-        float ry = R.y + (pj - 0.5) * 0.05 + (flo - 0.5) * 0.05;
+        float ry = R.y + (pj - 0.5) * 0.025 + (flo - 0.5) * 0.04;
         float fr = max(fwidth(ry), 1e-4) * 1.2;
         vec3 tint = style < 3.5 ? glassTint(r3) : vec3(0.62, 0.70, 0.82);
         vec3 gDeep = tint * vec3(0.40, 0.50, 0.74);
         vec3 gMid = mix(tint, vec3(0.50, 0.68, 0.93), 0.5) * 0.9;
         vec3 gPale = mix(vec3(0.84, 0.91, 0.97), tint, 0.18);
         vec3 gDown = mix(tint * 0.5, vec3(0.46, 0.52, 0.66), 0.5);
-        vec3 glass = mix(gDown, gPale, smoothstep(-0.07 - fr, -0.07 + fr, ry));
+        vec3 glass = mix(gDown, gPale, smoothstep(-0.1, -0.04, ry));
         glass = mix(glass, gMid, smoothstep(0.09 - fr, 0.09 + fr, ry));
         glass = mix(glass, gDeep, smoothstep(0.36 - fr, 0.36 + fr, ry));
         float az = atan(R.x, -R.z);
@@ -419,9 +422,9 @@ export function facadeMaterial() {
         // interiors: dim rooms and ceiling light strips where the glass looks straight in
         float fy = fract(Y / (style < 3.5 ? 4.2 : 3.0));
         float look = smoothstep(0.55, 0.95, max(dot(N, V), 0.0)) * (1.0 - smoothstep(0.1, 0.3, mpp));
-        vec3 inside = tint * 0.3 * (0.85 + 0.3 * pj);
+        vec3 inside = mix(tint * 0.5, vec3(0.62, 0.66, 0.74), 0.4) * (0.85 + 0.3 * pj);
         inside = mix(inside, vec3(0.88, 0.92, 0.96) * 0.8, (1.0 - smoothstep(0.0, 0.05, abs(fy - 0.82))) * step(0.3, pj));
-        glass = mix(glass, inside, look * 0.45 * step(ry, 0.1));
+        glass = mix(glass, inside, look * 0.3 * step(ry, 0.1));
         // light: sunlit glass warms and brightens, shaded glass drops into the lavender
         glass = mix(glass * vec3(0.70, 0.73, 0.88), glass * 1.04 + uSunColor * 0.07, lit);
         float glint = smoothstep(0.985, 0.995, dot(normalize(R), uSunDir)) * sh;
@@ -450,13 +453,15 @@ export function facadeMaterial() {
         vec3 amb = mix(vec3(0.045, 0.045, 0.10), vec3(0.085, 0.075, 0.16), up);
         amb *= mix(vec3(1.0), vec3(1.08, 0.96, 1.1), bt);
         // the glow of the streets climbs the lower floors; the sky deck lights the upper ones
-        amb += vec3(0.15, 0.09, 0.11) * exp(-Y / 30.0) * (1.0 - up);
+        amb += vec3(0.20, 0.11, 0.15) * exp(-Y / 34.0) * (1.0 - up);
         amb += vec3(0.04, 0.035, 0.07) * smoothstep(0.0, 1.0, Y / max(top, 1.0));
         vec3 opaque = F.albedo * amb;
         vec3 R = reflect(-V, N);
         vec3 glass = nightReflect(R) * 0.6;
-        float hr = hash12(F.cell + seed * 5.0);
-        float hb = hash12(F.cell * 1.37 + seed * 2.0);
+        // homes light up as units (two or three windows together), offices by the floor
+        vec2 unit = vec2(floor(F.cell.x / (style < 3.5 ? 4.0 : 3.0)), F.cell.y);
+        float hr = mix(hash12(unit + seed * 5.0), hash12(F.cell + seed * 5.0), 0.25);
+        float hb = hash12(unit * 1.37 + seed * 2.0);
         float floorH = hash12(vec2(F.cell.y, seed * 3.0));
         float p = style < 3.5 ? 0.05 : style < 6.5 ? 0.26 : style < 7.5 ? 0.3 : 0.04;
         if(kind > 4.5) p = 0.1;
@@ -496,6 +501,11 @@ export function facadeMaterial() {
           vec3 cc = fract(seed * 11.0) < 0.5 ? vec3(0.75, 0.95, 1.0) : vec3(0.85, 0.75, 1.0);
           nightC += cc * 2.2 * (1.0 - smoothstep(0.3, 0.3 + mpp * 1.5, d));
         }
+        // 安's HQ: the lattice crown uplit in a cold violet-white, a thin amber line under it
+        if(kind > 4.5 && part > 1.5){
+          float hk = clamp((Y - 560.0) / 60.0, 0.0, 1.0);
+          nightC = mix(vec3(0.42, 0.42, 0.62), vec3(0.08, 0.08, 0.16), hk) * (part > 2.5 ? 0.6 : 1.0);
+        }
         // 安's HQ: a thin amber line under the crown, and the beacon on the mast
         if(kind > 4.5 && !roof){
           float d = abs(Y - 558.0);
@@ -517,20 +527,30 @@ export function facadeMaterial() {
         float fh = style < 3.5 ? 4.2 : 3.0;
         vec2 cellM = vec2(3.0, fh);
         vec2 q = vec2(U, Y - vC.z);
-        vec2 f = (fract(q / cellM) - 0.5) * cellM;
-        vec2 cid = floor(q / cellM);
+        // window points with a level of detail: far away, ever larger cells keep one point each, so a distant tower
+        // stays a scatter of distinct sparks instead of a smear of gold
         float cellPx = min(cellM.x, cellM.y) / max(mpp, 1e-4);
-        float rr = max(0.24, mpp * 0.62);
-        float dotA = 1.0 - smoothstep(rr - mpp * 0.5, rr + mpp * 0.5, length(f));
-        float density = 3.1416 * rr * rr / (cellM.x * cellM.y);
-        dotA = mix(dotA, min(density * 1.4, 0.3), smoothstep(5.0, 2.0, cellPx));
-        float hc = hash12(cid + seed * 7.0);
-        float alive = step(0.42, hc);
-        float tw = (0.35 + 2.4 * pow(fract(hc * 17.0), 4.0)) * (1.0 + 0.35 * sin(uTime * 1.3 + hc * 40.0) * uBreath);
-        vec3 dc = hc > 0.9 ? vec3(0.95, 0.97, 1.0) : AMBER;
+        float lodF = clamp(log2(4.0 / cellPx), 0.0, 5.0);
+        float l0 = floor(lodF), fl = fract(lodF);
+        vec3 dA = vec3(0.0);
+        for(int li = 0; li < 2; li++){
+          float L = l0 + float(li);
+          vec2 cs = cellM * exp2(L);
+          vec2 cid = floor(q / cs);
+          vec2 jit = L > 0.5 ? (hash22(cid + seed + L * 7.0) - 0.5) * 0.6 : vec2(0.0);
+          vec2 f = (fract(q / cs) - 0.5 - jit) * cs;
+          float rr = max(0.24, mpp * 0.62);
+          float da = 1.0 - smoothstep(rr - mpp * 0.5, rr + mpp * 0.5, length(f));
+          float hc = hash12(cid + seed * 7.0 + L * 13.0);
+          float alive = step(L > 0.5 ? 0.5 : 0.42, hc);
+          float tw = (0.35 + 2.4 * pow(fract(hc * 17.0), 4.0)) * (1.0 + 0.35 * sin(uTime * 1.3 + hc * 40.0) * uBreath);
+          tw *= L > 0.5 ? 1.5 : 1.0;
+          vec3 c = hc > 0.9 ? vec3(0.95, 0.97, 1.0) * 2.2 : AMBER * 1.7;
+          dA += c * da * alive * tw * (li == 0 ? 1.0 - fl : fl);
+        }
         vec3 data = vec3(0.010, 0.013, 0.026) + vec3(0.02, 0.016, 0.03) * smoothstep(0.0, 300.0, Y);
         if(!roof && part < 1.5){
-          data += dc * dotA * alive * tw * (hc > 0.9 ? 2.2 : 1.7);
+          data += dA;
           // hairlines: the vertical corners, the roof line, every third slab
           float fwS = fwidth(vP.x);
           float corner = max(hair(vP.x, fwS, 0.8), hair(vP.y - vP.x, fwS, 0.8));
@@ -541,7 +561,7 @@ export function facadeMaterial() {
           // light climbing the corners of the towers
           float climb = corner * smoothstep(0.82, 0.97, fract(Y / 55.0 - uTime * 0.45 + hash12(vec2(seed, floor(U / 30.0))) )) * 1.6;
           float lines = max(max(corner, topL), max(baseL, slab)) + climb;
-          lines *= 1.0 - smoothstep(4.0, 9.0, mpp);
+          lines *= 1.0 - 0.75 * smoothstep(1.2, 5.0, mpp);
           data += AMBER * lines * 1.4;
         } else if(part > 1.5){
           float fwY = fwidth(Y);

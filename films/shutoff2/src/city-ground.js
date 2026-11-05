@@ -85,6 +85,14 @@ export function groundMaterial(tCore, tFar, core, far) {
         vec3 pave = mix(vec3(0.70, 0.69, 0.67), vec3(0.78, 0.76, 0.72), n1) * (0.95 + 0.08 * n2);
         // estates and courtyards inside the blocks are lush
         float yard = smoothstep(0.64, 0.7, fbm2(w.xz * 0.012 + 3.0)) * (1.0 - road) * (1.0 - water);
+        // blocks with no buildings become parks and gardens (Futian is a green CBD), with paved squares left open
+        float bld = 0.0;
+        for(int k = 0; k < 6; k++){
+          vec2 o = vec2(cos(float(k) * 1.047), sin(float(k) * 1.047)) * 32.0 / (uHBox.zw - uHBox.xy);
+          bld += texture(uHMap, hu + o).g;
+        }
+        float empty = (1.0 - smoothstep(0.0, 0.2, bld / 6.0)) * (inCore ? 1.0 : 0.0);
+        yard = max(yard, empty * smoothstep(0.38, 0.46, fbm2(w.xz * 0.025 + 7.0)) * (1.0 - smoothstep(0.2, 0.4, road)) * (1.0 - water));
         // paving patterns in the plazas: big stone squares, a darker border
         vec2 pv = fract(w.xz / 9.0);
         float joint = 1.0 - smoothstep(0.0, max(0.02, mpp / 9.0 * 1.5), min(min(pv.x, 1.0 - pv.x), min(pv.y, 1.0 - pv.y)));
@@ -101,9 +109,11 @@ export function groundMaterial(tCore, tFar, core, far) {
         // canopies: the banyan rows along every avenue, parks, estate gardens
         float belt = smoothstep(0.06, 0.22, roadB) * (1.0 - smoothstep(0.3, 0.55, road)) * (1.0 - water);
         float treeAmt = max(max(green, belt * 0.95), yard * 0.8);
-        vec2 b = billows(w.xz, mix(6.0, 3.6, belt), 3.0);
+        // canopy clumps grow with distance so parks keep their texture instead of turning into lawn
+        float cs = mix(6.0, 3.6, belt) * max(1.0, mpp * 1.1);
+        vec2 b = billows(w.xz, cs, 3.0 + floor(log2(max(1.0, mpp * 1.1))));
         float cov = smoothstep(0.0, 0.05, b.y) * step(0.25, treeAmt + (b.y - 0.6) * 0.4);
-        if(mpp > 1.5){ cov = treeAmt * 0.85; b.x = 0.45; }
+        if(mpp > 6.0){ cov = treeAmt * 0.85; b.x = 0.45; }
         vec3 leaf = leafTone(b.x * mix(0.35, 1.0, sh));
         col = mix(col, leaf, cov * treeAmt / max(treeAmt, 0.001));
         // light
@@ -120,14 +130,18 @@ export function groundMaterial(tCore, tFar, core, far) {
         // wet streets: the lamps pool and smear
         vec3 lampC = mix(vec3(1.0, 0.82, 0.62), vec3(1.0, 0.62, 0.42), smoothstep(0.4, 0.9, n1));
         float wet = 0.6 + 0.4 * vnoise(w.xz * 0.3);
-        // pools of light under the street lamps, ~26 m apart along the lit streets
-        vec2 ci = floor(w.xz / 26.0);
-        vec2 pc = (ci + 0.2 + 0.6 * hash22(ci)) * 26.0;
+        // pools of light under the street lamps, ~24 m apart along the lit streets
+        vec2 ci = floor(w.xz / 24.0);
+        vec2 pc = (ci + 0.25 + 0.5 * hash22(ci)) * 24.0;
         float pd = length(w.xz - pc);
-        float pool = exp(-pd * pd / 70.0) * smoothstep(0.25, 0.55, lamp);
+        float pool = exp(-pd * pd / 18.0) * smoothstep(0.35, 0.6, lamp) * step(0.3, hash12(ci + 7.0));
         float near = 1.0 - smoothstep(0.6, 3.0, mpp);
-        col += lampC * mix(pow(lamp, 1.5) * (inCore ? 0.7 : 1.4), pool * 1.4 + pow(lamp, 2.0) * 0.25, near) * wet;
-        col += lampC * smoothstep(0.5, 0.9, road) * 0.08;
+        col += lampC * mix(pow(lamp, 1.5) * (inCore ? 0.7 : 1.4), pool * 0.9 + pow(lamp, 2.0) * 0.08, near) * wet;
+        // car lights streaking along the avenues: white heading one way, red the other
+        float avenue = smoothstep(0.7, 0.95, road) * smoothstep(0.45, 0.75, roadB);
+        float lane = fract(dot(w.xz, vec2(0.011, 0.007)) * 9.0 + hash12(floor(w.xz / 60.0)) - uTime * 0.25);
+        col += mix(vec3(1.0, 0.25, 0.2), vec3(1.0, 0.95, 0.85), step(0.5, hash12(floor(w.xz / 30.0)))) * avenue * step(0.94, lane) * 0.9;
+        col += lampC * smoothstep(0.5, 0.9, road) * 0.03;
         // the river: black water with broken light
         vec3 wat = vec3(0.02, 0.025, 0.05) + vec3(0.25, 0.18, 0.3) * smoothstep(0.7, 0.9, vnoise(vec2(w.x * 0.02, w.z * 0.3))) * 0.3;
         col = mix(col, wat, water);
@@ -189,8 +203,8 @@ export function buildGround(tCore, tFar, core, far) {
 export function buildHills() {
   const rng = new Rng(5501);
   const layers = [
-    { r: 5600, seg: 360, base: 60, amp: 260, f: 2.0, tone: 0 },
-    { r: 7000, seg: 360, base: 140, amp: 520, f: 1.2, tone: 1 },
+    { r: 5600, seg: 720, base: 40, amp: 230, f: 2.0, tone: 0 },
+    { r: 7000, seg: 720, base: 110, amp: 470, f: 1.2, tone: 1 },
   ];
   const pos = [], aL = [], idx = [];
   const noise = (a, f, s) => {
@@ -208,7 +222,9 @@ export function buildHills() {
       // mountains sit to the north and the south (HK); the bay to the west is open water
       const north = Math.max(0, Math.cos(az)), south = Math.max(0, -Math.cos(az));
       const west = Math.max(0, -Math.sin(az));
-      let h = L.base + L.amp * (0.55 + 0.45 * noise(a, L.f * 6, s)) * (0.25 + 0.75 * Math.max(north, south * 0.9)) * (1 - 0.8 * west * west);
+      // rounded ranges with sharper spurs (abs-noise ridges), stronger to the north (Meilin) and south (HK hills)
+      const ridge = 1 - Math.abs(noise(a, L.f * 14, s + 3));
+      let h = L.base + L.amp * (0.45 + 0.35 * noise(a, L.f * 6, s) + 0.3 * ridge * ridge) * (0.25 + 0.75 * Math.max(north, south * 0.9)) * (1 - 0.8 * west * west);
       h = Math.max(h, 8);
       const x = Math.sin(az) * L.r, z = -Math.cos(az) * L.r;
       pos.push(x, -60, z, x, h, z);
@@ -256,7 +272,7 @@ export function buildHills() {
         float fwT = fwidth(t);
         data += AMBER * (1.0 - smoothstep(fwT * 0.5, fwT * 1.5, 1.0 - t)) * (0.6 - 0.3 * far);
         col = mix(col, data, rv);
-        writeOut(col, 1.0, vec3(0.0, 0.0, 1.0), vDepth * mix(0.5, 0.42, far), 0.0);
+        writeOut(col, 1.0, vec3(0.0, 0.0, 1.0), vDepth * mix(0.5, 0.42, far) * mix(1.0, 0.12, uHillData), 0.0);
       }
     `,
   });

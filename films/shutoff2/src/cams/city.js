@@ -1,27 +1,28 @@
 // Cameras and looks for the city department's shots: s26 (out of the meeting room, over the CBD, 安's view) and
-// s27–s30 (the data city breathing behind the end texts). Times are real film seconds (st.tr; no stamps after 86.4 s).
+// s27–s30 (the data city breathing behind the end texts). All times are relative to the CUES (real film seconds,
+// st.tr), so a retime of the cut moves everything with it.
 import * as THREE from 'three';
+import { CUES } from '../shots.js';
 import { smooth, invLerp, clamp } from '../util.js';
 
-const T0 = 113.0;   // s26 start
-// s26: start in the room beside the LED wall, between two window fins (x −4.5 / −3); push through the glass, rise over
-// the CBD and tilt down as the rings spread; 安's last wave as we reach the top.
+// s26: start in the room beside the LED wall, between two window fins (x −6 / −4.5); push through the glass, rise over
+// the CBD and tilt down as the rings spread; 安's last wave as we reach the top.   [dt from cityOut, pos, look, fov]
 const S26 = [
-  // [t, pos, look, fov]
-  [113.0, [-5.25, 151.7, -1.2], [-5.4, 151.2, -60], 46],
-  [114.0, [-5.25, 151.75, -5.2], [-5.0, 150.6, -80], 47],
-  [114.9, [-5.0, 152.6, -11.0], [-3.5, 146, -120], 48],
-  [116.0, [-2.8, 178, -46], [-0.5, 92, -460], 51],
-  [117.5, [-0.6, 255, -118], [0, 22, -800], 53],
-  [119.5, [0, 430, -220], [0, -40, -1120], 55],
-  [122.0, [0, 640, -320], [0, -90, -1520], 56],
+  [0.0, [-3.3, 151.85, 3.6], [-4.7, 151.35, -40], 48],
+  [1.2, [-4.9, 151.8, -3.0], [-5.0, 150.9, -70], 48],
+  [2.0, [-5.2, 152.3, -9.5], [-3.8, 146.5, -120], 49],
+  [3.2, [-10, 185, -60], [-40, 90, -520], 51],        // rising over the CBD, looking north
+  [4.6, [-250, 300, -230], [-100, 40, -900], 53],     // drifting north-west as the screens flip
+  [6.2, [-800, 470, -520], [100, 80, -800], 54],      // the orbit begins: 安's HQ swings into frame
+  [7.6, [-1250, 600, -760], [200, 190, -300], 55],
+  [9.0, [-1500, 680, -900], [260, 245, -60], 56],     // the HQ (right third, clear of the end texts), its links to every screen
 ];
-// s27–s30: one continuous slow drift deeper into the data city (122 → 143.6)
+// s27–s30: one continuous slow push toward the HQ over the breathing data city   [fraction of end1 → title2, ...]
 const END = [
-  [122.0, [0, 640, -320], [0, -90, -1520], 56],
-  [128.0, [30, 590, -560], [20, -90, -1760], 56],
-  [136.0, [80, 500, -900], [50, -80, -2080], 55],
-  [143.6, [130, 420, -1200], [80, -70, -2380], 54],
+  [0.0, [-1500, 680, -900], [260, 245, -60], 56],
+  [0.25, [-1380, 640, -865], [170, 250, -120], 55],   // the HQ eases to the right edge of the safe area, clear of the texts
+  [0.5, [-1260, 600, -830], [89, 255, -175], 54],
+  [1.0, [-1020, 525, -770], [-150, 265, -260], 52],
 ];
 
 // Catmull-Rom through the keys (position, look target and fov)
@@ -41,23 +42,27 @@ function camAt(keys, t) {
   return { pos: v3(1), look: v3(2), fov: cr(k0[3], k1[3], k2[3], k3[3]) };
 }
 
-// warp the s26 clock: a held beat in the room, then the glide out
+// warp the s26 clock: a held beat in the room, then the glide out (9 s of keys over the shot's length)
 function s26Clock(tr) {
-  const a = clamp((tr - T0) / 9);
+  const D = CUES.end1 - CUES.cityOut;
+  const a = clamp((tr - CUES.cityOut) / D);
   const w = a < 0.3 ? 0.3 * Math.pow(a / 0.3, 1.6) : a;
-  return T0 + w * 9;
+  return w * 9;
 }
 
 export const CAMS = {
   s26: (lt, d, t, st) => {
-    const c = camAt(S26, s26Clock(st.tr));
-    return { pos: c.pos, look: c.look, fov: c.fov, near: 0.12, far: 9000 };
+    const k = s26Clock(st.tr);
+    const c = camAt(S26, k);
+    // a short near plane inside the room, a long one over the city (depth precision for the far skyline)
+    const near = k < 2.4 ? 0.12 : Math.min(2.0, 0.12 + (k - 2.4) * 2.0);
+    return { pos: c.pos, look: c.look, fov: c.fov, near, far: 9000 };
   },
 };
 for (const id of ['s27', 's28', 's29', 's30']) {
   CAMS[id] = (lt, d, t, st) => {
-    const c = camAt(END, st.tr);
-    return { pos: c.pos, look: c.look, fov: c.fov, near: 0.5, far: 9000 };
+    const c = camAt(END, invLerp(CUES.end1, CUES.title2, st.tr));
+    return { pos: c.pos, look: c.look, fov: c.fov, near: 2.0, far: 9000 };
   };
 }
 
@@ -66,16 +71,17 @@ const cA = new THREE.Color(), cB = new THREE.Color();
 const mixHex = (a, b, k) => hex(cA.set(a).lerp(cB.set(b), clamp(k)));
 
 // one continuous grade over s26–s30: morning until 安's last wave, then the dark data view, dimming under the texts
-function cityLook(tr) {
-  const k = smooth(invLerp(118.9, 121.4, tr));          // day → data
-  const dim = smooth(invLerp(122.0, 124.5, tr));         // settle under the end texts
-  const inRoom = 1 - smooth(invLerp(114.2, 115.2, tr));
+export function cityLook(tr) {
+  const D = CUES.cityData;
+  const k = smooth(invLerp(D + 1.6, D + 3.8, tr));                 // day → data
+  const dim = smooth(invLerp(CUES.end1, CUES.end1 + 2.5, tr));       // settle under the end texts
+  const inRoom = 1 - smooth(invLerp(CUES.cityOut + 1.2, CUES.cityOut + 2.2, tr));
   return {
     preset: 'morning', to: 'dc', k: 0.85 * k + 0.15 * dim,
     sunElev: 14, sunAz: 58,                               // the meeting room's sun (ENE, low)
     sunStrength: 1.0 - 0.8 * k,
-    fogDensity: 0.00034 * (1 - k) + 0.00022 * k,
-    fogWarm: mixHex('#eef3f5', '#140f12', k), fogCool: mixHex('#cfe2f2', '#05070f', k),
+    fogDensity: 0.00027 * (1 - k) + 0.00013 * k,
+    fogWarm: mixHex('#e6eef3', '#140f12', k), fogCool: mixHex('#c2d8ec', '#05070f', k),
     exposure: 1.1 - 0.04 * k + 0.05 * inRoom - 0.1 * dim,
     bloom: 0.85 + 0.65 * k, threshold: 1.05 - 0.38 * k,
     vignette: 0.14 + 0.16 * k, grain: 0.02,

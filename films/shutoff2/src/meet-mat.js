@@ -30,6 +30,7 @@ export function meetToon(o = {}) {
     uPLGain: { value: o.plGain ?? 1 },
     uSheen: { value: o.sheen ?? 0 },
     uLitGain: { value: o.litGain ?? 1 },
+    uUnder: { value: 0 },
   };
   const vs = /* glsl */ `
     attribute vec3 aCol;
@@ -44,7 +45,7 @@ export function meetToon(o = {}) {
     ${MRT_OUT}
     uniform vec3 uColor, uDarkC, uEmis;
     uniform float uUseDark, uId, uUseMap, uUseEmisMap, uEmisGain, uSpec, uRim, uUnlit, uAlphaTest;
-    uniform float uUseVC, uSil, uRimK, uEye, uPLGain, uSheen, uLitGain;
+    uniform float uUseVC, uSil, uRimK, uEye, uPLGain, uSheen, uLitGain, uUnder;
     uniform sampler2D uMap, uEmisMap;
     varying vec3 vWorld, vNormalW, vNormalV;
     varying float vDepth;
@@ -83,7 +84,9 @@ export function meetToon(o = {}) {
         // eye band: brow shadow that no light reaches (SEELE / Gendo)
         float eye = vMask * uEye;
         outc = mix(outc, col * uDeepTint * 0.42, eye);
-        outc += col * (uAmbient + localLights(vWorld, N) * uPLGain * (1.0 - eye * 0.92));
+        // under-light (phones on the table): only surfaces turned downward catch it
+        float under = mix(1.0, smoothstep(0.3, -0.5, N.y), uUnder);
+        outc += col * (uAmbient + localLights(vWorld, N) * uPLGain * under * (1.0 - eye * 0.92));
         if(uSpec > 0.0){
           vec3 H = normalize(uKeyDir + V);
           outc = mix(outc, mix(vec3(1.0), uSunColor, 0.3) * 1.05, step(0.982, dot(N, H)) * lit * uSpec);

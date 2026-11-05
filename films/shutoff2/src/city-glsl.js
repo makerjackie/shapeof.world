@@ -14,11 +14,12 @@ export const CU = {
   uCityShadow: { value: 1 },
   uCamY: { value: 150 },
   uHide: { value: new THREE.Vector4(0, 0, 0, 0) },
-  uSweep: { value: new THREE.Vector4(0, 0, 0, -1) },   // 安's last wave from the HQ: xyz centre, w radius
+  uSweep: { value: new THREE.Vector4(0, 0, 0, -1) },
+  uRipple: { value: 0 },            // concentric ripples that keep leaving every screen after its ring   // 安's last wave from the HQ: xyz centre, w radius
 };
 
 export const CITY_GLSL = /* glsl */ `
-uniform float uNight, uDataAll, uBreath, uCityShadow, uCamY;
+uniform float uNight, uDataAll, uBreath, uCityShadow, uCamY, uRipple;
 uniform vec4 uRing[${MAXR}];
 uniform vec4 uRingP;
 uniform vec4 uPulse;
@@ -40,9 +41,15 @@ float ringFront(vec3 p, out float glow){
     float d = length(p - R.xyz);
     float fr = rad - d;
     f = max(f, fr);
-    float band = 4.0 + rad * 0.02;
+    float band = min(4.0 + rad * 0.02, 16.0);
     glow += exp(-abs(fr) / band) * smoothstep(0.0, 0.25, age) * (0.35 + 0.65 * exp(-age / 2.6));
-    // ripples following the front, like rain on a pond
+    // and then the ripples keep coming, like rain on a pond
+    if(uRipple > 0.0){
+      float rp = mod(age * 230.0 - d, 380.0);
+      float rd = min(rp, 380.0 - rp);
+      glow += uRipple * exp(-rd / (2.5 + d * 0.006)) * exp(-d / 1300.0) * step(d, rad);
+    }
+    // ripples following the front
     for(int e = 1; e <= 3; e++){
       float lag = float(e) * (60.0 + rad * 0.12);
       glow += 0.3 / float(e) * exp(-abs(fr - lag) / (band * 1.3)) * step(lag * 0.5, fr + lag * 0.5) * exp(-age / 3.5);
@@ -51,7 +58,7 @@ float ringFront(vec3 p, out float glow){
   if(uSweep.w > 0.0){
     float fr = uSweep.w - length(p - uSweep.xyz);
     f = max(f, fr);
-    glow += 1.3 * exp(-abs(fr) / (8.0 + uSweep.w * 0.012));
+    glow += 1.3 * exp(-abs(fr) / min(8.0 + uSweep.w * 0.012, 26.0));
   }
   if(uPulse.w > 0.0){
     float d = length(p.xz - uPulse.xz);

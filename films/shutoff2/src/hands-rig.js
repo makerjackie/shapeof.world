@@ -5,10 +5,10 @@ import * as THREE from 'three';
 import { Rig, Prim, Sculpt, smin, sdfAO, decoAttrs } from './hands-sdf.js';
 
 export const FINGERS = [
-  { n: 'i', L: [0.042, 0.025, 0.021], rb: 0.0093, mcp: [0.086, 0.0, 0.0255], splay: -5 },
-  { n: 'm', L: [0.046, 0.029, 0.0225], rb: 0.0098, mcp: [0.089, 0.0005, 0.0085], splay: -1 },
-  { n: 'r', L: [0.043, 0.028, 0.021], rb: 0.0092, mcp: [0.0855, 0.0, -0.009], splay: 3 },
-  { n: 'l', L: [0.034, 0.0205, 0.019], rb: 0.008, mcp: [0.0785, -0.001, -0.0255], splay: 8 },
+  { n: 'i', L: [0.045, 0.0265, 0.0222], rb: 0.0083, mcp: [0.086, 0.0, 0.0245], splay: -5 },
+  { n: 'm', L: [0.049, 0.0305, 0.0235], rb: 0.0087, mcp: [0.089, 0.0005, 0.0082], splay: -1 },
+  { n: 'r', L: [0.0455, 0.0295, 0.0222], rb: 0.0082, mcp: [0.0855, 0.0, -0.0085], splay: 3 },
+  { n: 'l', L: [0.0365, 0.0218, 0.0200], rb: 0.0071, mcp: [0.0785, -0.001, -0.0242], splay: 8 },
 ];
 export const WATCH_X = -0.034;          // watch centre along the forearm
 // forearm cross-section (half thickness b along y, half width a along z) at x
@@ -136,12 +136,12 @@ export function makeHandSculpt(opts = {}) {
     return d;
   };
 
-  const sculpt = new Sculpt({ rig, prims, field, bounds: 'auto', h: opts.h ?? 0.001, sigma: 0.0035, margin: 1.5 });
+  const sculpt = new Sculpt({ rig, prims, field, bounds: 'auto', h: opts.h ?? 0.001, sigma: 0.0035, margin: 1.5, smoothEps: opts.smoothEps ?? 0.0055 });
   const origSetPose = sculpt.setPose.bind(sculpt);
   sculpt.setPose = (worlds) => { origSetPose(worlds); for (const g of [...fingerGroups, thumbG, palmG]) if (g.prims) g.fit(worlds); };
 
   // ---- decoration: skin colour, pale knuckles, nails, creases, crevices
-  const SKIN = new THREE.Color(opts.skin ?? '#e7bfa9'), RED = new THREE.Color('#d98f86');
+  const SKIN = new THREE.Color(opts.skin ?? '#f1d9cf'), RED = new THREE.Color('#e6a59c');
   sculpt.decorate = (base) => {
     const n = base.count, Pp = base.pos;
     const col = new Float32Array(n * 3), id = new Float32Array(n).fill(opts.id ?? 41), pale = new Float32Array(n);
@@ -177,7 +177,7 @@ export function makeHandSculpt(opts = {}) {
           const over = Math.max(0, Math.abs(s) - lim) * g.rb * 2.5;
           return Math.abs(L[0] - (off + curve * s * s)) + over;
         };
-        if (g.pip) { cr = Math.min(cr, arc(g.pip, -0.0011, 0.0024, 0.42), arc(g.pip, 0.0015, 0.0016, 0.26), arc(g.dip, 0.0002, 0.0016, 0.3)); }
+        if (g.pip) { cr = Math.min(cr, arc(g.pip, -0.0009, 0.0022, 0.36), arc(g.pip, 0.0016, 0.0014, 0.2)); }
         if (g.ip) cr = Math.min(cr, arc(g.ip, 0.0004, 0.0018, 0.36));
       }
       c.copy(SKIN).lerp(RED, Math.min(0.6, red));
@@ -214,7 +214,7 @@ export function makeSleeveSculpt(rig, opts = {}) {
     const shell = Math.abs(dt) - 0.0011;
     return Math.max(shell, x - x0, -0.26 - x);
   };
-  const sculpt = new Sculpt({ rig, prims, field, bounds: [[-0.27, -0.06, -0.07], [x0 + 0.004, 0.06, 0.07]], h: opts.h ?? 0.0014, sigma: 0.01 });
+  const sculpt = new Sculpt({ rig, prims, field, bounds: [[-0.27, -0.06, -0.07], [x0 + 0.004, 0.06, 0.07]], h: opts.h ?? 0.0014, sigma: 0.01, smoothEps: 0.006 });
   const SH = new THREE.Color(opts.color ?? '#eef2f7');
   sculpt.decorate = (base) => {
     const n = base.count, Pp = base.pos;
