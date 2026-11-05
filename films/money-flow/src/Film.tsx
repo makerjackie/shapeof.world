@@ -65,7 +65,7 @@ const CAPS: Cap[] = [
   { at: b(69) + 0.03, out: b(71), y: 420, align: "center", lines: [{ p: ["你每个月经手的钱，并不少"], size: 80 }] },
   { at: b(71) + 0.03, out: b(73), y: 420, align: "center", lines: [{ p: ["只是，它从你手里", { t: "流过", mark: true }], size: 92 }] },
   // ending line
-  { at: b(73) + 0.1, out: T.sources - 0.3, y: 400, align: "center", lines: [{ p: ["钱会流过每一个人"], size: 84 }, { p: ["只在", { t: "会生钱的地方", mark: true }, "停下"], size: 96 }] },
+  { at: b(73) + 0.1, out: T.sources - 0.3, y: 400, align: "center", lines: [{ p: ["工资，是", { t: "流过", c: K.goldHi }, "你的钱"], size: 88 }, { p: ["资产，是", { t: "留下来", mark: true }, "的钱"], size: 96 }] },
 ];
 
 // ---------------------------------------------------------------- bottom-left source lines
