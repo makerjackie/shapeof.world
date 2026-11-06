@@ -97,3 +97,69 @@ export function wallTex() {
   g.fillStyle = '#4c5961'; for (let x = 0; x < 512; x += 10) g.fillRect(x, 66, 5, 58);
   return tex(c, { repeat: true });
 }
+
+// ---------------------------------------------------------------- the switchgear (k11)
+// main name plate: 主电源
+export function mainPlate() {
+  const [c, g] = cv(1024, 320);
+  g.fillStyle = '#e9ecef'; g.fillRect(0, 0, 1024, 320);
+  g.strokeStyle = '#1b1f26'; g.lineWidth = 10; g.strokeRect(10, 10, 1004, 300);
+  g.fillStyle = '#c3202a'; g.fillRect(10, 10, 26, 300); g.fillRect(988, 10, 26, 300);
+  g.fillStyle = '#141820'; g.textBaseline = 'middle'; g.textAlign = 'center';
+  g.font = `700 150px ${FONT}`; g.fillText('主 电 源', 512, 140);
+  g.font = `600 46px ${FONT}`; g.fillStyle = '#3a414c'; g.fillText('MAIN POWER · QF1 · 380V 4000A', 512, 258);
+  return tex(c);
+}
+// warning label: red triangle with a bolt, 高压危险
+export function warnLabel() {
+  const [c, g] = cv(320, 400);
+  g.fillStyle = '#f2f3f4'; g.fillRect(0, 0, 320, 400);
+  g.strokeStyle = '#c3202a'; g.lineWidth = 14; g.strokeRect(7, 7, 306, 386);
+  g.fillStyle = '#c3202a';
+  g.beginPath(); g.moveTo(160, 40); g.lineTo(285, 255); g.lineTo(35, 255); g.closePath(); g.fill();
+  g.fillStyle = '#f2f3f4'; g.beginPath(); g.moveTo(160, 82); g.lineTo(248, 233); g.lineTo(72, 233); g.closePath(); g.fill();
+  g.fillStyle = '#141820'; g.beginPath(); g.moveTo(172, 105); g.lineTo(132, 180); g.lineTo(160, 180); g.lineTo(145, 225); g.lineTo(192, 150); g.lineTo(164, 150); g.closePath(); g.fill();
+  g.fillStyle = '#c3202a'; g.font = `700 64px ${FONT}`; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('高压危险', 160, 322);
+  return tex(c);
+}
+// the handle's ring plate: 合 ON (green, top) / 分 OFF (red, bottom)
+export function handleRing() {
+  const [c, g] = cv(512, 512);
+  g.fillStyle = '#2b3038'; g.beginPath(); g.arc(256, 256, 250, 0, Math.PI * 2); g.fill();
+  g.strokeStyle = '#8a929e'; g.lineWidth = 10; g.beginPath(); g.arc(256, 256, 238, 0, Math.PI * 2); g.stroke();
+  g.lineWidth = 34;
+  g.strokeStyle = '#1fa64a'; g.beginPath(); g.arc(256, 256, 196, -Math.PI * 0.5 - 0.55, -Math.PI * 0.5 + 0.9); g.stroke();
+  g.strokeStyle = '#c3202a'; g.beginPath(); g.arc(256, 256, 196, Math.PI * 0.5 - 0.9, Math.PI * 0.5 + 0.55); g.stroke();
+  g.fillStyle = '#eef2f4'; g.font = `700 64px ${FONT}`; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('合 ON', 330, 112); g.fillText('分 OFF', 330, 400);
+  return tex(c);
+}
+// analog meter face
+export function meterFace(unit) {
+  const [c, g] = cv(256, 256);
+  g.fillStyle = '#f1f2ee'; g.fillRect(0, 0, 256, 256);
+  g.strokeStyle = '#141820'; g.lineWidth = 8; g.strokeRect(4, 4, 248, 248);
+  g.lineWidth = 3;
+  for (let i = 0; i <= 10; i++) {
+    const a = (-45 + i * 9) * Math.PI / 180, r0 = i % 5 ? 96 : 88;
+    g.beginPath(); g.moveTo(128 + Math.sin(a) * r0, 170 - Math.cos(a) * r0); g.lineTo(128 + Math.sin(a) * 108, 170 - Math.cos(a) * 108); g.stroke();
+  }
+  g.strokeStyle = '#c3202a'; g.lineWidth = 6; g.beginPath(); g.arc(128, 170, 112, -Math.PI / 2 + 0.55, -Math.PI / 2 + 0.785); g.stroke();
+  g.fillStyle = '#141820'; g.font = `700 44px ${FONT}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(unit, 128, 214);
+  return tex(c);
+}
+// the digital power meter: live readings, then dead
+export function meterDisplay(on) {
+  const [c, g] = cv(512, 160);
+  g.fillStyle = '#061016'; g.fillRect(0, 0, 512, 160);
+  g.font = `600 58px "Menlo", "SF Mono", monospace`; g.textBaseline = 'middle';
+  if (on) {
+    g.fillStyle = '#8ff5e0'; g.textAlign = 'left'; g.fillText('380.4V', 24, 52); g.fillText('1268A', 24, 116);
+    g.font = `500 30px ${FONT}`; g.fillStyle = 'rgba(143,245,224,0.7)'; g.textAlign = 'right'; g.fillText('50.0Hz', 488, 52); g.fillText('0.98', 488, 116);
+  } else {
+    g.fillStyle = '#ff3b36'; g.textAlign = 'left'; g.fillText('  0.0V', 24, 52); g.fillText('    0A', 24, 116);
+    g.font = `500 30px ${FONT}`; g.textAlign = 'right'; g.fillText('分闸', 488, 84);
+  }
+  return tex(c);
+}

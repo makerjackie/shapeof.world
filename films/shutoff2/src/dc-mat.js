@@ -1,18 +1,23 @@
-// 关不掉 v11 · DC department — materials. Cel shading like toonMaterial (src/materials.js), plus the data centre's own light:
+// 关不掉 v13 · DC department — materials. Cel shading like toonMaterial (src/materials.js), plus the data centre's own light:
 // the copy's amber stream (a line light along the trunk), the glow of the rack faces on the aisle, the ceiling fixtures,
-// procedural server faces with LED arrays, and a glossy raised floor that mirrors all of it.
+// the red emergency lamps, procedural server faces with LED arrays, and a glossy raised floor that mirrors all of it.
+// The hall's power (k12 blackout) is a wave in z: every light source dies when it passes (pw(z)).
 import * as THREE from 'three';
 import { G, COMMON, MRT_OUT, VERT_STD } from './glsl.js';
-import { OY, NK, RW, Z0, ZEND, RH, U42, CS, CD, TRUNK, arrival, P0 } from './dc-flow.js';
+import { OY, NK, RW, Z0, ZEND, RH, U42, CS, CD, TRUNK, arrival, ROWS_OUT, WAVE } from './dc-flow.js';
 
-// shared uniforms of the dc materials
+// shared uniforms of the dc materials (the per-frame ones are set in src/dc.js update())
 export const DC = {
   uOrigin: { value: new THREE.Vector3(0, OY, 0) },
-  uCopy: { value: new THREE.Vector4(CS, CD, P0, 0) },
+  uCopy: { value: new THREE.Vector4(CS, CD, CD - CS, 0) },
   uRackData: { value: null },
   uTrunk: { value: Array.from({ length: 24 }, () => new THREE.Vector4()) },
   uTrunkA: { value: new Array(24).fill(0) },
   uFix: { value: Array.from({ length: 8 }, () => new THREE.Vector4(0, -100, 0, 0)) },
+  uEm: { value: Array.from({ length: 4 }, () => new THREE.Vector4(0, -100, 0, 0)) },
+  uPower: { value: new THREE.Vector4(ROWS_OUT, WAVE.dur, WAVE.zFar, WAVE.zNear) },
+  uAn: { value: 0 }, uDoor: { value: 1 }, uEmerg: { value: 0 },
+  uLamp: { value: new THREE.Vector4(1, 0, 1, 0) },
   uLedGain: { value: 1 },
   uReflGain: { value: 1 },
 };
@@ -29,12 +34,13 @@ const f1 = (x) => (Number.isInteger(x) ? x.toFixed(1) : String(x));
 
 export const DC_GLSL = /* glsl */ `
 uniform vec3 uOrigin;
-uniform vec4 uCopy;
+uniform vec4 uCopy, uPower, uLamp;
 uniform sampler2D uRackData;
 uniform vec4 uTrunk[24];
 uniform float uTrunkA[24];
 uniform vec4 uFix[8];
-uniform float uLedGain, uReflGain;
+uniform vec4 uEm[4];
+uniform float uLedGain, uReflGain, uAn, uDoor, uEmerg;
 #define NK ${NK}
 #define NKF ${f1(NK)}
 #define Z0 ${f1(Z0)}
@@ -45,77 +51,60 @@ uniform float uLedGain, uReflGain;
 const vec3 AMBER = vec3(1.0, 0.64, 0.22);
 const vec3 COLD = vec3(0.24, 0.56, 1.0);
 const vec3 FLASH = vec3(1.0, 0.92, 0.78);
+const vec3 EMRED = vec3(1.0, 0.07, 0.06);
 float h11(float n){ return hash12(vec2(n * 0.1373, 17.31 + n * 0.0071)); }
+float cel2(float fall){ return smoothstep(0.0, 0.1, fall) * 0.4 + smoothstep(0.42, 0.52, fall) * 0.6; }
 
-// ---- the copy's timing
-float copyDone(){ return smoothstep(uCopy.y, uCopy.y + 0.9, uTime); }
-float settle(){ float a = uTime - uCopy.y; return a > 0.0 ? 0.9 * exp(-a * 3.0) * (1.0 - exp(-a * 30.0)) : 0.0; }
-float gather(){ float a = uTime - (uCopy.x - 0.55); return 1.0 + 0.55 * smoothstep(0.0, 0.5, a) * (1.0 - smoothstep(0.55, 0.95, a)); }
-// the stream's light at a point the front reached at time arr (no packets): used for lighting
+// ---- power: the blackout wave passes from the far end (uPower.z) to the near end (uPower.w) over uPower.y s
+float pw(float z){
+  float tOff = uPower.x + uPower.y * clamp((z - uPower.z) / (uPower.w - uPower.z), 0.0, 1.0);
+  float a = uTime - tOff;
+  if(a < -0.16) return 1.0;
+  if(a >= 0.0) return 0.0;
+  float fl = step(0.45, hash12(vec2(floor(uTime * 30.0) * 1.37, floor(z * 1.7) + 3.1)));
+  return mix(1.0, fl * 0.8, smoothstep(-0.16, -0.08, a));   // a stutter, then dark
+}
+// the hall's general light (key, fill, rims) dies with the wave too, so darkness visibly rushes toward the camera
+float hallPw(float z){
+  float tOff = uPower.x + uPower.y * clamp((z - uPower.z) / (uPower.w - uPower.z), 0.0, 1.0);
+  return smoothstep(-0.02, 0.22, tOff - uTime);
+}
+float pwRack(float z){ return pw(Z0 - RW * (floor((Z0 - z) / RW) + 0.5)); }   // row by row: one rack pitch at a time
+
+// ---- the copy: lit from the front's arrival until its tail passes uCopy.z s later
+float gather(){ return 1.0; }
+float settle(){ return 0.0; }
 float flowBase(float arr){
   float age = uTime - arr;
-  float on = smoothstep(-0.03, 0.03, age);
+  float on = smoothstep(-0.03, 0.03, age) * (1.0 - smoothstep(uCopy.z - 0.08, uCopy.z + 0.08, age));
   float head = exp(-max(age, 0.0) * 5.0);
-  return on * (mix(0.5, 0.12, copyDone()) + 1.5 * head);
+  return on * (0.5 + 1.5 * head);
 }
 // the light inside a fibre: F = (arrival, s along the route, lane, idle glow)
 float flowI(vec4 F){
   float age = uTime - F.x;
-  float idle = F.w * (0.10 + 0.05 * sin(uTime * 2.4 + F.y * 3.0)) * gather();
+  float idle = F.w * (0.10 + 0.05 * sin(uTime * 2.4 + F.y * 3.0)) * uAn;
   if(age < -0.04) return idle;
-  float done = copyDone();
-  float on = smoothstep(-0.03, 0.03, age);
+  float on = smoothstep(-0.03, 0.03, age) * (1.0 - smoothstep(uCopy.z - 0.08, uCopy.z + 0.08, age));
   float head = exp(-max(age, 0.0) * 5.0);
   float Lp = 1.5 + 1.1 * h11(F.z * 7.1 + 1.0);
-  float x = (F.y - uTime * 7.0) / Lp + h11(F.z * 3.7 + 2.0) * 9.0;
+  float x = (F.y - uTime * 9.0) / Lp + h11(F.z * 3.7 + 2.0) * 9.0;
   float cell = floor(x), fx = fract(x);
-  float has = step(0.25 + 0.5 * done, hash12(vec2(cell * 1.31, F.z * 1.37 + 0.5)));
+  float has = step(0.25, hash12(vec2(cell * 1.31, F.z * 1.37 + 0.5)));
   float comet = smoothstep(0.42, 0.96, fx) * (1.0 - smoothstep(0.96, 1.0, fx));
-  return max(idle, on * (mix(0.5, 0.12, done) + 1.8 * head + 1.5 * has * comet));
+  return max(idle, on * (0.5 + 1.8 * head + 1.5 * has * comet));
 }
 
-// ---- racks: data texture rows = row * NK + k; columns 0..41 units (type, pos in span, span, seed), 48 (group, t0, dur, phase), 49 (glow weight)
-// the console's progress curve (as the UI's copyPct): 37 % … pause … 73 % … pause … done; uCopy.z = P0 (rank 0)
-float eio(float x){ x = clamp(x, 0.0, 1.0); return x < 0.5 ? 2.0 * x * x : 1.0 - 2.0 * (1.0 - x) * (1.0 - x); }
-float einv(float u){ u = clamp(u, 0.0, 1.0); return u < 0.5 ? sqrt(u * 0.5) : 1.0 - sqrt((1.0 - u) * 0.5); }
-float progP(float t){
-  float a = uCopy.x, b = uCopy.y;
-  if(t < a) return 0.0;
-  if(t < a + 1.0) return 0.37 * eio(t - a);
-  if(t < a + 1.6) return 0.37;
-  if(t < a + 2.6) return 0.37 + 0.36 * eio(t - a - 1.6);
-  if(t < a + 3.1) return 0.73;
-  if(t < b) return 0.73 + 0.27 * eio((t - a - 3.1) / (b - a - 3.1));
-  return 1.0;
-}
-float progInv(float y){
-  float a = uCopy.x, b = uCopy.y;
-  if(y <= 0.37) return a + einv(y / 0.37);
-  if(y <= 0.73) return a + 1.6 + einv((y - 0.37) / 0.36);
-  return a + 3.1 + (b - a - 3.1) * einv((y - 0.73) / 0.27);
-}
-float visF(){ return clamp((progP(uTime) - uCopy.z) / (1.0 - uCopy.z), 0.0, 1.0); }
-float rankTime(float r){ return progInv(uCopy.z + (1.0 - uCopy.z) * r); }
-// R = (group, rank base, rank span, phase): 安-2's units flip in rank order, top first
+// ---- racks: data texture rows = row * NK + k; columns 0..41 units (type, pos in span, span, seed), 48 (group, -, -, phase), 49 (glow weight)
 vec4 rackInfo(int ri){ return texelFetch(uRackData, ivec2(48, ri), 0); }
-float anLife(float v, vec4 R){ return (0.82 + 0.28 * sin(v * 8.0 - uTime * 4.5 + R.w)) * gather() * (1.0 + settle()); }
-float flipTime(vec4 R, float v, float jit){ return rankTime(R.y + R.z * (0.84 * (1.0 - v) + 0.12 * jit)); }
-float flipped(vec4 R, float v){
-  if(R.x < 0.5) return 0.0;
-  if(R.x < 1.5) return 1.0;
-  float tl = flipTime(R, v, 0.5);
-  return smoothstep(tl, tl + 0.05, uTime);
-}
-// the AI racks' vertical light columns on the front posts: 42 segments, one per unit
+float anOf(vec4 R){ return R.x > 0.5 ? uAn : 0.0; }          // 安's racks are amber only while it acts (s07)
+float anLife(float v, vec4 R){ return 0.82 + 0.28 * sin(v * 8.0 - uTime * 4.5 + R.w); }
+// light columns on the main rows' posts: 42 segments; 安's turn amber while it acts
 vec3 stripC(vec4 R, float v, float seg){
-  if(R.x < 0.5) return vec3(0.0);
+  vec3 cold = mix(vec3(0.25, 0.55, 1.0), vec3(0.8, 0.94, 1.0), 0.35) * (0.5 + 0.35 * smoothstep(0.6, 1.0, sin(v * 6.0 + uTime * 1.6 + R.w)));
+  if(R.x < 0.5) return cold * 0.6;
   float beat = 0.7 + 0.3 * sin(v * 9.0 - uTime * 4.2 + R.w) + 0.35 * smoothstep(0.75, 1.0, sin(v * 23.0 + uTime * 6.5 + R.w * 3.0));
-  vec3 amb = AMBER * (1.0 + 0.55 * beat) * gather() * (1.0 + settle());
-  if(R.x < 1.5) return amb;
-  vec3 cold = mix(vec3(0.25, 0.55, 1.0), vec3(0.8, 0.94, 1.0), 0.35) * (0.55 + 0.35 * smoothstep(0.6, 1.0, sin(v * 6.0 + uTime * 1.6 + R.w)));
-  float tl = flipTime(R, v, 0.0);
-  float k = step(tl, uTime);
-  return mix(cold, amb, k) + FLASH * k * exp(-(uTime - tl) * 10.0) * 2.8;
+  return mix(cold, AMBER * (1.0 + 0.55 * beat), uAn);
 }
 // average glow of one rack face (light it throws on the aisle)
 vec3 rackE(int row, float kf){
@@ -123,16 +112,30 @@ vec3 rackE(int row, float kf){
   int ri = row * NK + int(kf);
   vec4 R = rackInfo(ri);
   float w = texelFetch(uRackData, ivec2(49, ri), 0).x;
-  float f = R.x < 0.5 ? 0.0 : (R.x < 1.5 ? 1.0 : clamp((visF() - R.y) / R.z, 0.0, 1.0));
-  return mix(COLD * 0.22 * w, AMBER * 0.75 * gather() * (1.0 + settle()), f);
+  return mix(COLD * 0.22 * w, AMBER * 0.75, anOf(R)) * pw(Z0 - RW * (kf + 0.5));
 }
 vec3 rowGlow(int row, float z){
   float kf = (Z0 - z) / RW - 0.5;
   float k0 = floor(kf), f = kf - k0;
   return mix(rackE(row, k0), rackE(row, k0 + 1.0), smoothstep(0.0, 1.0, f));
 }
+// red emergency lamps: hard cel pools and red rims
+vec3 emLight(vec3 lp, vec3 N, vec3 wp){
+  if(uEmerg <= 0.0) return vec3(0.0);
+  vec3 acc = vec3(0.0);
+  vec3 V = normalize(cameraPosition - wp);
+  float fres = 1.0 - max(dot(N, V), 0.0);
+  for(int i = 0; i < 4; i++){
+    vec4 E = uEm[i];
+    if(E.w <= 0.0) continue;
+    vec3 d = E.xyz - lp; float dist = length(d); vec3 L = d / max(dist, 1e-4);
+    float ndl = dot(N, L);
+    float fall = clamp(1.0 - dist / 5.2, 0.0, 1.0);
+    acc += EMRED * E.w * (cel2(fall) * smoothstep(0.0, 0.2, ndl) * 0.26 + smoothstep(0.6, 0.72, fres) * smoothstep(-0.1, 0.3, ndl) * sqrt(fall) * 1.2);
+  }
+  return acc * uEmerg;
+}
 // ---- lights of the hall
-float cel2(float fall){ return smoothstep(0.0, 0.1, fall) * 0.4 + smoothstep(0.42, 0.52, fall) * 0.6; }
 vec3 trunkLight(vec3 lp, vec3 N){
   float best = 1e9, ba = 1e9; vec3 bd = vec3(0.0, 1.0, 0.0);
   for(int i = 0; i < 23; i++){
@@ -177,11 +180,14 @@ vec3 dcCel(vec3 col, vec3 N, vec3 wp){
   float deep = step(ndl, -0.55) * step(N.y, -0.35);
   o = mix(o, col * uDeepTint, deep * 0.7);
   vec3 lp = wp - uOrigin;
+  float hp = mix(0.035, 1.0, hallPw(lp.z));
+  o *= hp;
   o += col * (uAmbient + localLights(wp, N) + trunkLight(lp, N) + aisleLight(lp, N) + fixtureLight(lp, N));
+  o += mix(col, vec3(0.5), 0.25) * emLight(lp, N, wp);
   // a thin cold rim where surfaces turn toward the light at the end of the aisle
   vec3 V = normalize(cameraPosition - wp);
   float fres = 1.0 - max(dot(N, V), 0.0);
-  o += uSunColor * smoothstep(0.66, 0.74, fres) * smoothstep(0.05, 0.4, dot(N, uSunDir)) * 0.18 * uSunStrength;
+  o += uSunColor * smoothstep(0.66, 0.74, fres) * smoothstep(0.05, 0.4, dot(N, uSunDir)) * 0.18 * uSunStrength * hp;
   return o;
 }
 // ---- anti-aliased shapes (box-filtered coverage, anisotropic so grazing faces blur along one axis only)
@@ -220,14 +226,27 @@ export function dcToon(o = {}) {
       if(!gl_FrontFacing){ N = -N; NV = -NV; }
       vec3 outc = vMisc.w > 0.5 ? col : dcCel(col, N, vWorld);
       outc += col * vMisc.y;
-      if(vMisc.z > 1.5){
+      vec3 lp = vWorld - uOrigin;
+      // vMisc.z: 1 fibre carrying the copy, 2 rack light column, 3 ceiling fixture, 4 lit doorway, 5 emergency lamp, 6 pilot lamp
+      if(vMisc.z > 5.5){
+        float id = vFlow.x;
+        vec3 lc = id < 0.5 ? vec3(0.15, 1.0, 0.35) * uLamp.x : (id < 1.5 ? vec3(1.0, 0.1, 0.08) * uLamp.y : vec3(0.85, 0.92, 1.0) * uLamp.z);
+        outc = col * 0.12 + lc * 2.2;
+      } else if(vMisc.z > 4.5){
+        outc = mix(col * 0.1, EMRED * 2.4, uEmerg);
+      } else if(vMisc.z > 3.5){
+        outc = col * uDoor;
+      } else if(vMisc.z > 2.5){
+        int fi = int(vFlow.x + 0.5);
+        outc = mix(col * 0.05, col, clamp(uFix[fi].w / 0.3, 0.0, 1.0) * pw(lp.z));
+      } else if(vMisc.z > 1.5){
         // rack light column: vFlow = (rack data row, height 0..1)
         vec4 R = rackInfo(int(vFlow.x + 0.5));
         float v = clamp(vFlow.y, 0.0, 0.9999);
         float seg = floor(v * 42.0), fs = fract(v * 42.0);
         float fw = fwidth(v * 42.0);
         float gap = mix(smoothstep(0.0, 0.14, fs) * smoothstep(1.0, 0.86, fs), 0.75, smoothstep(0.3, 0.9, fw));
-        outc += stripC(R, (seg + 0.5) / 42.0, seg) * gap * 0.8;
+        outc += stripC(R, (seg + 0.5) / 42.0, seg) * gap * 0.8 * pwRack(lp.z);
       } else if(vMisc.z > 0.5) outc += AMBER * flowI(vFlow) * uFlowGain;
       writeOut(outc, 1.0, NV, vDepth, vMisc.x);
     }
@@ -247,10 +266,7 @@ vec3 ledC(float id, float v, vec4 R, float kind){
   if(R.x < 0.5) return cold;
   float on2 = kind < 0.5 ? 1.0 : blink(id + 91.0, 4.0 + 6.0 * h11(id * 3.1), 0.72);
   vec3 amb = AMBER * (0.55 + 1.25 * on2) * anLife(v, R);
-  if(R.x < 1.5) return amb;
-  float tl = flipTime(R, v, h11(id * 5.31));
-  float k = step(tl, uTime);
-  return mix(cold, amb, k) + FLASH * k * exp(-(uTime - tl) * 12.0) * 3.0;
+  return mix(cold, amb, uAn);
 }
 // the GPU nodes' light bars: 24 segments
 vec3 barC(float uid, float seg, float v, vec4 R){
@@ -258,11 +274,8 @@ vec3 barC(float uid, float seg, float v, vec4 R){
   vec3 cold = mix(vec3(0.2, 0.5, 1.0), vec3(0.8, 0.94, 1.0), 0.25 + 0.3 * h11(uid)) * (0.55 + 0.75 * scan);
   if(R.x < 0.5) return cold;
   float beat = 0.55 + 0.35 * sin(v * 7.0 - uTime * 4.0 + R.w) + 0.3 * smoothstep(0.6, 1.0, sin(seg * 0.5 + uTime * 7.0 + uid));
-  vec3 amb = AMBER * (0.95 + 0.6 * beat) * gather() * (1.0 + settle());
-  if(R.x < 1.5) return amb;
-  float tl = flipTime(R, v, 0.0) + 0.0065 * seg;
-  float k = step(tl, uTime);
-  return mix(cold, amb, k) + FLASH * k * exp(-(uTime - tl) * 9.0) * 2.6;
+  vec3 amb = AMBER * (0.95 + 0.6 * beat);
+  return mix(cold, amb, uAn);
 }
 vec3 led(vec2 p, vec2 c, vec2 hs, vec3 col, vec2 fw){
   vec2 he = max(hs, fw * 0.55);
@@ -391,7 +404,7 @@ export function faceMat() {
       int row = int(ri) / NK;
       float kk = ri - float(row * NK);
       outc += alb * rackE(row, kk) * 2.2;
-      outc += e * uLedGain;
+      outc += e * uLedGain * pw(Z0 - RW * (kk + 0.5));
       writeOut(outc, 1.0, NV, vDepth, 20.0);
     }
   `;
@@ -426,10 +439,10 @@ export function floorMat() {
       float vR = (uI - Ud.y + Ud.z * 0.5) / 42.0;
       vec3 cold = COLD * typeGlow(Ud.x) * (0.55 + 0.6 * h11(Ud.w * 7.0 + uI));
       vec3 amb = AMBER * typeGlow(Ud.x) * 1.4 * gather() * (1.0 + settle());
-      vec3 g = mix(cold, amb, flipped(R, vR)) * inEq;
+      vec3 g = mix(cold, amb, anOf(R)) * inEq;
       // the light columns on the posts
       float post = max(cov1(lu, 0.053, 0.03, 0.04), cov1(lu, 0.947, 0.03, 0.04));
-      return g + stripC(R, (y - 0.1) / U42, 0.0) * post * 1.6;
+      return (g + stripC(R, (y - 0.1) / U42, 0.0) * post * 1.6) * pw(Z0 - RW * (k + 0.5));
     }
     float raySeg(vec3 o, vec3 r, vec3 a, vec3 b, out float h){
       vec3 u = b - a; float C = max(dot(u, u), 1e-6);
@@ -488,7 +501,7 @@ export function floorMat() {
           // glossy: the doors' reflection smears toward the viewer as a long streak
           float door = cov1(Hd.x, 0.0, 0.62, 0.35) * exp(-max(Hd.y - 1.9, 0.0) * 0.16);
           door *= 1.0 - cov1(Hd.x, 0.0, 0.05, 0.06) * 0.6;
-          refl += vec3(0.5, 0.8, 1.0) * door * 0.45 * exp(-max(Hd.y, 0.0) * 0.05);
+          refl += vec3(0.5, 0.8, 1.0) * door * 0.45 * exp(-max(Hd.y, 0.0) * 0.05) * uDoor;
         }
       }
       // the stream (reflected only where the racks don't hide it)
@@ -513,6 +526,14 @@ export function floorMat() {
           float ty = (F.y - lp.y) / Rr.y;
           vec3 Hf = lp + Rr * ty;
           refl += vec3(0.6, 0.85, 1.0) * F.w * 3.0 * cov1(Hf.x, F.x, 0.06, 0.08) * cov1(Hf.z, F.z, 0.6, 0.25);
+        }
+        // red emergency lamps, smeared long by the gloss
+        for(int i = 0; i < 4; i++){
+          vec4 E = uEm[i];
+          if(E.w <= 0.0 || uEmerg <= 0.0) continue;
+          float ty = (E.y - lp.y) / Rr.y;
+          vec3 He = lp + Rr * ty;
+          refl += EMRED * E.w * uEmerg * 1.4 * cov1(He.x, E.x, 0.12, 0.3) * exp(-abs(He.z - E.z) * 1.6);
         }
       }
       float fres = 0.35 + 0.65 * pow(1.0 - abs(V.y), 2.0);
@@ -583,8 +604,9 @@ export function moteMat() {
       vec3 c = AMBER * flowBase(ba) * exp(-best * best * 2.2) * 1.4;
       // light from the rack faces (amber where 安 lives / has moved in)
       c += (rowGlow(0, lp.z) * smoothstep(1.6, 0.0, lp.x + 1.1) + rowGlow(1, lp.z) * smoothstep(1.6, 0.0, 1.1 - lp.x)) * smoothstep(2.6, 1.2, lp.y) * 0.9;
+      for(int i = 0; i < 4; i++){ vec4 E = uEm[i]; if(E.w > 0.0) c += EMRED * E.w * uEmerg * exp(-pow(length(E.xyz - lp) / 1.8, 2.0)) * 0.6; }
       // the cold light beyond the doors, and a faint base
-      c += vec3(0.35, 0.65, 0.8) * (0.06 + 0.5 * exp(-max(lp.z - ZEND, 0.0) * 0.25));
+      c += vec3(0.35, 0.65, 0.8) * (0.06 * pw(lp.z) + 0.5 * uDoor * exp(-max(lp.z - ZEND, 0.0) * 0.25));
       vec3 wp = lp + uOrigin;
       vec4 mv = viewMatrix * vec4(wp, 1.0);
       vD = -mv.z;

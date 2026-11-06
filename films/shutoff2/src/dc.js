@@ -6,10 +6,11 @@ import * as THREE from 'three';
 import { Rng } from './util.js';
 import { Merge, M, cbox, box, tube, offsetPath } from './dc-geo.js';
 import { DC, dcToon, faceMat, floorMat, glowMat, coneMat, moteMat, haloMat } from './dc-mat.js';
+import { createSwitch } from './dc-switch.js';
 import { labelAtlas, rowSign, exitSign, ceilTex, wallTex } from './dc-tex.js';
 import {
-  OY, NK, RW, RD, RH, Z0, ZEND, CEIL, U42, rackZ, ROWS, AN, AN2, groupOf, TX, TY, XZ,
-  TRUNK, arrival, DROPS, rackRank, roundedPath,
+  OY, NK, RW, RD, RH, Z0, ZEND, CEIL, U42, rackZ, ROWS, AN, groupOf, TX, TY, XZ,
+  TRUNK, arrival, DROPS, roundedPath, anAt, powerAt, doorAt, emergAt, hallLit,
 } from './dc-flow.js';
 
 const lin = (hex) => { const c = new THREE.Color(hex); return [c.r, c.g, c.b]; };
@@ -74,8 +75,7 @@ export function createDC(ctx) {
         glow += TYPE_GLOW[e[0]] / 42;
       }
       const o = (ri * 64 + 48) * 4;
-      const rr = g === 2 ? rackRank(k) : { base: 0, span: 1 };
-      data[o] = g; data[o + 1] = rr.base; data[o + 2] = rr.span; data[o + 3] = rng.range(0, 6.28);
+      data[o] = g; data[o + 1] = 0; data[o + 2] = 1; data[o + 3] = rng.range(0, 6.28);
       data[(ri * 64 + 49) * 4] = glow * 2.2;
     }
   }
@@ -92,7 +92,7 @@ export function createDC(ctx) {
   for (let r = 0; r < 2; r++) for (let k = 0; k < NK; k++) {
     const g = groupOf(r, k);
     const num = String(k + 1).padStart(2, '0');
-    labels.push(g === 1 ? { text: `安  A${num}`, sub: 'AN', an: true } : g === 2 ? { text: `安-2  B${num}`, sub: 'AN-2' } : { text: `${r ? 'R' : 'L'}1-${num}`, sub: '' });
+    labels.push(g === 1 ? { text: `安  A${num}`, sub: 'AN', an: true } : { text: `${r ? 'R' : 'L'}1-${num}`, sub: '' });
   }
   const atlas = labelAtlas(labels);
   const mLabel = dcToon({ map: atlas.tex });
@@ -127,8 +127,8 @@ export function createDC(ctx) {
       part(mg, cbox(0.22, 0.012, 0.36, 0.004), at(-RD * 0.7, RH + 0.002, 0), '#0e1014', 16);
       // the server face
       mgF.add(new THREE.PlaneGeometry(0.483, U42), at(-0.036, 0.1 + U42 / 2, 0, Math.PI / 2), { aRack: r * NK + k });
-      if (g) {
-        // the AI racks' light columns on both front posts (they flip unit by unit with the servers)
+      if (r < 2) {
+        // light columns on the main rows' front posts (安's turn amber while it acts; all die in the blackout)
         for (const s of [1]) part(mg, box(0.022, U42, 0.005), at(0.011, 0.1 + U42 / 2, s * 0.268), '#0b0d12', 119,
           { flow: 2, unlit: 1, aFlow: (p) => [r * NK + k, (p.y - 0.1) / U42, 0, 0] });
       }
@@ -223,16 +223,22 @@ export function createDC(ctx) {
     }
     part(mg, box(0.012, CEIL - 4.02, 0.012), M(-0.42, (CEIL + 4.02) / 2, z + 1.2), '#545d68', 27);
   }
-  // linear fixtures: most are dark tonight
+  // linear fixtures: few are on at 01:40 (s07); most are on in the normal-lit hall before the blackout (k12)
   const fixZ = [4.8, 2.4, 0.0, -2.4, -4.8, -7.2, -9.6, -12.0];
-  const fixOn = [0, 1, 0, 0, 1, 0, 0, 1];
-  const fixList = [];
+  const FIX_A = [0, 1, 0, 0, 1, 0, 0, 1], FIX_B = [1, 1, 0, 1, 1, 1, 0, 1], FIX_I = 0.3;
+  const fixList = fixZ.map((z) => [0.45, CEIL - 0.1, z]);
   fixZ.forEach((z, i) => {
     part(mg, cbox(0.16, 0.07, 1.25, 0.012), M(0.45, CEIL - 0.06, z), '#2b313a', 34);
-    part(mg, box(0.12, 0.005, 1.18), M(0.45, CEIL - 0.098, z), fixOn[i] ? '#d8f2ff' : '#1e242c', 135, { unlit: fixOn[i], emis: 0 });
-    if (fixOn[i]) fixList.push([0.45, CEIL - 0.1, z]);
+    part(mg, box(0.12, 0.005, 1.18), M(0.45, CEIL - 0.098, z), '#d8f2ff', 135, { unlit: 1, flow: 3, aFlow: [i, 0, 0, 0] });
+    DC.uFix.value[i].set(0.45, CEIL - 0.1, z, 0);
   });
-  fixList.forEach((p, i) => DC.uFix.value[i].set(p[0], p[1], p[2], 0.32));
+  // red emergency lamps (dark until CUES.emergency)
+  const emPos = [[0.0, CEIL - 0.08, 3.4], [0.0, CEIL - 0.08, -2.6], [0.0, CEIL - 0.08, -8.6], [0.0, 2.72, -17.36]];
+  emPos.forEach((p, i) => {
+    part(mg, cbox(0.26, 0.08, 0.14, 0.015), M(p[0], p[1] + (i < 3 ? 0.02 : 0), p[2] + (i < 3 ? 0 : 0.05)), '#30363f', 46);
+    part(mg, cbox(0.2, 0.05, 0.1, 0.02), M(p[0], p[1] - (i < 3 ? 0.04 : -0.0), p[2] + (i < 3 ? 0 : -0.04)), '#5a2226', 146, { unlit: 1, flow: 5 });
+    DC.uEm.value[i].set(p[0], p[1] - 0.12, p[2] + (i < 3 ? 0 : 0.3), i < 3 ? 1.0 : 0.8);
+  });
 
   // ---------------------------------------------------------------- the end: containment doors, the corridor light beyond
   for (const x of [-1.08, -0.03, 0.03, 1.08]) part(mg, cbox(0.05, 2.2, 0.06, 0.008), M(x, 1.1, ZEND), '#56606c', 40);
@@ -242,7 +248,7 @@ export function createDC(ctx) {
   // glass pane edges (the glass itself is drawn as reflections in the overlay)
   for (const x of [-0.555, 0.555]) for (const y of [0.06, 2.06]) part(mg, box(1.0, 0.02, 0.02), M(x, y, ZEND), '#7d8894', 43);
   // corridor beyond: a lit doorway in the end wall
-  part(mg, box(1.4, 2.3, 0.02), M(0, 1.15, -17.44), '#d7f0ff', 140, { unlit: 1 });
+  part(mg, box(1.4, 2.3, 0.02), M(0, 1.15, -17.44), '#d7f0ff', 140, { unlit: 1, flow: 4 });
   part(mg, cbox(1.6, 0.12, 0.12, 0.01), M(0, 2.36, -17.42), '#5a6470', 44);
   // walls, ceiling
   const mWall = dcToon({ map: wallTex() });
@@ -262,14 +268,12 @@ export function createDC(ctx) {
   const sign = (texture, w, h, pos, rods = true) => {
     const m = dcToon({ map: texture });
     const g = new Merge(X);
-    part(g, new THREE.PlaneGeometry(w, h), M(pos[0], pos[1], pos[2] + 0.012), '#ffffff', 118, { unlit: 1 });
-    part(g, new THREE.PlaneGeometry(w, h), M(pos[0], pos[1], pos[2] - 0.012, Math.PI), '#ffffff', 118, { unlit: 1 });
+    part(g, new THREE.PlaneGeometry(w, h), M(pos[0], pos[1], pos[2] + 0.012), '#ffffff', 118, { unlit: 1, flow: 4 });
+    part(g, new THREE.PlaneGeometry(w, h), M(pos[0], pos[1], pos[2] - 0.012, Math.PI), '#ffffff', 118, { unlit: 1, flow: 4 });
     part(mg, cbox(w + 0.04, h + 0.04, 0.02, 0.006), M(pos[0], pos[1], pos[2]), '#2a323c', 45);
     if (rods) for (const s of [-1, 1]) part(mg, box(0.01, CEIL - pos[1] - h / 2, 0.01), M(pos[0] + s * w * 0.4, (CEIL + pos[1] + h / 2) / 2, pos[2]), '#545d68', 27);
     mgS.push(new THREE.Mesh(g.geometry(), m));
   };
-  sign(rowSign('安', 'A区 · 01–09'), 0.92, 0.345, [-1.45, 3.12, rackZ(4)]);
-  sign(rowSign('安-2', 'B区 · 13–24'), 1.2, 0.45, [1.12, 2.93, rackZ(19)]);
   sign(exitSign(), 0.5, 0.19, [0, 2.62, ZEND - 0.25]);
 
   // ---------------------------------------------------------------- meshes
@@ -313,6 +317,8 @@ export function createDC(ctx) {
     glow.frustumCulled = false;
     over.add(glow);
   }
+  let cones, halo;
+  const redHalos = [];
   {
     const P = [], B = [], Cn = [], In = [], I = [];
     fixList.forEach((p) => {
@@ -326,7 +332,7 @@ export function createDC(ctx) {
     g.setAttribute('aCone', new THREE.Float32BufferAttribute(Cn, 2));
     g.setAttribute('aInt', new THREE.Float32BufferAttribute(In, 1));
     g.setIndex(I);
-    const cones = new THREE.Mesh(g, coneMat());
+    cones = new THREE.Mesh(g, coneMat());
     cones.frustumCulled = false;
     over.add(cones);
   }
@@ -346,10 +352,18 @@ export function createDC(ctx) {
     q.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(12), 3));
     q.setAttribute('aCorner', new THREE.Float32BufferAttribute([-1, -1, 1, -1, -1, 1, 1, 1], 2));
     q.setIndex([0, 1, 2, 1, 3, 2]);
-    const halo = new THREE.Mesh(q, haloMat({ center: [0, 1.25, ZEND - 1.2], size: [2.6, 2.2], color: [0.32, 0.6, 0.72], gain: 0.55 }));
+    halo = new THREE.Mesh(q, haloMat({ center: [0, 1.25, ZEND - 1.2], size: [2.6, 2.2], color: [0.32, 0.6, 0.72], gain: 0.55 }));
     halo.frustumCulled = false;
     over.add(halo);
+    // red pools of haze around the emergency lamps
+    emPos.forEach((p, i) => {
+      const h = new THREE.Mesh(q, haloMat({ center: [p[0], p[1] - 0.25, p[2] + (i < 3 ? 0 : 0.4)], size: i < 3 ? [1.5, 1.2] : [2.2, 1.6], color: [1.0, 0.1, 0.08], gain: 0 }));
+      h.frustumCulled = false;
+      over.add(h);
+      redHalos.push(h);
+    });
   }
+  const sw = createSwitch(root, over);
 
   root.visible = over.visible = false;
   const dbg = new URLSearchParams(location.search).get('dcdbg') || '';
@@ -358,6 +372,24 @@ export function createDC(ctx) {
     update(st) {
       const on = st.set === 'dc';
       root.visible = over.visible = on;
+      sw.update(st, on);
+      if (on) {
+        const t = st.t;
+        DC.uAn.value = anAt(t);
+        DC.uDoor.value = doorAt(t);
+        const em = emergAt(t);
+        DC.uEmerg.value = em;
+        const pat = t < 80 ? FIX_A : FIX_B;
+        const ia = cones.geometry.attributes.aInt;
+        fixZ.forEach((z, i) => {
+          const w = pat[i] * FIX_I * powerAt(z, t);
+          DC.uFix.value[i].w = w;
+          for (let j = 0; j < 4; j++) ia.setX(i * 4 + j, w / FIX_I);
+        });
+        ia.needsUpdate = true;
+        halo.material.uniforms.uGain.value = 0.55 * DC.uDoor.value;
+        redHalos.forEach((h, i) => { h.material.uniforms.uGain.value = em * (i < 3 ? 0.22 : 0.32); });
+      }
       if (dbg.includes('o')) over.visible = false;
       if (dbg.includes('f')) floor.visible = false;
       if (dbg.includes('s')) for (const m of mgS) m.visible = false;
