@@ -394,6 +394,8 @@ export function sculptMaterial(o = {}) {
     uColN: { value: new THREE.Color(o.region?.colN ?? '#000000') }, uIdN: { value: o.region?.idN ?? 2 },
     uColB: { value: new THREE.Color(o.region?.colB ?? '#000000') }, uIdB: { value: o.region?.idB ?? 3 }, uBand: { value: o.region?.band ?? 0 },
     uHairNeg: { value: o.region?.hairNeg ? 1 : 0 },
+    uColC: { value: new THREE.Color(o.region?.colC ?? '#ffffff') }, uRegC: { value: o.region?.colC ? 1 : 0 },   // a 4th tone where aFx.y >= 0.5 (a collar)
+    uLineLight: { value: o.lineLight ?? 0 },                                                                       // lines lighter than the cloth (dark fabric)
     uCrevT: { value: o.crevT ?? 0.62 },
   };
   const vs = /* glsl */ `
@@ -431,7 +433,8 @@ export function sculptMaterial(o = {}) {
     varying vec2 vFx;
     uniform float uRimW, uFaceK;
     uniform float uSmoothK, uCrevT, uFaceDark, uRegOn, uIdP, uIdN, uIdB, uBand, uHairNeg;
-    uniform vec3 uColP, uColN, uColB;
+    uniform vec3 uColP, uColN, uColB, uColC;
+    uniform float uRegC, uLineLight;
     void main(){
       if(uPass > 0.5 && uPass < 1.5){ oColor = vec4(1); oData = vec4(0); return; }
       vec3 Nd = normalize(vNormalW); vec3 NV = normalize(vNormalV);
@@ -443,7 +446,8 @@ export function sculptMaterial(o = {}) {
       float hairM = step(0.5, vFx.y);
       if(uRegOn > 0.5){
         float rg = vFx.y;
-        if(rg >= 0.0){ col = uColP; id = uIdP; hairM = 0.0; }
+        if(rg >= 0.5 && uRegC > 0.5){ col = uColC; id = uIdP; hairM = 0.0; }
+        else if(rg >= 0.0){ col = uColP; id = uIdP; hairM = 0.0; }
         else if(rg > -uBand){ col = uColB; id = uIdB; hairM = 0.0; }
         else { col = uColN; id = uIdN; hairM = uHairNeg; }
       }
@@ -499,7 +503,8 @@ export function sculptMaterial(o = {}) {
       float lw = fw * 1.4;
       float line = 1.0 - smoothstep(lw, lw + fw, vCrease);
       float vis = (1.0 - smoothstep(uLineW * 0.6, uLineW * 1.2, fw)) * smoothstep(0.3, 0.55, dot(Nd, V));
-      outc = mix(outc, mix(outc * 0.42, uLineCol * 0.6, 0.25), line * vis * 0.8);
+      vec3 lc = uLineLight > 0.5 ? outc * 1.4 + vec3(0.07, 0.085, 0.16) : mix(outc * 0.42, uLineCol * 0.6, 0.25);
+      outc = mix(outc, lc, line * vis * (uLineLight > 0.5 ? 0.65 : 0.8));
       writeOut(outc, 1.0, NV, vDepth, id);
     }
   `;

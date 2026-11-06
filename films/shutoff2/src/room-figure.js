@@ -71,7 +71,7 @@ function fitGroups(groups, worlds) {
   }
 }
 
-const COL = { 1: '#d6dbe6', 2: '#2c3040', 3: '#ebd2c6', 4: '#1d2028', 5: '#2a2d36', 6: '#1f2330', 7: '#ebd2c6' };
+const COL = { 1: '#2b3249', 2: '#15171f', 3: '#ebd2c6', 4: '#0b0c11', 5: '#2a2d36', 6: '#1f2330', 7: '#ebd2c6' };
 const ID = { 1: 46, 2: 47, 3: 49, 4: 45, 5: 48, 6: 43, 7: 49 };
 
 function decorateTags(sculpt, field, prims, extra) {
@@ -139,7 +139,7 @@ export function makeFigure() {
   const bodyF = (x, y, z) => {
     let d = bodyF0(x, y, z);
     // shirt folds on the back (hunched) and at the elbows: shallow grooves
-    const fold = Math.sin(y * 70 + Math.sin(x * 18) * 1.5) * 0.0018 * Math.max(0, Math.min(1, (y - 0.7) * 6)) * (z > -1.12 ? 1 : 0);
+    const fold = Math.sin(y * 70 + Math.sin(x * 18) * 1.5) * 0.0032 * Math.max(0, Math.min(1, (y - 0.7) * 6)) * (z > -1.12 ? 1 : 0);
     return d + fold;
   };
   // drawn lines: the shirt's back yoke, sleeve seams, folds bunching on the back and inside the elbows
@@ -159,8 +159,15 @@ export function makeFigure() {
     for (const sd of ['R', 'L']) {
       const e = J['el' + sd];
       const dd = Math.hypot(x - e[0], y - e[1], z - e[2]);
-      if (dd < 0.07 && y > e[1] + 0.01) c = Math.min(c, Math.abs(dd - 0.035));
+      if (dd < 0.07 && y > e[1] + 0.01) c = Math.min(c, Math.abs(dd - 0.035), Math.abs(dd - 0.052) + 0.0006);
+      // the shirt cuff, a band 3–5 cm up from the wrist
+      const w = J['wr' + sd];
+      const dw = Math.hypot(x - w[0], y - w[1], z - w[2]);
+      c = Math.min(c, Math.abs(dw - 0.03), Math.abs(dw - 0.052));
     }
+    // the collar's top edge and its seam where it meets the shoulders
+    const ct = Math.hypot(x - 0.04, y - 1.068, z + 1.072);
+    if (y > 1.0) c = Math.min(c, Math.abs(ct - 0.06), Math.abs(Math.hypot(x - 0.04, y - 1.005, z + 1.015) - 0.072));
     return c;
   };
   // region: + shirt, - trousers (a crisp belt line from a plane through the waist, following the lean)
@@ -168,7 +175,7 @@ export function makeFigure() {
   const body = new Sculpt({ rig, prims: B, field: bodyF, bounds: 'auto', h: 0.0052, sigma: 0.025, margin: 1.5, smoothEps: 0.022 });
   const sp0 = body.setPose.bind(body);
   body.setPose = (w) => { sp0(w); fitGroups(groups, w); };
-  const torsoSet = new Set(torso);
+  const torsoSet = new Set(torso), collarSet = new Set(collar);
   body.decorate = (base) => {
     const n = base.count;
     const fx = new Float32Array(n * 2), crease = new Float32Array(n).fill(1);
@@ -177,7 +184,7 @@ export function makeFigure() {
       const x = base.pos[v * 3], y = base.pos[v * 3 + 1], z = base.pos[v * 3 + 2];
       const pr = B[base.nearest[v]];
       const plane = (x - waistP.x) * waistN.x + (y - waistP.y) * waistN.y + (z - waistP.z) * waistN.z;
-      fx[v * 2 + 1] = torsoSet.has(pr) ? plane : (pr.tag === 1 ? 0.2 : -0.2);
+      fx[v * 2 + 1] = collarSet.has(pr) ? 0.8 : torsoSet.has(pr) ? Math.min(plane, 0.45) : (pr.tag === 1 ? 0.2 : -0.2);
       crease[v] = creaseBody(x, y, z, pr.tag);
     }
     decoAttrs(base, { ao, fx, crease });
@@ -344,7 +351,7 @@ export function makeFigure() {
 
   // ---------------------------------------------------------------- meshes
   const common = { warmK: 0.25, rim: 1.0, rimW: 0.5, rimCol: '#b9c6ff', aoK: 0.9, lineCol: '#6a7390', smoothK: 0.85, crevT: 0.72 };
-  const matBody = sculptMaterial({ ...common, lineW: 0.0035, region: { colP: COL[1], idP: ID[1], colN: COL[2], idN: ID[2], colB: COL[4], idB: ID[4], band: 0.028 } });
+  const matBody = sculptMaterial({ ...common, smoothK: 0.55, lineW: 0.0045, lineLight: 1, rimW: 0.44, region: { colC: '#3e4866', colP: COL[1], idP: ID[1], colN: COL[2], idN: ID[2], colB: COL[4], idB: ID[4], band: 0.028 } });
   const matHead = sculptMaterial({ ...common, lineW: 0.002, sheen: 0, smoothK: 0.7, rimW: 0.38, region: { colP: COL[3], idP: ID[3], colN: COL[6], idN: ID[6], hairNeg: true } });
   const matHands = sculptMaterial({ ...common, lineW: 0.002, region: { colP: COL[3], idP: ID[3], colN: COL[3], idN: ID[3] } });
   const group = new THREE.Group();

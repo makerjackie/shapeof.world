@@ -127,10 +127,12 @@ export function createRoom(ctx) {
       mH.uniforms.uColP.value.set(ir ? '#f4ece8' : '#ebd2c6');
       mN.uniforms.uColP.value.set(ir ? '#f4ece8' : '#ebd2c6');
       mH.uniforms.uFaceK.value = ir ? 0.85 : 0.5;
+      mB.uniforms.uColP.value.set(ir ? '#8d93a3' : '#2b3249');     // the navy shirt reads light grey in infrared
       // k05: the rim on his silhouette turns with the screen, cold → red at CUES.killPress
       const red = st.sid === 'k05' ? clamp((st.tr - st.cues.killPress + 0.02) / 0.14, 0, 1) : 0;
       for (const m of fig.mats) m.uniforms.uRimCol.value.set('#b9c6ff').lerp(_red.set('#ff4a3a'), red);
       fig.group.children[0].visible = st.sid !== 'k05';     // the flyaway strands (their cold rim would fight the red)
+      void mB;
       fig.group.visible = showFig;
       const inHands = PHONE_IN_HANDS.has(st.sid);
       if (phone) phone.root.visible = inHands;
