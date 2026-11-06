@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { airMaterial, dustMaterial, skyMaterial } from './meet-mat.js';
+import { G } from './glsl.js';
 import { buildRoom } from './meet-room.js';
 import { buildProps } from './meet-props.js';
 import { buildCast } from './people-cast.js';
@@ -14,7 +15,7 @@ const V = THREE.Vector3;
 // v12 vote: five members light green one by one from CUES.votes (the chair presides and does not vote);
 // 林工's light is the sixth and stays empty until CUES.pass
 export const VOTE_ORDER = ['young', 'zhang', 'heavy', 'bob', 'bun'];
-const VOTE_STEP = 0.5;
+const VOTE_STEP = 0.6;    // matches the UI's screen lights
 const voteTime = (id, C) => (id === 'lin' ? C.pass : id === 'chair' ? Infinity : C.votes + VOTE_ORDER.indexOf(id) * VOTE_STEP);
 
 export function createMeet(ctx) {
@@ -39,6 +40,17 @@ export function createMeet(ctx) {
     people.add(p.root);
   }
   ctx.shadowRoots.push(R.casters, P.group, people);
+  // 林工 gets his own material instances (sharing every uniform but the silhouette controls) so k15 can push him
+  // into a deep silhouette without darkening the committee
+  const linMats = [];
+  cast.lin.root.traverse((o) => {
+    if (!o.isMesh || !o.material?.uniforms?.uSil || o.material.uniforms.uUnlit.value > 0.5) return;
+    const a = o.material, b = a.clone();
+    for (const k in a.uniforms) if (k !== 'uSil' && k !== 'uLitGain') b.uniforms[k] = a.uniforms[k];
+    b.uniforms.uShadowMap = G.uShadowMap;
+    b.userData.sil0 = a.uniforms.uSil.value;
+    o.material = b; linMats.push(b);
+  });
 
   // ---- light in the air: volumetric shafts + dust motes (overlay pass)
   const airBox = new THREE.Mesh(new THREE.BoxGeometry(ROOM.x1 - ROOM.x0 - 0.02, ROOM.h - 0.02, ROOM.z1 - ROOM.z0 - 0.02).translate(0, FLOOR + ROOM.h / 2, 0),
@@ -109,15 +121,19 @@ export function createMeet(ctx) {
       const F = seatFrame(id);
       let clapSeat = 0, stand = 0, lean = 0.06, look = scrT.clone(), share = 0.35, extraPitch = 0, extraRoll = 0, handO = {};
       if (id === 'chair') { look.set(0, TOP + 0.05, -2.9); lean = 0.12; }       // reading his tablet
-      if (id === 'lin') { look.set(PHONE_LIN.x, TOP, PHONE_LIN.z + 0.1); lean = 0.22; }
+      if (id === 'lin') {
+        look.set(PHONE_LIN.x, TOP, PHONE_LIN.z + 0.1); lean = 0.22;
+        // k15: he faces them; on 「……同意。」 his head goes down a few degrees (on twos)
+        if (st.sid === 'k15') { look.set(0, FLOOR + 1.25, -3.7); lean = 0.16; extraPitch = 0.16 * smooth(invLerp(CUES.answer, CUES.answer + 0.6, onTwos(t))); }
+      }
       const i = ROSTER.indexOf(id);
       // breathing
-      lean += 0.012 * idle(id, tt);
+      if (st.sid !== 'k15') lean += 0.012 * idle(id, tt);   // k15: everything goes still
       // ---- shot-specific acting
-      if (st.sid === 's20' && id !== 'lin') {
+      if ((st.sid === 's20' || st.sid === 'k15') && id !== 'lin') {
         // at CUES.turn every head turns to 林工, almost together; the chair lifts his eyes from the tablet as he speaks
         const t0 = id === 'chair' ? CUES.ask - 0.35 : (CUES.turn ?? CUES.ask + 1) + [0, 0.12, 0.04, 0.2, 0.08, 0.16][i];
-        const k = smooth(invLerp(t0, t0 + (id === 'chair' ? 0.5 : 0.6), onTwos(t)));
+        const k = st.sid === 'k15' ? 1 : smooth(invLerp(t0, t0 + (id === 'chair' ? 0.5 : 0.6), onTwos(t)));
         look.lerp(linHead.clone(), k);
         if (id === 'chair') lean = lerp(0.12, 0.08, k);
         share = 0.45;
@@ -158,7 +174,7 @@ export function createMeet(ctx) {
           rig.wrist[k].rotation.set(0.1, 0, 0);
         }
       } else if (id === 'lin') {
-        handsOnTable(id, p, { reach: 0.1, spread: 0.17 });
+        handsOnTable(id, p, st.sid === 'k15' ? { reach: -0.03, spread: 0.2 } : { reach: 0.1, spread: 0.17 });
       } else {
         // s19: each member reaches for the vote key just before their light comes on
         let o = {};
@@ -212,7 +228,14 @@ export function createMeet(ctx) {
     cast, props: P, room: R,
     update(st) {
       const on = st.set === 'meet' || (st.sid === 's26' && st.tr < ROOM_UNTIL);
-      R.room.visible = P.group.visible = people.visible = on;
+      R.room.visible = P.group.visible = on;
+      // a04 is the day before: the room is empty, only 林工's nameplate on the table
+      const empty = st.sid === 'a04';
+      people.visible = on && !empty;
+      P.linG.visible = !empty;
+      for (const ph of P.phones) if (ph) ph.root.visible = !empty;
+      P.plate.visible = empty;
+      if (empty) { const pc = ctx.ui?.screen?.('nameplate', st); if (pc) { P.plateTex.image = pc; P.plateTex.needsUpdate = true; } }
       airBox.visible = dust.visible = st.set === 'meet';
       if (sky) sky.visible = on;
       if (!on) return;
@@ -239,7 +262,8 @@ export function createMeet(ctx) {
         else { m.uEmis.value.set('#59606c'); m.uEmisGain.value = 0.6; }
       }
       // 林工 (from behind) and his chair: hidden where the camera sits at his eyeline or the Hands team shows him
-      const linOn = ['s19', 's23', 's25'].includes(st.sid);
+      const linOn = ['s19', 's23', 's25', 'k15'].includes(st.sid);
+      for (const m of linMats) { m.uniforms.uSil.value = st.sid === 'k15' ? 1.7 : m.userData.sil0; m.uniforms.uLitGain.value = st.sid === 'k15' ? 0.4 : 1; }
       cast.lin.root.visible = linOn;
       R.chairs.lin.visible = st.sid !== 's20';
       // the pendant bar would slice through the screen from the s19/s23 camera behind 林工

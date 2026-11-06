@@ -122,7 +122,8 @@ export function buildProps(ctx) {
   const linPhone = makePhone();
   linPhone.root.position.set(PHONE_LIN.x, PHONE_LIN.y - 0.004, PHONE_LIN.z);
   linPhone.root.rotation.y = 0.06;
-  g.add(linPhone.root);
+  const linG = new THREE.Group(); g.add(linG);      // his things (hidden the day before, a04)
+  linG.add(linPhone.root);
   {
     const parts = [];
     // coffee: cup on a saucer, to his left
@@ -132,16 +133,34 @@ export function buildProps(ctx) {
     parts.push([sweep([[cx + 0.043, TOP + 0.064, cz], [cx + 0.07, TOP + 0.055, cz], [cx + 0.068, TOP + 0.03, cz], [cx + 0.04, TOP + 0.025, cz]], [[0.006, 0.004], [0.006, 0.004]], { nu: 6, nv: 12 }), '#f6f5f2']);
     parts.push([new THREE.TorusGeometry(0.0205, 0.0013, 6, 24), '#c4c0b8']);
     parts[parts.length - 1][0].rotateX(Math.PI / 2).translate(cx + 0.042, TOP + 0.016, cz + 0.05);
-    add(mergePainted(parts), M.cup);
-    add(mergePainted([[new THREE.CylinderGeometry(0.041, 0.041, 0.002, 28).translate(cx, TOP + 0.068, cz), '#4a2f22']]), M.water);
+    add(mergePainted(parts), M.cup, linG);
+    add(mergePainted([[new THREE.CylinderGeometry(0.041, 0.041, 0.002, 28).translate(cx, TOP + 0.068, cz), '#4a2f22']]), M.water, linG);
     // spoon on the saucer
     // notebook (closed, navy) and a pen, to his right
     const nb = [[rbox(0.15, 0.012, 0.21, 0.004, 0.42, TOP + 0.006, 2.02), '#2f3a55']];
     nb.push([rbox(0.152, 0.004, 0.012, 0.002, 0.42, TOP + 0.0125, 1.93), '#c9a25e']);
-    add(mergePainted(nb), M.note);
+    add(mergePainted(nb), M.note, linG);
     const pen = sweep([[0.53, TOP + 0.006, 2.1], [0.56, TOP + 0.006, 1.96]], [[0.0045, 0.0045], [0.004, 0.004]], { nu: 10, nv: 4 });
-    add(mergePainted([[pen, '#1e2026']]), M.phoneRim);
+    add(mergePainted([[pen, '#1e2026']]), M.phoneRim, linG);
   }
+
+  // ---- 林工's nameplate (a04, the day before): a double-sided tent card, the UI canvas on both faces
+  const plate = new THREE.Group();
+  const pc0 = document.createElement('canvas'); pc0.width = 1024; pc0.height = 320;
+  const plateTex = new THREE.CanvasTexture(pc0); plateTex.colorSpace = THREE.SRGBColorSpace; plateTex.anisotropy = 8;
+  const plateM = meetToon({ id: 44, color: '#ffffff', map: plateTex });
+  for (const sgn of [-1, 1]) {
+    const m = new THREE.Mesh(paint(new THREE.PlaneGeometry(0.24, 0.075), '#ffffff'), plateM);
+    m.position.set(0, 0.035, sgn * 0.012);
+    m.rotation.x = -sgn * 0.33;
+    if (sgn < 0) m.rotation.y = Math.PI;
+    m.frustumCulled = false;
+    plate.add(m);
+  }
+  plate.add(new THREE.Mesh(mergePainted([[rbox(0.242, 0.004, 0.03, 0.0015, 0, 0.001, 0), '#d8d4cc']]), M.note));
+  plate.position.set(0, TOP, 2.2);
+  plate.rotation.y = Math.PI;               // its +Z face looks toward 林工's chair
+  g.add(plate);
 
   // ---- committee places
   const units = [];     // vote light materials in seat order
@@ -216,5 +235,5 @@ export function buildProps(ctx) {
       tb.position.set(tx, TOP, tz); tb.rotation.y = s.yaw + 0.2;
     }
   }
-  return { group: g, linPhone, phones, units, M };
+  return { group: g, linPhone, linG, phones, units, M, plate, plateTex, plateM };
 }

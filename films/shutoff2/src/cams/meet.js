@@ -18,6 +18,22 @@ const base = (o = {}) => ({
 const phonePos = (id) => { const p = seatFrame(id).at(0.2, 0.13); return [p[0], p[1] + 0.06, p[2]]; };
 
 export const CAMS = {
+  // a04 (the day before): the empty room in late gold light. The notice on the screen, then a slow glide back
+  // along the empty table that settles over 林工's place at CUES.plate, his nameplate low in frame.
+  a04: (lt, d, t, st) => {
+    const ta = (st.cues.plate ?? 41.6) - 37.5;
+    const k = smoother(invLerp(0, ta, lt));
+    const drift = smooth(invLerp(ta, d, lt));
+    const pos = mixA([0, Y(1.42), 0.4], [0, Y(1.0), 2.86 - 0.08 * drift], k);
+    const look = mixA([0, Y(1.95), -6], [0, Y(1.12), -6], k);
+    return { pos, look, fov: 58 };
+  },
+  // k15 (silence): from behind 林工, his head and shoulders dark in the lower third; beyond him the five green
+  // lights and his empty one, and the row of faces turned to him. A very slow push-in.
+  k15: (lt, d) => {
+    const k = smooth(lt / d);
+    return { pos: mixA([0.2, Y(1.37), 4.2], [0.19, Y(1.36), 3.92], k), look: [0.0, Y(1.0), -6], fov: 46 };
+  },
   // s19 vote: behind 林工 — his dark head and shoulder low left, the big screen filling the top; slow push
   s19: (lt, d) => {
     const k = smooth(lt / d);
@@ -52,6 +68,8 @@ export const CAMS = {
 };
 
 export const LOOKS = {
+  a04: () => base({ k: 0.5, sunElev: 9, exposure: 1.02, shafts: 0.3 }),
+  k15: () => base({ k: 0.34, exposure: 1.04, ambient: '#2c2c36' }),
   s19: () => base(),
   s20: () => base({ shafts: 0.26 }),
   s23: () => base({ exposure: 1.0 }),
