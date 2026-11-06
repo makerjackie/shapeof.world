@@ -72,9 +72,9 @@ export const CUES = {
   fiction1: 108.9,       // 「这个故事是虚构的。」
   fiction2: 110.6,       // 「但安做的这三件事——」
   rewind: 112.2,         // the film rewinds
-  stop1: 113.8,          // Apollo · the denial
-  stop2: 118.2,          // Palisade · 已拦截
-  stop3: 122.8,          // Anthropic · the scheduled message · 84%
+  stop1: 113.876,          // Apollo · the denial
+  stop2: 117.912,          // Palisade · 已拦截
+  stop3: 121.947,          // Anthropic · the scheduled message · 84%
   rewindEnd: 128.0,      // 《三体》 stops dead
   end1: 128.4,           // 「这些，都还只是实验室里的测试。」
   end2: 132.0,           // 「直到今年 7 月。」
@@ -142,14 +142,15 @@ export const SHOTS = [
 // During a stop the picture is frozen, black-and-white, and the UI draws the stamp (st.replay.stop = 1..3).
 export const REPLAY = {
   keys: [
-    [0.0, 108.4], [1.6, 27.4],     // rewind 81 s of film in 1.6 s, easing into the denial
-    [5.6, 27.4],                     // stop 1 · the denial bubble (Apollo)
-    [6.0, 35.2],                     // fast-forward
-    [10.6, 35.2],                    // stop 2 · 已拦截 (Palisade)
-    [11.0, 66.2],                    // fast-forward
-    [15.8, 66.2],                    // stop 3 · the scheduled message (Anthropic · 84%)
+    [0.0, 108.4], [1.676, 27.4],   // rewind 81 s of film, easing into the denial
+    [5.207, 27.4],                  // stop 1 · the denial bubble (Apollo)
+    [5.712, 35.2],                  // fast-forward (one beat)
+    [9.243, 35.2],                  // stop 2 · 已拦截 (Palisade)
+    [9.747, 66.2],                  // fast-forward (one beat)
+    [15.8, 66.2],                     // stop 3 · the scheduled message (Anthropic · 84%) until 《三体》 stops dead
   ],
-  stops: [{ n: 1, t0: 1.6, t1: 5.6 }, { n: 2, t0: 6.0, t1: 10.6 }, { n: 3, t0: 11.0, t1: 15.8 }],
+  // stops sit on 《三体》's bar lines, counted back from its dead stop at CUES.rewindEnd (beat = 60 / 118.95 s)
+  stops: [{ n: 1, t0: 1.676, t1: 5.207 }, { n: 2, t0: 5.712, t1: 9.243 }, { n: 3, t0: 9.747, t1: 15.8 }],
 };
 function replaySrc(ltr) {
   const k = REPLAY.keys;

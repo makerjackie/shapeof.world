@@ -15,7 +15,7 @@ export const CAMS = {
       pos: [lerp(-0.42, -0.32, u), OY + lerp(1.62, 1.56, u), lerp(6.4, 4.4, u)],
       look: [lerp(0.22, 0.3, u), OY + lerp(1.95, 1.92, u), -12],
       fov: 82,
-      py: (st.split || 0.42) / 2,
+      py: 0.5,   // v12: full frame
     };
   },
   s07b: (lt, d, t, st) => {
