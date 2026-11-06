@@ -1,0 +1,104 @@
+{
+  "id": "pop-fallen-civilizations-b2",
+  "code": "POP-B2",
+  "title": {
+    "en": "Fallen Civilizations · B2",
+    "zh": "文明陨落 · B2"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "epic",
+    "dark",
+    "driving",
+    "tense"
+  ],
+  "topics": [
+    "2,000 years of world population",
+    "empires, plagues and wars",
+    "fast-cut data film"
+  ],
+  "energy": 5,
+  "bpm": 130,
+  "key": "C minor",
+  "instruments": [
+    "braams",
+    "taiko ensemble",
+    "staccato strings and brass",
+    "cowbell lead",
+    "distorted 808 bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 170,
+  "prompt": "Instrumental only, no vocals, no voice, no lyrics. Length: 2 minutes 50 seconds.\nEpic hybrid trailer music with drift phonk drums: massive braams, taiko ensembles, staccato strings and brass, a dark cowbell lead, distorted 808 bass. For a dramatic short film on the rise and fall of human civilizations over 2,000 years.\nStrict steady tempo, 130 BPM, 4/4, C minor. Every beat clear; the picture cuts on the beat.\nMany accents: orchestral hits and taiko on the downbeats, stutter edits, drum fills and swells into every new section, booming impacts every 8 beats. Changing sections, never a flat loop.\n\n[0:00 - 0:06] Massive hits on every beat.\n[0:06 - 0:09] Reverse swell and tape-stop rewind, then silence.\n[0:09 - 0:45] Mysterious, tense build: pulsing strings, ticking percussion, phonk beat in half energy.\n[0:45 - 1:48] Full power: phonk drums plus taiko and brass, heroic and aggressive.\n[1:48 - 2:12] Solemn requiem: no drums, low choir, cello, a tolling bell.\n[2:12 - 2:32] Faster, brighter, unstoppable: double-time drums, soaring strings, the climax.\n[2:32 - 2:44] Calm piano.\n[2:44 - 2:50] Final braam, ring out.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "phonk",
+    "orchestral"
+  ],
+  "scenarios": [
+    "motion",
+    "suspense"
+  ],
+  "description": {
+    "en": "Epic hybrid trailer music with drift-phonk drums: braams, taiko ensembles, staccato strings and brass, a dark cowbell lead and distorted 808 bass; hits on the downbeats and booming impacts every 8 beats. 130 BPM, C minor.",
+    "zh": "史诗混合预告片配乐加漂移 Phonk 鼓：Braam 低音号角、太鼓群、断奏弦乐和铜管、暗色牛铃主旋律、失真 808；重拍上有打击，每 8 拍一次轰鸣。130 BPM，C 小调。"
+  },
+  "batch": "film-population-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "foreground",
+    "tags": [
+      "phonk",
+      "epic",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 170.945,
+  "targetEnergy": 5,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T03:38:42Z",
+  "generation": {
+    "id": "v1_ChdvYWpxYXViWElvZk1yZmNQek1mQm9BWRIXb2FqcWF1YlhJb2ZNcmZjUHpNZkJvQVk",
+    "model": "lyria-3.5",
+    "generator": "Google Lyria 3.5",
+    "api": "Gemini API Interactions",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+    "completedAt": "2026-11-04T03:38:42Z",
+    "interactionId": "v1_ChdvYWpxYXViWElvZk1yZmNQek1mQm9BWRIXb2FqcWF1YlhJb2ZNcmZjUHpNZkJvQVk",
+    "sha256": "e69ccb487fb36218cd5c138e802555a6055868a295ebeb82fa4ae286ca68ae0d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, key, moods and energy are prompt intent (instrumental prompt; some prompts ask for a wordless choir); duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pop-fallen-civilizations-b2/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pop-fallen-civilizations-b2/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pop-fallen-civilizations-b2/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b98d9b3256660084a4aa16860d940938b96fa0866bcdecc869cc5d28ddcf9a4d",
+      "bytes": 2394009,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e69ccb487fb36218cd5c138e802555a6055868a295ebeb82fa4ae286ca68ae0d",
+      "bytes": 4108813,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "84ea89b4f23375ec2dfddf592f4b61017be97f9561ebd3b88fabb95377b983fe",
+      "bytes": 2797,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-05T03:14:11.274065+00:00"
+}

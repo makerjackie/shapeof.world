@@ -1,0 +1,99 @@
+{
+  "id": "pulse-draft-e7",
+  "code": "PULSE-E7",
+  "title": {
+    "en": "Pulse · Draft E7 · Guitar",
+    "zh": "脉搏 · 草稿 E7 · 吉他"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "curious",
+    "driving",
+    "steady"
+  ],
+  "topics": [
+    "knowledge explainer",
+    "science video",
+    "beat-cut edit"
+  ],
+  "energy": 4,
+  "bpm": 110,
+  "key": "",
+  "instruments": [
+    "clean electric guitar",
+    "bell synth pluck",
+    "808",
+    "trap drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 180,
+  "prompt": "A 3-minute instrumental track. Instrumental only, no vocals, no lyrics.\nGenre: modern melodic trap with guitar, steady and flowing, made as background for knowledge and science videos. The energy stays high and even the whole way: no quiet breakdowns, no long silences, the beat almost never stops.\nTempo: exactly 112 BPM, 4/4, never changes. Key: F minor, the whole song stays in F minor.\nHarmony: one four-bar loop all song long: Fm | Fm | Db | Eb, one chord per bar; the Db bar is slightly softer, like a breath. In the final section the loop is Fm | Gb | Db | Eb.\nInstruments: a clean electric guitar carries the main melody, a bell-like synth pluck answers it and doubles it in the bigger sections, warm synth pad, deep 808 sub bass on the roots, trap drum kit: kick on beat 1 and beat 3 with a pickup on the \"and\" of 1, crisp clap on beats 2 and 4, steady 16th-note hi-hats with short triplet rolls every 4 bars, soft risers into each section. Original melody in short 2-bar phrases that repeat and are easy to remember.\n\n[0:00 - 0:11] Intro: a clean electric guitar melody with pad, 808 and a light version of the beat already playing at medium volume.\n[0:11 - 0:17] Pre-drop: 3 bars where the drums drop out, a clean electric guitar and pad continue, a riser builds.\n[0:17 - 1:24] Main: full beat drops in on the downbeat, a clean electric guitar melody, a bell-like synth pluck answers, steady and catchy.\n[1:24 - 1:44] Breather: the beat keeps going at almost the same volume, the melody instruments get softer and darker; the last bar is a short stop.\n[1:44 - 2:18] Main again: full beat, a clean electric guitar and a bell-like synth pluck together.\n[2:18 - 2:48] Final peak: fuller and warmer, heavier 808 and wide low pads, a clean electric guitar and a bell-like synth pluck in octaves, slightly louder but not brighter.\n[2:48 - 3:02] Ending: the beat thins, a clean electric guitar plays the motif once more, ends on F minor.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "trap"
+  ],
+  "scenarios": [
+    "explain",
+    "motion"
+  ],
+  "description": {
+    "en": "Draft take at the model's own tempo. Steady trap groove for explainers: kick and clap backbeat, 16th hi-hats with rolls, 808 sub, a four-bar minor loop, section changes every 8-16 bars.",
+    "zh": "草稿，模型原速。为知识科普视频做的稳定 Trap 律动：底鼓加二四拍拍手、16 分音符踩镲和滚奏、808 低音、四小节小调循环，每 8 到 16 小节换一层。"
+  },
+  "batch": "pulse-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "explainer",
+      "trap",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 178.678,
+  "targetEnergy": 4,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T15:55:47Z",
+  "generation": {
+    "generator": "Google Lyria 3.5",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "interactionId": "v1_ChdaRlhyYXBtM0pJSGFyZmNQMU5uZnVBWRIXWkZYcmFwbTNKSUhhcmZjUDFObmZ1QVk",
+    "sha256": "ec69b8259d154081dfa2b35b248839e51d45210f322ce96a0d92e1b3750c34e9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, moods and energy are prompt intent; tempo of edited takes measured by beat-grid fit; duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pulse-draft-e7/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pulse-draft-e7/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pulse-draft-e7/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "330c14348def0f2a6034b9cee60321f35cdf389f8fad22cdd3acdda10c23b765",
+      "bytes": 2502260,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ec69b8259d154081dfa2b35b248839e51d45210f322ce96a0d92e1b3750c34e9",
+      "bytes": 4294387,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "8bd1ccb61280a6e16de75051b1f5743ed3d2d1c679bd5689cfb7027f14e2e075",
+      "bytes": 2800,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-05T03:20:00.146185+00:00"
+}

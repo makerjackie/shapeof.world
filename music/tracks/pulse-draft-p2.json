@@ -1,0 +1,99 @@
+{
+  "id": "pulse-draft-p2",
+  "code": "PULSE-P2",
+  "title": {
+    "en": "Pulse · Draft P2 · Zheng (Pro model)",
+    "zh": "脉搏 · 草稿 P2 · 筝（Pro 模型）"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "curious",
+    "driving",
+    "steady"
+  ],
+  "topics": [
+    "knowledge explainer",
+    "science video",
+    "beat-cut edit"
+  ],
+  "energy": 4,
+  "bpm": 110,
+  "key": "",
+  "instruments": [
+    "guzheng",
+    "dizi",
+    "808",
+    "trap drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 180,
+  "prompt": "A 3-minute instrumental track. Instrumental only, no vocals, no lyrics.\nGenre: modern Chinese guofeng trap / Asian-fusion trap, cinematic and steady, made as background for knowledge and science videos.\nTempo: exactly 112 BPM, 4/4, the tempo never changes. Key: F minor.\nHarmony: one four-bar loop repeated through the whole song: Fm | Fm | Db | Eb (one chord per bar). In the peak section the loop becomes Fm | Gb | Db | Eb.\nInstruments: guzheng carries the main melody (bright plucked phrases with slides and tremolo), a dizi bamboo flute answers it and doubles the melody in the bigger sections, warm synth pad underneath, deep 808 sub bass on the chord roots, trap drum kit: punchy kick on beat 1 and the \"and\" of beat 2, crisp snare/clap on beats 2 and 4, constant 16th-note hi-hats with triplet hi-hat rolls at the end of every 4 bars, soft reverse-cymbal risers into each new section. Original melody, short 2-bar phrases that repeat and are easy to remember.\nThe groove stays steady and driving for the whole song; changes come from adding and removing layers, not from changing tempo.\n\n[0:00 - 0:17] Intro (8 bars): guzheng melody over the pad with soft filtered drums and sub; in bars 6-8 the drums drop out, only guzheng and pad, a riser builds.\n[0:17 - 1:24] Main section (32 bars): full beat drops in on the downbeat with 808, hats and clap; guzheng melody, dizi answers; every 8 bars a small new layer.\n[1:24 - 1:44] Breather (8 bars): melody instruments become softer and darker, drums keep a lighter groove, the last bar is a one-bar stop with a riser.\n[1:44 - 2:18] Main section again (16 bars): full beat returns, guzheng and dizi together, brighter.\n[2:18 - 2:48] Peak (14 bars): the biggest and fullest part: heavier 808, wider pads, dizi and guzheng in unison an octave apart, louder drums, same tempo.\n[2:48 - 3:02] Outro (6 bars): drums stop, guzheng plays the motif one last time over the pad, ending on F minor.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "explain",
+    "motion"
+  ],
+  "description": {
+    "en": "Draft take at the model's own tempo. Steady trap groove for explainers: kick and clap backbeat, 16th hi-hats with rolls, 808 sub, a four-bar minor loop, section changes every 8-16 bars.",
+    "zh": "草稿，模型原速。为知识科普视频做的稳定 Trap 律动：底鼓加二四拍拍手、16 分音符踩镲和滚奏、808 低音、四小节小调循环，每 8 到 16 小节换一层。"
+  },
+  "batch": "pulse-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "explainer",
+      "trap",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 182.622,
+  "targetEnergy": 4,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T15:41:04Z",
+  "generation": {
+    "generator": "Google Lyria 3.5",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "interactionId": "v1_ChczMUhyYXR2aUhZSHByZmNQdi12RHNRWRIXMzFIcmF0dmlIWUhwcmZjUHYtdkRzUVk",
+    "sha256": "ab6273c08fccc2b16a7425e260aa46654d70fae1d6c7c8018e2bbf52f95d4420"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, moods and energy are prompt intent; tempo of edited takes measured by beat-grid fit; duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pulse-draft-p2/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pulse-draft-p2/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pulse-draft-p2/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c87d7014d3d33c6a45a40a0fdd86cce1fa18b3ad2281ca4be503380f3012368c",
+      "bytes": 2557483,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ab6273c08fccc2b16a7425e260aa46654d70fae1d6c7c8018e2bbf52f95d4420",
+      "bytes": 4389055,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "45f0986981fbc3f7d94cba1928bf25ece10d9bc0d442cc49338d7d00dee69899",
+      "bytes": 2776,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-05T03:19:15.146629+00:00"
+}

@@ -1,0 +1,99 @@
+{
+  "id": "pulse-celesta-cut",
+  "code": "PULSE-CUT",
+  "title": {
+    "en": "Pulse · Celesta (cut)",
+    "zh": "脉搏 · 钢片琴（剪辑版）"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "curious",
+    "driving",
+    "steady"
+  ],
+  "topics": [
+    "knowledge explainer",
+    "science video",
+    "beat-cut edit"
+  ],
+  "energy": 4,
+  "bpm": 111.6,
+  "key": "",
+  "instruments": [
+    "celesta",
+    "pulsing synth bass",
+    "hybrid percussion",
+    "ostinato strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 180,
+  "prompt": "Lead sound: celesta motif over a pulsing synth bass, hybrid cinematic percussion, low ostinato strings join in the peak section, restrained and focused.\nInstrumental only, no vocals, no lyrics. Tempo exactly 112 BPM, straight 4/4, steady and unwavering from start to end. Key F minor. Harmony: a four-bar loop i - i - bVI - bVII (Fm, Fm, Db, Eb), the third bar of every loop slightly softer like a breath. Groove: soft punchy kick, crisp snare or clap on beats 2 and 4, steady 16th-note hi-hats with occasional rolls, warm sub bass following the roots. It must feel like forward motion and curiosity: perfect bed for a knowledge / science explainer video, leaving room in the midrange for on-screen text. Original melody, simple and memorable, repeating in 2-bar phrases.\nStructure (bars at 112 BPM, one bar = 2.14 s): \n0:00 intro 8 bars: lead motif alone over a pad, filtered, no drums, last 2 bars drums tease in.\n0:17 section A 32 bars: full groove enters on the downbeat, lead motif, every 8 bars add a small new layer.\n1:25 lift 8 bars: drums thin out to kick and hats, harmony instruments carry, building tension.\n1:43 section B 16 bars: full groove returns, brighter counter-melody added on top.\n2:17 peak 14 bars: biggest, widest, warmest version, low strings or big pads, same tempo (no speed-up).\n2:47 outro 8 bars: layers drop away one by one, ends on a clean F minor chord with a short tail.\nTotal about 3 minutes 05 seconds. Clean modern mix, not lo-fi, no vinyl noise.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "explain",
+    "motion"
+  ],
+  "description": {
+    "en": "Take W6 re-cut on bar lines (peak extended) and sped up to 111.6 BPM. Steady trap groove for explainers: kick and clap backbeat, 16th hi-hats with rolls, 808 sub, a four-bar minor loop, section changes every 8-16 bars.",
+    "zh": "W6 版按小节重剪（高潮加长），提速到 111.6 BPM。为知识科普视频做的稳定 Trap 律动：底鼓加二四拍拍手、16 分音符踩镲和滚奏、808 低音、四小节小调循环，每 8 到 16 小节换一层。"
+  },
+  "batch": "pulse-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "explainer",
+      "trap",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 183.198,
+  "targetEnergy": 4,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T15:28:15Z",
+  "generation": {
+    "generator": "Google Lyria 3.5 (edited)",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "interactionId": "v1_Chc5VTdyYXFIbE1iM0tyZmNQaTdqQWtBYxIXOVU3cmFxSGxNYjNLcmZjUGk3akFrQWM",
+    "sha256": "436f85b1b89c4939cb447ebfc4b3304e18c2d53d4e0659c4ce038738764b7ab8"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, moods and energy are prompt intent; tempo of edited takes measured by beat-grid fit; duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pulse-celesta-cut/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pulse-celesta-cut/v1/master.wav",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pulse-celesta-cut/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "dc43df9383701163a2ea3beaec1b7fab1882f0946fd25491ea22330eaf244ec1",
+      "bytes": 2565894,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "436f85b1b89c4939cb447ebfc4b3304e18c2d53d4e0659c4ce038738764b7ab8",
+      "bytes": 32316184,
+      "mimeType": "audio/wav"
+    },
+    "waveform": {
+      "sha256": "feba9ed0741ae6d1d3ece38789de70f9d71585380a035279d30ad3557f4c79b1",
+      "bytes": 2800,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-05T03:17:22.680835+00:00"
+}

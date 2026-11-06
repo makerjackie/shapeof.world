@@ -1,0 +1,99 @@
+{
+  "id": "pulse-draft-w1",
+  "code": "PULSE-W1",
+  "title": {
+    "en": "Pulse · Draft W1 · Guzheng and dizi",
+    "zh": "脉搏 · 草稿 W1 · 古筝与竹笛"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "curious",
+    "driving",
+    "steady"
+  ],
+  "topics": [
+    "knowledge explainer",
+    "science video",
+    "beat-cut edit"
+  ],
+  "energy": 4,
+  "bpm": 110,
+  "key": "",
+  "instruments": [
+    "guzheng",
+    "dizi",
+    "808",
+    "trap drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 180,
+  "prompt": "Lead sound: guzheng plucks in the intro, then bamboo flute (dizi) melody, modern Chinese cinematic electronic with light trap drums and 808 sub.\nInstrumental only, no vocals, no lyrics. Tempo exactly 112 BPM, straight 4/4, steady and unwavering from start to end. Key F minor. Harmony: a four-bar loop i - i - bVI - bVII (Fm, Fm, Db, Eb), the third bar of every loop slightly softer like a breath. Groove: soft punchy kick, crisp snare or clap on beats 2 and 4, steady 16th-note hi-hats with occasional rolls, warm sub bass following the roots. It must feel like forward motion and curiosity: perfect bed for a knowledge / science explainer video, leaving room in the midrange for on-screen text. Original melody, simple and memorable, repeating in 2-bar phrases.\nStructure (bars at 112 BPM, one bar = 2.14 s): \n0:00 intro 8 bars: lead motif alone over a pad, filtered, no drums, last 2 bars drums tease in.\n0:17 section A 32 bars: full groove enters on the downbeat, lead motif, every 8 bars add a small new layer.\n1:25 lift 8 bars: drums thin out to kick and hats, harmony instruments carry, building tension.\n1:43 section B 16 bars: full groove returns, brighter counter-melody added on top.\n2:17 peak 14 bars: biggest, widest, warmest version, low strings or big pads, same tempo (no speed-up).\n2:47 outro 8 bars: layers drop away one by one, ends on a clean F minor chord with a short tail.\nTotal about 3 minutes 05 seconds. Clean modern mix, not lo-fi, no vinyl noise.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "explain",
+    "motion"
+  ],
+  "description": {
+    "en": "Draft take at the model's own tempo. Steady trap groove for explainers: kick and clap backbeat, 16th hi-hats with rolls, 808 sub, a four-bar minor loop, section changes every 8-16 bars.",
+    "zh": "草稿，模型原速。为知识科普视频做的稳定 Trap 律动：底鼓加二四拍拍手、16 分音符踩镲和滚奏、808 低音、四小节小调循环，每 8 到 16 小节换一层。"
+  },
+  "batch": "pulse-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "explainer",
+      "trap",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 177.345,
+  "targetEnergy": 4,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T15:23:47Z",
+  "generation": {
+    "generator": "Google Lyria 3.5",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "interactionId": "v1_Chc0azNyYXYtM0daN1Uycm9QdDlTdW9RRRIXNGszcmF2LTNHWjdVMnJvUHQ5U3VvUUU",
+    "sha256": "8a00da9ee1c5fbba83e245c3d0d317bde07a062f14edc70cd4eae850792d44ee"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, moods and energy are prompt intent; tempo of edited takes measured by beat-grid fit; duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pulse-draft-w1/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pulse-draft-w1/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pulse-draft-w1/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "363d9f1c01068236a70df0e10a29a6b9d4d3ecb3329f038d768068ecf7b9ff43",
+      "bytes": 2483609,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8a00da9ee1c5fbba83e245c3d0d317bde07a062f14edc70cd4eae850792d44ee",
+      "bytes": 4262413,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "1a7ec7dee92528b61d78a8ebc95149898d3cb0a79433842d90e2cee51fabaa18",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-05T03:17:48.864668+00:00"
+}

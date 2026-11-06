@@ -13,18 +13,18 @@ import { cleanSearch } from '~/lib/locale'
 import { usePlayer } from '~/state/player'
 import { useSaved } from '~/state/saved'
 
-export function HomePage({ kind = 'music', games = false }: { kind?: AudioKind; games?: boolean }) {
+export function HomePage({ kind = 'music', games = false, picks = false }: { kind?: AudioKind; games?: boolean; picks?: boolean }) {
   const { locale, t } = useI18n()
   const player = usePlayer()
   const { saved } = useSaved()
-  const storageKey = `music.library.${games ? 'games' : kind}`
+  const storageKey = `music.library.${games ? 'games' : picks ? 'picks' : kind}`
   const [state, setState] = useState(() => readLibrary(storageKey))
   const { filters, sort, savedOnly, limit } = state
   useEffect(() => { try { sessionStorage.setItem(storageKey, JSON.stringify(state)) } catch { /* Browsing still works without storage. */ } }, [state, storageKey])
   const updateFilters = (filters: TrackFilters) => setState(value => ({ ...value, filters, limit: 40 }))
-  const library = useMemo(() => tracks.filter(track => track.kind === kind && (!games || track.collections.includes('game-audio'))), [kind, games])
+  const library = useMemo(() => tracks.filter(track => track.kind === kind && (!games || track.collections.includes('game-audio')) && (!picks || track.collections.includes('jackie-picks'))), [kind, games, picks])
   const visible = useMemo(() => sortLibrary(filterTracks(savedOnly ? library.filter(track => saved.includes(track.id)) : library, filters), sort, locale), [filters, sort, locale, savedOnly, saved, library])
-  const theme = kind === 'music' && !games ? hiddenShapesTrack() : undefined
+  const theme = kind === 'music' && !games && !picks ? hiddenShapesTrack() : undefined
   const scenes = Object.entries(taxonomy.scenarios).filter(([id]) => library.some(track => track.scenarios.includes(id)))
   const themePlaying = theme && player.current?.id === theme.id && player.playing
   return (
@@ -32,8 +32,8 @@ export function HomePage({ kind = 'music', games = false }: { kind?: AudioKind; 
       <section className="library-hero">
         <div className="hero-copy">
           <p className="kicker">{t('library.kicker')}</p>
-          <h1>{t(games ? 'audio.gamesTitle' : kind === 'sfx' ? 'audio.sfxTitle' : kind === 'ambience' ? 'audio.ambienceTitle' : 'library.title')}</h1>
-          <p className="lede">{t(games ? 'audio.gamesLede' : kind === 'sfx' ? 'audio.sfxLede' : kind === 'ambience' ? 'audio.ambienceLede' : 'site.lede')}</p>
+          <h1>{t(picks ? 'audio.picksTitle' : games ? 'audio.gamesTitle' : kind === 'sfx' ? 'audio.sfxTitle' : kind === 'ambience' ? 'audio.ambienceTitle' : 'library.title')}</h1>
+          <p className="lede">{t(picks ? 'audio.picksLede' : games ? 'audio.gamesLede' : kind === 'sfx' ? 'audio.sfxLede' : kind === 'ambience' ? 'audio.ambienceLede' : 'site.lede')}</p>
           <p className="library-stats"><span>{library.length} <small>{t('audio.assets')}</small></span><span>{library.filter(track => track.rights?.commercialUse === true).length} <small>{t('audio.commercial')}</small></span><span>{library.filter(track => track.loop?.seamless).length} <small>{t('audio.loops')}</small></span></p>
         </div>
         {theme ? <button className="featured-record" type="button" onClick={() => player.current?.id === theme.id ? player.toggle() : player.playTrack(theme, tracks.filter(track => track.kind === 'music'))} aria-label={`${themePlaying ? t('player.pause') : t('home.playTheme')}`}>
@@ -43,9 +43,9 @@ export function HomePage({ kind = 'music', games = false }: { kind?: AudioKind; 
       </section>
       <AiMusic />
       <nav className="audio-kind-nav" aria-label={t('audio.type')}>
-        {([{id:'music',path:'/'},{id:'sfx',path:'/sounds'},{id:'ambience',path:'/ambience'},{id:'games',path:'/games'}] as const).map(item => <Link key={item.id} to={item.path} search={cleanSearch} className={(games ? item.id === 'games' : item.id === kind) ? 'selected' : ''}><span>{t(`audio.${item.id}`)}</span><small>{tracks.filter(track => item.id === 'games' ? track.collections.includes('game-audio') : track.kind === item.id).length}</small></Link>)}
+        {([{id:'picks',path:'/picks'},{id:'music',path:'/'},{id:'sfx',path:'/sounds'},{id:'ambience',path:'/ambience'},{id:'games',path:'/games'}] as const).map(item => <Link key={item.id} to={item.path} search={cleanSearch} className={(games ? item.id === 'games' : picks ? item.id === 'picks' : item.id === kind) ? 'selected' : ''}><span>{t(`audio.${item.id}`)}</span><small>{tracks.filter(track => item.id === 'games' ? track.collections.includes('game-audio') : item.id === 'picks' ? track.collections.includes('jackie-picks') : track.kind === item.id).length}</small></Link>)}
       </nav>
-      {kind === 'music' && !games ? <Link className="shorts-banner" to="/shorts" search={cleanSearch}><span><small>{t('shorts.nav')}</small><strong>{t('shorts.open')}</strong></span><span aria-hidden="true">↗</span></Link> : null}
+      {kind === 'music' && !games && !picks ? <Link className="shorts-banner" to="/shorts" search={cleanSearch}><span><small>{t('shorts.nav')}</small><strong>{t('shorts.open')}</strong></span><span aria-hidden="true">↗</span></Link> : null}
       <section className="scene-section" aria-label={t('filter.scenario')}>
         <p className="kicker">{t('library.scenePrompt')}</p>
         <div className="scene-choices">

@@ -42,3 +42,17 @@ SCALE=0.33 COMP=Film node tools/lab.mjs /tmp/s 30 180 …   # 任意帧的截图
 python tools/sheet.py /tmp/s /tmp/s/sheet.jpg 5            # 截图拼成带时间的总览
 node tools/readtime.mjs                                     # 检查每行字够不够读完
 ```
+
+## Blender scenes (样片 D on)
+
+Realistic shots are rendered in Blender 5.2 (EEVEE) from `blender/*.py` and composited in Remotion (`src/samples/`).
+Assets are not in Git; they live in `assets/`:
+
+- `tools/ph.py assets hdri:… tex:… model:…` downloads Poly Haven assets (CC0).
+- `assets/rocketbox/`: Microsoft Rocketbox avatars (MIT licence, github.com/microsoft/Microsoft-Rocketbox), the
+  US ACU camouflage re-coloured to a neutral olive pattern by `blender/soldier.py`.
+- Vehicles: Sketchfab models under CC BY 4.0, credited in the film's sources (needs a Sketchfab API token).
+- Music for 样片D: 电荷分裂 (charge-split) from music.shapeof.world; `tools/trench_audio.py` cuts it.
+
+Render the trench sample: `blender/render_trench.sh`, copy `blender/out/s1..s3` to `public/trench/`, then
+`COMP=SampleD node tools/render.mjs out/samples/样片D-raw.mp4` and master with `tools/tpmaster.py`.

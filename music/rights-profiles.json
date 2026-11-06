@@ -37,6 +37,24 @@
       "basis": "Original deterministic oscillator/noise synthesis implemented in music/scripts/synthesize-sounds.py. No external recordings, samples, melodies or model-generated audio are inputs. CC0 applies only to designated rendered audio, to the extent the project controls rights; generator code retains its software license.",
       "sources": ["https://creativecommons.org/publicdomain/zero/1.0/"]
     },
+    "lyria-gemini-api-2026-11": {
+      "id": "lyria-gemini-api-2026-11",
+      "status": "needs-review",
+      "label": {
+        "en": "Usage terms not yet verified",
+        "zh": "使用权限待核对"
+      },
+      "license": null,
+      "licenseUrl": "https://music.shapeof.world/audio-license.txt",
+      "commercialUse": null,
+      "modification": null,
+      "standaloneRedistribution": null,
+      "attributionRequired": null,
+      "exclusiveRights": false,
+      "claimFreeGuarantee": false,
+      "provider": "Google Gemini API / Lyria 3.5",
+      "basis": "Generated on 2026-11-04 through the Gemini API (not Vertex AI), so the reviewed Vertex profile does not apply. The Gemini API terms for generated output have not been reviewed for this library yet. Used by the project's own films; exclude from requests requiring confirmed commercial-use permission until reviewed."
+    },
     "legacy-unreviewed": {
       "id": "legacy-unreviewed",
       "status": "needs-review",

@@ -1,0 +1,8 @@
+node_modules/
+out/
+public/score.wav
+public/music*.m4a
+public/sfx/
+public/fonts/
+public/music/
+public/models/
