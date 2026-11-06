@@ -14,7 +14,7 @@ import { BRUSH, SANS, SERIF, fontsReady } from "./fonts6";
 import type { Pt, Spec } from "./specG";
 import { revealOf } from "./reveal7";
 import OHLC_RAW from "./oil_ohlc.json";
-import { BW_UNTIL, COIN, COLD5, MAPFX, NEXT, PEGS, RATES, SWEEP, WIDE, WIDE_AT, WIRES, fwBursts } from "./oil";
+import { COIN, COLD5, MAPFX, MONTAGE, NEXT, PEGS, RATES, SHOT_BEAT, SWEEP, WIDE, WIDE_AT, WIRES, fwBursts } from "./oil";
 import LAND_RAW from "./oil_land.json";
 import type { Icon, P5 } from "./oil";
 
@@ -160,7 +160,7 @@ const IMGS: Record<string, HTMLImageElement> = {};
 let IMG_P: Promise<unknown> | null = null;
 const imagesReady = () =>
   (IMG_P ??= Promise.all(
-    ["mark-disc.png", "art/fieldbg.png", "art/pj_base.png", "art/pj_beam.png", "art/pj_crank.png", "art/barrel.png",...["pumpjack", "derrick", "tanker", "refinery", "barrel", "pipeline", "flame", "tank", "pump", "exchange", "gavel", "strait", "virus"].map((n) => `art/i_${n}.png`)].map(
+    ["mark-disc.png", "art/fieldbg.png", "art/pj_base.png", "art/pj_beam.png", "art/pj_crank.png", "art/barrel.png",...["pumpjack", "derrick", "tanker", "refinery", "barrel", "pipeline", "flame", "tank", "pump", "exchange", "gavel", "strait", "virus", "car", "offshore"].map((n) => `art/i_${n}.png`)].map(
       (s) =>
         new Promise<void>((res, rej) => {
           const im = new Image();
@@ -828,7 +828,7 @@ export const createFilm5 = (S: Spec) => {
         hi += (thi - hi) * (thi > hi ? 0.3 : 0.08);
       }
       lgK = t < RW1 ? 1 : t < B0 ? 1 - ease(clamp((t - RW1) / (B0 - RW1))) : lgK + ((t >= END ? 1 : 0) - lgK) * 0.09;
-      const cw = t < RW0 ? 1 : t < RWM ? 1 - ease((t - RW0) / (RWM - RW0)) : 0;
+      const cw = 0;
       const pxd = ppy / 365.25;
       const wi = WIDES.findIndex((w) => t >= w.ws && t < w.we);
       if (wi >= 0) gi = wi;
@@ -856,13 +856,19 @@ export const createFilm5 = (S: Spec) => {
     ...COLD5.marks.map((m) => ({ t: m.at, kind: m.red ? "crash" : "mile", big: !!m.top || !!m.red, tone: m.red ? "red" : "gold", fw: !m.red })),
     ...EV.map((e) => ({ t: e.t0, kind: e.k, big: !!e.big, tone: KIND_TONE[e.k], e, fw: !!e.fx?.some((f) => f === "fw" || f === "fwBig") })),
   ];
+  const montShake = (t: number) => {
+    if (t >= RW0) return 0;
+    let m = 0;
+    for (const s of MONTAGE) m = Math.max(m, 0.35 * env(t, s.at, 0.01, 0.1), (s.tone === "red" ? 1.05 : 0.7) * env(t, s.at + SHOT_BEAT, 0.01, 0.2));
+    return m;
+  };
   const shakeAt = (t: number) =>
     HITS.reduce((m, h) => {
       if (t < h.t - 0.05 || t > h.t + 1.5) return m;
       const sh = h.e?.fx?.includes("shatter") ? 1.2 : 0;
       const k = Math.max(sh, h.kind === "mile" ? (h.big ? 0.55 : 0.3) : h.kind === "crash" ? (h.big ? 1 : 0.6) : h.kind === "war" ? (h.big ? 0.8 : 0.4) : h.kind === "split" ? (h.big ? 0.9 : 0.5) : h.kind === "peak" || h.kind === "unite" ? (h.big ? 0.45 : 0.25) : h.kind === "turn" ? 0.2 : 0.12);
       return Math.max(m, k * env(t, h.t, 0.02, h.big ? 0.32 : 0.2));
-    }, 0);
+    }, montShake(t));
 
   // ---------- black and white: before Nixon (the gold line keeps its colour), and the first weeks of the pandemic
   const GR = new Float32Array(NF);
@@ -871,11 +877,8 @@ export const createFilm5 = (S: Spec) => {
     for (let f = 0; f < NF; f++) {
       const t = f / FPS;
       const c = CAM[f].c;
-      let target = t >= RW0 && t < END && t < NIX.t0 && c < BW_UNTIL - 1e-4 ? 1 : 0;
-      for (const e of EV) if (e.fx?.includes("bw") && t >= e.t0 && t < e.t1 - 0.2) target = 0.92;
+      const target = 0 * c;
       g += (target - g) * (1 - Math.exp(-1 / FPS / (target > g ? 0.1 : 0.22)));
-      if (t >= NIX.t0 && t < NIX.t0 + 0.75) g = 1;
-      else if (t >= NIX.t0 + 0.75 && t < NIX.t0 + 0.8) g = 0;
       GR[f] = g;
     }
   }
@@ -888,30 +891,9 @@ export const createFilm5 = (S: Spec) => {
   const MS = 4.4;
   const FXc = 540;
   const FYc = 1420;
-  const LJ = LAND_RAW as unknown as { world: number[][]; gulf: number[][]; cty: Record<string, number[][]> };
+  // coastlines only: no borders, no country shapes (borders are disputed; a data film has no business drawing them)
+  const LJ = LAND_RAW as unknown as { world: number[][]; gulf: number[][] };
   let STIP: HTMLCanvasElement | null = null;
-  const ISO: Record<string, string> = {
-    美国: "USA", 俄罗斯: "RUS", 沙特: "SAU", 伊朗: "IRN", 伊拉克: "IRQ", 委内瑞拉: "VEN", 墨西哥: "MEX", 科威特: "KWT", 阿联酋: "ARE",
-    加拿大: "CAN", 中国: "CHN", 挪威: "NOR", 英国: "GBR", 罗马尼亚: "ROU", 印尼: "IDN", 尼日利亚: "NGA", 利比亚: "LBY", 巴西: "BRA",
-    哈萨克斯坦: "KAZ", 卡塔尔: "QAT", 阿尔及利亚: "DZA", 安哥拉: "AGO", 特立尼达: "TTO", 阿根廷: "ARG", 哥伦比亚: "COL", 埃及: "EGY", 阿曼: "OMN",
-  };
-  // the country each event happened in (its pin inside the polygon); none at sea
-  const inRing = (r: number[], x: number, y: number) => {
-    let ins = false;
-    for (let i = 0, j = r.length - 2; i < r.length; j = i, i += 2) {
-      const xi = r[i];
-      const yi = r[i + 1];
-      const xj = r[j];
-      const yj = r[j + 1];
-      if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) ins = !ins;
-    }
-    return ins;
-  };
-  const EV_ISO: Record<number, string> = {};
-  for (const e of EV) {
-    if (!e.geo) continue;
-    for (const [k, rs] of Object.entries(LJ.cty)) if (rs.some((r) => inRing(r, e.geo![0], e.geo![1]))) EV_ISO[e.i] = k;
-  }
   const PLACE: Record<string, [number, number]> = {
     沙特: [49.5, 25.5], 伊朗: [49.5, 31.5], 伊拉克: [46.5, 31.5], 委内瑞拉: [-71.5, 10.5], 墨西哥: [-93, 19], 科威特: [47.8, 29.2],
     阿联酋: [54, 24], 加拿大: [-113, 56.5], 中国: [122, 46], 挪威: [3, 60], 英国: [1, 57.5], 罗马尼亚: [25.5, 45], 印尼: [101, 1],
@@ -1139,10 +1121,10 @@ export const createFilm5 = (S: Spec) => {
     // the cold open, and again under the ending's whole line (smaller, lower) until the credits
     const end = t >= END;
     const CR0 = S.ending.credits?.t0 ?? S.ending.card;
-    const a = end ? 0.75 * clamp((t - END - 0.3) / 0.8) * (1 - clamp((t - CR0 + 0.2) / 0.4)) : t < RW0 ? 1 : 1 - clamp((t - RW0) / 0.45);
+    const a = end ? 0.75 * clamp((t - END - 0.3) / 0.8) * (1 - clamp((t - CR0 + 0.2) / 0.4)) : clamp((t - RW0) / 0.3) * (1 - clamp((t - (RW1 - 0.45)) / 0.45));
     const im = IMGS["art/fieldbg.png"];
     if (a <= 0.01 || !im) return;
-    const s = end ? 1 + 0.04 * clamp((t - END) / (CR0 - END)) : 1 + 0.06 * clamp(t / RW0);
+    const s = end ? 1 + 0.04 * clamp((t - END) / (CR0 - END)) : 1 + 0.05 * clamp((t - RW0) / (RW1 - RW0));
     const w = (end ? 1150 : 1420) * s;
     const h = (w * im.height) / im.width;
     const HZ = end ? 1640 : 1400;
@@ -1272,56 +1254,6 @@ export const createFilm5 = (S: Spec) => {
     pat.setTransform(new DOMMatrix().translateSelf(ox, oy));
     g.fillStyle = pat;
     g.fill(path);
-    // inside the land: who pumps the oil (tinted in the table's colours), the event's country, the borders
-    g.save();
-    g.clip(path);
-    const c = camAt(t).c;
-    const rows = S.table ? S.table(c).filter((r) => r.v > 0.6) : [];
-    const vmax = Math.max(1, ...rows.map((r) => r.v));
-    for (const r of rows) {
-      const cr = LJ.cty[ISO[r.n] ?? ""];
-      if (!cr) continue;
-      const cp = ringPath(cr);
-      // tinted in the world view; close up only the outline stays (a big country would wash the shot)
-      const zf = 1 - clamp((m.z - 1.6) / 1.2);
-      g.globalAlpha = (0.05 + 0.13 * Math.sqrt(r.v / vmax)) * zf;
-      g.fillStyle = r.c;
-      g.fill(cp);
-      g.globalAlpha = (0.35 + 0.4 * Math.sqrt(r.v / vmax)) * (0.4 + 0.6 * zf);
-      g.strokeStyle = r.c;
-      g.lineWidth = 1.6;
-      g.stroke(cp);
-    }
-    g.globalAlpha = 1;
-    const e = evAt(t);
-    const ei = e ? EV_ISO[e.i] : "";
-    if (e && ei && LJ.cty[ei]) {
-      const cp = ringPath(LJ.cty[ei]);
-      const d = t - e.t0;
-      const col = toneCol(KIND_TONE[e.k]);
-      // only the hot events wash the country; the rest just outline it
-      if (col === RED || col === GOLD) {
-        g.globalAlpha = clamp(d / 0.15) * (0.12 + 0.22 * env(t, e.t0, 0.02, 0.5)) * clamp((e.t1 - t) / 0.2);
-        g.fillStyle = col;
-        g.fill(cp);
-      }
-      g.globalAlpha = clamp(d / 0.15) * clamp((e.t1 - t) / 0.2);
-      g.strokeStyle = col;
-      g.lineWidth = 3;
-      g.shadowColor = col;
-      g.shadowBlur = 14;
-      g.stroke(cp);
-      g.shadowBlur = 0;
-      g.globalAlpha = 1;
-    }
-    const borders = new Path2D();
-    for (const k of Object.keys(LJ.cty)) ringPath(LJ.cty[k], borders);
-    g.strokeStyle = "rgba(255,220,160,0.2)";
-    g.lineWidth = 1;
-    g.setLineDash([4, 4]);
-    g.stroke(borders);
-    g.setLineDash([]);
-    g.restore();
     // the coast: a gold line with a glow
     g.strokeStyle = "rgba(255,214,140,0.8)";
     g.lineWidth = 1.3 + 0.25 * Math.sqrt(m.z);
@@ -1492,7 +1424,13 @@ export const createFilm5 = (S: Spec) => {
     }
     // the event's pin: rings where it happened, its engraving on a stem, a name tag
     const e = evAt(t);
-    if (e && e.geo) {
+    if (e && e.geo && e.anim) {
+      ctx.save();
+      const [ax, ay] = P(e.geo[0], e.geo[1]);
+      drawAnims(ctx, e, t, ax, ay, a);
+      ctx.restore();
+    }
+    if (e && e.geo && !e.anim?.includes("drill")) {
       const [x, y] = P(e.geo[0], e.geo[1]);
       const col = toneCol(KIND_TONE[e.k]);
       const d = t - e.t0;
@@ -1537,6 +1475,500 @@ export const createFilm5 = (S: Spec) => {
         tag(ctx, e.place, x + (right ? 62 : -62), y - up - 26, right, a * clamp((d - 0.15) / 0.12), col);
         ctx.restore();
       }
+    }
+    ctx.restore();
+  };
+
+  // ---------- what happens at the pin, so each kind of event is seen, not just read
+  // fire: flame tongues (layered, flickering, additive) over a dark smoke column drifting with the wind
+  const flames = (ctx: CanvasRenderingContext2D, x: number, y: number, sc: number, t: number, seed: number, n: number, a: number) => {
+    const r = rng(seed);
+    ctx.save();
+    // smoke first, behind the fire
+    for (let i = 0; i < 16; i++) {
+      const life = 2.2 + r();
+      const u = ((t + r() * life) % life) / life;
+      const px = x + (r() - 0.5) * 46 * sc + u * 90 * sc;
+      const py = y - 18 * sc - u * 230 * sc;
+      const rad = (12 + 46 * u) * sc;
+      const al = a * 0.6 * (1 - u) * Math.min(1, u * 6);
+      const g = ctx.createRadialGradient(px, py, 0, px, py, rad);
+      g.addColorStop(0, `rgba(24,18,12,${al})`);
+      g.addColorStop(0.7, `rgba(40,30,20,${al * 0.6})`);
+      g.addColorStop(1, "rgba(40,30,20,0)");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(px, py, rad, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalCompositeOperation = "lighter";
+    const COLS = [["rgba(255,80,20,0.7)", "rgba(255,50,10,0)"], ["rgba(255,160,40,0.8)", "rgba(255,120,20,0)"], ["rgba(255,240,190,0.9)", "rgba(255,210,120,0)"]];
+    for (let i = 0; i < n; i++) {
+      const ox = (r() - 0.5) * 70 * sc;
+      const ph = r() * 10;
+      const hh = (34 + 34 * r()) * sc;
+      for (let q = 0; q < 3; q++) {
+        const fl = 1 + 0.28 * Math.sin(t * (13 + 5 * r()) + ph + q * 1.3) + 0.12 * Math.sin(t * 31 + ph);
+        const h = hh * fl * (1 - q * 0.3);
+        const w = h * (0.34 - q * 0.05);
+        const tip = Math.sin(t * 8 + ph + q) * w * 0.4;
+        const g = ctx.createLinearGradient(0, y, 0, y - h);
+        g.addColorStop(0, COLS[q][0]);
+        g.addColorStop(1, COLS[q][1]);
+        ctx.globalAlpha = a;
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.moveTo(x + ox - w, y);
+        ctx.quadraticCurveTo(x + ox - w * 0.7, y - h * 0.55, x + ox + tip, y - h);
+        ctx.quadraticCurveTo(x + ox + w * 0.7, y - h * 0.55, x + ox + w, y);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+    // a glow on the ground
+    const gg = ctx.createRadialGradient(x, y, 0, x, y, 90 * sc);
+    gg.addColorStop(0, `rgba(255,120,40,${0.45 * a})`);
+    gg.addColorStop(1, "rgba(255,120,40,0)");
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = gg;
+    ctx.fillRect(x - 90 * sc, y - 90 * sc, 180 * sc, 180 * sc);
+    ctx.restore();
+  };
+  // air strikes: missiles arc in from the upper left with bright trails; each hit flashes, rings out, throws sparks, burns
+  const bez = (a: number[], c: number[], b: number[], u: number) => [(1 - u) * (1 - u) * a[0] + 2 * (1 - u) * u * c[0] + u * u * b[0], (1 - u) * (1 - u) * a[1] + 2 * (1 - u) * u * c[1] + u * u * b[1]];
+  const strike = (ctx: CanvasRenderingContext2D, x: number, y: number, d: number, t: number, seed: number, a: number) => {
+    const r = rng(seed);
+    for (let q = 0; q < 4; q++) {
+      const launch = 0.05 + q * 0.26;
+      const fly = 0.42;
+      const tx = x + (r() - 0.5) * 110;
+      const ty = y + (r() - 0.5) * 46;
+      const s0 = [tx - 420 - r() * 220, ty - 560 - r() * 160];
+      const c0 = [(s0[0] + tx) / 2 + 80, Math.min(s0[1], ty) - 120];
+      const u = (d - launch) / fly;
+      ctx.save();
+      if (u > 0 && u < 1) {
+        const [hx, hy] = bez(s0, c0, [tx, ty], u);
+        const [bx, by] = bez(s0, c0, [tx, ty], Math.max(0, u - 0.3));
+        const g = ctx.createLinearGradient(bx, by, hx, hy);
+        g.addColorStop(0, "rgba(255,230,190,0)");
+        g.addColorStop(1, "rgba(255,240,210,0.95)");
+        ctx.globalAlpha = a;
+        ctx.strokeStyle = g;
+        ctx.lineWidth = 3;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        for (let k = 0; k <= 10; k++) {
+          const [px, py] = bez(s0, c0, [tx, ty], Math.max(0, u - 0.3) + (k / 10) * Math.min(u, 0.3));
+          if (k) ctx.lineTo(px, py);
+          else ctx.moveTo(px, py);
+        }
+        ctx.stroke();
+        ctx.fillStyle = "#fff6e0";
+        ctx.shadowColor = "#ffb347";
+        ctx.shadowBlur = 16;
+        ctx.beginPath();
+        ctx.arc(hx, hy, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+      const e = d - launch - fly;
+      if (e > 0) {
+        // the flash and the ring
+        if (e < 0.4) {
+          const R = 12 + 90 * eo3(e / 0.25);
+          const g = ctx.createRadialGradient(tx, ty, 0, tx, ty, R);
+          g.addColorStop(0, `rgba(255,255,240,${a * (1 - e / 0.4)})`);
+          g.addColorStop(0.4, `rgba(255,170,60,${0.8 * a * (1 - e / 0.4)})`);
+          g.addColorStop(1, "rgba(255,90,30,0)");
+          ctx.globalCompositeOperation = "lighter";
+          ctx.fillStyle = g;
+          ctx.fillRect(tx - R, ty - R, 2 * R, 2 * R);
+          ctx.globalCompositeOperation = "source-over";
+        }
+        if (e < 0.6) {
+          ctx.globalAlpha = a * 0.85 * (1 - e / 0.6);
+          ctx.strokeStyle = "#ffd9a0";
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.ellipse(tx, ty, 16 + 150 * eo3(e / 0.6), (16 + 150 * eo3(e / 0.6)) * 0.45, 0, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        // sparks
+        const rs = rng(seed * 7 + q);
+        for (let k = 0; k < 14; k++) {
+          const ang = -Math.PI * rs();
+          const sp = 160 + 260 * rs();
+          const life = 0.5 + 0.4 * rs();
+          if (e > life) continue;
+          const px = tx + Math.cos(ang) * sp * e;
+          const py = ty + Math.sin(ang) * sp * e + 500 * e * e;
+          ctx.globalAlpha = a * (1 - e / life);
+          ctx.fillStyle = rs() < 0.4 ? "#fff3d6" : "#ffb04a";
+          ctx.fillRect(px - 1.5, py - 1.5, 3, 3);
+        }
+        // then it burns
+        if (q % 2 === 0) flames(ctx, tx, ty + 4, 0.55, t, seed + q * 13, 2, a * clamp((e - 0.1) / 0.25));
+      }
+      ctx.restore();
+    }
+  };
+  // a pipeline with a valve wheel under the pin: the flow slows and stops as the wheel turns shut (a cut), or starts (a release)
+  const valve = (ctx: CanvasRenderingContext2D, x: number, y: number, d: number, t: number, open: boolean, a: number) => {
+    const k = eo3(clamp((d - 0.15) / 0.7));
+    const flow = open ? k : 1 - k;
+    // how far the oil has moved: the flow integrated over the event (so it slows, not slides back)
+    let dist = 0;
+    for (let q = 0; q < 24; q++) {
+      const kk = eo3(clamp((((q + 0.5) / 24) * d - 0.15) / 0.7));
+      dist += ((open ? kk : 1 - kk) * Math.max(0, d)) / 24;
+    }
+    const L = 170;
+    const py = y + 52;
+    ctx.save();
+    ctx.globalAlpha = a * clamp(d / 0.15);
+    for (const side of [-1, 1]) {
+      const x0 = side < 0 ? x - L : x + 18;
+      const x1 = side < 0 ? x - 18 : x + L;
+      const g = ctx.createLinearGradient(0, py - 11, 0, py + 11);
+      g.addColorStop(0, "#f2c77a");
+      g.addColorStop(0.5, "#8a5b22");
+      g.addColorStop(1, "#3a250d");
+      ctx.fillStyle = "#120c05";
+      ctx.fillRect(x0 - 2, py - 13, x1 - x0 + 4, 26);
+      ctx.fillStyle = g;
+      ctx.fillRect(x0, py - 11, x1 - x0, 22);
+      // the oil inside, moving left to right
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(x0, py - 5, x1 - x0, 10);
+      ctx.clip();
+      ctx.fillStyle = "rgba(20,12,4,0.9)";
+      ctx.fillRect(x0, py - 5, x1 - x0, 10);
+      ctx.fillStyle = `rgba(255,190,90,${0.25 + 0.6 * flow})`;
+      for (let xx = x0 - 26 + ((dist * 150) % 26); xx < x1; xx += 26) ctx.fillRect(xx, py - 2, 12, 4);
+      ctx.restore();
+      // flanges
+      ctx.fillStyle = "#d9a656";
+      for (const fx of [x0, x1 - 6]) ctx.fillRect(fx, py - 15, 6, 30);
+    }
+    // the valve body and its wheel, turning while it shuts (or opens)
+    ctx.fillStyle = "#120c05";
+    ctx.fillRect(x - 20, py - 18, 40, 36);
+    ctx.fillStyle = "#c48d44";
+    ctx.fillRect(x - 17, py - 15, 34, 30);
+    ctx.strokeStyle = "#e8b665";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(x, py - 15);
+    ctx.lineTo(x, py - 34);
+    ctx.stroke();
+    ctx.save();
+    ctx.translate(x, py - 44);
+    ctx.rotate(k * Math.PI * 3 * (open ? -1 : 1));
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(0, 0, 17, 0, Math.PI * 2);
+    ctx.stroke();
+    for (let q = 0; q < 3; q++) {
+      ctx.rotate(Math.PI / 3);
+      ctx.beginPath();
+      ctx.moveTo(-17, 0);
+      ctx.lineTo(17, 0);
+      ctx.stroke();
+    }
+    ctx.restore();
+    ctx.restore();
+  };
+  // shale: a cross-section above the pin. Drill down, turn, drill along the shale, crack it open, the oil comes back up
+  const drillPanel = (ctx: CanvasRenderingContext2D, d: number, a: number, place: string) => {
+    const PW = 760;
+    const PH = 290;
+    const px = CX - PW / 2;
+    const py = 1110;
+    const al = a * clamp(d / 0.15);
+    if (al <= 0.01) return;
+    ctx.save();
+    ctx.globalAlpha = al;
+    ctx.fillStyle = "rgba(10,8,6,0.88)";
+    rrect(ctx, px, py, PW, PH, 14);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,201,77,0.75)";
+    ctx.lineWidth = 2;
+    rrect(ctx, px, py, PW, PH, 14);
+    ctx.stroke();
+    ctx.save();
+    rrect(ctx, px, py, PW, PH, 14);
+    ctx.clip();
+    const G = py + 52;
+    // strata: sand (stipple), rock (hatching), shale (dark, fine lines)
+    const r = rng(5);
+    ctx.fillStyle = "rgba(120,90,50,0.35)";
+    ctx.fillRect(px, G, PW, 70);
+    ctx.fillStyle = "rgba(255,210,140,0.35)";
+    for (let i = 0; i < 260; i++) ctx.fillRect(px + r() * PW, G + 4 + r() * 62, 1.6, 1.6);
+    ctx.fillStyle = "rgba(90,70,45,0.4)";
+    ctx.fillRect(px, G + 70, PW, 80);
+    ctx.strokeStyle = "rgba(255,210,140,0.16)";
+    ctx.lineWidth = 1;
+    for (let xx = -80; xx < PW; xx += 12) {
+      ctx.beginPath();
+      ctx.moveTo(px + xx, G + 150);
+      ctx.lineTo(px + xx + 80, G + 70);
+      ctx.stroke();
+    }
+    const S0 = G + 150;
+    ctx.fillStyle = "rgba(30,24,18,0.95)";
+    ctx.fillRect(px, S0, PW, 70);
+    ctx.strokeStyle = "rgba(200,180,150,0.14)";
+    for (let yy = S0 + 8; yy < S0 + 70; yy += 9) {
+      ctx.beginPath();
+      ctx.moveTo(px, yy);
+      ctx.lineTo(px + PW, yy);
+      ctx.stroke();
+    }
+    ctx.restore();
+    // the surface and a rig
+    ctx.strokeStyle = "rgba(255,214,140,0.85)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(px, G);
+    ctx.lineTo(px + PW, G);
+    ctx.stroke();
+    const WX = px + 120;
+    ctx.strokeStyle = GOLD;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(WX - 18, G);
+    ctx.lineTo(WX, G - 40);
+    ctx.lineTo(WX + 18, G);
+    ctx.moveTo(WX - 11, G - 14);
+    ctx.lineTo(WX + 11, G - 14);
+    ctx.stroke();
+    // the well: down, a bend, along the shale
+    const SY = S0 + 35;
+    const RB = 34;
+    const vEnd = SY - RB;
+    const hLen = PW - 120 - 60 - RB;
+    const L1 = vEnd - G;
+    const L2 = (Math.PI / 2) * RB;
+    const LT = L1 + L2 + hLen;
+    const prog = eo3(clamp(d / 0.95)) * LT;
+    const ptAt = (l: number): [number, number] => {
+      if (l <= L1) return [WX, G + l];
+      if (l <= L1 + L2) {
+        const an = (l - L1) / RB;
+        return [WX + RB - RB * Math.cos(an), vEnd + RB * Math.sin(an)];
+      }
+      return [WX + RB + (l - L1 - L2), SY];
+    };
+    ctx.strokeStyle = "#ffe0a0";
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    for (let l = 0; l <= prog; l += 6) {
+      const [qx, qy] = ptAt(l);
+      if (l) ctx.lineTo(qx, qy);
+      else ctx.moveTo(qx, qy);
+    }
+    ctx.stroke();
+    const [bx, by] = ptAt(prog);
+    ctx.fillStyle = "#fff";
+    ctx.shadowColor = GOLD;
+    ctx.shadowBlur = 14;
+    ctx.beginPath();
+    ctx.arc(bx, by, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    // the fractures, one stage after another, then the oil flowing back up the well
+    const FX = [0.2, 0.38, 0.56, 0.74, 0.92].map((f) => WX + RB + f * hLen);
+    FX.forEach((fx, i) => {
+      const e = d - 1.0 - i * 0.1;
+      if (e <= 0) return;
+      const k = eo3(clamp(e / 0.25));
+      ctx.strokeStyle = `rgba(255,190,90,${0.9})`;
+      ctx.lineWidth = 2;
+      const rr = rng(40 + i);
+      for (let q = 0; q < 7; q++) {
+        const up = q % 2 ? -1 : 1;
+        const len = (16 + 20 * rr()) * k;
+        const dx = (rr() - 0.5) * 22;
+        ctx.beginPath();
+        ctx.moveTo(fx, SY);
+        ctx.lineTo(fx + dx * 0.5, SY + up * len * 0.5);
+        ctx.lineTo(fx + dx, SY + up * len);
+        ctx.stroke();
+      }
+      if (e < 0.2) {
+        ctx.globalAlpha = al * (1 - e / 0.2);
+        ctx.fillStyle = "#fff3d0";
+        ctx.beginPath();
+        ctx.arc(fx, SY, 10 + 20 * e, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = al;
+      }
+    });
+    const fe = d - 1.5;
+    if (fe > 0) {
+      ctx.fillStyle = "#ffc94d";
+      for (let q = 0; q < 14; q++) {
+        const l = LT - (((fe * 260 + q * (LT / 14)) % LT) + 0);
+        const [qx, qy] = ptAt(Math.max(0, l));
+        ctx.beginPath();
+        ctx.arc(qx, qy, 3.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    // three plain words
+    const lab = (s: string, x: number, y: number, on: number) => {
+      if (on <= 0) return;
+      ctx.globalAlpha = al * clamp(on / 0.15);
+      text(ctx, s, x, y, 28, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+      ctx.globalAlpha = al;
+    };
+    lab("竖着钻", WX + 22, G + 66, d - 0.1);
+    lab("拐弯，横着钻", WX + RB + 150, SY - 22, d - 0.55);
+    lab("压裂", FX[3] - 10, SY - 22, d - 1.05);
+    lab("油出来了", WX + 30, G - 16, d - 1.6);
+    text(ctx, place, px + PW - 18, py + 34, 24, 700, SERIF, SOFT, { align: "right" });
+    ctx.restore();
+  };
+  const drawAnims = (ctx: CanvasRenderingContext2D, e: P5, t: number, x: number, y: number, a: number) => {
+    const d = t - e.t0;
+    const fade = a * clamp((e.t1 + 0.15 - t) / 0.3);
+    const seed = e.i * 97 + 11;
+    for (const an of e.anim ?? []) {
+      if (an === "strike") strike(ctx, x, y, d, t, seed, fade);
+      else if (an === "fire") {
+        const r = rng(seed + 5);
+        for (let q = 0; q < 3; q++) flames(ctx, x + (r() - 0.5) * 120, y + (r() - 0.5) * 30, 0.6, t, seed + q, 2, fade * clamp((d - 0.15 - q * 0.12) / 0.25));
+      } else if (an === "gush") {
+        gusher(ctx, t, e.t0 + 0.12, x, y - 4, seed, false, 0.6, y + 6);
+        gusher(ctx, t, e.t0 + 0.12 + 2 * BEAT_S, x, y - 4, seed + 1, false, 0.5, y + 6);
+      } else if (an === "valve" || an === "release") valve(ctx, x, y, d, t, an === "release", fade);
+      else if (an === "drill") drillPanel(ctx, d, fade, e.place ?? "");
+    }
+  };
+
+  // ---------- the cold open: six moments, two beats each, cut on the beat. On the cut the year and the engraving land
+  // (punch-in, a white frame); on the second beat the word or number slams (shake, a flash in its colour, its effect)
+  const drawMontage = (ctx: CanvasRenderingContext2D, t: number) => {
+    if (t >= RW0 + 0.02) return;
+    let i = -1;
+    MONTAGE.forEach((m, q) => {
+      if (t >= m.at - 1e-3) i = q;
+    });
+    if (i < 0) return;
+    const m = MONTAGE[i];
+    const d = t - m.at;
+    const ds = d - SHOT_BEAT;
+    const col = m.tone === "red" ? RED : GOLD;
+    const p = beatPulse(t);
+    ctx.save();
+    // the room: a glow in the shot's colour, breathing on the beat, dust in the air
+    const g = ctx.createRadialGradient(CX, 980, 40, CX, 980, 1000);
+    g.addColorStop(0, m.tone === "red" ? `rgba(130,24,12,${0.5 + 0.25 * p})` : `rgba(130,88,18,${0.48 + 0.25 * p})`);
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(...FULL);
+    motes(ctx, t, FULL[0], FULL[0] + FULL[2], 300, 1500, 0.9);
+    // the engraving: punches in on the cut, keeps pushing
+    const im = IMGS[`art/i_${m.pic}.png`];
+    const AY = 960;
+    const AS = 720;
+    if (im) {
+      const s0 = 1 + 0.28 * (1 - eo3(d / 0.16)) + 0.06 * d;
+      ctx.save();
+      ctx.translate(CX, AY);
+      ctx.scale(s0, s0);
+      ctx.globalAlpha = clamp(d / 0.03);
+      ctx.drawImage(im, -AS / 2, -AS / 2, AS, AS);
+      ctx.restore();
+    }
+    // its effect, on the slam
+    if (m.anim === "fire") flames(ctx, CX - 20, AY + 150, 1.5, t, 31, 3, clamp((d - 0.05) / 0.2) * (ds > 0 ? 1 : 0.6));
+    if (m.anim === "fw" || m.anim === "rise") gusher(ctx, t, m.at + SHOT_BEAT, CX, AY - 120, 77 + i, m.anim === "fw", 0.7, 1600);
+    if (m.anim === "drip" && ds > -0.05) {
+      const r = rng(19);
+      for (let q = 0; q < 16; q++) {
+        const td = m.at + SHOT_BEAT + r() * 0.35;
+        const e = t - td;
+        if (e < 0) continue;
+        const x0 = CX + (r() - 0.5) * 380;
+        const yy = AY - 120 + 0.5 * 2600 * e * e;
+        drop(ctx, x0, yy, 0, 2600 * e + 40, 4 + r() * 4, clamp(1 - e / 0.7), 1600);
+      }
+      if (ds >= 0 && ds < 0.22) {
+        ctx.save();
+        ctx.globalAlpha = 1 - ds / 0.22;
+        ctx.strokeStyle = "#f2f7ff";
+        ctx.shadowColor = "#ff5a4a";
+        ctx.shadowBlur = 30;
+        bolt(ctx, CX + 120, VY0, CX + 10, AY - 60, 404 + Math.floor(ds * 30), 7);
+        ctx.restore();
+      }
+    }
+    // the year and where
+    const ys = 1 + 0.45 * (1 - eo3(d / 0.12));
+    ctx.save();
+    ctx.translate(CX, 500);
+    ctx.scale(ys, ys);
+    text(ctx, m.year, 0, 0, 176, 900, SANS, WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 22 });
+    ctx.restore();
+    ctx.globalAlpha = clamp((d - 0.04) / 0.08);
+    text(ctx, m.tag, CX, 572, 42, 900, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+    ctx.globalAlpha = 1;
+    // the slam
+    if (ds >= 0) {
+      const bs = 1 + 0.75 * (1 - eo3(ds / 0.13));
+      ctx.save();
+      ctx.translate(CX, 1400);
+      ctx.scale(bs, bs);
+      ctx.globalAlpha = clamp(ds / 0.03);
+      if (m.anim === "stamp" || m.anim === "x") {
+        // a stamp: tilted, double-ruled, in red
+        ctx.rotate(-0.06);
+        const bw = measure(ctx, m.big, 128, 900, SANS) + 80;
+        ctx.strokeStyle = RED;
+        ctx.lineWidth = 7;
+        rrect(ctx, -bw / 2, -128, bw, 160, 10);
+        ctx.stroke();
+        ctx.lineWidth = 2.5;
+        rrect(ctx, -bw / 2 + 12, -116, bw - 24, 136, 6);
+        ctx.stroke();
+      }
+      text(ctx, m.big, 0, 0, 128, 900, SANS, col, { align: "center", glow: col + "99", glowBlur: 36, maxW: 960 });
+      ctx.restore();
+      ctx.globalAlpha = clamp((ds - 0.08) / 0.1);
+      text(ctx, m.sub, CX, 1484, 42, 900, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      // the strait: a red X over the engraving
+      if (m.anim === "x") {
+        const k = 1 + 0.6 * (1 - eo3(ds / 0.14));
+        const L = 170 * k;
+        ctx.globalAlpha = clamp(ds / 0.04);
+        ctx.strokeStyle = RED;
+        ctx.lineWidth = 22;
+        ctx.lineCap = "round";
+        ctx.shadowColor = RED;
+        ctx.shadowBlur = 30;
+        ctx.beginPath();
+        ctx.moveTo(CX - L, AY - L);
+        ctx.lineTo(CX + L, AY + L);
+        ctx.moveTo(CX + L, AY - L);
+        ctx.lineTo(CX - L, AY + L);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+      // a flash in the shot's colour
+      ctx.globalAlpha = 0.42 * clamp(1 - ds / 0.12);
+      ctx.fillStyle = m.tone === "red" ? "#ff5b45" : "#ffe39a";
+      ctx.fillRect(...FULL);
+    }
+    // the cut: one white frame
+    if (d < 0.05) {
+      ctx.globalAlpha = 0.4 * (1 - d / 0.05);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(...FULL);
     }
     ctx.restore();
   };
@@ -2345,10 +2777,10 @@ export const createFilm5 = (S: Spec) => {
 
   // ---------- crude oil instead of fireworks: on new highs a gusher shoots from the head; on crashes oil drips off it
   const FW = HITS.filter((h) => h.fw).map((h) => ({ t0: h.t, big: !!h.big || !!h.e?.fx?.includes("fwBig") }));
-  const drop = (ctx: CanvasRenderingContext2D, x: number, y: number, vx: number, vy: number, s: number, a: number) => {
+  const drop = (ctx: CanvasRenderingContext2D, x: number, y: number, vx: number, vy: number, s: number, a: number, fy = 1462) => {
     // a drop of crude: a round glossy head leading, a tail tapering behind it along the motion; black-brown with an
     // amber rim and a hot specular point; gone at the ground
-    if (y > 1462) return;
+    if (y > fy) return;
     const sp = Math.hypot(vx, vy);
     const L = clamp(sp * 0.03, s * 1.4, s * 6);
     ctx.save();
@@ -2374,7 +2806,7 @@ export const createFilm5 = (S: Spec) => {
     ctx.fill();
     ctx.restore();
   };
-  const gusher = (ctx: CanvasRenderingContext2D, t: number, tb: number, x0: number, y0: number, seed: number, big: boolean, up = 1) => {
+  const gusher = (ctx: CanvasRenderingContext2D, t: number, tb: number, x0: number, y0: number, seed: number, big: boolean, up = 1, fy = 1462) => {
     const tau = t - tb;
     if (tau < 0 || tau > 1.7) return;
     const r = rng(seed);
@@ -2413,7 +2845,7 @@ export const createFilm5 = (S: Spec) => {
       const y = y0 + vy * q + 0.5 * g * q * q;
       const life = 1.15 + 0.4 * r();
       if (q > life) continue;
-      drop(ctx, x, y, vx, vy + g * q, s, clamp(1 - Math.pow(q / life, 3)));
+      drop(ctx, x, y, vx, vy + g * q, s, clamp(1 - Math.pow(q / life, 3)), fy);
     }
   };
   const drawFireworks = (ctx: CanvasRenderingContext2D, t: number) => {
@@ -2424,11 +2856,6 @@ export const createFilm5 = (S: Spec) => {
         const h = headAt(tb - 0.14);
         gusher(ctx, t, tb - 0.14, h.x + (bi - 1) * 26 * (fw.big ? 1 : 0), h.y, Math.round(fw.t0 * 1000) + bi * 77, fw.big);
       });
-    }
-    // the cold open: oil splashes up where the line breaks through zero
-    {
-      const k = camAt(COLD5.floor.at);
-      gusher(ctx, t, COLD5.floor.at, X(k, COLD5.floor.y), Yv(k, 0), 9191, true, 0.75);
     }
     // crashes: drops fall off the head while the price slides
     const e = evAt(t);
@@ -2565,7 +2992,7 @@ export const createFilm5 = (S: Spec) => {
     ctx.fillRect(114 + w1 + 14, 104, 2, 26);
     if (t >= TI1) text(ctx, S.brand, 114 + w1 + 30, 127, 30, 900, SERIF, GOLD, { ls: 2 });
     else drawIntro(ctx, t, 114 + w1 + 30);
-    const nums = 1;
+    const nums = t < RW0 ? 0 : 1;
     if (nums <= 0) {
       ctx.restore();
       return;
@@ -2915,20 +3342,6 @@ export const createFilm5 = (S: Spec) => {
       ctx.fillStyle = "#cfe6ff";
       ctx.fillRect(FULL[0], VY0 + r() * (VY1 - VY0), FULL[2], 3 + r() * 26);
     }
-    ctx.globalAlpha = a;
-    const jx = (r() - 0.5) * 8;
-    ctx.fillStyle = WHITE;
-    for (const ox of [0, 62]) {
-      ctx.beginPath();
-      ctx.moveTo(CX - 160 + ox + jx, 455 + 80);
-      ctx.lineTo(CX - 100 + ox + jx, 420 + 80);
-      ctx.lineTo(CX - 100 + ox + jx, 490 + 80);
-      ctx.closePath();
-      ctx.fill();
-    }
-    text(ctx, tr("倒回"), CX + 10 + jx, 482 + 80, 72, 900, SERIF, WHITE, { glow: "rgba(150,200,255,0.8)", glowBlur: 20 });
-    const yNow = Math.max(Math.floor(FIRST), Math.floor(CUR(t)));
-    text(ctx, EN ? String(yNow) : `${yNow} 年`, CX + jx, 640, 44, 900, SANS, "#cfe6ff", { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     ctx.restore();
   };
   const drawSource = (ctx: CanvasRenderingContext2D, t: number) => {
@@ -3464,7 +3877,7 @@ export const createFilm5 = (S: Spec) => {
     cb.setTransform(1, 0, 0, 1, 0, 0);
     cb.clearRect(0, 0, W, H);
     cb.setTransform(LS, 0, 0, LS, LX, LY);
-    const chartA = 1 - clamp((t - (OUT - 0.2)) / 0.8);
+    const chartA = (1 - clamp((t - (OUT - 0.2)) / 0.8)) * clamp((t - RW0) / 0.2);
     drawChart(cb, t, chartA);
     drawRibbon(cb, t, chartA);
     drawPegs(cb, t);
@@ -3476,7 +3889,7 @@ export const createFilm5 = (S: Spec) => {
     drawWide(cb, t);
     drawHits(cb, t);
     drawFireworks(cb, t);
-    drawCold(cb, t);
+    drawMontage(cb, t);
     b.setTransform(1, 0, 0, 1, 0, 0);
     b.globalAlpha = 1;
     b.drawImage(CBUF, 0, 0);
