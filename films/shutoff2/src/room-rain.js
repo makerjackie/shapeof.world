@@ -266,7 +266,7 @@ export function createRainGlass(ctx, glassZ) {
       u.uInvProj.value.copy(cam.projectionMatrixInverse);
       u.uCamWorld.value.copy(cam.matrixWorld);
       u.uCamPos.value.setFromMatrixPosition(cam.matrixWorld);
-      u.uTime.value = st.t;
+      u.uTime.value = st.look?.rainFreeze ? 977.0 : st.t;     // k14: the rain has stopped; the drops stay where they are
       u.uGlass.value = glass ? 1 : 0;
       u.uCCTV.value = cctv ? 1 : 0;
       const L = st.look || {};

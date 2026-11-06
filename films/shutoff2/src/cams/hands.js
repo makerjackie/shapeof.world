@@ -1,4 +1,5 @@
-// Cameras and looks for the Hands department's shots: s02 wrist, s15 pulse, s18 jump, s21 grip.
+// Cameras and looks for the Hands department's shots. v13: only k05 (the over-the-shoulder red flood) remains;
+// the hand close-ups (k01, s02, s15, s18, s21) are kept below for reference but not exported.
 import * as THREE from 'three';
 import { STAGES } from '../hands-stage.js';
 import { PHONE } from '../room-figure.js';
@@ -21,7 +22,7 @@ function watchFrame(sid) {
 const A = (v) => [v.x, v.y, v.z];
 const add = (c, ...terms) => { const v = c.clone(); for (const [d, k] of terms) v.addScaledVector(d, k); return v; };
 
-export const CAMS = {
+const ALL_CAMS = {
   // k01: the first frame. Low over the dark desk: the still hand at the edge, the phone beyond, the rain window above.
   k01: (lt, d) => {
     const k = smoother(lt / d);
@@ -73,7 +74,7 @@ const phoneLight = (sid, st, i) => {
   return { pos: rw(p.pos[0], p.pos[1] + 0.06, p.pos[2]), r: 0.42, color: '#a9c0ff', i: i * g };
 };
 
-export const LOOKS = {
+const ALL_LOOKS = {
   // one light: the phone. Before CUES.deskLight only the rain window's faint blue.
   k01: (lt, d, t, st) => {
     const g = smooth(invLerp(st.cues.deskLight - 0.02, st.cues.deskLight + 0.12, st.tr));
@@ -131,3 +132,6 @@ export const LOOKS = {
     return { preset: 'morning', sunElev: 24, sunAz: 120, shadow: { center: A(hp), radius: 0.35, depth: 4 }, exposure: 0.94, bloom: 0.75 };
   },
 };
+
+export const CAMS = { k05: ALL_CAMS.k05 };
+export const LOOKS = { k05: ALL_LOOKS.k05 };

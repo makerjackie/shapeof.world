@@ -11,6 +11,8 @@ import { ROOM_M } from './room-layout.js';
 import { toonMaterial } from './materials.js';
 
 const FLAT = new Set(['phone', 'card', 'black']);
+// v13 has no hand close-ups: no shot stages the hand rig (the stage data is kept for reference)
+const ACTIVE = new Set([]);
 
 export function createHands(ctx) {
   bindCtx(ctx);
@@ -78,7 +80,7 @@ export function createHands(ctx) {
     makePhone, makeWatch,
     watch, phone,
     update(st) {
-      const S = STAGES[st.sid];
+      const S = ACTIVE.has(st.sid) ? STAGES[st.sid] : null;
       const on = !!S && !FLAT.has(st.set);
       root.visible = on;
       phone.root.visible = on && !!S.phone;

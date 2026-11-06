@@ -1,7 +1,7 @@
 // Room department: 林工's flat at night (01:40–03:12, rain). The set, 林工 at his desk with the phone, rain on the
 // window glass (a screen-space glass pass over the City department's night city), and the CCTV view (s12).
 import * as THREE from 'three';
-import { ROOM, ROOM_M, homeCamPose } from './room-layout.js';
+import { ROOM, ROOM_M, homeCamPose, DESK_PHONE } from './room-layout.js';
 import { makeHomeCam } from './room-homecam.js';
 import { buildSet } from './room-set.js';
 import { buildTowers } from './room-towers.js';
@@ -9,7 +9,8 @@ import { makeFigure, PHONE, J, HEAD_PITCH } from './room-figure.js';
 import { createRainGlass, createHalo } from './room-rain.js';
 import { onTwos, smoother, invLerp, clamp } from './util.js';
 
-const FIGURE_SHOTS = new Set(['s05', 's12', 'k05']);
+const FIGURE_SHOTS = new Set(['h01', 's05', 'k05', 'k13', 's12', 's15', 'k14']);
+const PHONE_IN_HANDS = new Set(['s05', 'k05', 's12', 's15']);     // otherwise it lies face-up on the desk
 
 export function createRoom(ctx) {
   const root = new THREE.Group();
@@ -18,7 +19,7 @@ export function createRoom(ctx) {
   root.visible = false;
   ctx.scene.add(root);
   const set = buildSet(root);
-  buildTowers(root);                     // v12: ordinary neighbours across the street fill the window, no 安 tower
+  const towers = buildTowers(root);      // v12: ordinary neighbours across the street fill the window, no 安 tower
   ctx.shadowRoots.push(set.casters);     // the window frame, curtains, desk and chair cast the low sun's shadow (s18 sweep)
   // the home camera on the shelf
   const hc = makeHomeCam();
@@ -38,6 +39,10 @@ export function createRoom(ctx) {
     phone.root.matrix.copy(phoneRest);
     fig.group.add(phone.root);
   }
+  // the same phone lying on the desk (h01, k13, k14)
+  const deskPhone = ctx.hands?.makePhone?.();
+  const deskM = new THREE.Matrix4();
+  if (deskPhone) { deskPhone.root.matrixAutoUpdate = false; deskPhone.root.visible = false; root.add(deskPhone.root); }
   let restW = null;
   const tm = new THREE.Matrix4();
 
@@ -76,6 +81,17 @@ export function createRoom(ctx) {
     const t = onTwos(st.tr);
     const breath = Math.sin(t * Math.PI * 2 / 3.6) * 0.7;
     const o = { chest: { r: [breath, 0, 0] }, head: { r: [breath * 0.4, 0, 0] } };
+    // v13 room shots: bowed lower over the desk (h01, k13, s15); at dawn the head lifts a little toward the window
+    if (st.sid === 'h01' || st.sid === 'k13') { o.chest.r[0] -= 4; o.head.r[0] -= 10; }
+    if (st.sid === 's15') { o.chest.r[0] -= 6; o.neck = { r: [-8, 0, 0] }; o.head.r[0] -= 14; }
+    if (st.sid === 'k14') { o.chest.r[0] += 2; o.head.r[0] += 12; }
+    if (st.sid === 'k13') {
+      // after the blackout: a held breath, then the shoulders let go (a slow exhale, drawn on twos)
+      const ex = smoother(invLerp(0.5, 2.1, onTwos(st.lt)));
+      o.chest.r[0] += -1.5 + 4.5 * ex;
+      o.shR = { r: [0, 0, -3.5 * ex] }; o.shL = { r: [0, 0, 3.5 * ex] };
+      o.head.r[0] += -2 * ex;
+    }
     if (st.sid === 's12') {
       // at CUES.lookUp he slowly lifts his head, then turns it, straight into the lens; holds the last 0.6 s
       const L = solveLook();
@@ -94,6 +110,7 @@ export function createRoom(ctx) {
       rain.update(st, on);
       halo.hide();
       if (!on) return;
+      towers.userData.setLamps(st.sid === 'k14' ? 0.16 : 1);     // at dawn only a few lamps are still on
       // the home camera: a few degrees off him until CUES.camTurn, then a servo step (fast, a hair of overshoot)
       {
         const u = clamp((st.tr - st.cues.camTurn) / 0.16, 0, 1);
@@ -115,10 +132,24 @@ export function createRoom(ctx) {
       for (const m of fig.mats) m.uniforms.uRimCol.value.set('#b9c6ff').lerp(_red.set('#ff4a3a'), red);
       fig.group.children[0].visible = st.sid !== 'k05';     // the flyaway strands (their cold rim would fight the red)
       fig.group.visible = showFig;
+      const inHands = PHONE_IN_HANDS.has(st.sid);
+      if (phone) phone.root.visible = inHands;
+      if (deskPhone) {
+        deskPhone.root.visible = showFig && !inHands;
+        if (deskPhone.root.visible) {
+          // k13: a soft vibrate shimmer as the phone wakes (frame-based, so it is a pure function of the frame)
+          const v = st.sid === 'k13' ? clamp(1 - (st.tr - st.cues.phoneWake) / 0.45, 0, 1) * (st.tr >= st.cues.phoneWake ? 1 : 0) : 0;
+          const jx = v * 0.0008 * Math.sin(st.frame * 2.9), jz = v * 0.0008 * Math.cos(st.frame * 3.7);
+          deskM.makeRotationY((DESK_PHONE.yaw + v * 1.2 * Math.sin(st.frame * 2.3)) * Math.PI / 180).setPosition(DESK_PHONE.pos.x + jx, DESK_PHONE.pos.y, DESK_PHONE.pos.z + jz);
+          deskPhone.root.matrix.copy(deskM); deskPhone.root.matrixWorldNeedsUpdate = true;
+          const pc = ctx.ui?.screen?.('phone-lin', st);
+          deskPhone.setScreen(pc || null, pc ? (pc.glow ?? 0) : 0);
+        }
+      }
       if (showFig) {
         const w = fig.pose(poseFor(st));
         if (!restW) restW = fig.rig.pose({}).map((m) => m.clone().invert());
-        if (phone) {
+        if (phone && inHands) {
           const i = fig.rig.index.wrR;
           tm.multiplyMatrices(w[i], restW[i]);
           phone.root.matrix.multiplyMatrices(tm, phoneRest);

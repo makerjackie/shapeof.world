@@ -41,3 +41,6 @@ export function s12Zoom(st) {
   const k = Math.min(1, Math.max(0, (st.tr - (st.cues.lookUp + 0.25)) / 1.0));
   return 1 + 0.3 * k * k * (3 - 2 * k);
 }
+
+// v13: the phone lying face-up on the desk in front of his hands (h01, k13, k14)
+export const DESK_PHONE = { pos: new THREE.Vector3(-0.27, 0.752, -1.44), yaw: -24 };

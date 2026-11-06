@@ -39,6 +39,7 @@ function facadeTex(seed, cols, rows) {
 
 export function buildTowers(parent) {
   const g = new THREE.Group(); parent.add(g);
+  const lit = [];
   // [x, z, width, depth, height above the city ground, seed, yaw]; local y = −45 is the street
   const T = [
     [-6, -150, 38, 18, 86, 3, 0.04],       // straight across: hides the CBD (and 安's tower) behind it
@@ -52,6 +53,7 @@ export function buildTowers(parent) {
     const floors = Math.round(h / 3.0), cols = Math.max(6, Math.round(w / 3.4));
     const tx = facadeTex(seed, cols, floors);
     const mat = toonMaterial({ color: '#ffffff', map: tx.map, emissiveMap: tx.emis, emissiveGain: 1.25, id: 0 });
+    lit.push(mat);
     const side = toonMaterial({ color: '#2e3247', id: 0 });
     const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), [side, side, side, side, mat, side]);
     b.position.set(x, -45 + h / 2, z); b.rotation.y = yaw; g.add(b);
@@ -66,5 +68,6 @@ export function buildTowers(parent) {
       av.position.set(x + w * 0.15, -45 + h + 5.6, z); g.add(av);
     }
   }
+  g.userData.setLamps = (k) => { for (const m of lit) m.uniforms.uEmisGain.value = 1.25 * k; };
   return g;
 }
