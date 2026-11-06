@@ -1,5 +1,8 @@
-// Covers for 油价一百六十年: the whole 1859-2026 line on a log scale (zero and below sit on the floor), the title, the swing, the question.
-// Cover34 = 1200x1600 (vertical main cover), Cover43 = 1600x1200 (Bilibili / horizontal cover).
+// Covers for 油价一百六十年, to the house rule (films/DIRECTOR.md 封面和标题): the question in plain words, the film's
+// own picture (the whole 1859-2026 line on a log scale, zero and below on the floor, over the engraved oil field), a
+// cream brand bar on top (mark + 世界的形状 left, 看见世界如何运行 right, ~6% of the height). One design, laid out per
+// ratio: 16:9 (1920x1080, words left, line right), 4:3 (1440x1080) and 3:4 (1080x1440) with the words centred so a
+// platform's centre crop keeps them whole.
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { AbsoluteFill, cancelRender, continueRender, delayRender, staticFile } from "remotion";
 import { SANS, SERIF, fontsReady } from "./fonts6";
@@ -7,34 +10,19 @@ import { SERIES } from "./oil";
 
 const GOLD = "#ffc94d";
 const RED = "#ff3b2f";
-const SOFT = "#c4c9cd";
 const WHITE = "#f6f7f8";
 const PEAK = { y: 2008.5027, v: 145.29 };
-const NOW = { y: 2026.2630, v: 112.95 };
+const NOW = { y: 2026.263, v: 112.95 };
 const NEG = { y: 2020.3, v: -37.63 };
+const Q1 = "1 桶油的价格";
+const Q2 = "到底谁说了算？";
 
-type L = { W: number; H: number; tx: number; ty: number; ts: number; align: CanvasTextAlign; cx0: number; cx1: number; cy0: number; cy1: number; sub: number; q: number };
-const L34: L = { W: 1200, H: 1600, tx: 600, ty: 330, ts: 200, align: "center", cx0: 90, cx1: 1080, cy0: 760, cy1: 1420, sub: 450, q: 540 };
-const L169: L = { W: 1920, H: 1080, tx: 110, ty: 230, ts: 150, align: "left", cx0: 110, cx1: 1800, cy0: 470, cy1: 940, sub: 340, q: 420 };
-type Tx = { brand: string; title: string; parts: [string, number, string][]; q: string; start: string; years: string };
-const ZH: Tx = {
-  brand: "世界的形状",
-  title: "油价一百六十年",
-  parts: [
-    ["1 桶原油：", 56, WHITE],
-    ["−37", 92, RED],
-    [" 美元 → ", 56, WHITE],
-    ["113", 92, GOLD],
-    [" 美元", 56, WHITE],
-  ],
-  q: "油价，到底是谁定的？",
-  start: "1859 年 · 16 美元",
-  years: "",
-};
-const ENX: Tx = ZH;
-const L43: L = { W: 1600, H: 1200, tx: 110, ty: 270, ts: 150, align: "left", cx0: 110, cx1: 1470, cy0: 560, cy1: 1060, sub: 360, q: 440 };
+type L = { W: number; H: number; align: CanvasTextAlign; tx: number; q1: number; q2: number; qs: number; cx0: number; cx1: number; cy0: number; cy1: number; ls: number };
+const L34: L = { W: 1080, H: 1440, align: "center", tx: 540, q1: 330, q2: 482, qs: 128, cx0: 80, cx1: 1000, cy0: 690, cy1: 1150, ls: 1 };
+const L43: L = { W: 1440, H: 1080, align: "center", tx: 720, q1: 230, q2: 356, qs: 108, cx0: 130, cx1: 1310, cy0: 480, cy1: 860, ls: 0.95 };
+const L169: L = { W: 1920, H: 1080, align: "left", tx: 120, q1: 400, q2: 552, qs: 130, cx0: 960, cx1: 1800, cy0: 270, cy1: 800, ls: 0.95 };
 
-const txt = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number, size: number, w: number, fam: string, col: string, align: CanvasTextAlign = "left", glow?: string, blur = 0) => {
+const txt = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number, size: number, w: number, fam: string, col: string | CanvasGradient, align: CanvasTextAlign = "left", glow?: string, blur = 0) => {
   ctx.font = `${w} ${size}px ${fam}`;
   ctx.textAlign = align;
   ctx.textBaseline = "alphabetic";
@@ -46,8 +34,31 @@ const txt = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number, siz
   return ctx.measureText(s).width;
 };
 
-const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null, X0: Tx, field: HTMLImageElement | null = null) => {
+// the house brand bar: cream, dark brown words, the round mark
+const brandBar = (ctx: CanvasRenderingContext2D, W: number, H: number, logo: HTMLImageElement | null) => {
+  const h = Math.round(H * 0.06);
+  ctx.fillStyle = "#efe6d2";
+  ctx.fillRect(0, 0, W, h);
+  const pad = h * 0.6;
+  const ms = h * 0.72;
+  if (logo) ctx.drawImage(logo, pad, (h - ms) / 2, ms, ms);
+  ctx.textBaseline = "middle";
+  ctx.font = `700 ${h * 0.42}px ${SERIF}`;
+  ctx.fillStyle = "#1d160e";
+  ctx.textAlign = "left";
+  (ctx as unknown as { letterSpacing: string }).letterSpacing = "2px";
+  ctx.fillText("世界的形状", pad + ms + h * 0.22, h / 2 + 1);
+  ctx.font = `700 ${h * 0.32}px ${SERIF}`;
+  ctx.textAlign = "right";
+  (ctx as unknown as { letterSpacing: string }).letterSpacing = `${Math.round(h * 0.18)}px`;
+  ctx.fillText("看见世界如何运行", W - pad, h / 2 + 1);
+  (ctx as unknown as { letterSpacing: string }).letterSpacing = "0px";
+  ctx.textBaseline = "alphabetic";
+};
+
+const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null, field: HTMLImageElement | null) => {
   const { W, H } = l;
+  const wide = l.align === "left";
   const bg = ctx.createRadialGradient(W * 0.55, H * 0.55, 50, W * 0.5, H * 0.5, Math.max(W, H) * 0.75);
   bg.addColorStop(0, "#1d160b");
   bg.addColorStop(1, "#050403");
@@ -55,41 +66,13 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
   ctx.fillRect(0, 0, W, H);
   // the engraved oil field along the bottom, under the line
   if (field) {
-    const fw = W * (W > H ? 0.95 : 1.15);
+    const fw = W * (wide ? 0.62 : W > H ? 0.95 : 1.15);
     const fh = (fw * field.height) / field.width;
-    ctx.globalAlpha = 0.34;
-    ctx.drawImage(field, W / 2 - fw / 2, H - fh * 0.62, fw, fh);
+    ctx.globalAlpha = 0.36;
+    ctx.drawImage(field, (wide ? (l.cx0 + l.cx1) / 2 : W / 2) - fw / 2, H - fh * 0.62, fw, fh);
     ctx.globalAlpha = 1;
   }
-  // brand
-  {
-    ctx.font = `900 30px ${SANS}`;
-    const bw = 56 + ctx.measureText(X0.brand).width;
-    const bx = l.align === "center" ? W / 2 - bw / 2 : l.tx;
-    if (logo) ctx.drawImage(logo, bx, 70, 44, 44);
-    txt(ctx, X0.brand, bx + 56, 104, 30, 900, SANS, "#e9ebee");
-  }
-  // title, the price span, the question
-  const tg = ctx.createLinearGradient(0, l.ty - l.ts, 0, l.ty);
-  tg.addColorStop(0, "#fff1b8");
-  tg.addColorStop(0.55, GOLD);
-  tg.addColorStop(1, "#c98a12");
-  ctx.font = `900 ${l.ts}px ${SERIF}`;
-  const ts = Math.min(l.ts, (l.ts * (W - 2 * 90)) / ctx.measureText(X0.title).width);
-  txt(ctx, X0.title, l.tx, l.ty, ts, 900, SERIF, tg as unknown as string, l.align, "rgba(255,190,60,0.55)", 40);
-  // 1 盎司黄金：19 美元 → 5,318 美元 (5,318 big and gold)
-  const parts = X0.parts;
-  let tw = 0;
-  for (const [s, size] of parts) {
-    ctx.font = `900 ${size}px ${size > 60 ? SANS : SERIF}`;
-    tw += ctx.measureText(s).width;
-  }
-  let x = l.align === "center" ? W / 2 - tw / 2 : l.tx;
-  for (const [s, size, col] of parts) x += txt(ctx, s, x, l.sub, size, 900, size > 60 ? SANS : SERIF, col, "left", col === GOLD ? "rgba(255,201,77,0.5)" : undefined, col === GOLD ? 18 : 0);
-  ctx.font = `900 58px ${SERIF}`;
-  const qs = Math.min(58, (58 * (W - 2 * 90)) / ctx.measureText(X0.q).width);
-  txt(ctx, X0.q, l.align === "center" ? W / 2 : l.tx, l.q, qs, 900, SERIF, SOFT, l.align);
-  // the line: log scale, 1792 to now
+  // the line: log scale, 1859 to now
   const y0 = 1859.5;
   const y1 = SERIES[SERIES.length - 1].y;
   const L0 = Math.log10(0.3);
@@ -100,21 +83,19 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
   let lx = -1e9;
   for (const p of SERIES) {
     const px = X(p.y);
-    if (px - lx < 1 && p.kind !== "p") continue;
+    if (px - lx < 1 && p.kind !== "p" && p.v > 0) continue;
     lx = px;
     pts.push([px, Y(p.v)]);
   }
-  // grid
   ctx.strokeStyle = "rgba(255,255,255,0.08)";
   ctx.lineWidth = 2;
   ctx.setLineDash([6, 10]);
   for (const v of [1, 10, 100]) {
-    const lab = v !== 10;
     ctx.beginPath();
     ctx.moveTo(l.cx0, Y(v));
     ctx.lineTo(l.cx1, Y(v));
     ctx.stroke();
-    if (lab) txt(ctx, "$" + v.toLocaleString("en-US"), l.cx0 + 4, Y(v) - 10, 24, 500, SANS, "rgba(255,255,255,0.35)");
+    if (v !== 10) txt(ctx, "$" + v, l.cx0 + 4, Y(v) - 10, 24 * l.ls, 500, SANS, "rgba(255,255,255,0.35)");
   }
   ctx.setLineDash([]);
   const fill = ctx.createLinearGradient(0, l.cy0, 0, l.cy1 + 40);
@@ -148,7 +129,6 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
   ctx.lineWidth = 2;
   path();
   ctx.stroke();
-  // marks: where it starts, Nixon, the 1980 high, the 2001 low, the top
   const dot = (y: number, v: number, col: string, r: number) => {
     ctx.fillStyle = col;
     ctx.shadowColor = col;
@@ -158,17 +138,17 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
     ctx.fill();
     ctx.shadowBlur = 0;
   };
+  const S = l.ls;
   dot(1859.5, 16, WHITE, 9);
-  txt(ctx, X0.start, X(1859.5) + 4, Y(16) - 26, 34, 900, SERIF, WHITE, "left", "rgba(0,0,0,0.9)", 8);
+  txt(ctx, "1859 年 · 16 美元", X(1859.5) + 4, Y(16) - 26, 34 * S, 900, SERIF, WHITE, "left", "rgba(0,0,0,0.9)", 8);
   dot(1861.5, 0.49, RED, 9);
-  txt(ctx, "1861 · 0.49", X(1861.5) + 16, Y(0.49) + 12, 30, 900, SANS, "#ff8a80", "left", "rgba(0,0,0,0.9)", 8);
+  txt(ctx, "1861 · 0.49", X(1861.5) + 16, Y(0.49) + 12, 30 * S, 900, SANS, "#ff8a80", "left", "rgba(0,0,0,0.9)", 8);
   dot(1980.29, 39.5, GOLD, 9);
-  txt(ctx, "1980 · 39.50", X(1980.29) - 18, Y(39.5) - 24, 30, 900, SANS, GOLD, "right", "rgba(0,0,0,0.9)", 8);
+  txt(ctx, "1980 · 39.50", X(1980.29) - 18, Y(39.5) - 24, 30 * S, 900, SANS, GOLD, "right", "rgba(0,0,0,0.9)", 8);
   dot(NEG.y, 0.3, RED, 11);
-  txt(ctx, "2020 · −37.63", X(NEG.y) - 18, Y(0.3) + 8, 34, 900, SANS, "#ff6a5e", "right", "rgba(0,0,0,0.95)", 10);
+  txt(ctx, "2020 · −37.63", X(NEG.y) - 18, Y(0.3) + 8, 36 * S, 900, SANS, "#ff6a5e", "right", "rgba(0,0,0,0.95)", 10);
   dot(PEAK.y, PEAK.v, GOLD, 9);
-  txt(ctx, "2008 · 145", X(PEAK.y) - 18, Y(PEAK.v) - 24, 30, 900, SANS, GOLD, "right", "rgba(0,0,0,0.9)", 8);
-  // the top, with a burst
+  txt(ctx, "2008 · 145", X(PEAK.y) - 18, Y(PEAK.v) - 24, 30 * S, 900, SANS, GOLD, "right", "rgba(0,0,0,0.9)", 8);
   const px = X(NOW.y);
   const py = Y(NOW.v);
   const halo = ctx.createRadialGradient(px, py, 0, px, py, 150);
@@ -187,35 +167,47 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement | null
     ctx.stroke();
   }
   dot(NOW.y, NOW.v, WHITE, 11);
-  txt(ctx, "2026 · 113", px - 30, py + 130, 40, 900, SANS, GOLD, "right", "rgba(0,0,0,0.95)", 10);
-  // years along the bottom
-  for (const yy of [1900, 1950, 2000]) txt(ctx, String(yy), X(yy), l.cy1 + 70, 28, 600, SANS, "rgba(255,255,255,0.45)", "center");
+  txt(ctx, "2026 · 113", px + 40, py - 96, 40 * S, 900, SANS, GOLD, "right", "rgba(0,0,0,0.95)", 10);
+  for (const yy of [1900, 1950, 2000]) txt(ctx, String(yy), X(yy), l.cy1 + 66, 28 * S, 600, SANS, "rgba(255,255,255,0.45)", "center");
+  // the question: white, then gold
+  if (wide) {
+    const sh = ctx.createLinearGradient(0, 0, W * 0.55, 0);
+    sh.addColorStop(0, "rgba(5,4,3,0.75)");
+    sh.addColorStop(1, "rgba(5,4,3,0)");
+    ctx.fillStyle = sh;
+    ctx.fillRect(0, 0, W * 0.55, H);
+  }
+  ctx.font = `900 ${l.qs}px ${SERIF}`;
+  const room = wide ? l.cx0 - l.tx - 60 : W - 2 * 70;
+  const qs = Math.min(l.qs, (l.qs * room) / ctx.measureText(Q2).width);
+  txt(ctx, Q1, l.tx, l.q1, qs * 0.86, 900, SERIF, WHITE, l.align, "rgba(0,0,0,0.85)", 30);
+  const tg = ctx.createLinearGradient(0, l.q2 - qs, 0, l.q2);
+  tg.addColorStop(0, "#fff1b8");
+  tg.addColorStop(0.55, GOLD);
+  tg.addColorStop(1, "#c98a12");
+  txt(ctx, Q2, l.tx, l.q2, qs, 900, SERIF, tg, l.align, "rgba(255,190,60,0.5)", 36);
+  brandBar(ctx, W, H, logo);
 };
 
-const Cover: React.FC<{ l: L; x?: Tx }> = ({ l, x = ZH }) => {
+const Cover: React.FC<{ l: L }> = ({ l }) => {
   const ref = useRef<HTMLCanvasElement>(null);
   const [handle] = useState(() => delayRender("cover fonts"));
   useLayoutEffect(() => {
-    const logo = new Image();
-    const img = new Promise<HTMLImageElement | null>((res) => {
-      logo.onload = () => res(logo);
-      logo.onerror = () => res(null);
-      logo.src = staticFile("mark-disc.png");
-    });
-    const fld = new Image();
-    const fimg = new Promise<HTMLImageElement | null>((res) => {
-      fld.onload = () => res(fld);
-      fld.onerror = () => res(null);
-      fld.src = staticFile("art/field.png");
-    });
-    Promise.all([fontsReady(), img, fimg]).then(
-      ([, im, fi]) => {
-        draw(ref.current!.getContext("2d")!, l, im, x, fi);
+    const load = (src: string) =>
+      new Promise<HTMLImageElement | null>((res) => {
+        const im = new Image();
+        im.onload = () => res(im);
+        im.onerror = () => res(null);
+        im.src = staticFile(src);
+      });
+    Promise.all([fontsReady(), load("mark-disc.png"), load("art/field.png")]).then(
+      ([, logo, field]) => {
+        draw(ref.current!.getContext("2d")!, l, logo, field);
         continueRender(handle);
       },
       (e) => cancelRender(e),
     );
-  }, [handle, l, x]);
+  }, [handle, l]);
   return (
     <AbsoluteFill style={{ background: "#060504" }}>
       <canvas ref={ref} width={l.W} height={l.H} />
@@ -224,5 +216,4 @@ const Cover: React.FC<{ l: L; x?: Tx }> = ({ l, x = ZH }) => {
 };
 export const Cover34: React.FC = () => <Cover l={L34} />;
 export const Cover43: React.FC = () => <Cover l={L43} />;
-void ENX;
-void L169;
+export const Cover169: React.FC = () => <Cover l={L169} />;
