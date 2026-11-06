@@ -372,6 +372,10 @@ for c in CUES.get("fx", []):
     elif f == "coin":
         put(bianzhong(1046, 2.4, 0.6), at + 0.05, 0.16)
         put(bianzhong(1568, 1.6, 0.5), at + 0.09, 0.08)
+    elif f == "wide":
+        put(swish(1.0), at, 0.2)
+        put(impact(0.8), at + 0.55, 0.24)
+        put(bianzhong(330, 2.4, 0.6), at + 0.57, 0.1)
     elif f == "sweep":
         put(swish(0.7), at, 0.12)
         put(bianzhong(523, 3.0, 0.6), at + 0.1, 0.12)

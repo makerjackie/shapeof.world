@@ -14,7 +14,7 @@ import { BRUSH, SANS, SERIF, fontsReady } from "./fonts6";
 import type { Pt, Spec } from "./specG";
 import { revealOf } from "./reveal7";
 import OHLC_RAW from "./oil_ohlc.json";
-import { BW_UNTIL, COIN, COLD5, MAPFX, NEXT, PEGS, RATES, SWEEP, WIRES, fwBursts } from "./oil";
+import { BW_UNTIL, COIN, COLD5, MAPFX, NEXT, PEGS, RATES, SWEEP, WIDE, WIDE_AT, WIRES, fwBursts } from "./oil";
 import LAND_RAW from "./oil_land.json";
 import type { Icon, P5 } from "./oil";
 
@@ -63,7 +63,7 @@ const KIND_TONE: Record<string, "gold" | "red" | "ash" | "white"> = {
 const KIND_LABEL: Record<string, string> = {
   stat: "", peak: "上涨", grow: "上涨", war: "战争", crash: "暴跌", plague: "", famine: "", split: "脱钩", unite: "", move: "", policy: "政策", note: "", quote: "", turn: "转折",
 };
-const fmtUsd = (v: number) => (v < 0 ? "−" : "") + (Math.abs(v) < 1000 ? Math.abs(v).toFixed(2) : Math.round(Math.abs(v)).toLocaleString("en-US"));
+const fmtUsd = (v: number) => (v < 0 ? "−" : "") + (Math.abs(v) < 1000 ? (Math.round(Math.abs(v) * 100 + 1e-6) / 100).toFixed(2) : Math.round(Math.abs(v)).toLocaleString("en-US"));
 const toneCol = (tone: string) => (tone === "gold" ? GOLD : tone === "red" ? RED : tone === "ash" ? ASH : WHITE);
 const MONTH_DAYS = (yr: number) => {
   const leap = (yr % 4 === 0 && yr % 100 !== 0) || yr % 400 === 0;
@@ -160,7 +160,7 @@ const IMGS: Record<string, HTMLImageElement> = {};
 let IMG_P: Promise<unknown> | null = null;
 const imagesReady = () =>
   (IMG_P ??= Promise.all(
-    ["mark-disc.png", "art/field.png", "art/barrel.png", ...["pumpjack", "derrick", "tanker", "refinery", "barrel", "pipeline", "flame", "tank", "pump", "exchange", "gavel", "strait", "virus"].map((n) => `art/i_${n}.png`)].map(
+    ["mark-disc.png", "art/fieldbg.png", "art/pj_base.png", "art/pj_beam.png", "art/pj_crank.png", "art/barrel.png",...["pumpjack", "derrick", "tanker", "refinery", "barrel", "pipeline", "flame", "tank", "pump", "exchange", "gavel", "strait", "virus"].map((n) => `art/i_${n}.png`)].map(
       (s) =>
         new Promise<void>((res, rej) => {
           const im = new Image();
@@ -690,7 +690,37 @@ export const createFilm5 = (S: Spec) => {
 
   // ---------- mapping: the body (head at 40%), the log overview (lg), the cold window (cw)
   const HX_BODY = 0.4 * W;
-  type Cam = { c: number; cx: number; ppy: number; hxw: number; lo: number; hi: number; top: number; bot: number; lg: number; sp: number; lgCold: number; cw: number; ca: number; span: number };
+  type Cam = { c: number; cx: number; ppy: number; hxw: number; lo: number; hi: number; top: number; bot: number; lg: number; sp: number; lgCold: number; cw: number; ca: number; span: number; gw: number; gi: number };
+  // the pull-backs: after a big crash has been told, the camera backs out to decades (linear dollars), the drop marked
+  const GT = 650;
+  const GB = 1170;
+  const GX0 = 70;
+  const GX1 = SAFE_R - 50;
+  const WIDES = WIDE.map((w) => {
+    const e = EV.reduce((b, x) => (Math.abs(x.y - w.y) < Math.abs(b.y - w.y) ? x : b), EV[0]);
+    const nx = EV[e.i + 1];
+    const ws = WIDE_AT[WIDE.indexOf(w)];
+    const xr = nx ? nx.y : e.y;
+    const x1 = xr + 0.035 * (xr - w.from);
+    let lo = 0;
+    let hi = 0;
+    for (const p of SER) {
+      if (p.y < w.from || p.y > xr) continue;
+      lo = Math.min(lo, p.v);
+      hi = Math.max(hi, p.v);
+    }
+    // the high it fell from: the top of the series near w.a
+    let ay = w.a ?? 0;
+    if (w.a !== undefined) for (const p of SER) if (Math.abs(p.y - w.a) < 0.1 && p.v > val(ay)) ay = p.y;
+    let by = e.y;
+    for (const p of SER) if (Math.abs(p.y - e.y) < 0.1 && p.v < val(by)) by = p.y;
+    const refs = (w.ref ?? []).map((r) => {
+      let ry = r;
+      for (const p of SER) if (Math.abs(p.y - r) < 0.03 && p.v > val(ry)) ry = p.y;
+      return ry;
+    });
+    return { ...w, e, ws, we: e.t1, x0: w.from, x1, lo: lo < 0 ? lo * 1.25 : 0, hi: hi * 1.1, ay, by, refs };
+  });
   const CWX0 = 70;
   const CWX1 = SAFE_R - 56;
   const CWT = 640;
@@ -699,6 +729,11 @@ export const createFilm5 = (S: Spec) => {
   const L1 = Math.log10(S.log[1]);
   const X = (k: Cam, y: number) => {
     let xb = k.hxw - (k.cx - y) * k.ppy;
+    if (k.gw > 0) {
+      const w = WIDES[k.gi];
+      const xg = GX0 + ((y - w.x0) / (w.x1 - w.x0)) * (GX1 - GX0);
+      xb = xb + (xg - xb) * ease(k.gw);
+    }
     if (k.lg > 0) {
       const xe = 70 + ((y - FIRST) / (LAST - FIRST)) * (SAFE_R - 50 - 70);
       xb = xb + (xe - xb) * ease(k.lg);
@@ -711,6 +746,11 @@ export const createFilm5 = (S: Spec) => {
   };
   const Yv = (k: Cam, v: number) => {
     let yl = k.bot - ((v - k.lo) / (k.hi - k.lo)) * (k.bot - k.top);
+    if (k.gw > 0) {
+      const w = WIDES[k.gi];
+      const yg = GB - ((v - w.lo) / (w.hi - w.lo)) * (GB - GT);
+      yl = yl + (yg - yl) * ease(k.gw);
+    }
     if (k.lg > 0) {
       const top = k.lgCold ? 660 : 640;
       const bot = k.lgCold ? 1000 : 1255;
@@ -732,6 +772,8 @@ export const createFilm5 = (S: Spec) => {
     let lgK = 0;
     let prevX = 0;
     let prevY = 0;
+    let gw = 0;
+    let gi = 0;
     for (let f = 0; f < NF; f++) {
       const t = f / FPS;
       const c = CUR(t);
@@ -788,11 +830,15 @@ export const createFilm5 = (S: Spec) => {
       lgK = t < RW1 ? 1 : t < B0 ? 1 - ease(clamp((t - RW1) / (B0 - RW1))) : lgK + ((t >= END ? 1 : 0) - lgK) * 0.09;
       const cw = t < RW0 ? 1 : t < RWM ? 1 - ease((t - RW0) / (RWM - RW0)) : 0;
       const pxd = ppy / 365.25;
-      const ca = t >= B0 && t < END && lgK < 0.05 && c > 2000.7 ? clamp((pxd - 1.8) / 1.6) : 0;
-      const k: Cam = { c, cx, ppy, hxw, lo, hi, top: 610, bot: 1010, lg: lgK, sp: 0, lgCold: t < B0 ? 1 : 0, cw, ca, span };
+      const wi = WIDES.findIndex((w) => t >= w.ws && t < w.we);
+      if (wi >= 0) gi = wi;
+      gw += ((wi >= 0 ? 1 : 0) - gw) * (wi >= 0 ? 0.2 : 0.17);
+      if (wi < 0 && gw < 0.003) gw = 0;
+      const ca = (t >= B0 && t < END && lgK < 0.05 && c > 2000.7 ? clamp((pxd - 1.8) / 1.6) : 0) * (1 - clamp(gw * 2));
+      const k: Cam = { c, cx, ppy, hxw, lo, hi, top: 610, bot: 1010, lg: lgK, sp: 0, lgCold: t < B0 ? 1 : 0, cw, ca, span, gw, gi };
       const hx = X(k, c);
       const hy = Yv(k, val(c));
-      k.sp = f === 0 ? 0 : Math.hypot(hx - prevX, hy - prevY) * FPS;
+      k.sp = f === 0 || (gw > 0.01 && gw < 0.99) ? 0 : Math.hypot(hx - prevX, hy - prevY) * FPS;
       prevX = hx;
       prevY = hy;
       CAM.push(k);
@@ -842,7 +888,30 @@ export const createFilm5 = (S: Spec) => {
   const MS = 4.4;
   const FXc = 540;
   const FYc = 1420;
-  const LJ = LAND_RAW as unknown as { world: number[][]; gulf: number[][] };
+  const LJ = LAND_RAW as unknown as { world: number[][]; gulf: number[][]; cty: Record<string, number[][]> };
+  let STIP: HTMLCanvasElement | null = null;
+  const ISO: Record<string, string> = {
+    美国: "USA", 俄罗斯: "RUS", 沙特: "SAU", 伊朗: "IRN", 伊拉克: "IRQ", 委内瑞拉: "VEN", 墨西哥: "MEX", 科威特: "KWT", 阿联酋: "ARE",
+    加拿大: "CAN", 中国: "CHN", 挪威: "NOR", 英国: "GBR", 罗马尼亚: "ROU", 印尼: "IDN", 尼日利亚: "NGA", 利比亚: "LBY", 巴西: "BRA",
+    哈萨克斯坦: "KAZ", 卡塔尔: "QAT", 阿尔及利亚: "DZA", 安哥拉: "AGO", 特立尼达: "TTO", 阿根廷: "ARG", 哥伦比亚: "COL", 埃及: "EGY", 阿曼: "OMN",
+  };
+  // the country each event happened in (its pin inside the polygon); none at sea
+  const inRing = (r: number[], x: number, y: number) => {
+    let ins = false;
+    for (let i = 0, j = r.length - 2; i < r.length; j = i, i += 2) {
+      const xi = r[i];
+      const yi = r[i + 1];
+      const xj = r[j];
+      const yj = r[j + 1];
+      if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) ins = !ins;
+    }
+    return ins;
+  };
+  const EV_ISO: Record<number, string> = {};
+  for (const e of EV) {
+    if (!e.geo) continue;
+    for (const [k, rs] of Object.entries(LJ.cty)) if (rs.some((r) => inRing(r, e.geo![0], e.geo![1]))) EV_ISO[e.i] = k;
+  }
   const PLACE: Record<string, [number, number]> = {
     沙特: [49.5, 25.5], 伊朗: [49.5, 31.5], 伊拉克: [46.5, 31.5], 委内瑞拉: [-71.5, 10.5], 墨西哥: [-93, 19], 科威特: [47.8, 29.2],
     阿联酋: [54, 24], 加拿大: [-113, 56.5], 中国: [122, 46], 挪威: [3, 60], 英国: [1, 57.5], 罗马尼亚: [25.5, 45], 印尼: [101, 1],
@@ -919,13 +988,159 @@ export const createFilm5 = (S: Spec) => {
     }
     return m;
   };
-  // the cold open's oil field (an engraving), pushing in slowly, its horizon breathing on the beat
+  // the field's pumpjacks: engraved parts (base, walking beam, crank) put together and run by their cranks. The crank
+  // turns about the gearbox hub, the pitman arm pulls the beam's tail, the beam rocks on the samson bearing, the
+  // horsehead strokes the polished rod. Coordinates are in the 2048-px frame the parts were drawn in.
+  const PJ = { piv: [1162, 594], tail: [586, 680], hub: [733, 1312], pinR: 200, pinA: Math.atan2(-42, -293), head: 620, tip: [1748, 866], carrier: 1040, rodX: 1760, well: 1522, ground: 1800 };
+  const PJ_SPR: Record<string, [number, number, number, number]> = { base: [98, 542, 1852, 1273], beam: [530, 258, 1252, 621], crank: [270, 1044, 502, 446] };
+  const pinAt = (phi: number): [number, number] => [PJ.hub[0] + PJ.pinR * Math.cos(phi), PJ.hub[1] + PJ.pinR * Math.sin(phi)];
+  const PJ_L = (() => {
+    const [px, py] = pinAt(PJ.pinA);
+    return Math.hypot(PJ.tail[0] - px, PJ.tail[1] - py);
+  })();
+  const beamAngle = (phi: number) => {
+    const [px, py] = pinAt(phi);
+    const vx = PJ.tail[0] - PJ.piv[0];
+    const vy = PJ.tail[1] - PJ.piv[1];
+    const f = (th: number) => {
+      const c = Math.cos(th);
+      const s = Math.sin(th);
+      const dx = PJ.piv[0] + vx * c - vy * s - px;
+      const dy = PJ.piv[1] + vx * s + vy * c - py;
+      return dx * dx + dy * dy - PJ_L * PJ_L;
+    };
+    let th = 0;
+    for (let i = 0; i < 10; i++) {
+      const f0 = f(th);
+      const d = (f(th + 1e-4) - f0) / 1e-4;
+      if (!d) break;
+      th = clamp(th - f0 / d, -0.7, 0.7);
+    }
+    return th;
+  };
+  const BAR_S = 4 * BEAT_S;
+  // where the generator had drawn them (field image pixels, 2304 wide), all facing left; back to front
+  const RIGS = [
+    { x: 132, y: 1065, s: 0.075, per: BAR_S * 1.3, ph: 0.35 },
+    { x: 2003, y: 1150, s: 0.193, per: BAR_S * 1.15, ph: 0.7 },
+    { x: 822, y: 1195, s: 0.252, per: BAR_S, ph: 0.5 },
+    { x: 1283, y: 1505, s: 0.566, per: BAR_S, ph: 0 },
+  ];
+  const rodLine = (ctx: CanvasRenderingContext2D, a: number[], b: number[], w: number) => {
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]);
+    ctx.strokeStyle = "#140d05";
+    ctx.lineWidth = w + 9;
+    ctx.stroke();
+    ctx.strokeStyle = "#c98f3e";
+    ctx.lineWidth = w;
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(255,232,180,0.85)";
+    ctx.lineWidth = Math.max(2, w * 0.24);
+    ctx.stroke();
+  };
+  const boss = (ctx: CanvasRenderingContext2D, x: number, y: number, r: number) => {
+    ctx.fillStyle = "#140d05";
+    ctx.beginPath();
+    ctx.arc(x, y, r + 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#e0a95a";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#3a2510";
+    ctx.beginPath();
+    ctx.arc(x, y, r * 0.4, 0, Math.PI * 2);
+    ctx.fill();
+  };
+  const drawRig = (ctx: CanvasRenderingContext2D, r: (typeof RIGS)[number], t: number) => {
+    const ib = IMGS["art/pj_base.png"];
+    const ik = IMGS["art/pj_crank.png"];
+    const im = IMGS["art/pj_beam.png"];
+    if (!ib || !ik || !im) return;
+    // a turn of the crank per bar on the big ones: the horsehead bottoms out on the downbeat
+    const phi = -Math.PI / 2 + 2 * Math.PI * ((t - 0.05) / r.per + r.ph);
+    const th = beamAngle(phi);
+    const c = Math.cos(th);
+    const s = Math.sin(th);
+    const rot = (p: number[]) => [PJ.piv[0] + (p[0] - PJ.piv[0]) * c - (p[1] - PJ.piv[1]) * s, PJ.piv[1] + (p[0] - PJ.piv[0]) * s + (p[1] - PJ.piv[1]) * c];
+    const spr = (img: HTMLImageElement, b: [number, number, number, number]) => ctx.drawImage(img, b[0], b[1], b[2], b[3]);
+    ctx.save();
+    ctx.translate(r.x, r.y);
+    ctx.scale(-r.s, r.s);
+    ctx.translate(-PJ.rodX, -PJ.ground);
+    spr(ib, PJ_SPR.base);
+    // the crank and its counterweight
+    ctx.save();
+    ctx.translate(PJ.hub[0], PJ.hub[1]);
+    ctx.rotate(phi - PJ.pinA);
+    ctx.translate(-PJ.hub[0], -PJ.hub[1]);
+    spr(ik, PJ_SPR.crank);
+    ctx.restore();
+    const pin = pinAt(phi);
+    const tail = rot(PJ.tail);
+    rodLine(ctx, pin, tail, 18);
+    boss(ctx, pin[0], pin[1], 15);
+    // the walking beam on its bearing
+    ctx.save();
+    ctx.translate(PJ.piv[0], PJ.piv[1]);
+    ctx.rotate(th);
+    ctx.translate(-PJ.piv[0], -PJ.piv[1]);
+    spr(im, PJ_SPR.beam);
+    ctx.restore();
+    boss(ctx, tail[0], tail[1], 13);
+    // the bridle off the horsehead, the carrier bar, the polished rod into the wellhead
+    const tip = rot(PJ.tip);
+    const cy = PJ.carrier + PJ.head * s;
+    ctx.lineCap = "round";
+    for (const o of [-7, 7]) {
+      ctx.strokeStyle = "#140d05";
+      ctx.lineWidth = 8;
+      ctx.beginPath();
+      ctx.moveTo(tip[0] + o, tip[1]);
+      ctx.lineTo(PJ.rodX + o, cy);
+      ctx.stroke();
+      ctx.strokeStyle = "#e3b064";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+    }
+    ctx.fillStyle = "#140d05";
+    ctx.fillRect(PJ.rodX - 34, cy - 4, 68, 22);
+    ctx.fillStyle = "#d39b4b";
+    ctx.fillRect(PJ.rodX - 30, cy, 60, 14);
+    rodLine(ctx, [PJ.rodX, cy + 14], [PJ.rodX, PJ.well], 9);
+    ctx.restore();
+  };
+  // gold motes drifting up over the field
+  const motes = (ctx: CanvasRenderingContext2D, t: number, x0: number, x1: number, y0: number, y1: number, a: number) => {
+    const r = rng(4242);
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    for (let i = 0; i < 46; i++) {
+      const sp = 18 + 40 * r();
+      const ph = r();
+      const x = x0 + (x1 - x0) * r() + 14 * Math.sin(t * (0.6 + r()) + i);
+      const span = y1 - y0;
+      const y = y1 - ((((t * sp) / span + ph) % 1) * span);
+      const tw = 0.5 + 0.5 * Math.sin(t * (2 + 3 * r()) + i * 1.7);
+      const sz = 1.2 + 2.4 * r();
+      ctx.globalAlpha = a * tw * 0.7 * clamp((y - y0) / 120) * clamp((y1 - y) / 80);
+      ctx.fillStyle = r() < 0.3 ? "#fff1c8" : "#ffb54a";
+      ctx.beginPath();
+      ctx.arc(x, y, sz, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  };
+  // the cold open's oil field (an engraving), pushing in slowly, its pumpjacks working, its horizon breathing on the beat
   const drawField = (ctx: CanvasRenderingContext2D, t: number) => {
     // the cold open, and again under the ending's whole line (smaller, lower) until the credits
     const end = t >= END;
     const CR0 = S.ending.credits?.t0 ?? S.ending.card;
     const a = end ? 0.75 * clamp((t - END - 0.3) / 0.8) * (1 - clamp((t - CR0 + 0.2) / 0.4)) : t < RW0 ? 1 : 1 - clamp((t - RW0) / 0.45);
-    const im = IMGS["art/field.png"];
+    const im = IMGS["art/fieldbg.png"];
     if (a <= 0.01 || !im) return;
     const s = end ? 1 + 0.04 * clamp((t - END) / (CR0 - END)) : 1 + 0.06 * clamp(t / RW0);
     const w = (end ? 1150 : 1420) * s;
@@ -934,6 +1149,12 @@ export const createFilm5 = (S: Spec) => {
     ctx.save();
     ctx.globalAlpha = a;
     ctx.drawImage(im, CX - w / 2, HZ - 0.585 * h, w, h);
+    ctx.save();
+    ctx.translate(CX - w / 2, HZ - 0.585 * h);
+    ctx.scale(w / 2304, h / 1856);
+    for (const r of RIGS) drawRig(ctx, r, t);
+    ctx.restore();
+    motes(ctx, t, CX - w / 2, CX + w / 2, HZ - 520, HZ + 40, a);
     const p = beatPulse(t);
     const g = ctx.createLinearGradient(0, HZ - 90, 0, HZ + 40);
     g.addColorStop(0, "rgba(255,170,70,0)");
@@ -979,24 +1200,133 @@ export const createFilm5 = (S: Spec) => {
       g.stroke();
     }
     const rings = m.z > 4.2 && Math.abs(m.lon - 56) < 22 && Math.abs(m.lat - 27) < 14 ? LJ.gulf : LJ.world;
-    const path = new Path2D();
-    for (const r of rings) {
-      for (let q = 0; q < r.length; q += 2) {
-        const [x, y] = P(r[q], r[q + 1]);
-        if (q === 0) path.moveTo(x, y);
-        else path.lineTo(x, y);
+    const ringPath = (rs: number[][], path = new Path2D()) => {
+      for (const r of rs) {
+        for (let q = 0; q < r.length; q += 2) {
+          const [x, y] = P(r[q], r[q + 1]);
+          if (q === 0) path.moveTo(x, y);
+          else path.lineTo(x, y);
+        }
+        path.closePath();
       }
-      path.closePath();
+      return path;
+    };
+    const path = ringPath(rings);
+    const [ox, oy] = P(0, 0);
+    // the sea: deep petrol blue under the graticule, engraved with level wave lines that ride with the map
+    g.globalCompositeOperation = "destination-over";
+    const sea = g.createLinearGradient(0, 800, 0, 1950);
+    sea.addColorStop(0, "#0f2d3c");
+    sea.addColorStop(1, "#0a1c26");
+    g.fillStyle = sea;
+    g.fillRect(...FULL);
+    g.globalCompositeOperation = "source-over";
+    const SP = 10;
+    g.strokeStyle = "rgba(150,210,230,0.13)";
+    g.lineWidth = 1.2;
+    for (let y = 640 + (((oy % SP) + SP) % SP); y < 2000; y += SP) {
+      const li = Math.round((y - oy) / SP);
+      g.beginPath();
+      for (let x = FULL[0]; x <= FULL[0] + FULL[2]; x += 18) {
+        const yy = y + 1.6 * Math.sin((x - ox) * 0.045 + li * 1.7 + t * 0.9);
+        if (x === FULL[0]) g.moveTo(x, yy);
+        else g.lineTo(x, yy);
+      }
+      g.stroke();
     }
+    // water lines along every coast, the way old charts drew them; calm water inside the nearest
+    g.lineJoin = "round";
+    for (const [wd, al] of [[24, 0.08], [15, 0.13], [7.5, 0.2]] as const) {
+      g.strokeStyle = `rgba(160,210,225,${al})`;
+      g.lineWidth = wd * 2;
+      g.stroke(path);
+      g.strokeStyle = sea;
+      g.lineWidth = wd * 2 - 2.2;
+      g.stroke(path);
+    }
+    // the land: warm bronze with an engraved stipple that rides with the map
     const fill = g.createLinearGradient(0, 900, 0, 1900);
-    fill.addColorStop(0, "#2b2419");
-    fill.addColorStop(1, "#1a150f");
+    fill.addColorStop(0, "#56432a");
+    fill.addColorStop(1, "#34281a");
     g.fillStyle = fill;
     g.fill(path);
-    g.strokeStyle = "rgba(255,206,130,0.55)";
-    g.lineWidth = 1.1 + 0.25 * Math.sqrt(m.z);
-    g.shadowColor = "rgba(255,180,80,0.6)";
-    g.shadowBlur = 6;
+    if (!STIP) {
+      STIP = document.createElement("canvas");
+      STIP.width = 120;
+      STIP.height = 120;
+      const sc = STIP.getContext("2d")!;
+      const r = rng(77);
+      for (let i = 0; i < 420; i++) {
+        sc.fillStyle = r() < 0.5 ? "rgba(255,214,150,0.16)" : "rgba(0,0,0,0.22)";
+        sc.fillRect(r() * 120, r() * 120, 1.4, 1.4);
+      }
+      sc.strokeStyle = "rgba(255,214,150,0.06)";
+      for (let i = -120; i < 120; i += 6) {
+        sc.beginPath();
+        sc.moveTo(i, 120);
+        sc.lineTo(i + 120, 0);
+        sc.stroke();
+      }
+    }
+    const pat = g.createPattern(STIP, "repeat")!;
+    pat.setTransform(new DOMMatrix().translateSelf(ox, oy));
+    g.fillStyle = pat;
+    g.fill(path);
+    // inside the land: who pumps the oil (tinted in the table's colours), the event's country, the borders
+    g.save();
+    g.clip(path);
+    const c = camAt(t).c;
+    const rows = S.table ? S.table(c).filter((r) => r.v > 0.6) : [];
+    const vmax = Math.max(1, ...rows.map((r) => r.v));
+    for (const r of rows) {
+      const cr = LJ.cty[ISO[r.n] ?? ""];
+      if (!cr) continue;
+      const cp = ringPath(cr);
+      // tinted in the world view; close up only the outline stays (a big country would wash the shot)
+      const zf = 1 - clamp((m.z - 1.6) / 1.2);
+      g.globalAlpha = (0.05 + 0.13 * Math.sqrt(r.v / vmax)) * zf;
+      g.fillStyle = r.c;
+      g.fill(cp);
+      g.globalAlpha = (0.35 + 0.4 * Math.sqrt(r.v / vmax)) * (0.4 + 0.6 * zf);
+      g.strokeStyle = r.c;
+      g.lineWidth = 1.6;
+      g.stroke(cp);
+    }
+    g.globalAlpha = 1;
+    const e = evAt(t);
+    const ei = e ? EV_ISO[e.i] : "";
+    if (e && ei && LJ.cty[ei]) {
+      const cp = ringPath(LJ.cty[ei]);
+      const d = t - e.t0;
+      const col = toneCol(KIND_TONE[e.k]);
+      // only the hot events wash the country; the rest just outline it
+      if (col === RED || col === GOLD) {
+        g.globalAlpha = clamp(d / 0.15) * (0.12 + 0.22 * env(t, e.t0, 0.02, 0.5)) * clamp((e.t1 - t) / 0.2);
+        g.fillStyle = col;
+        g.fill(cp);
+      }
+      g.globalAlpha = clamp(d / 0.15) * clamp((e.t1 - t) / 0.2);
+      g.strokeStyle = col;
+      g.lineWidth = 3;
+      g.shadowColor = col;
+      g.shadowBlur = 14;
+      g.stroke(cp);
+      g.shadowBlur = 0;
+      g.globalAlpha = 1;
+    }
+    const borders = new Path2D();
+    for (const k of Object.keys(LJ.cty)) ringPath(LJ.cty[k], borders);
+    g.strokeStyle = "rgba(255,220,160,0.2)";
+    g.lineWidth = 1;
+    g.setLineDash([4, 4]);
+    g.stroke(borders);
+    g.setLineDash([]);
+    g.restore();
+    // the coast: a gold line with a glow
+    g.strokeStyle = "rgba(255,214,140,0.8)";
+    g.lineWidth = 1.3 + 0.25 * Math.sqrt(m.z);
+    g.shadowColor = "rgba(255,180,80,0.7)";
+    g.shadowBlur = 7;
     g.stroke(path);
     g.shadowBlur = 0;
     // fade: faint behind the chart, full below it, soft at every edge
@@ -1041,7 +1371,7 @@ export const createFilm5 = (S: Spec) => {
   };
   const drawFloor = (ctx: CanvasRenderingContext2D, t: number) => {
     drawField(ctx, t);
-    const a = floorOn(t);
+    const a = floorOn(t) * (1 - 0.55 * ease(camAt(t).gw));
     if (a <= 0.01) return;
     const c = camAt(t).c;
     const P = mapProj(t);
@@ -1061,12 +1391,12 @@ export const createFilm5 = (S: Spec) => {
       const [x, y] = P(...placeOf(r.n, c));
       const mk = maskAt(x, y);
       if (mk <= 0.01) return;
-      const R = (18 + 80 * Math.sqrt(r.v / 60)) * (0.75 + 0.25 * Math.sqrt(z));
+      const R = (10 + 34 * Math.sqrt(r.v / 60)) * (0.75 + 0.25 * Math.sqrt(z)) * (1 + 0.25 * beatPulse(t));
       const gl = ctx.createRadialGradient(x, y, 0, x, y, R);
-      gl.addColorStop(0, r.c + "dd");
-      gl.addColorStop(0.3, r.c + "55");
+      gl.addColorStop(0, "#fff0c8cc");
+      gl.addColorStop(0.35, r.c + "66");
       gl.addColorStop(1, r.c + "00");
-      ctx.globalAlpha = a * mk * (z > 2 ? 0.5 : 0.95);
+      ctx.globalAlpha = a * mk * (z > 2 ? 0.5 : 0.9);
       ctx.fillStyle = gl;
       ctx.fillRect(x - R, y - R, 2 * R, 2 * R);
       ctx.fillStyle = "#fff6e0";
@@ -1339,7 +1669,7 @@ export const createFilm5 = (S: Spec) => {
     if (alpha <= 0.01) return;
     const k = camAt(t);
     const c = k.c;
-    const yL = k.lg > 0.01 || k.cw > 0.01 ? Math.min(FIRST, COLD5.win[0]) : k.cx - k.hxw / k.ppy - 2;
+    const yL = k.lg > 0.01 || k.cw > 0.01 ? Math.min(FIRST, COLD5.win[0]) : k.gw > 0.01 ? Math.min(WIDES[k.gi].x0, k.cx - k.hxw / k.ppy - 2) : k.cx - k.hxw / k.ppy - 2;
     const yR = t >= END ? LAST : c;
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -1390,6 +1720,35 @@ export const createFilm5 = (S: Spec) => {
           }
           ctx.stroke();
           ctx.restore();
+        }
+        ctx.globalAlpha = alpha;
+      } else if (k.gw > 0.5) {
+        // the pull-back: round dollars and the decades
+        const w = WIDES[k.gi];
+        const ga = clamp((k.gw - 0.5) * 2);
+        const raw = (w.hi - w.lo) / 4;
+        const p10 = Math.pow(10, Math.floor(Math.log10(raw)));
+        const step = [1, 2, 2.5, 5, 10].map((m) => m * p10).find((q) => q >= raw) ?? raw;
+        for (let v = Math.ceil(w.lo / step) * step; v < w.hi; v += step) {
+          const y = Yv(k, v);
+          ctx.globalAlpha = alpha * ga;
+          ctx.strokeStyle = v === 0 ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.08)";
+          ctx.lineWidth = v === 0 ? 2 : 1;
+          ctx.setLineDash(v === 0 ? [] : [4, 8]);
+          ctx.beginPath();
+          ctx.moveTo(40, y);
+          ctx.lineTo(SAFE_R, y);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          text(ctx, "$" + Math.round(v).toLocaleString("en-US"), 44, y - 7, 20, 600, SANS, "rgba(255,255,255,0.4)");
+        }
+        const dec = w.x1 - w.x0 > 30 ? 10 : 5;
+        for (let yy = Math.ceil(w.x0 / dec) * dec; yy < w.x1; yy += dec) {
+          const x = X(k, yy);
+          if (x < 60 || x > SAFE_R - 30) continue;
+          ctx.fillStyle = "rgba(255,255,255,0.35)";
+          ctx.fillRect(x - 0.5, GB + 10, 1, 12);
+          text(ctx, String(yy), x, GB + 48, 22, 600, SANS, "rgba(255,255,255,0.5)", { align: "center" });
         }
         ctx.globalAlpha = alpha;
       } else if (k.lg < 0.5) {
@@ -1445,7 +1804,7 @@ export const createFilm5 = (S: Spec) => {
       lastX = x;
     }
     if (P.length > 1) {
-      const base = t < B0 || k.lg > 0.5 ? (k.cw > 0.5 ? CWB : Yv(k, S.log[0])) : k.bot;
+      const base = t < B0 || k.lg > 0.5 ? (k.cw > 0.5 ? CWB : Yv(k, S.log[0])) : k.gw > 0.5 ? GB : k.bot;
       const g = ctx.createLinearGradient(0, k.cw > 0.5 ? CWT : k.top, 0, base);
       g.addColorStop(0, `rgba(26,18,9,${0.8 * la})`);
       g.addColorStop(0.5, `rgba(18,12,6,${0.5 * la})`);
@@ -1676,7 +2035,7 @@ export const createFilm5 = (S: Spec) => {
   const drawWires = (ctx: CanvasRenderingContext2D, t: number) => {
     if (t < B0 || t >= END) return;
     const k = camAt(t);
-    if (k.lg > 0.05) return;
+    if (k.lg > 0.05 || k.gw > 0.05) return;
     const c = k.c;
     const h = headAt(t);
     ctx.save();
@@ -1733,6 +2092,153 @@ export const createFilm5 = (S: Spec) => {
         text(ctx, lab, h.x - 14, ly, 32, 900, SANS, dcol, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 10, maxW: h.x - 60 });
         OCC.push([Math.max(40, h.x - 14 - measure(ctx, lab, 32, 900, SANS)), ly - 34, h.x - 6, ly + 8]);
       } else solvedFx(ctx, xa, xb, wy, clamp(h.x - 150, 140, 700), t - ts, on, tr("解套"));
+    }
+    ctx.restore();
+  };
+
+  // ---------- the pull-back's marks: the high, the low, the fall between them redrawn hot, its size in the empty corner;
+  // or, for a new high, the old highs it is measured against
+  const span1 = (yrs: number) => {
+    const m = yrs * 12;
+    if (m < 12) return `${Math.floor(m)} 个${m - Math.floor(m) >= 0.3 ? "多" : ""}月`;
+    return `${yrs < 10 ? yrs.toFixed(1) : Math.round(yrs)} 年`;
+  };
+  const dotAt = (ctx: CanvasRenderingContext2D, x: number, y: number, col: string, r = 9) => {
+    ctx.fillStyle = "#0b0d10";
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 4;
+    ctx.shadowColor = col;
+    ctx.shadowBlur = 16;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  };
+  const drawWide = (ctx: CanvasRenderingContext2D, t: number) => {
+    const k = camAt(t);
+    if (k.gw < 0.35 || t < B0 || t >= END) return;
+    const w = WIDES[k.gi];
+    const A = clamp((k.gw - 0.45) / 0.4);
+    const u = t - w.ws;
+    ctx.save();
+    ctx.globalAlpha = A;
+    text(ctx, `拉远看：${w.x0}—${Math.floor(w.e.y)} 年`, 60, 612, 30, 900, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+    const yb = w.a !== undefined ? w.by : w.e.y;
+    const vb = val(yb);
+    const xb = X(k, yb);
+    const pb = Yv(k, vb);
+    if (w.a !== undefined) {
+      const ya = w.ay;
+      const va = val(ya);
+      const xa = X(k, ya);
+      const pa = Yv(k, va);
+      // the fall, drawn on hot
+      const q = eo3(clamp((u - 0.12) / 0.4));
+      const yEnd = ya + (yb - ya) * q;
+      ctx.save();
+      ctx.globalAlpha = A;
+      ctx.strokeStyle = RED;
+      ctx.lineWidth = 7;
+      ctx.lineJoin = "round";
+      ctx.shadowColor = RED;
+      ctx.shadowBlur = 22;
+      ctx.beginPath();
+      ctx.moveTo(xa, pa);
+      for (let i = segOf(ya) + 1; i < SER.length && SER[i].y < yEnd; i++) ctx.lineTo(X(k, SER[i].y), Yv(k, SER[i].v));
+      ctx.lineTo(X(k, yEnd), Yv(k, val(yEnd)));
+      ctx.stroke();
+      ctx.restore();
+      // the level it fell from, and the drop to the low
+      ctx.globalAlpha = A * clamp((u - 0.3) / 0.2);
+      ctx.strokeStyle = "rgba(255,255,255,0.55)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 8]);
+      ctx.beginPath();
+      ctx.moveTo(xa, pa);
+      ctx.lineTo(Math.max(xb, xa) + 34, pa);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      const ax = Math.max(xb, xa) + 34;
+      const ay = pa + (pb - pa) * eo3(clamp((u - 0.35) / 0.3));
+      ctx.strokeStyle = RED;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(ax, pa);
+      ctx.lineTo(ax, ay);
+      ctx.stroke();
+      if (ay > pa + 30) {
+        ctx.fillStyle = RED;
+        ctx.beginPath();
+        ctx.moveTo(ax, ay + 4);
+        ctx.lineTo(ax - 12, ay - 16);
+        ctx.lineTo(ax + 12, ay - 16);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.globalAlpha = A;
+      dotAt(ctx, xa, pa, WHITE);
+      text(ctx, fmtUsd(va), xa, pa - 26, 32, 900, SANS, WHITE, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      if (u > 0.5) {
+        dotAt(ctx, xb, pb, RED);
+        text(ctx, fmtUsd(vb), xb - 18, pb + 44, 32, 900, SANS, RED, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      }
+      // the size of it, big, in the empty corner the decades leave
+      const d = u - 0.55;
+      if (d > 0) {
+        const s = 1 + 0.35 * (1 - eo3(d / 0.16));
+        const big = vb <= 0 ? "跌穿 0" : `−${Math.round((1 - vb / va) * 100)}%`;
+        ctx.save();
+        ctx.translate(60, 752);
+        ctx.scale(s, s);
+        ctx.globalAlpha = A * clamp(d / 0.08);
+        text(ctx, big, 0, 0, 112, 900, SANS, RED, { glow: "rgba(255,59,47,0.6)", glowBlur: 30 });
+        ctx.restore();
+        ctx.globalAlpha = A * clamp((d - 0.12) / 0.15);
+        text(ctx, `${span1(yb - ya)}，从 ${fmtUsd(va)} 跌到 ${fmtUsd(vb)} 美元`, 62, 808, 30, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      }
+    } else if (w.refs.length) {
+      // a new high against the old ones
+      let top = w.refs[0];
+      for (const ry of w.refs) if (val(ry) > val(top)) top = ry;
+      w.refs.forEach((ry, i) => {
+        const v = val(ry);
+        const x = X(k, ry);
+        const y = Yv(k, v);
+        ctx.globalAlpha = A * clamp((u - 0.15 - i * 0.15) / 0.15);
+        dotAt(ctx, x, y, GOLD);
+        text(ctx, `${Math.floor(ry)} 年 ${fmtUsd(v)}`, x, y - 26, 28, 900, SANS, GOLD, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      });
+      const vt = val(top);
+      const yt = Yv(k, vt);
+      ctx.globalAlpha = A * clamp((u - 0.45) / 0.2);
+      ctx.strokeStyle = "rgba(255,201,77,0.6)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 8]);
+      ctx.beginPath();
+      ctx.moveTo(X(k, top), yt);
+      ctx.lineTo(xb + 34, yt);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.strokeStyle = WHITE;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(xb + 34, pb);
+      ctx.lineTo(xb + 34, yt);
+      ctx.stroke();
+      dotAt(ctx, xb, pb, WHITE);
+      const d = u - 0.6;
+      if (d > 0) {
+        const s = 1 + 0.35 * (1 - eo3(d / 0.16));
+        ctx.save();
+        ctx.translate(60, 752);
+        ctx.scale(s, s);
+        ctx.globalAlpha = A * clamp(d / 0.08);
+        text(ctx, `${fmtUsd(vb)} 美元`, 0, 0, 100, 900, SANS, WHITE, { glow: "rgba(255,255,255,0.35)", glowBlur: 24 });
+        ctx.restore();
+        ctx.globalAlpha = A * clamp((d - 0.12) / 0.15);
+        text(ctx, `比 ${Math.floor(top)} 年的最高点，还低 ${Math.round((1 - vb / vt) * 100)}%`, 62, 808, 30, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      }
     }
     ctx.restore();
   };
@@ -1840,29 +2346,32 @@ export const createFilm5 = (S: Spec) => {
   // ---------- crude oil instead of fireworks: on new highs a gusher shoots from the head; on crashes oil drips off it
   const FW = HITS.filter((h) => h.fw).map((h) => ({ t0: h.t, big: !!h.big || !!h.e?.fx?.includes("fwBig") }));
   const drop = (ctx: CanvasRenderingContext2D, x: number, y: number, vx: number, vy: number, s: number, a: number) => {
-    // a streak of crude along its motion: dark brown body, amber glow, a lit edge; gone at the ground
+    // a drop of crude: a round glossy head leading, a tail tapering behind it along the motion; black-brown with an
+    // amber rim and a hot specular point; gone at the ground
     if (y > 1462) return;
-    const k = 0.028;
-    const x0 = x - vx * k;
-    const y0 = y - vy * k;
+    const sp = Math.hypot(vx, vy);
+    const L = clamp(sp * 0.03, s * 1.4, s * 6);
     ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(Math.atan2(vy, vx));
     ctx.globalAlpha = a;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "#3a230c";
-    ctx.shadowColor = "rgba(255,160,50,0.85)";
-    ctx.shadowBlur = 9;
-    ctx.lineWidth = 2 * s;
     ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    ctx.arc(0, 0, s, -Math.PI / 2, Math.PI / 2);
+    ctx.quadraticCurveTo(-L * 0.45, s * 0.75, -L - s, 0);
+    ctx.quadraticCurveTo(-L * 0.45, -s * 0.75, 0, -s);
+    ctx.closePath();
+    ctx.shadowColor = "rgba(255,150,40,0.55)";
+    ctx.shadowBlur = 7;
+    ctx.fillStyle = "#140c05";
+    ctx.fill();
     ctx.shadowBlur = 0;
-    ctx.strokeStyle = "rgba(255,210,140,0.85)";
-    ctx.lineWidth = Math.max(1, s * 0.5);
-    ctx.beginPath();
-    ctx.moveTo(x0 - s * 0.4, y0 - s * 0.4);
-    ctx.lineTo(x - s * 0.4, y - s * 0.4);
+    ctx.strokeStyle = "rgba(255,190,100,0.75)";
+    ctx.lineWidth = 1.1;
     ctx.stroke();
+    ctx.fillStyle = "rgba(255,244,214,0.95)";
+    ctx.beginPath();
+    ctx.ellipse(s * 0.25, -s * 0.38, Math.max(0.8, s * 0.32), Math.max(0.6, s * 0.18), 0, 0, Math.PI * 2);
+    ctx.fill();
     ctx.restore();
   };
   const gusher = (ctx: CanvasRenderingContext2D, t: number, tb: number, x0: number, y0: number, seed: number, big: boolean, up = 1) => {
@@ -1990,7 +2499,8 @@ export const createFilm5 = (S: Spec) => {
     const d = t - e.t0;
     const life = Math.min(e.t1 - e.t0, 2.6);
     if (d > life + 0.2) return null;
-    const a = d < life ? 1 : 1 - (d - life) / 0.2;
+    const a = (d < life ? 1 : 1 - (d - life) / 0.2) * (1 - clamp(camAt(t).gw * 2));
+    if (a <= 0.01) return null;
     const h = headAt(t);
     const s = 1 + 0.5 * env(t, e.t0, 0.01, 0.1);
     const up = e.pct.startsWith("+") || e.pct.startsWith("×");
@@ -2063,7 +2573,7 @@ export const createFilm5 = (S: Spec) => {
     ctx.globalAlpha = fade * nums;
     const c = k.c;
     const rw = t >= RW0 && t < B0;
-    text(ctx, rw ? S.rewindLabel ?? "倒回……" : t < RW0 ? tr(COLD5.era) : S.era(c), 58, 186, 30, 700, SERIF, SOFT, { maxW: 560 });
+    text(ctx, rw ? S.rewindLabel ?? "倒回……" : t < RW0 ? tr(COLD5.era) : S.era(c), 58, 186, 30, 700, SERIF, SOFT, { maxW: 700 });
     const yNum = Math.floor(c + 1e-6);
     // the price leads; the date sits under it (in the rewind, with no price, the year takes the top line)
     const YB = rw ? 300 : 392;
@@ -2141,36 +2651,36 @@ export const createFilm5 = (S: Spec) => {
     if (a <= 0.01) return;
     ctx.save();
     ctx.globalAlpha = a;
-    text(ctx, S.tableTitle ?? "", 640, 168, 22, 700, SERIF, MUTED);
+    text(ctx, S.tableTitle ?? "", 790, 168, 22, 700, SERIF, MUTED);
     rows.forEach((r, i) => {
       const p = pos[i];
       if (p > NR - 0.02) return;
       ctx.globalAlpha = a * clamp(NR - p);
       const y = 214 + p * 50;
       ctx.fillStyle = r.c;
-      ctx.fillRect(640, y - 22, 6, 28);
-      text(ctx, r.n, 656, y, 26, 900, SERIF, WHITE);
+      ctx.fillRect(790, y - 22, 6, 28);
+      text(ctx, r.n, 806, y, 26, 900, SERIF, WHITE);
       if (r.tag) {
         ctx.font = `900 26px ${SERIF}`;
-        if (r.tag === "*") text(ctx, "*", 660 + ctx.measureText(r.n).width, y + 2, 28, 900, SANS, GOLD);
-        else text(ctx, r.tag, 662 + ctx.measureText(r.n).width, y - 2, 16, 700, SANS, MUTED);
+        if (r.tag === "*") text(ctx, "*", 810 + ctx.measureText(r.n).width, y + 2, 28, 900, SANS, GOLD);
+        else text(ctx, r.tag, 812 + ctx.measureText(r.n).width, y - 2, 16, 700, SANS, MUTED);
       }
-      text(ctx, r.v.toFixed(1) + "%", 940, y, 25, 900, SANS, WHITE, { align: "right" });
+      text(ctx, r.v.toFixed(1) + "%", 1090, y, 25, 900, SANS, WHITE, { align: "right" });
       const w0 = was.find((x) => x.n === r.n);
       const ch = 0 * (w0 ? w0.v : 0);
       if (Math.abs(ch) >= 0.005) {
         const down = ch < 0;
-        text(ctx, `${down ? "▼" : "▲"}${Math.abs(ch * 100).toFixed(0)}%`, 946, y, 21, 900, SANS, down ? RED : GOLD, { align: "right" });
+        text(ctx, `${down ? "▼" : "▲"}${Math.abs(ch * 100).toFixed(0)}%`, 1096, y, 21, 900, SANS, down ? RED : GOLD, { align: "right" });
       }
       ctx.fillStyle = "rgba(255,255,255,0.08)";
-      ctx.fillRect(656, y + 9, 290, 4);
+      ctx.fillRect(806, y + 9, 290, 4);
       ctx.fillStyle = r.c;
-      ctx.fillRect(656, y + 9, 290 * (r.v / vmax), 4);
+      ctx.fillRect(806, y + 9, 290 * (r.v / vmax), 4);
     });
     const note = S.tableNote?.(c);
     if (note) {
       ctx.globalAlpha = a;
-      text(ctx, note, 640, 214 + NR * 50 - 6, 17, 500, SANS, MUTED, { maxW: 306 });
+      text(ctx, note, 790, 214 + NR * 50 - 6, 17, 500, SANS, MUTED, { maxW: 306 });
     }
     ctx.restore();
   };
@@ -2181,7 +2691,7 @@ export const createFilm5 = (S: Spec) => {
   const drawTicks = (ctx: CanvasRenderingContext2D, t: number) => {
     if (t < B0 || t >= END) return;
     const k = camAt(t);
-    if (k.lg > 0.05 || k.ca > 0.3) return;
+    if (k.lg > 0.05 || k.ca > 0.3 || k.gw > 0.05) return;
     const c = k.c;
     ctx.save();
     const pb = pctLayout(ctx, t)?.box;
@@ -2329,8 +2839,13 @@ export const createFilm5 = (S: Spec) => {
     ctx.save();
     const prev = e.i > 0 ? EV[e.i - 1] : null;
     const d = t - e.t0;
-    if (prev && d < 0.1) drawOne(ctx, prev, t, Math.pow(1 - d / 0.1, 2), eo3(d / 0.1) * 70);
-    drawOne(ctx, e, t, 1, 0);
+    const wf = 1 - clamp(camAt(t).gw * 1.8);
+    if (wf <= 0.01) {
+      ctx.restore();
+      return;
+    }
+    if (prev && d < 0.1) drawOne(ctx, prev, t, Math.pow(1 - d / 0.1, 2) * wf, eo3(d / 0.1) * 70);
+    drawOne(ctx, e, t, wf, 0);
     ctx.restore();
   };
 
@@ -2958,6 +3473,7 @@ export const createFilm5 = (S: Spec) => {
     drawStreaks(cb, t);
     drawHead(cb, t, chartA);
     drawTicks(cb, t);
+    drawWide(cb, t);
     drawHits(cb, t);
     drawFireworks(cb, t);
     drawCold(cb, t);

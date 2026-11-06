@@ -185,6 +185,15 @@ export const COLD5 = {
 };
 // a barrel (159 litres), held up while the question is asked
 export const COIN = { t0: A(6), t1: A(12) - 0.05 };
+// the biggest swings, pulled back to decades so they read at their true size: from = the first year in view,
+// a = the high the price fell from (the drop is marked), ref = old highs to measure a new one against
+export const WIDE: { y: number; from: number; a?: number; ref?: number[] }[] = [
+  { y: 1986.55, from: 1946, a: 1985.85 },
+  { y: 2008.964, from: 1975, a: 2008.503 },
+  { y: 2016.112, from: 1975, a: 2014.466 },
+  { y: 2020.301, from: 1975, a: 2020.014 },
+  { y: 2026.263, from: 1975, ref: [2008.503, 2022.181] },
+];
 export const NEXT = { a: "下一集 · 中美 GDP", b: "中国经济，离美国还有多远？" };
 export const SWEEP = { t0: BAR(88), dur: 1.3 };
 export const RATES = { t0: 1e9, t1: 1e9, split: 1973.8, a: ["", ""], b: ["", ""] };
@@ -242,6 +251,14 @@ export const FXCUES: { t: number; fx: string }[] = [
     ...(e.icon ? [{ t: e.t0, fx: e.icon === "lock" ? "lock" : e.icon === "stamp" || e.icon === "gavel" ? "stamp" : "icon" }] : []),
   ]),
 ];
+
+// when each pull-back starts: once the card has been told, leaving it a beat and a bit before the next event
+export const WIDE_AT = WIDE.map((w) => {
+  const e = PLACED.reduce((b, x) => (Math.abs(x.y - w.y) < Math.abs(b.y - w.y) ? x : b), PLACED[0]);
+  const R = revealOf(e, MUSIC.beats);
+  return Math.min(Math.max(R.title, R.num ?? 0, R.sub ?? 0) + 0.6, e.t1 - 1.15);
+});
+FXCUES.push(...WIDE_AT.map((t) => ({ t, fx: "wide" })));
 
 export const OIL: Spec = {
   id: "gold",
