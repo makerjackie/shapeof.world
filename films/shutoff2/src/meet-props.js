@@ -119,13 +119,14 @@ export function buildProps(ctx) {
   // ---- committee places
   const units = [];     // vote light materials in seat order
   const phones = [];    // committee phones by phone index 0..4
-  const seatOrder = ['bun', 'bob', 'zhang', 'heavy', 'young', 'chair'];
+  const seatOrder = ['bun', 'bob', 'zhang', 'heavy', 'young', 'chair', 'lin'];
+  const CLEAN = true;   // v12: one focal point per frame — no papers or nameplates on the table
   for (const id of seatOrder) {
     const s = SEATS[id], F = seatFrame(id);
     const yawP = s.yaw - Math.PI;
     // vote unit: slim graphite base with three keys and a light bar facing the member; gooseneck mic
     const u = new THREE.Group();
-    const [ux, uy, uz] = F.at(0.13, -0.22);
+    const [ux, uy, uz] = id === 'lin' ? F.at(0.13, -0.5) : F.at(0.13, -0.22);
     u.position.set(ux, uy, uz);
     u.rotation.y = s.yaw + Math.PI;           // its front (+Z) faces the member
     const up = [];
@@ -140,13 +141,14 @@ export function buildProps(ctx) {
     bar.userData.noShadow = true;
     g.add(u);
     units.push({ id, mat: lightM, group: u, pos: new THREE.Vector3(ux, uy + 0.02, uz) });
+    if (id === 'lin') continue;               // 林工's place has its own props (phone, coffee, notebook)
 
     // water glass + water
     const [wx, , wz] = F.at(0.3, -0.34);
     add(mergePainted([[tubeGeo(tube([[0, 0.028, 0.028, 0, 2], [0.11, 0.033, 0.033, 0, 2]]), { nu: 22, nv: 2, capTop: false }).translate(wx, TOP, wz), '#eef5f8']]), M.glass);
     add(mergePainted([[new THREE.CylinderGeometry(0.0315, 0.0285, 0.075, 22).translate(wx, TOP + 0.04, wz), '#d3e6f0']]), M.water);
     // papers: two fanned sheets
-    for (let k = 0; k < 2; k++) {
+    for (let k = 0; k < (CLEAN ? 0 : 2); k++) {
       const [px, , pz] = F.at(0.27 + k * 0.02, 0.05 - k * 0.03);
       const pm = meetToon({ id: 41, color: '#ffffff', map: docTex(17 + k + id.length * 3) });
       const sh = paint(new THREE.PlaneGeometry(0.21, 0.297).rotateX(-Math.PI / 2).translate(0, 0, 0), '#ffffff');
@@ -155,7 +157,7 @@ export function buildProps(ctx) {
       m.rotation.y = yawP + R.range(-0.25, 0.25);
     }
     // nameplate (tent card) facing across the table
-    {
+    if (!CLEAN) {
       const [nx, , nz] = F.at(0.58, 0.0);
       const nm = meetToon({ id: 44, color: '#ffffff', map: nameTex(NAMES[id] ?? '') });
       const card = new THREE.Group();

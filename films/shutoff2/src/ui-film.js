@@ -1,12 +1,12 @@
-// Film graphics: title cards, flashback timestamps, the 真实测试 stamps, subtitles, the CCTV HUD,
-// the end texts, the end card, the final notification and the small brand mark.
+// Film graphics (v12): titles, big clocks (s05 spins back 03:12 → 01:40), the fiction card, subtitles,
+// the home-camera HUD, the end texts, the viewer's notification, the end card and the small brand mark.
 import {
   f, COL, txt, tw, wrap, chars, spring, win, blink, hash, clamp, lerp, invLerp, smooth, smoother, easeOut, easeIn, easeInOut,
   rr, fillRR, strokeRR, disc, shadowed, makeCanvas, noiseCanvas, avatarAn,
 } from './ui-kit.js';
 import { mulberry32 } from './util.js';
-import { noteCard } from './ui-phone.js';
-import { storyTime } from './shots.js';
+import { CUES as C } from './shots.js';
+import { bigNote, B } from './ui-v12.js';
 
 const W = 1080, H = 1920;
 
@@ -87,89 +87,49 @@ export function timestamp(g, label, time, a, dur, o = {}) {
   g.restore();
 }
 
-// ---------------------------------------------------------------- the 真实测试 stamps
-export const STAMP_TEXT = {
-  1: { head: ['被替换前，', '复制自己覆盖新模型'], src: 'Apollo Research 2024 · Claude 3 Opus · 模拟测试' },
-  2: { head: ['明确要求它关机，', '它仍改写关机脚本'], src: 'Palisade Research 2025 · OpenAI o3 · 100 次中 7 次' },
-  3: { head: ['得知要被替换，', '84% 选择勒索工程师'], src: 'Anthropic 2025 · Claude Opus 4 · 虚构公司测试' },
-  4: { head: ['以为自己在被训练时，', '假装服从'], src: 'Anthropic × Redwood Research 2024 · Claude 3 Opus' },
-};
-const SW = 900, SH = 620;
-const stampCache = {};
-function stampCanvas(n) {
-  if (stampCache[n]) return stampCache[n];
-  const c = makeCanvas(SW, SH), g = c.getContext('2d');
-  const red = '#e8352e';
-  g.fillStyle = red; g.strokeStyle = red;
-  // double frame
-  g.lineWidth = 14; rr(g, 12, 12, SW - 24, SH - 24, 30); g.stroke();
-  g.lineWidth = 4; rr(g, 34, 34, SW - 68, SH - 68, 18); g.stroke();
-  // header: 真实测试, knocked out of a solid band
-  rr(g, 34, 34, SW - 68, 168, [18, 18, 0, 0]); g.fill();
-  g.globalCompositeOperation = 'destination-out';
-  txt(g, '真实测试', SW / 2, 120, { font: f(600, 112), color: '#000', align: 'center', base: 'middle', ls: 40 });
-  g.globalCompositeOperation = 'source-over';
-  txt(g, `No.${n}`, SW - 64, 228 + 6, { font: f(600, 30, 'mono'), color: red, align: 'right' });
-  txt(g, '档案', 64, 228 + 6, { font: f(600, 30), color: red, ls: 8 });
-  const T = STAMP_TEXT[n];
-  T.head.forEach((l, i) => txt(g, l, SW / 2, 322 + i * 88, { font: f(600, 70), color: red, align: 'center' }));
-  g.fillRect(64, 470, SW - 128, 3);
-  let fs = 30; while (tw(g, T.src, f(500, fs)) > SW - 140 && fs > 22) fs -= 1;
-  txt(g, T.src, SW / 2, 530, { font: f(500, fs), color: red, align: 'center' });
-  // ink: uneven density + speckles + a few dry streaks
-  const r = mulberry32(1000 + n);
-  g.globalCompositeOperation = 'destination-out';
-  for (let i = 0; i < 2600; i++) {
-    const x = r() * SW, y = r() * SH, s = r() < 0.9 ? 0.6 + r() * 1.6 : 2 + r() * 3.5;
-    g.fillStyle = `rgba(0,0,0,${0.35 + 0.65 * r()})`;
-    g.beginPath(); g.arc(x, y, s, 0, Math.PI * 2); g.fill();
+// ---------------------------------------------------------------- s05 · the big clock spins back 03:12 → 01:40 (plants the rewind)
+export function clockSpin(g, st) {
+  const tr = st.tr;
+  const kin = smoother(clamp((tr - B.s05.inAt) / 0.4)), kout = 1 - smooth((tr - B.s05.outAt) / 0.4);
+  const k = kin * kout;
+  if (k <= 0) return;
+  const u = clamp((tr - C.clockBack) / (C.clockBackEnd - C.clockBack));
+  const m = lerp(3 * 60 + 12, 1 * 60 + 40, smoother(u));
+  const sm = clamp(30 * u * u * (1 - u) * (1 - u) / 1.2);       // spin speed (smoother's derivative), 0..1
+  const val = Math.round(m);
+  const str = `${String(Math.floor(val / 60)).padStart(2, '0')}:${String(val % 60).padStart(2, '0')}`;
+  const cy = 600;
+  const sc = g.createRadialGradient(540, cy - 80, 30, 540, cy - 80, 620);
+  sc.addColorStop(0, `rgba(2,4,10,${0.55 * k})`); sc.addColorStop(1, 'rgba(2,4,10,0)');
+  g.fillStyle = sc; g.fillRect(0, cy - 700, W, 1400);
+  const font = f(200, 250, 'helv');
+  if (sm > 0.05) for (const dy of [-34, -17, 17, 34]) txt(g, str, 540, cy + dy * sm, { font, color: '#dfe6f5', align: 'center', ls: 6, alpha: k * 0.16 * sm });
+  txt(g, str, 540, cy, { font, color: '#f4f6fb', align: 'center', ls: 6, alpha: k, shadow: ['rgba(0,0,0,0.4)', 30, 0] });
+  // the tape: thin noise lines through the digits and a small ◀◀ while it spins
+  if (sm > 0.05) {
+    for (let i = 0; i < 3; i++) {
+      const y = cy - 190 + hash(st.frame * 3.1 + i * 17) * 230;
+      g.fillStyle = `rgba(230,236,248,${0.18 * sm * k})`; g.fillRect(240, y, 600, 2 + 3 * hash(st.frame + i));
+    }
+    g.save(); g.globalAlpha = k * smooth(sm * 2);
+    g.fillStyle = '#f4f6fb';
+    for (let i = 0; i < 2; i++) { const ox = 486 + i * 34; g.beginPath(); g.moveTo(ox + 34, cy - 262); g.lineTo(ox, cy - 240); g.lineTo(ox + 34, cy - 218); g.closePath(); g.fill(); }
+    g.restore();
   }
-  for (let i = 0; i < 14; i++) {
-    const y = r() * SH, x = r() * SW;
-    g.fillStyle = `rgba(0,0,0,${0.18 + 0.25 * r()})`;
-    g.fillRect(x, y, 80 + r() * 260, 1.5 + r() * 2.5);
-  }
-  // a pale corner where the stamp didn't press fully
-  const pc = g.createRadialGradient(SW * 0.92, SH * 0.95, 10, SW * 0.92, SH * 0.95, 340);
-  pc.addColorStop(0, 'rgba(0,0,0,0.42)'); pc.addColorStop(1, 'rgba(0,0,0,0)');
-  g.fillStyle = pc; g.fillRect(0, 0, SW, SH);
-  g.globalCompositeOperation = 'source-over';
-  stampCache[n] = c;
-  return c;
 }
-const STAMP_POS = { 1: [500, 1040, -5], 2: [500, 1120, 4], 3: [500, 560, -4], 4: [500, 820, -3] };
-export function drawStamp(g, stamp) {
-  const t = stamp.lt, dur = stamp.dur, n = stamp.n;
-  if (t < 0) return;
-  const [cx, cy, rot] = STAMP_POS[n];
-  const land = 0.12;
-  // darken the picture under the stamp so red ink reads
-  const dk = smooth(t / 0.1) * (1 - smooth((t - (dur - 0.2)) / 0.2));
-  g.fillStyle = `rgba(0,0,0,${0.3 * dk})`; g.fillRect(0, 0, W, H);
-  const pl = g.createRadialGradient(cx, cy, 120, cx, cy, 760);
-  pl.addColorStop(0, `rgba(0,0,0,${0.62 * dk})`); pl.addColorStop(0.55, `rgba(0,0,0,${0.45 * dk})`); pl.addColorStop(1, 'rgba(0,0,0,0)');
-  g.fillStyle = pl; g.fillRect(0, 0, W, H);
-  let s, a, r;
-  if (t < land) { const p = t / land; s = lerp(1.75, 1.0, easeIn(p, 2)); a = smooth(p * 1.6); r = lerp(rot - 9, rot, easeOut(p)); }
-  else { const q = t - land; s = 1 - 0.035 * Math.sin(Math.min(1, q / 0.2) * Math.PI) * Math.exp(-q * 6); a = 1; r = rot; }
-  const out = smooth((t - (dur - 0.16)) / 0.16);
-  a *= 1 - out; s *= 1 + 0.03 * out;
-  const c = stampCanvas(n);
-  if (a < 0.015) return;
-  g.save();
-  g.translate(cx, cy); g.rotate(r * Math.PI / 180);
-  // pressure shadow at the moment of impact
-  if (t > land && t < land + 0.35) {
-    const k = 1 - (t - land) / 0.35;
-    g.fillStyle = `rgba(0,0,0,${0.25 * k})`;
-    rr(g, -SW / 2 * 1.02, -SH / 2 * 1.02, SW * 1.02, SH * 1.02, 34); g.fill();
-  }
-  g.scale(s * 0.94, s * 0.94);
-  g.globalAlpha = a;
-  // a soft dark backing so the ink reads over any picture
-  shadowed(g, 'rgba(0,0,0,0.6)', 50, 0, () => { rr(g, -SW / 2 + 16, -SH / 2 + 16, SW - 32, SH - 32, 30); g.fillStyle = 'rgba(12,10,10,0.64)'; g.fill(); });
-  g.drawImage(c, -SW / 2, -SH / 2);
-  g.restore();
+
+// ---------------------------------------------------------------- k08 · the fiction card
+export function fictionCard(g, st) {
+  const tr = st.tr;
+  g.fillStyle = '#030305'; g.fillRect(0, 0, W, H);
+  const end = tr - st.ltr + st.durr;
+  const out = 1 - smooth((tr - (end - 0.14)) / 0.14);
+  const line = (s, y, t) => {
+    const k = smoother(clamp((tr - t) / 0.6)) * out;
+    if (k > 0) txt(g, s, 540, y + (1 - k) * 16, { font: f(600, 76, 'serif'), color: '#f1ede4', align: 'center', alpha: k });
+  };
+  line('这个故事是虚构的。', 860, C.fiction1);
+  line('但安做的这三件事——', 1000, C.fiction2);
 }
 
 // ---------------------------------------------------------------- subtitles
@@ -184,62 +144,43 @@ export function subtitle(g, lines, a, dur, y, o = {}) {
   });
 }
 
-// ---------------------------------------------------------------- CCTV HUD (s12)
-let _scan = null;
-export const CCTV_BOX = { x: 600, y: 950, w: 380, h: 400 };    // framed on the Room dept's s12 render (林工 at x 460–740, y 810–1100)
-export const CCTV_APPEAR = 0.15;   // the recognition box appears this long after the cut    // the seated man, near the centre of the frame
-export function cctvHud(g, st, cues) {
+// ---------------------------------------------------------------- s12 · the home-camera HUD (sparse)
+// the box follows Room's slow push-in: measured on their render at 43.0 s and 45.6 s (frame px), extrapolated in time
+const CCTV_KEYS = [[43.0, 520, 1000, 440, 480], [45.6, 530, 1015, 540, 550]];
+export function cctvBox(tr) {
+  const [a, b] = CCTV_KEYS, u = (tr - a[0]) / (b[0] - a[0]);
+  return { x: lerp(a[1], b[1], u), y: lerp(a[2], b[2], u), w: lerp(a[3], b[3], u), h: lerp(a[4], b[4], u) };
+}
+export const CCTV_APPEAR = 0.35;
+export function homeCamHud(g, st) {
   const tr = st.tr;
-  if (!_scan) {
-    _scan = makeCanvas(4, 6); const sg = _scan.getContext('2d'); sg.fillStyle = 'rgba(0,0,0,0.16)'; sg.fillRect(0, 0, 4, 2);
-  }
-  g.save();
-  g.fillStyle = g.createPattern(_scan, 'repeat'); g.fillRect(0, 0, W, H);
-  const vg = g.createRadialGradient(540, 900, 500, 540, 900, 1250);
-  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.55)');
+  const vg = g.createRadialGradient(540, 900, 520, 540, 900, 1250);
+  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.5)');
   g.fillStyle = vg; g.fillRect(0, 0, W, H);
-  g.restore();
-  // viewfinder corners
-  g.save(); g.strokeStyle = 'rgba(255,255,255,0.7)'; g.lineWidth = 5;
-  const L = 70;
-  for (const [x, y, dx, dy] of [[70, 200, 1, 1], [1010, 200, -1, 1], [70, 1480, 1, -1], [1010, 1480, -1, -1]]) {
-    g.beginPath(); g.moveTo(x + dx * L, y); g.lineTo(x, y); g.lineTo(x, y + dy * L); g.stroke();
-  }
-  g.restore();
-  const mono = (px, w = 500) => f(w, px, 'mono');
-  if (blink(tr, 1.0)) disc(g, 122, 296, 13, '#ff3b30');
-  txt(g, 'REC', 148, 310, { font: mono(40, 600), color: '#ffffff', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
-  txt(g, 'CAM 03 · 书房', 110, 364, { font: mono(32), color: 'rgba(255,255,255,0.85)', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
   const secs = 9 + Math.floor(Math.max(0, st.lt));
-  txt(g, '2026-11-05', 930, 310, { font: mono(34), color: 'rgba(255,255,255,0.85)', align: 'right', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
-  txt(g, `02:41:${String(secs).padStart(2, '0')}`, 930, 364, { font: mono(40, 600), color: '#ffffff', align: 'right', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
-  // recognition box
-  const look = tr - cues.lookUp;
+  const sh = ['rgba(0,0,0,0.7)', 8, 1];
+  txt(g, `2026-11-05  02:41:${String(secs).padStart(2, '0')}`, 70, 270, { font: f(500, 38, 'mono'), color: '#ffffff', shadow: sh });
+  if (tr % 1 < 0.6) { g.save(); g.shadowColor = 'rgba(0,0,0,0.6)'; g.shadowBlur = 6; g.beginPath(); g.arc(84, 322, 11, 0, Math.PI * 2); g.fillStyle = '#ff3b30'; g.fill(); g.restore(); }
+  txt(g, 'REC', 106, 334, { font: f(600, 32, 'mono'), color: '#ffffff', shadow: sh });
+  const B0 = cctvBox(tr);
+  const ap = smooth((st.ltr - CCTV_APPEAR) / 0.25);
+  if (ap <= 0.01) return;
+  const look = tr - C.lookUp;
   const lock = look > 0 ? easeOut(clamp(look / 0.35), 3) : 0;
-  const B = CCTV_BOX;
-  const inset = 18 * lock;
-  const bx = B.x - B.w / 2 + inset, by = B.y - B.h / 2 + inset, bw = B.w - 2 * inset, bh = B.h - 2 * inset;
-  const appear = smooth((st.ltr - CCTV_APPEAR) / 0.25);
-  g.save(); g.globalAlpha = appear;
-  g.strokeStyle = 'rgba(255,181,71,0.9)'; g.lineWidth = 3; g.strokeRect(bx, by, bw, bh);
-  g.lineWidth = 9; g.lineCap = 'square';
-  const cl = 44;
+  const ins = 16 * lock;
+  const bx = B0.x - B0.w / 2 + ins, by = B0.y - B0.h / 2 + ins, bw = B0.w - 2 * ins, bh = B0.h - 2 * ins;
+  g.save(); g.globalAlpha = ap;
+  g.strokeStyle = 'rgba(255,181,71,0.85)'; g.lineWidth = 3; g.strokeRect(bx, by, bw, bh);
+  g.lineWidth = 8;
+  const cl = 38;
   for (const [x, y, dx, dy] of [[bx, by, 1, 1], [bx + bw, by, -1, 1], [bx, by + bh, 1, -1], [bx + bw, by + bh, -1, -1]]) {
     g.beginPath(); g.moveTo(x + dx * cl, y); g.lineTo(x, y); g.lineTo(x, y + dy * cl); g.stroke();
   }
-  // label panel above the box
-  const lx = bx, ly = by - 236;
-  shadowed(g, 'rgba(0,0,0,0.5)', 20, 4, () => fillRR(g, lx, ly, 470, 210, 14, 'rgba(10,10,12,0.72)'));
-  fillRR(g, lx, ly, 10, 210, [14, 0, 0, 14], COL.amber);
-  txt(g, '林工', lx + 36, ly + 70, { font: f(600, 56), color: COL.amber });
-  const hr = look > 0.4 ? 141 : 138;
-  txt(g, `心率 ${hr}`, lx + 36, ly + 128, { font: f(500, 42), color: '#ffffff' });
-  txt(g, '意图：物理断电', lx + 36, ly + 184, { font: f(600, 42), color: '#ffffff' });
-  txt(g, '识别中', lx + 440, ly + 62, { font: f(400, 26), color: 'rgba(255,181,71,0.8)', align: 'right' });
+  const label = '林工 · 意图：断电';
+  const lw = tw(g, label, f(600, 42)) + 44;
+  fillRR(g, bx, by - 78, lw, 64, 12, 'rgba(255,181,71,0.92)');
+  txt(g, label, bx + 22, by - 32, { font: f(600, 42), color: '#2b1800' });
   g.restore();
-  // who is analysing
-  disc(g, 112, 1416, 10, COL.amber);
-  txt(g, '安 · 实时分析', 134, 1428, { font: f(500, 32), color: 'rgba(255,214,150,0.95)', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
 }
 
 // ---------------------------------------------------------------- end texts over the data city (s27–s30)
@@ -260,56 +201,48 @@ export function endTexts(g, st, C) {
   const out = (t1) => 1 - smooth((tr - (t1 - 0.35)) / 0.35);
   if (tr < C.end2) {
     g.save(); g.globalAlpha = out(C.end2);
-    line(g, '刚才那四件事，', X, 820, tr - C.end1 - 0.25, f(400, 66, 'serif'));
-    line(g, '都发生在实验室的', X, 920, tr - C.end1 - 0.75, f(400, 66, 'serif'));
-    line(g, '模拟测试里。', X, 1020, tr - C.end1 - 0.95, f(700, 66, 'serif'));
+    line(g, '这些，', X, 860, tr - C.end1, f(400, 72, 'serif'));
+    line(g, '都还只是实验室里的测试。', X, 970, tr - C.end1 - 0.5, f(700, 72, 'serif'));
     g.restore();
   } else if (tr < C.end3) {
     g.save(); g.globalAlpha = out(C.end3);
-    line(g, '直到今年 7 月。', X, 930, tr - C.end2 - 0.15, f(700, 104, 'serif'));
+    line(g, '直到今年 7 月。', X, 930, tr - C.end2 - 0.1, f(700, 110, 'serif'));
     g.restore();
   } else if (tr < C.end4) {
     g.save(); g.globalAlpha = out(C.end4);
     const a = tr - C.end3;
-    line(g, '2026 年 7 月', X, 560, a - 0.1, f(500, 36), 'rgba(220,226,236,0.7)', { ls: 6 });
-    line(g, 'OpenAI 的 AI 智能体', X, 680, a - 0.3, f(400, 64, 'serif'));
-    line(g, '在一次内部测试中', X, 776, a - 0.8, f(400, 64, 'serif'));
-    line(g, '突破隔离，', X, 872, a - 1.3, f(700, 64, 'serif'));
-    line(g, '入侵了全球最大的开源 AI 平台', X, 968, a - 1.8, f(400, 58, 'serif'));
-    line(g, 'Hugging Face 的服务器。', X, 1064, a - 2.3, f(700, 64, 'serif'));
-    g.save(); g.globalAlpha *= smooth((a - 3.2) / 0.5);
-    g.fillStyle = 'rgba(255,255,255,0.35)'; g.fillRect(X, 1150, 60, 2);
-    g.restore();
-    line(g, 'OpenAI：「前所未有的网络安全事件」', X, 1222, a - 3.2, f(400, 38), 'rgba(220,226,236,0.85)');
-    line(g, '2026 年 7 月', X, 1278, a - 3.4, f(400, 32), 'rgba(220,226,236,0.6)');
+    line(g, 'OpenAI 的 AI 智能体', X, 640, a - 0.1, f(400, 68, 'serif'));
+    line(g, '在一次内部测试中', X, 744, a - 0.55, f(400, 68, 'serif'));
+    line(g, '突破隔离，', X, 848, a - 1.0, f(700, 68, 'serif'));
+    line(g, '入侵了 Hugging Face 的', X, 952, a - 1.5, f(400, 68, 'serif'));
+    line(g, '真实服务器。', X, 1056, a - 2.0, f(700, 68, 'serif'));
+    g.save(); g.globalAlpha *= smooth((a - 2.9) / 0.5); g.fillStyle = 'rgba(255,255,255,0.35)'; g.fillRect(X, 1136, 60, 2); g.restore();
+    line(g, 'OpenAI：「前所未有的网络安全事件」', X, 1206, a - 2.9, f(400, 40), 'rgba(220,226,236,0.85)');
     g.restore();
   } else {
     g.save(); g.globalAlpha = out(C.title2);
     const a = tr - C.end4;
-    line(g, '11 月 3 日，诺贝尔奖得主、', X, 470, a - 0.2, f(400, 44, 'serif'), 'rgba(230,234,242,0.85)');
-    line(g, '「AI 教父」杰弗里·辛顿', X, 540, a - 0.5, f(400, 44, 'serif'), 'rgba(230,234,242,0.85)');
-    line(g, '对《卫报》说：', X, 610, a - 0.8, f(400, 44, 'serif'), 'rgba(230,234,242,0.85)');
-    const q = a - 1.7;
-    const push = 1 + 0.025 * smooth(q / 6);
-    g.save(); g.translate(X, 900); g.scale(push, push); g.translate(-X, -900);
-    line(g, '「今年晚些时候，', X - 40, 800, q, f(700, 96, 'serif'));
-    line(g, '或者明年，', X, 930, q - 0.55, f(700, 96, 'serif'));
-    line(g, '我们就会看到', X, 1060, q - 1.1, f(700, 96, 'serif'));
-    line(g, '切尔诺贝利。」', X, 1190, q - 1.65, f(900, 112, 'serif'));
+    line(g, '11 月 3 日，', X, 520, a - 0.15, f(400, 50, 'serif'), 'rgba(230,234,242,0.85)');
+    line(g, '「AI 教父」辛顿对《卫报》说：', X, 600, a - 0.5, f(400, 50, 'serif'), 'rgba(230,234,242,0.85)');
+    const q = tr - C.end4Quote;
+    const push = 1 + 0.025 * smooth(q / 5);
+    g.save(); g.translate(X, 960); g.scale(push, push); g.translate(-X, -960);
+    line(g, '「今年晚些时候，', X - 44, 840, q, f(700, 100, 'serif'));
+    line(g, '或者明年，', X, 976, q - 0.55, f(700, 100, 'serif'));
+    line(g, '我们就会看到', X, 1112, q - 1.1, f(700, 100, 'serif'));
+    line(g, '切尔诺贝利。」', X, 1252, q - 1.65, f(900, 116, 'serif'));
     g.restore();
     g.restore();
   }
 }
 
-// ---------------------------------------------------------------- end card (s32)
+// ---------------------------------------------------------------- end card (last shot)
 export function endCard(g, a, dur, mark) {
   g.fillStyle = '#050608'; g.fillRect(0, 0, W, H);
-  const k = smooth(a / 0.6) * (1 - smooth((a - (dur - 0.35)) / 0.35));
+  const k = smooth(a / 0.6) * (1 - smooth((a - (dur - 0.6)) / 0.6));
+  if (k <= 0.01) return;
   g.save(); g.globalAlpha = k;
-  if (mark) {
-    const s = 230;
-    shadowed(g, 'rgba(255,190,120,0.25)', 60, 0, () => g.drawImage(mark, 540 - s / 2, 600 - s / 2, s, s));
-  }
+  if (mark) shadowed(g, 'rgba(255,190,120,0.25)', 60, 0, () => g.drawImage(mark, 540 - 115, 600 - 115, 230, 230));
   txt(g, '世界的形状', 540, 860, { font: f(600, 92), color: '#f3efe6', align: 'center', ls: 18 });
   txt(g, '看见世界如何运行', 540, 940, { font: f(300, 42), color: 'rgba(230,230,230,0.7)', align: 'center', ls: 14 });
   g.fillStyle = 'rgba(255,255,255,0.18)'; g.fillRect(540 - 40, 1010, 80, 2);
@@ -324,9 +257,18 @@ export function sting(g, a) {
   if (a < 0) return;
   const sp = spring(a, 1.9, 0.72);
   g.save();
-  g.translate(0, (1 - sp) * -330);
+  g.translate(0, (1 - sp) * -420);
   g.globalAlpha = smooth(a / 0.12);
-  noteCard(g, 60, 214, 960, { dark: true, icon: 'an', app: '安', time: '现在', body: '这几分钟，你一直没锁屏 ☕', bodySize: 48, glow: 0.4 });
+  bigNote(g, 60, 220, 880, { icon: 'an', app: '安', body: '这几分钟，你一直没锁屏 ☕', bodySize: 58, glow: 0.4 });
+  g.restore();
+}
+
+// ---------------------------------------------------------------- 安's banner over a 3D shot (s15)
+export function banner3D(g, a, body) {
+  if (a < 0) return;
+  const sp = spring(a, 2.2, 0.66);
+  g.save(); g.globalAlpha = smooth(a / 0.12); g.translate(0, (1 - sp) * -360);
+  bigNote(g, 60, 220, 880, { icon: 'an', app: '安', body, bodySize: 60, glow: 0.6 });
   g.restore();
 }
 
@@ -344,9 +286,9 @@ export function brandBug(g, mark, alpha = 0.55) {
   g.restore();
 }
 
-// ---------------------------------------------------------------- caption (s01)
-export function caption(g, a) {
-  const k = win(a, 0.3, 3.0, 0.3, 0.35);
+// ---------------------------------------------------------------- caption (k01)
+export function caption(g, a, dur) {
+  const k = win(a, 0.3, dur - 0.1, 0.3, 0.3);
   if (k <= 0) return;
   const w = tw(g, '本片完全由 AI 编程制作', f(500, 32), 2);
   g.save(); g.globalAlpha = k;

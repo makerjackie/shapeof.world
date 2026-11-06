@@ -85,6 +85,7 @@ export function buildRoom(ctx) {
     glow: meetToon({ id: 104, vc: true, unlit: true, emissive: '#000000' }),
   };
   M.floor.uniforms.uMap.value.repeat.set(1, 1);
+  const pendant = [];
   const mesh = (g, m, parent = casters) => { const o = new THREE.Mesh(g, m); o.frustumCulled = false; parent.add(o); return o; };
 
   // ---- floor (stone, UVs in metres / 2.4) + rug under the table
@@ -135,9 +136,10 @@ export function buildRoom(ctx) {
     const pz0 = TABLE.cz - 2.3, pz1 = TABLE.cz + 2.3, py = 2.95;
     const lb = [[rbox(0.07, 0.05, pz1 - pz0, 0.012, 0, py, (pz0 + pz1) / 2), '#d7dbe2']];
     for (const z of [pz0 + 0.3, pz1 - 0.3]) lb.push([new THREE.CylinderGeometry(0.003, 0.003, Hh + 0.42 - py, 4).translate(0, (Hh + 0.42 + py) / 2, z), '#7d828c']);
-    mesh(mergePainted(lb), M.lightBar);
+    pendant.push(mesh(mergePainted(lb), M.lightBar));
     const strip = mesh(mergePainted([[box(0.045, 0.01, pz1 - pz0 - 0.04, 0, py - 0.026, (pz0 + pz1) / 2), '#fff4e2']]), M.glow);
     strip.userData.noShadow = true;
+    pendant.push(strip);
   }
 
   // ---- window walls: -Z (CBD) and +X (east, the sun). Slim interior fins, floor grille, corner post.
@@ -383,5 +385,5 @@ export function buildRoom(ctx) {
     void R;
   }
 
-  return { room, casters, plain, chairs, screen, M };
+  return { room, casters, plain, chairs, screen, M, pendant };
 }

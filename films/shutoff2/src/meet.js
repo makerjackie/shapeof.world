@@ -11,9 +11,11 @@ import { onTwos, smooth, invLerp, clamp, lerp, Rng, noise1 } from './util.js';
 // Exposes: { update, seat (林工's seat, world), phone (林工's phone position), table (edge z), screen }
 
 const V = THREE.Vector3;
-// vote order (near → far as seen from the s19 camera on the +X side)
-export const VOTE_ORDER = ['young', 'heavy', 'zhang', 'bun', 'bob', 'chair'];
-const VOTE_STEP = 0.42;
+// v12 vote: five members light green one by one from CUES.votes (the chair presides and does not vote);
+// 林工's light is the sixth and stays empty until CUES.pass
+export const VOTE_ORDER = ['young', 'zhang', 'heavy', 'bob', 'bun'];
+const VOTE_STEP = 0.5;
+const voteTime = (id, C) => (id === 'lin' ? C.pass : id === 'chair' ? Infinity : C.votes + VOTE_ORDER.indexOf(id) * VOTE_STEP);
 
 export function createMeet(ctx) {
   const { scene, overlay, CUES } = ctx;
@@ -105,7 +107,7 @@ export function createMeet(ctx) {
     for (const id of [...ROSTER, 'lin']) {
       const p = cast[id], rig = p.rig;
       const F = seatFrame(id);
-      let stand = 0, lean = 0.06, look = scrT.clone(), share = 0.35, extraPitch = 0, extraRoll = 0, handO = {};
+      let clapSeat = 0, stand = 0, lean = 0.06, look = scrT.clone(), share = 0.35, extraPitch = 0, extraRoll = 0, handO = {};
       if (id === 'chair') { look.set(0, TOP + 0.05, -2.9); lean = 0.12; }       // reading his tablet
       if (id === 'lin') { look.set(PHONE_LIN.x, TOP, PHONE_LIN.z + 0.1); lean = 0.22; }
       const i = ROSTER.indexOf(id);
@@ -113,19 +115,19 @@ export function createMeet(ctx) {
       lean += 0.012 * idle(id, tt);
       // ---- shot-specific acting
       if (st.sid === 's20' && id !== 'lin') {
-        // heads turn toward 林工, one after another; the chair is already looking at him
-        const t0 = id === 'chair' ? -1 : CUES.ask + 0.6 + [0, 0.55, 0.15, 0.95, 0.35, 1.2][i];
-        const k = smooth(invLerp(t0, t0 + 0.75, onTwos(t)));
-        const toLin = linHead.clone();
-        look.lerp(toLin, k);
-        if (id === 'chair') { look.copy(toLin); lean = 0.1; }
+        // at CUES.turn every head turns to 林工, almost together; the chair lifts his eyes from the tablet as he speaks
+        const t0 = id === 'chair' ? CUES.ask - 0.35 : (CUES.turn ?? CUES.ask + 1) + [0, 0.12, 0.04, 0.2, 0.08, 0.16][i];
+        const k = smooth(invLerp(t0, t0 + (id === 'chair' ? 0.5 : 0.6), onTwos(t)));
+        look.lerp(linHead.clone(), k);
+        if (id === 'chair') lean = lerp(0.12, 0.08, k);
         share = 0.45;
       }
       if (st.sid === 's23' && id !== 'lin') {
         const t0 = CUES.pass + 0.15 + [0.0, 0.3, 0.55, 0.15, 0.4, 0.7][i];
         stand = smooth(invLerp(t0, t0 + 0.9, onTwos(t)));
         look = scrT.clone();
-        if (id === 'chair') look.set(0, FLOOR + 1.3, 1.5);
+        // the chair stays seated (he would stand right in front of 全票通过) and claps where he sits
+        if (id === 'chair') { look.set(0, FLOOR + 1.3, 1.5); clapSeat = stand; stand = 0; }
       }
       if (st.sid === 's25' && id !== 'lin') {
         // looking down at their phones; the light catches them
@@ -138,9 +140,10 @@ export function createMeet(ctx) {
       }
       bodyPose(rig, stand, { lean, seatY: 0.47 });
       // hands
-      if (stand > 0.05) {
+      if (stand > 0.05 || clapSeat > 0.05) {
         // clapping once up
-        const clap = stand > 0.85 ? Math.abs(Math.sin((onTwos(t) - CUES.pass) * Math.PI * 2.6 + i)) : 1;
+        const up = Math.max(stand, clapSeat);
+        const clap = up > 0.85 ? Math.abs(Math.sin((onTwos(t) - CUES.pass) * Math.PI * 2.6 + i)) : 1;
         const chest = new V(0, 0, 0);
         rig.torso.updateWorldMatrix(true, false);
         chest.set(0, 0.22 * rig.s, 0.28).applyMatrix4(rig.torso.matrixWorld);
@@ -149,9 +152,9 @@ export function createMeet(ctx) {
           const off = new V(side * (0.012 + 0.06 * clap), -0.02, 0).applyMatrix4(new THREE.Matrix4().extractRotation(rig.torso.matrixWorld));
           const tgtStand = chest.clone().add(off);
           const tgtSeat = new V(...F.at(0.05, side * 0.15, TOP + 0.035));
-          const tg = tgtSeat.lerp(tgtStand, smooth(invLerp(0.3, 0.9, stand)));
+          const tg = tgtSeat.lerp(tgtStand, smooth(invLerp(0.3, 0.9, up)));
           pole.set(-F.fx * 0.3 + F.lx * side, -1.0, -F.fz * 0.3 + F.lz * side);
-          armIK(rig, k, tg, pole, side * lerp(1.2, 0.2, stand));
+          armIK(rig, k, tg, pole, side * lerp(1.2, 0.2, up));
           rig.wrist[k].rotation.set(0.1, 0, 0);
         }
       } else if (id === 'lin') {
@@ -160,8 +163,7 @@ export function createMeet(ctx) {
         // s19: each member reaches for the vote key just before their light comes on
         let o = {};
         if (st.sid === 's19') {
-          const vi = VOTE_ORDER.indexOf(id);
-          const tv = CUES.votes + vi * VOTE_STEP;
+          const tv = voteTime(id, CUES);
           const k = smooth(invLerp(tv - 0.45, tv - 0.05, onTwos(t))) * (1 - smooth(invLerp(tv + 0.25, tv + 0.7, onTwos(t))));
           if (k > 0) {
             const u = P.units.find((x) => x.id === id);
@@ -170,7 +172,7 @@ export function createMeet(ctx) {
             o.hand = [null, rest.lerp(key, k).toArray()];
           }
         }
-        if (st.sid === 's25') o = { hand: [F.at(0.03, 0.26, TOP + 0.035), F.at(0.04, -0.2, TOP + 0.035)] };
+        if (st.sid === 's25') o = { hand: id === 'zhang' ? [F.at(-0.1, 0.17, TOP - 0.15), F.at(0.04, -0.24, TOP + 0.035)] : [F.at(0.03, 0.26, TOP + 0.035), F.at(0.04, -0.2, TOP + 0.035)] };   // 张主任's left hand drops to his lap, clear of the phone close-up
         handsOnTable(id, p, o);
       }
       headLook(rig, look, share, { pitch: extraPitch, roll: extraRoll });
@@ -187,14 +189,14 @@ export function createMeet(ctx) {
     let gc = 0, gz = 0;
     const t = onTwos(st.tr);
     if (st.sid === 's20') {
-      gc = smooth(invLerp(CUES.ask + 0.1, CUES.ask + 0.3, t)) * (1 - 0.6 * smooth(invLerp(CUES.ask + 1.0, CUES.ask + 1.6, t)));
-      gz = smooth(invLerp(CUES.ask + 1.35, CUES.ask + 1.55, t));
+      const tu = CUES.turn ?? CUES.ask + 1;
+      gc = 0.5 * smooth(invLerp(CUES.ask - 0.1, CUES.ask + 0.1, t)) + 0.9 * smooth(invLerp(tu + 0.45, tu + 0.6, t));
+      gz = smooth(invLerp(tu + 0.5, tu + 0.66, t));
     }
     if (st.sid === 's25') {
       gz = smooth(invLerp(CUES.phonesLight, CUES.phonesLight + 0.12, t)) * 1.15;
       gc = gz * 0.7;
     }
-    if (st.sid === 's14') gz = 0.0;
     set('chair', gc * 1.6); set('zhang', gz * 1.6);
   }
 
@@ -224,21 +226,21 @@ export function createMeet(ctx) {
       for (let i = 0; i < 5; i++) {
         const ph = P.phones[i]; if (!ph) continue;
         const c = lit ? ctx.ui?.screen?.('phone-c' + i, st) : null;
-        ph.setScreen(c ?? null, c ? g * 1.15 : 0);
+        ph.setScreen(c ?? null, c ? g * 1.15 * (c.glow ?? 1) : 0);
       }
       // vote lights
       for (const u of P.units) {
-        const vi = VOTE_ORDER.indexOf(u.id);
-        const tv = CUES.votes + vi * VOTE_STEP;
-        const k = st.tr >= tv ? 1 : 0;
+        const k = st.tr >= voteTime(u.id, CUES) ? 1 : 0;
         const m = u.mat.uniforms;
         if (k) { m.uEmis.value.set('#46ff86'); m.uEmisGain.value = 2.4; }
         else { m.uEmis.value.set('#59606c'); m.uEmisGain.value = 0.6; }
       }
       // 林工 (from behind) and his chair: hidden where the camera sits at his eyeline or the Hands team shows him
-      const linOn = ['s04', 's14', 's23', 's25'].includes(st.sid);
+      const linOn = ['s19', 's23', 's25'].includes(st.sid);
       cast.lin.root.visible = linOn;
-      R.chairs.lin.visible = !['s01', 's09', 's19', 's20'].includes(st.sid);
+      R.chairs.lin.visible = st.sid !== 's20';
+      // the pendant bar would slice through the screen from the s19/s23 camera behind 林工
+      for (const m of R.pendant) m.visible = !(st.sid === 's19' || st.sid === 's23');
       // s25: the room's light falls away from the faces; the phones light them from below
       const PM = peopleMats(), s25 = st.sid === 's25';
       for (const k of ['face', 'skin', 'hair', 'suit', 'shirt', 'tie', 'lapel']) { const sk = k === 'face' || k === 'skin'; PM[k].uniforms.uPLGain.value = s25 ? (sk ? 3.4 : 1.6) : 1; PM[k].uniforms.uSil.value = s25 ? (sk ? 1.5 : 1.15) : 0.25; PM[k].uniforms.uUnder.value = s25 ? 1 : 0; }
