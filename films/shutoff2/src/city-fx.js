@@ -80,7 +80,6 @@ export function buildNightFx(vols, room) {
     pts.push(r[k][0], V.y1 + 1.5, r[k][1], V.seed);
     if (V.y1 > 180) { const k2 = (k + Math.floor(r.length / 2)) % r.length; pts.push(r[k2][0], V.y1 + 1.5, r[k2][1], V.seed + 0.5); }
   }
-  pts.push(0, 662, 23.1, 0.25);   // the HQ mast
   const ga = new THREE.BufferGeometry();
   ga.setAttribute('position', new THREE.Float32BufferAttribute(pts.filter((_, i) => i % 4 !== 3), 3));
   ga.setAttribute('aSeed', new THREE.Float32BufferAttribute(pts.filter((_, i) => i % 4 === 3), 1));

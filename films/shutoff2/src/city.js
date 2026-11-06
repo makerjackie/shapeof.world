@@ -76,7 +76,11 @@ export async function createCity(ctx) {
   root.add(hills);
 
   // ---- screens: facing the s26 flight and the meeting-room window, a few facing 林工's window
-  const uiTex = new THREE.CanvasTexture(document.createElement('canvas'));
+  // the billboard texture is allocated at the UI canvas's size (1024×512) from the start: WebGL texture storage can't
+  // be resized later, so a smaller placeholder would leave every screen blank
+  const bbCanvas = document.createElement('canvas');
+  bbCanvas.width = 1024; bbCanvas.height = 512;
+  const uiTex = new THREE.CanvasTexture(bbCanvas);
   uiTex.colorSpace = THREE.SRGBColorSpace;
   const scr = buildScreens(vols, [
     { p: new THREE.Vector3(0, 0, -300), n: 9, dmin: 250, dmax: 1500, gap: 230 },
@@ -87,11 +91,14 @@ export async function createCity(ctx) {
   root.add(scr.grp);
   root.add(buildRoofSigns(vols, [{ p: ROOM, n: 14, dmin: 200, dmax: 2000, hmin: 48, dir: [-0.614, -0.789], cone: 0.55 }, { p: new THREE.Vector3(0, 0, 0), n: 8, dmin: 300, dmax: 2500, hmin: 90 }]));
   // rings start nearest the camera's view first, then outward
+  // v12 timing: s26 is short (cityOut → cityData → its end); the end texts (s27–s30) follow after the rewind
+  const shot = (id) => ctx.SHOTS.find((x) => x.id === id) || { start: 0, end: 0 };
+  const T_OUT = ctx.CUES.cityOut, T_DATA = ctx.CUES.cityData, T_END26 = shot('s26').end, T_E1 = shot('s27').start;
   const ringOrder = scr.screens.map((s, i) => [Math.hypot(s.p.x, s.p.z + 500), i]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
   const ringT0 = new Array(scr.screens.length);
-  ringOrder.forEach((i, k) => { ringT0[i] = ctx.CUES.cityData + 0.12 + k * 0.17; });
+  ringOrder.forEach((i, k) => { ringT0[i] = T_DATA + 0.05 + k * 0.09; });
   const flipT = new Array(scr.screens.length);
-  ringOrder.forEach((i, k) => { flipT[i] = ctx.CUES.cityOut + 1.6 + k * 0.1; });
+  ringOrder.forEach((i, k) => { flipT[i] = T_OUT + 0.9 + k * 0.07; });
 
   // light pillars from the screens (overlay)
   const beams = buildBeams(scr.screens);
@@ -137,11 +144,12 @@ export async function createCity(ctx) {
       sky.u.uNight.value = night;
       CU.uCamY.value = cam.position.y;
       // the HQ: hidden from inside the meeting room; in s26 the room's window is cut out of its north face
-      hqMesh.visible = st.set !== 'meet';
-      emb.grp.visible = st.set !== 'meet';
+      // v12: 林工's window shows ordinary towers in rain — 安's HQ and its amber emblem only appear in the city shots
+      hqMesh.visible = st.set === 'city';
+      emb.grp.visible = st.set === 'city';
       const inS26 = st.set === 'city';
       // HQ facade cut-out where the meeting room sits (the camera starts inside it in s26)
-      CU.uHide.value.set(HQ.room.x, HQ.room.y0, HQ.room.y1, inS26 && tr < ctx.CUES.cityOut + 3.5 ? 1 : 0);
+      CU.uHide.value.set(HQ.room.x, HQ.room.y0, HQ.room.y1, inS26 && tr < T_OUT + 2.4 ? 1 : 0);
 
       // ---- screens: ads, then (s26) 早上好 one by one
       let bb = null;
@@ -174,31 +182,33 @@ export async function createCity(ctx) {
         scr.screens.forEach((s, i) => {
           const age = tr - ringT0[i];
           let I = age > 0 ? smooth(age / 0.25) * (0.22 + 0.78 * Math.exp(-age / 1.4)) : 0;
-          I *= 0.35 + 0.65 * smooth(invLerp(ctx.CUES.cityData + 1.6, ctx.CUES.cityData + 3.5, tr));   // softer in daylight
-          if (tr > ctx.CUES.end1) I = 0.1 + 0.05 * Math.sin(tr * 1.1 + i * 1.7);
+          I *= 0.35 + 0.65 * smooth(invLerp(T_DATA + 0.9, T_DATA + 2.2, tr));   // softer in daylight
+          if (tr >= T_E1) I = 0.1 + 0.05 * Math.sin(tr * 1.1 + i * 1.7);
           beams.set(i, I, Math.max(0, age));
           // the link from the HQ lands on the screen as its ring leaves
           const drawn = clamp((tr - (ringT0[i] - 0.7)) / 0.7);
           const glow = drawn >= 1 ? 0.25 + 0.75 * Math.exp(-(tr - ringT0[i]) / 1.2) : 0.6;
-          links.set(i, drawn, glow * (tr > ctx.CUES.end1 ? 0.6 : 1), tr * 0.8 + i * 0.37);
+          links.set(i, drawn, glow * (tr >= T_E1 ? 0.6 : 1), tr * 0.8 + i * 0.37);
         });
         links.u.uTime.value = tr;
-        CU.uDataAll.value = tr > ctx.CUES.end1 ? 1 : 0;
+        CU.uDataAll.value = tr >= T_E1 ? 1 : 0;
         // 安's last wave: from the HQ, overtaking every ring, to the edge of the world by the end of s26
-        const sw = tr - (ctx.CUES.cityData + 1.6);
-        CU.uSweep.value.set(0, 300, HQ.zc, sw > 0 && tr < ctx.CUES.end1 ? 600 * sw + 1600 * sw * sw + 900 * sw * sw * sw : -1);
-        CU.uBreath.value = smooth(invLerp(ctx.CUES.cityData + 1.5, ctx.CUES.end1, tr));
-        CU.uRipple.value = 0.24 * smooth(invLerp(ctx.CUES.cityData + 2.0, ctx.CUES.cityData + 3.5, tr)) * (1 - 0.45 * smooth(invLerp(ctx.CUES.end1, ctx.CUES.end1 + 2.5, tr)));
+        const sw = tr - (T_DATA + 0.9);
+        CU.uSweep.value.set(0, 300, HQ.zc, sw > 0 && tr < T_E1 ? 600 * sw + 1600 * sw * sw + 2500 * sw * sw * sw : -1);
+        CU.uBreath.value = smooth(invLerp(T_DATA + 1.0, T_END26, tr));
+        CU.uRipple.value = 0.24 * smooth(invLerp(T_DATA + 1.0, T_DATA + 2.2, tr)) * (1 - 0.45 * smooth(invLerp(T_E1, T_E1 + 2.5, tr)));
         // a slow pulse from 安's HQ every 6 s through the end texts
-        const pt = tr - ctx.CUES.end1;
+        const pt = tr - T_E1;
         CU.uPulse.value.set(0, 0, HQ.zc, pt > 0 ? ((pt % 6.5) * 700) : -1);
         // the sky and the hills turn with the grade (cams/city.js cityLook: day → data over cityData + 1.9 … + 4.4)
-        const kLook = smooth(invLerp(ctx.CUES.cityData + 1.6, ctx.CUES.cityData + 3.8, tr));
-        sky.u.uData.value = tr > ctx.CUES.cityData + 1.6 ? 1 : 0;
-        sky.u.uDataWipe.value = tr >= ctx.CUES.end1 ? 1 : 0;
-        sky.u.uSweepSky.value.set(0, HQ.zc, CU.uSweep.value.w, CU.uSweep.value.w > 0 ? 1 : 0);
+        const kLook = smooth(invLerp(T_DATA + 1.2, T_DATA + 2.6, tr));
+        sky.u.uData.value = tr > T_DATA + 0.9 ? 1 : 0;
+        sky.u.uDataWipe.value = tr >= T_E1 ? 1 : 0;
+        // once the sweep has crossed the whole city (≈7.5 km), the sky and the hills flip in ~0.25 s
+        const farFlip = tr >= T_E1 ? 1 : clamp((CU.uSweep.value.w - 7500) / 2400);
+        sky.u.uSweepSky.value.set(0, HQ.zc, CU.uSweep.value.w, farFlip);
         sky.u.uBreath.value = 0.5 + 0.5 * Math.sin(tr * 0.9);
-        hills.userData.u.uHillData.value = smooth(invLerp(0.0, 0.12, kLook));
+        hills.userData.u.uHillData.value = smooth(farFlip);
       } else {
         P.set(70, 0, tr, 190);
         CU.uDataAll.value = 0;

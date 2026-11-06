@@ -281,16 +281,11 @@ export function createSky() {
       vec3 col = uNight > 0.999 ? vec3(0.0) : daySky(d, normalize(uSunDir));
       if(uNight > 0.001) col = mix(col, nightSky(d), uNight);
       if(uData > 0.001){
-        // the sky turns where 安's sweep has passed: overhead first, the far horizon last (with the far city)
-        float k = uDataWipe;
+        // the sky turns last, once 安's sweep has taken the whole city: a quick wipe from the zenith down to the horizon
+        float el = clamp(asin(clamp(d.y, -1.0, 1.0)) / 1.5708, 0.0, 1.0);
+        float f = uSweepSky.w;                                       // 0..1 flip progress
+        float k = max(uDataWipe, smoothstep(el - 0.12, el + 0.02, f * 1.15 - 0.1));
         float front = 0.0;
-        if(uSweepSky.w > 0.5){
-          float ce = max(d.y, 0.0);
-          vec2 Q = cameraPosition.xz + normalize(d.xz + 1e-5) * 6500.0 * (1.0 - ce) * (1.0 - ce);
-          float fr = uSweepSky.z - length(Q - uSweepSky.xy);
-          k = max(k, smoothstep(-350.0, 80.0, fr));
-          front = exp(-abs(fr) / 220.0);
-        }
         col = mix(col, dataSky(d), uData * k);
         col += vec3(1.0, 0.71, 0.28) * front * 0.18 * uData * (1.0 - uDataWipe);
       }

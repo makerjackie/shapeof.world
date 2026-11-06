@@ -2,7 +2,8 @@
 // s27–s30 (the data city breathing behind the end texts). All times are relative to the CUES (real film seconds,
 // st.tr), so a retime of the cut moves everything with it.
 import * as THREE from 'three';
-import { CUES } from '../shots.js';
+import { CUES, SHOTS } from '../shots.js';
+const shot = (id) => SHOTS.find((x) => x.id === id) || { start: 0, end: 1 };
 import { smooth, invLerp, clamp } from '../util.js';
 
 // s26: start in the room beside the LED wall, between two window fins (x −6 / −4.5); push through the glass, rise over
@@ -44,8 +45,8 @@ function camAt(keys, t) {
 
 // warp the s26 clock: a held beat in the room, then the glide out (9 s of keys over the shot's length)
 function s26Clock(tr) {
-  const D = CUES.end1 - CUES.cityOut;
-  const a = clamp((tr - CUES.cityOut) / D);
+  const S = shot('s26');
+  const a = clamp((tr - S.start) / (S.end - S.start));
   const w = a < 0.3 ? 0.3 * Math.pow(a / 0.3, 1.6) : a;
   return w * 9;
 }
@@ -61,7 +62,7 @@ export const CAMS = {
 };
 for (const id of ['s27', 's28', 's29', 's30']) {
   CAMS[id] = (lt, d, t, st) => {
-    const c = camAt(END, invLerp(CUES.end1, CUES.title2, st.tr));
+    const c = camAt(END, invLerp(shot('s27').start, shot('s30').end, st.tr));
     return { pos: c.pos, look: c.look, fov: c.fov, near: 2.0, far: 9000 };
   };
 }
@@ -73,9 +74,10 @@ const mixHex = (a, b, k) => hex(cA.set(a).lerp(cB.set(b), clamp(k)));
 // one continuous grade over s26–s30: morning until 安's last wave, then the dark data view, dimming under the texts
 export function cityLook(tr) {
   const D = CUES.cityData;
-  const k = smooth(invLerp(D + 2.2, D + 3.9, tr));                 // day → data, in step with 安's sweep reaching the far city
-  const dim = smooth(invLerp(CUES.end1, CUES.end1 + 2.5, tr));       // settle under the end texts
-  const inRoom = 1 - smooth(invLerp(CUES.cityOut + 1.2, CUES.cityOut + 2.2, tr));
+  const k = smooth(invLerp(D + 1.5, D + 2.45, tr));                 // day → data, in step with 安's sweep reaching the far city
+  const E1 = shot('s27').start;
+  const dim = smooth(invLerp(E1, E1 + 2.5, tr));       // settle under the end texts
+  const inRoom = 1 - smooth(invLerp(CUES.cityOut + 0.8, CUES.cityOut + 1.5, tr));
   return {
     preset: 'morning', to: 'dc', k: 0.85 * k + 0.15 * dim,
     sunElev: 14, sunAz: 58,                               // the meeting room's sun (ENE, low)
