@@ -9,7 +9,7 @@ import { makeFigure, PHONE, J, HEAD_PITCH } from './room-figure.js';
 import { createRainGlass, createHalo } from './room-rain.js';
 import { onTwos, smoother, invLerp, clamp } from './util.js';
 
-const FIGURE_SHOTS = new Set(['s05', 's12']);
+const FIGURE_SHOTS = new Set(['s05', 's12', 'k05']);
 
 export function createRoom(ctx) {
   const root = new THREE.Group();
@@ -44,6 +44,7 @@ export function createRoom(ctx) {
   const rain = createRainGlass(ctx, set.glassZ);
   const halo = createHalo(ctx);
   const _hp = new THREE.Vector3();
+  const _red = new THREE.Color();
 
   // s12: solve the chest / neck / head rotations that point his face straight into the dome camera's lens
   const D2R = Math.PI / 180;
@@ -109,7 +110,10 @@ export function createRoom(ctx) {
       mH.uniforms.uColP.value.set(ir ? '#f4ece8' : '#ebd2c6');
       mN.uniforms.uColP.value.set(ir ? '#f4ece8' : '#ebd2c6');
       mH.uniforms.uFaceK.value = ir ? 0.85 : 0.5;
-      void mB;
+      // k05: the rim on his silhouette turns with the screen, cold → red at CUES.killPress
+      const red = st.sid === 'k05' ? clamp((st.tr - st.cues.killPress + 0.02) / 0.14, 0, 1) : 0;
+      for (const m of fig.mats) m.uniforms.uRimCol.value.set('#b9c6ff').lerp(_red.set('#ff4a3a'), red);
+      fig.group.children[0].visible = st.sid !== 'k05';     // the flyaway strands (their cold rim would fight the red)
       fig.group.visible = showFig;
       if (showFig) {
         const w = fig.pose(poseFor(st));
@@ -122,9 +126,10 @@ export function createRoom(ctx) {
           const glow = pc ? (pc.glow ?? 1) : 1;
           phone.setScreen(pc || null, glow);
           // the phone's cold halo around his silhouette (s05, seen from behind)
-          if (st.sid === 's05') {
+          if (st.sid === 's05' || st.sid === 'k05') {
             _hp.setFromMatrixPosition(phone.root.matrix).applyMatrix4(ROOM_M);
-            halo.set(_hp, 0.9 * glow, 1.1);
+            const red = st.sid === 'k05' ? clamp((st.tr - st.cues.killPress + 0.02) / 0.14, 0, 1) : 0;
+            halo.set(_hp, (0.9 + 0.6 * red) * Math.max(glow, 0.6), 1.1 + 0.6 * red, red > 0 ? '#ff3a2c' : '#9fb6ff');
           }
         }
       }

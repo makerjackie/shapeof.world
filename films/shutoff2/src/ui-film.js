@@ -146,12 +146,18 @@ export function subtitle(g, lines, a, dur, y, o = {}) {
 
 // ---------------------------------------------------------------- s12 · the home-camera HUD (sparse)
 // the box sits on 林工 in Room's home-camera view (their numbers: centre (480, 900), ~400×440) and follows their
-// digital push-in during the look-up: 1.0 → 1.3 about (470, 880), from CUES.lookUp + 0.25
-export const CCTV_PUSH = { from: 0.25, dur: 1.2, to: 1.3, cx: 470, cy: 880 };
-export function cctvBox(tr) {
-  const z = 1 + (CCTV_PUSH.to - 1) * easeInOut(clamp((tr - C.lookUp - CCTV_PUSH.from) / CCTV_PUSH.dur));
-  const x = 480, y = 900, w = 400, h = 440;
-  return { x: CCTV_PUSH.cx + (x - CCTV_PUSH.cx) * z, y: CCTV_PUSH.cy + (y - CCTV_PUSH.cy) * z, w: w * z, h: h * z };
+// digital push-in during the look-up. Room exports the curve (src/room-layout.js: s12Zoom, S12_ZOOM_CENTRE);
+// ui.js loads it when present, and this fallback matches it: 1.0 → 1.3, smoothstep over 1.0 s from lookUp + 0.25.
+let roomZoom = null, roomCentre = [470, 880];
+export function setRoomZoom(fn, centre) { roomZoom = fn; if (centre) roomCentre = centre; }
+function s12Zoom(st) {
+  if (roomZoom) { try { return roomZoom(st); } catch (e) { /* fall through */ } }
+  return 1 + 0.3 * smooth(clamp((st.tr - (C.lookUp + 0.25)) / 1.0));
+}
+export function cctvBox(st) {
+  const z = s12Zoom(st), [cx, cy] = roomCentre;
+  const x = 505, y = 930, w = 420, h = 450;     // measured on the new camera at 43.0 s and 46.4 s
+  return { x: cx + (x - cx) * z, y: cy + (y - cy) * z, w: w * z, h: h * z };
 }
 export const CCTV_APPEAR = 0.35;
 export function homeCamHud(g, st) {
@@ -164,7 +170,7 @@ export function homeCamHud(g, st) {
   txt(g, `2026-11-05  02:41:${String(secs).padStart(2, '0')}`, 110, 300, { font: f(500, 38, 'mono'), color: '#ffffff', shadow: sh });
   if (tr % 1 < 0.6) { g.save(); g.shadowColor = 'rgba(0,0,0,0.6)'; g.shadowBlur = 6; g.beginPath(); g.arc(124, 352, 11, 0, Math.PI * 2); g.fillStyle = '#ff3b30'; g.fill(); g.restore(); }
   txt(g, 'REC', 146, 364, { font: f(600, 32, 'mono'), color: '#ffffff', shadow: sh });
-  const B0 = cctvBox(tr);
+  const B0 = cctvBox(st);
   const ap = smooth((st.ltr - CCTV_APPEAR) / 0.25);
   if (ap <= 0.01) return;
   const look = tr - C.lookUp;

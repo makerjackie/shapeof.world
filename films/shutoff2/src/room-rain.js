@@ -19,7 +19,8 @@ uniform vec3 uCamPos, uGO, uGU, uGV, uGN;
 uniform vec2 uGSize;
 uniform float uTime, uGlass, uCCTV, uHaze, uFogDensity, uBlur, uDropK, uFall, uDropScale, uZoom, uHunt, uBokeh;
 uniform vec2 uZoomOut;
-uniform vec3 uFogCool, uFogWarm, uTint;
+uniform vec3 uFogCool, uFogWarm, uTint, uWash;
+uniform float uWashK;
 varying vec2 vUv;
 out vec4 oColor;
 
@@ -218,6 +219,8 @@ void main(){
   }
   // trails are a touch darker and clearer, with a faint edge
   col = mix(col, col * 0.92, trail * 0.4);
+  // the room's light caught on the wet glass (k05: the red flood)
+  col += uWash * uWashK * (0.18 + 0.5 * haze + 0.6 * m * (0.4 + 0.6 * smoothstep(0.5, 0.9, dist)));
   float a = clamp(max(haze * 0.9 + 0.1, m), 0.0, 1.0);
   oColor = vec4(col, a);
 }
@@ -239,7 +242,8 @@ export function createRainGlass(ctx, glassZ) {
     uGSize: { value: new THREE.Vector2(x1 - x0, y1 - y0) },
     uTime: { value: 0 }, uGlass: { value: 0 }, uCCTV: { value: 0 },
     uHaze: { value: 0.55 }, uFogDensity: atm.uFogDensity, uBlur: { value: 9 }, uDropK: { value: 1 }, uFall: { value: 1 }, uDropScale: { value: 2.4 },
-    uZoom: { value: 1 }, uHunt: { value: 0 }, uBokeh: { value: 4 }, uZoomOut: { value: new THREE.Vector2(S12_ZOOM_CENTRE[0] / 1080, 1 - S12_ZOOM_CENTRE[1] / 1920) },
+    uZoom: { value: 1 }, uHunt: { value: 0 }, uBokeh: { value: 4 },
+    uWash: { value: new THREE.Color('#ff2a1e') }, uWashK: { value: 0 }, uZoomOut: { value: new THREE.Vector2(S12_ZOOM_CENTRE[0] / 1080, 1 - S12_ZOOM_CENTRE[1] / 1920) },
     uFogCool: atm.uFogCool, uFogWarm: atm.uFogWarm, uTint: { value: new THREE.Color('#d6eee4') },
   };
   const mat = new THREE.ShaderMaterial({
@@ -272,6 +276,8 @@ export function createRainGlass(ctx, glassZ) {
       u.uFall.value = L.rainFall ?? 1;
       u.uDropScale.value = L.rainScale ?? 2.4;
       u.uBokeh.value = L.rainBokeh ?? 4;
+      u.uWashK.value = L.rainTintK ?? 0;
+      if (L.rainTint) u.uWash.value.set(L.rainTint);
       if (cctv) {
         // as he looks up, the camera "notices": a focus hunt, then a slow digital push-in that holds
         const lu = st.cues.lookUp, tr = st.tr;
@@ -319,7 +325,7 @@ export function createHalo(ctx) {
   m.frustumCulled = false; m.visible = false; m.renderOrder = 1100;
   ctx.overlay.add(m);
   return {
-    set(pos, i, size = 0.5) { m.visible = i > 0; m.position.copy(pos); u.uI.value = i; u.uSize.value = size; },
+    set(pos, i, size = 0.5, color) { m.visible = i > 0; m.position.copy(pos); u.uI.value = i; u.uSize.value = size; u.uColor.value.set(color ?? '#9fb6ff'); },
     hide() { m.visible = false; },
   };
 }

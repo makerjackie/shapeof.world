@@ -1,6 +1,7 @@
 // Cameras and looks for the Hands department's shots: s02 wrist, s15 pulse, s18 jump, s21 grip.
 import * as THREE from 'three';
-import { STAGES, K05 } from '../hands-stage.js';
+import { STAGES } from '../hands-stage.js';
+import { PHONE } from '../room-figure.js';
 import { WATCH_X, wristSection } from '../hands-rig.js';
 import { ROOM, rw, rwDir, roomAz } from '../room-layout.js';
 import { smooth, smoother, invLerp, lerp } from '../util.js';
@@ -20,29 +21,17 @@ function watchFrame(sid) {
 const A = (v) => [v.x, v.y, v.z];
 const add = (c, ...terms) => { const v = c.clone(); for (const [d, k] of terms) v.addScaledVector(d, k); return v; };
 
-// the k05 phone: centre, screen normal, top, right (world)
-function phoneK05() {
-  const m = K05.phone(), e = m.elements;
-  const x = new THREE.Vector3(e[0], e[1], e[2]), n = new THREE.Vector3(e[4], e[5], e[6]), top = new THREE.Vector3(-e[8], -e[9], -e[10]);
-  const c = new THREE.Vector3().setFromMatrixPosition(m).addScaledVector(n, 0.008);
-  return { c, n, top, x };
-}
-
 export const CAMS = {
   // k01: the first frame. Low over the dark desk: the still hand at the edge, the phone beyond, the rain window above.
   k01: (lt, d) => {
     const k = smoother(lt / d);
     return { pos: rw(-0.1, lerp(1.025, 1.01, k), lerp(-0.985, -1.03, k)), look: rw(-0.095, 0.70, -1.594), fov: 50, near: 0.01 };
   },
-  // k05: close on his thumb over the red button, a slow push-in
+  // k05: 02:30. Medium, from behind his right shoulder in the dark room: his silhouette at the desk by the rain
+  // window, the phone small in his hands, the only light. A slow push-in through the red flood.
   k05: (lt, d) => {
-    const P = phoneK05();
     const k = smoother(lt / d);
-    const dist = lerp(1.0, 0.85, k);
-    const pos = add(P.c, [P.n, 0.3 * dist], [P.top, -0.06 * dist], [P.x, 0.07 * dist]);
-    // rolled so the thumb comes in on the diagonal from the lower left
-    const up = P.top.clone().multiplyScalar(Math.cos(0.42)).addScaledVector(P.x, Math.sin(0.42));
-    return { pos: A(pos), look: A(add(P.c, [P.top, 0.0], [P.x, -0.035])), up: A(up), fov: 36, near: 0.01 };
+    return { pos: rw(lerp(0.5, 0.42, k), lerp(1.46, 1.42, k), lerp(-0.5, -0.6, k)), look: rw(lerp(0.0, 0.02, k), lerp(1.02, 1.0, k), -1.6), fov: 46, near: 0.03 };
   },
   // close on the wrist at the table edge, from his side; the watch face reads upright
   s02: (lt, d) => {
@@ -97,13 +86,15 @@ export const LOOKS = {
       rainHaze: 0.85, rainBlur: 26, rainFall: 0.3, rainBokeh: 1.2, exposure: 1.05, bloom: 1.3,
     };
   },
-  // 02:30: the red screen washes his hand; the room is nearly black
+  // 02:30: cold screen light, then at CUES.killPress the screen turns red and floods the room
   k05: (lt, d, t, st) => {
-    const P = phoneK05();
+    const r = smooth(invLerp(st.cues.killPress - 0.02, st.cues.killPress + 0.12, st.tr));
+    const c = new THREE.Color('#bcd0ff').lerp(new THREE.Color('#ff3326'), r);
     return {
-      preset: 'night', sunElev: 9, sunAz: roomAz(0, -1), sunStrength: 0.12, ambient: '#05061a', fogDensity: 0.0007, rain: 0.8,
-      lights: [{ pos: A(add(P.c, [P.n, 0.05], [P.top, -0.02], [P.x, -0.045])), r: 0.17, color: '#ff4a44', i: 0.85 }, { pos: A(add(P.c, [P.n, 0.12], [P.top, 0.06])), r: 0.4, color: '#7d8cff', i: 0.25 }],
-      exposure: 1.05, bloom: 1.2,
+      preset: 'night', sunElev: 10, sunAz: roomAz(0, -1), sunStrength: lerp(0.2, 0.08, r), ambient: '#04050f', fogDensity: 0.0007, rain: 0.8,
+      lights: [{ pos: rw(PHONE.c.x, PHONE.c.y + 0.07, PHONE.c.z + 0.06), r: lerp(0.85, 1.7, r), color: '#' + c.getHexString(), i: lerp(0.95, 1.7, r) }],
+      rainHaze: 0.72, rainBlur: 22, rainFall: 0.4, rainBokeh: 2, rainTint: '#ff2a1e', rainTintK: 0.32 * r,
+      exposure: 1.05, bloom: lerp(1.2, 1.45, r), sat: lerp(1.0, 1.08, r),
     };
   },
   s02: (lt, d) => {

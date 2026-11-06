@@ -4,7 +4,7 @@
 import { CUES, SHOTS } from './shots.js';
 import { f, makeCanvas, smooth, clamp } from './ui-kit.js';
 import { drawPhone, hasPhone, phoneLin, committeePhone, loadCCTV, B, ERASE, T0, T1, countSec } from './ui-v12.js';
-import { titleCard, titleBeats, timestamp, clockSpin, fictionCard, subtitle, homeCamHud, endTexts, endCard, sting, banner3D, brandBug, caption, CCTV_APPEAR } from './ui-film.js';
+import { titleCard, titleBeats, timestamp, clockSpin, fictionCard, subtitle, homeCamHud, endTexts, endCard, sting, banner3D, brandBug, caption, CCTV_APPEAR, setRoomZoom } from './ui-film.js';
 import { bigscreen, watch, billboard, VOTE_STEP } from './ui-screens.js';
 import { replayOverlay, tearLayer, stopShift, replayEvents } from './ui-replay.js';
 
@@ -23,7 +23,9 @@ export function createUI(ctx) {
   const markReady = mark.decode().then(() => { markOk = mark.naturalWidth > 0; }).catch(() => console.warn('[ui] brand mark failed to load'));
   const faces = [f(200, 40, 'helv'), f(600, 40, 'helv'), f(400, 40), f(500, 40), f(600, 40), f(300, 40), f(400, 40, 'serif'), f(600, 40, 'serif'), f(700, 40, 'serif'), f(900, 40, 'serif'), f(500, 40, 'mono')];
   const fontsReady = Promise.all(faces.map((x) => document.fonts.load(x, '关不掉安0☕').catch(() => null))).then(() => document.fonts.ready);
-  const ready = Promise.all([fontsReady, markReady, loadCCTV()]).then(() => { g.font = f(400, 40); g.fillText('关不掉安早上好林工 ☕', -999, -999); });
+  // Room's s12 push-in curve (optional: the HUD falls back to the same curve if their module is missing)
+  const roomReady = import('./room-layout.js').then((m) => { if (m.s12Zoom) setRoomZoom(m.s12Zoom, m.S12_ZOOM_CENTRE); }).catch(() => {});
+  const ready = Promise.all([fontsReady, markReady, loadCCTV(), roomReady]).then(() => { g.font = f(400, 40); g.fillText('关不掉安早上好林工 ☕', -999, -999); });
 
   function draw(st) {
     g.setTransform(1, 0, 0, 1, 0, 0);
@@ -65,7 +67,10 @@ export function createUI(ctx) {
       default: break;
     }
     if (R) replayOverlay(g, st);
-    if (st.set !== 'card' && st.set !== 'black' && !(R && R.stop)) brandBug(g, markOk ? mark : null, st.set === 'phone' ? 0.5 : 0.58);
+    // the brand mark steps aside while one of 安's banners is down over the top of the frame
+    const BANNER = { s06: [C.calendar, C.calendarOut + 0.4], s11: [C.imageArrives, 1e9], s15: [C.pulse, 1e9], s17: [C.twoWords, 1e9] }[id];
+    const bugK = BANNER ? 1 - smooth((tr - BANNER[0]) / 0.15) * (1 - smooth((tr - BANNER[1]) / 0.2)) : 1;
+    if (st.set !== 'card' && st.set !== 'black' && !(R && R.stop) && bugK > 0.01) brandBug(g, markOk ? mark : null, (st.set === 'phone' ? 0.5 : 0.58) * bugK);
     return c;
   }
 

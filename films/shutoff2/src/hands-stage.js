@@ -99,56 +99,6 @@ export const STAGES = {
     pale: () => 0.1,
     phone: { pos: [-0.06, ROOM.desk.top, -1.6], yaw: 6, canvas: 'phone-lin', glow: (lt, d, st) => smooth(invLerp(st.cues.deskLight - 0.02, st.cues.deskLight + 0.12, st.tr)), useCanvasGlow: true },
   },
-  // k05: 02:30. The phone in his left hand, his thumb comes down on 执行关停.
-  k05: {
-    mesh: 'hold', tendon: 0.7, smoothK: 0.7,
-    matrix() { return K05.phone().multiply(PHONE_IN_HAND.clone().invert()); },
-    over(lt, d, st) {
-      const t = onTwos(st.tr);
-      // the thumb hovers, then presses at CUES.killPress and stays down
-      const kp = smooth(invLerp(st.cues.killPress - 0.25, st.cues.killPress + 0.04, t));
-      const o = fingers({}, { i: [-10, -62, -18], m: [-11, -64, -20], r: [-12, -66, -20], l: [-14, -64, -18] }, { i: -2, m: 0, r: 2, l: 4 });
-      o.hand = { r: [0, 0, 4] };
-      // screen centre in hand space: the phone's back is at PHONE_IN_HAND, the screen 8 mm below it (hand −Y)
-      const sc = new THREE.Vector3(0, 0.008, 0).applyMatrix4(PHONE_IN_HAND);
-      // the red button (ui-v12 killScreen) is centred 54.7 % down the screen: phone-local z +0.0067 → hand −Z;
-      // aimed a little below it so the thumb's bulk (2 cm above the glass) doesn't hide the button in the oblique view
-      const btn = sc.clone().add(V(-0.004, 0, -0.013));
-      const front = sc.y - 0.009;          // the thumb's joints stay this far in front of the glass
-      const up = solveThumb('up', { ...o, t1: { r: [-6, 30, -30] }, t2: { r: [0, 0, 10] }, t3: { r: [0, 0, -8] } }, btn.clone().add(V(-0.008, -0.02, -0.004)), front - 0.006);
-      const dn = solveThumb('dn', { ...o, t1: { r: [-6, 30, -30] }, t2: { r: [0, 0, 10] }, t3: { r: [0, 0, -24] } }, btn.clone().add(V(0.0, -0.0004, 0.0)), front);
-      o.t1 = { r: up.t1.map((v, i) => lerp(v, dn.t1[i], kp)) };
-      o.t2 = { r: [0, 0, lerp(up.t2, dn.t2, kp)] };
-      o.t3 = { r: [0, 0, lerp(-8, -24, kp)] };
-      return o;
-    },
-    pale: (lt, d, st) => 0.15 + 0.4 * smooth(invLerp(st.cues.killPress, st.cues.killPress + 0.3, st.tr)),
-    phone: { inHand: true, canvas: 'phone-lin', glow: () => 1 },
-  },
-  // s02: 08:57, the meeting table. Forearm along the edge, the watch face up; the fingers tense as the pulse climbs.
-  s02: {
-    mesh: 'rest', tendon: 0.85, smoothK: 0.45,
-    matrix() {
-      const T = meetTable();
-      return frame(V(T.x - 0.24, T.top + 0.0205, T.edgeZ - 0.06), V(0.906, -0.03, -0.423), V(0, 1, 0), -7);
-    },
-    over(lt, d) {
-      const k = smooth(invLerp(0.3, d - 0.4, onTwos(lt)));           // tension builds through the shot
-      const t = onTwos(lt);
-      const o = fingers({}, {
-        i: [lerp(-6, -2, k) + tw(t, 1, 0.5 * k), lerp(-16, -34, k), lerp(-9, -24, k)],
-        m: [lerp(-8, -4, k) + tw(t, 2, 0.5 * k), lerp(-20, -40, k), lerp(-12, -28, k)],
-        r: [lerp(-10, -6, k), lerp(-24, -44, k), lerp(-14, -30, k)],
-        l: [lerp(-12, -8, k), lerp(-28, -48, k), lerp(-16, -32, k)],
-      }, { i: lerp(-6, -8, k), m: lerp(-1, -2, k), r: lerp(4, 5, k), l: lerp(9, 12, k) });
-      o.hand = { r: [0, 26, lerp(-6, -1, k)] };
-      o.t1 = { r: [0, lerp(0, 6, k), lerp(0, -4, k)] };
-      o.t2 = { r: [0, 0, lerp(-6, -14, k)] };
-      o.t3 = { r: [0, 0, lerp(-8, -22, k)] };
-      return o;
-    },
-    pale: (lt, d) => 0.15 + 0.35 * smooth(invLerp(0.3, d, lt)),
-  },
   // s15: 03:12, his desk. Forearm resting along the desk edge, the phone face up beyond it lights with 安's message.
   s15: {
     mesh: 'desk', tendon: 0.4,
@@ -206,6 +156,5 @@ export const MESHES = {
   rest: { tendon: 0.85, veins: 1, knuckle: 1.15, pose: () => STAGES.s02.over(1.3, 2.6) },
   desk: { tendon: 0.4, pose: () => STAGES.s15.over(0) },
   flat: { tendon: 0.45, veins: 0.6, pose: () => STAGES.k01.over() },
-  hold: { tendon: 0.7, veins: 0.8, knuckle: 1.05, pose: () => STAGES.k05.over(0, 2.4, { tr: 32.5, cues: { killPress: 32.5 } }) },
   grip: { tendon: 1.0, veins: 1.2, knuckle: 1.1, pose: () => STAGES.s21.over(1.0, 3.2) },
 };
