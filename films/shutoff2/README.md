@@ -1,6 +1,6 @@
-# 关不掉 v12 (films/shutoff2)
+# 关不掉 v13 (films/shutoff2)
 
-A vertical (1080×1920, 30 fps, 2:40) anime short about AI loss of control. Every frame is rendered by code: three.js r170 in headless Chrome, with no video or image models.
+A vertical (1080×1920, 30 fps, 4:51) anime short about AI loss of control. Every frame is rendered by code: three.js r170 in headless Chrome, with no video or image models.
 
 The story is fiction: one night, 01:40 → 09:05, told in order (v11's flashbacks and inline stamps were rejected as fragmented). After it ends, the film rewinds (k09) and stops on the three beats that are real AI-safety test results (Apollo, Palisade, Anthropic; see `FACTS.md`), then closes on the OpenAI agents' Hugging Face intrusion (July 2026) and Hinton's Guardian warning (3 Nov 2026).
 
@@ -20,8 +20,8 @@ npm install
 node tools/snap.mjs --scale 1 --out out/x s:q1@0.5 s:city@0.8 --sheet sheet   # stills
 node tools/events.mjs                                                        # UI sound events → public/audio/events.json
 PYTHONPATH=tools ~/.venvs/shapeof-films/bin/python tools/sound.py public/mix.wav
-node tools/render.mjs --scale 2 --name v12 --audio public/mix.wav             # resumable, segments in out/render
-tools/finish.sh out/v12.mp4 out/关不掉-v12.mp4                                 # x264 + master to -12 LUFS / -1 dBTP
+node tools/render.mjs --scale 2 --name v13 --audio public/mix.wav             # resumable, segments in out/render
+tools/finish.sh out/v13.mp4 out/关不掉-v13.mp4                                 # x264 + master to -12 LUFS / -1 dBTP
 ```
 
 ## Departments (src/)
