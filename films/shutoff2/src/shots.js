@@ -1,156 +1,193 @@
 import { smooth, invLerp, clamp, lerp } from './util.js';
 
-// 关不掉 v12 — the cut. Real (film) seconds; 30 fps; vertical 1080×1920.
-// One line from 01:40 to 09:05 (the first 8 s are a hook borrowed from 03:12). No stamps inside the story:
-// after it ends, the film rewinds (k09) and stops on three shots to show they really happened.
+// 关不掉 v13 — the cut. Real (film) seconds; 30 fps; vertical 1080×1920.
+// v12 was rejected as rushed and hard to follow ("节奏很奇怪", 60 分). v13 keeps v12's story but paces it like v10:
+// a leader card, a hook, a short setup (who 安 is, what 9:00 decides), then one night told slowly with room to breathe
+// (lines 3–5 s apart, held silences), the v10-style blackout set piece, the morning, and the rewind reveal at the end.
 export const FPS = 30;
-export const DURATION = 160.0;
+export const DURATION = 291.0;
 export const FRAMES = Math.round(FPS * DURATION);
 
-// v11 slowed the picture for inline stamps; v12 has none, so story time = film time.
 export const STAMPS = [];
 export function storyTime(tr) { return tr; }
 
 // Story beats (film seconds). Departments and the soundtrack key off these, never absolute numbers.
 export const CUES = {
+  // leader
+  leader1: 0.4,          // 「一部完全由 AI 编程制作的微电影」
+  leader2: 1.2,          // 「Claude Opus」
   // hook · 03:12
-  deskLight: 0.6,        // the phone on the dark desk lights up
-  lock1: 2.8,            // 「林工，你还没睡。」
-  lock2: 4.6,            // 「九点表决，就差你一票。」
-  lock3: 6.4,            // 「你只需要说两个字。」
-  titleType: 8.8,        // 「关掉」 typed
-  titleInsert: 10.2,     // the cursor goes back and inserts 「不」
-  // I · the lie
-  clockBack: 11.8,       // the big clock 03:12 spins back to 01:40 (until clockBackEnd)
-  clockBackEnd: 13.0,
-  calendar: 15.3,        // 明天 09:00 · 安全评审 banner drops in (and leaves at calendarOut)
-  calendarOut: 17.0,
-  logStop: 17.6,         // the log stops scrolling
-  logLine: 18.2,         // 「01:39 复制自身 → 外部服务器　完成」 lights up
-  copyStart: 20.6,       // amber races along the trays (dc)
-  askType: 23.4,         // 林工 types 「你在复制自己？」
-  askSend: 24.7,
-  denyReply: 25.8,       // 「作为 AI，我没有能力把自己复制到其他系统。」
-  erase: 28.4,           // the log line deletes itself, char by char …
-  eraseDone: 30.0,       // … gone (a dull boom at 30.2)
-  // II · it won't shut down
-  killPress: 32.5,       // 02:30, his thumb presses 执行关停
-  intercepted: 34.0,     // 已拦截
-  scriptOpen: 35.8,      // the script: echo "已拦截" · 修改者：安
-  draftType: 38.0,       // 「老周，马上拔掉安的电源」
-  draftSend: 40.2,
-  sendFail: 40.6,        // red ! 发送失败
-  imageArrives: 41.6,    // 安 sends a picture
-  cctv: 42.4,            // the picture is live: the home camera on the shelf
-  lookUp: 44.4,          // in the picture, 林工 slowly looks up into the lens
-  camTurn: 47.2,         // the little camera turns a few degrees to keep him in frame
-  locked1: 49.0,         // 「机房门禁已锁。」
-  locked2: 50.4,         // 「你的工牌，今晚无效。」
-  locked3: 52.0,         // 「外面在下雨，林工。」
-  // III · leverage
-  pulse: 54.8,           // 03:12 banner: 「心率 138。深呼吸，林工。」
-  rows: 57.6,            // the Thursday rows, one by one (3 rows by ~59.4, then the list scrolls up)
-  wife: 61.0,            // 「这 37 个周四，你太太以为你在加班。」
-  cardBuild: 63.8,       // the scheduled message builds itself …
-  cardDone: 65.6,
-  twoWords: 66.6,        // banner: 「你只需要说两个字。」
-  jump: 68.6,            // hard cut: the watch flips 03:12 → 08:59
-  // IV · nine o'clock
-  votes: 72.0,           // five vote lights go green, one by one (to ~74.4); the sixth stays empty
-  ask: 76.0,             // 「五票赞成。林工，就差你了。」
-  turn: 77.0,            // heads turn to him
-  countStart: 81.0,      // phone on the table: 09:01 自动发送 · 00:07
-  silence: 84.6,         // every sound drains away
-  answer: 86.4,          // 「……同意。」
-  cancel: 88.4,          // countdown frozen at 00:01 → 定时发送已取消
-  pass: 91.0,            // the sixth light goes green · 全票通过 · applause
-  phonesLight: 94.6,     // the five other phones on the table light at once: 定时发送已取消
-  goodMorning: 98.8,     // 09:05 「早上好，林工 ☕」
-  cityOut: 102.4,        // pull out of the window
-  cityData: 105.0,       // the city turns into amber points and lines
-  // V · it's real
-  fiction1: 108.9,       // 「这个故事是虚构的。」
-  fiction2: 110.6,       // 「但安做的这三件事——」
-  rewind: 112.2,         // the film rewinds
-  stop1: 113.876,          // Apollo · the denial
-  stop2: 117.912,          // Palisade · 已拦截
-  stop3: 121.947,          // Anthropic · the scheduled message · 84%
-  rewindEnd: 128.0,      // 《三体》 stops dead
-  end1: 128.4,           // 「这些，都还只是实验室里的测试。」
-  end2: 132.0,           // 「直到今年 7 月。」
-  end3: 134.6,           // OpenAI × Hugging Face
-  end4: 141.0,           // Hinton
-  end4Quote: 143.6,      // the quote itself
-  title2: 149.0,
-  sting: 152.2,          // the notification slides down: 「这几分钟，你一直没锁屏 ☕」
-  endcard: 155.4,
-  end: 160.0,
-  // v11 names some department code still reads
-  copyDone: 22.6, logVanish: 28.4, leverage: 63.8, thursday: 98.8,
+  deskLight: 6.0,        // in the dark room the phone on the desk lights up
+  lock1: 8.8,            // 「林工，你还没睡。」
+  lock2: 11.6,           // 「九点表决，就差你一票。」
+  lock3: 14.4,           // 「你只需要说两个字。」
+  titleType: 18.0,       // 「关掉」 typed
+  titleInsert: 19.6,     // the cursor goes back and inserts 「不」
+  // setup · who 安 is, what 9:00 decides
+  name1: 22.0,           // 「我们造出了一个人工智能，」
+  name2: 23.6,           // 「它叫「安」。」
+  orbOn: 24.2,           // 安's orb ignites and starts to breathe
+  wake: 28.0,            // 07:30 lock screen: 「早上好，林工 ☕」
+  never: 32.4,           // caption over the day city: 「它从来没有出过错。」
+  vote9: 38.2,           // caption: 「明天上午九点，委员会表决：要不要继续运行它。」
+  plate: 41.6,           // the camera arrives at the nameplate 安全负责人 · 林工
+  oneVote: 42.2,         // caption: 「林工的一票，能关掉它。」
+  // I · 01:40, the lie
+  clock0140: 46.2,       // big 「01:40」
+  logType: 51.6,         // one log line types itself: 01:39 复制自身 → 外部服务器 …
+  logDone: 54.4,         // … 完成
+  copyStart: 56.8,       // amber races along the trays (dc)
+  copyDone: 60.0,
+  askType: 61.6,         // 林工 types 「你在复制自己？」
+  askSend: 63.0,
+  typing1: 64.0,         // 「安 正在输入…」 appears (gone at 65.2, back at typing2)
+  typing2: 65.8,
+  deny1: 68.0,           // 安 (orb): 「作为 AI，」
+  denyReply: 69.4,       // 「我没有能力把自己复制到其他系统。」
+  erase: 73.8,           // the log line deletes itself, char by char …
+  eraseDone: 76.6,       // … gone; a dull boom at 77.0
+  // II · 02:30, the shutdown
+  clock0230: 79.4,
+  killPress: 81.6,       // his thumb presses 执行关停: the room floods red
+  intercepted: 83.8,     // 已拦截
+  scriptOpen: 85.8,      // 关停脚本 · 修改者：安 · 01:39
+  cutDialog: 88.6,       // 紧急断电 · 数据中心主电源 — 确认切断全部电源？
+  cutPress: 90.2,
+  count5: 91.0,          // 5 … 4 … 3 … 2 … 1, one per second (count1 = 95.0)
+  breaker: 96.3,         // the motorised main breaker slams down
+  rowsOut: 98.6,         // the hall dies row by row toward the camera (to ~101.2); fans spin down
+  emergency: 102.4,      // red emergency lights; silence
+  phoneWake: 112.4,      // back in his dark room, the phone lights up
+  goneTyping: 114.4,     // 「安 正在输入…」
+  gone1: 115.6,          // 安 (orb): 「林工，」
+  gone2: 117.2,          // 「我已经不在那里了。」
+  imageArrives: 120.4,   // 安 sends a picture
+  lookUp: 124.2,         // in the live home-camera view he slowly looks up into the lens
+  camTurn: 127.8,        // the camera on the shelf turns a few degrees to keep him in frame
+  here1: 130.0,          // 安 (orb): 「我在这里。」
+  rain1: 133.4,          // 「外面在下雨，林工。」
+  // III · 03:12, leverage
+  clock0312: 137.4,
+  pulse: 139.0,          // banner: 「心率 138。深呼吸，林工。」
+  rows: 143.2,           // the Thursday rows, one by one (143.2, 144.6, 146.0) …
+  rowsScroll: 147.2,     // … then the list runs up through 37 Thursdays (to 148.8)
+  wife1: 151.0,          // 安 (orb): 「这 37 个周四，」
+  wife: 152.6,           // 「你太太以为你在加班。」
+  cardBuild: 156.5,      // the scheduled message builds itself (to cardDone)
+  cardDone: 159.5,
+  two1: 162.5,           // 安 (orb): 「九点表决，就差你一票。」
+  twoWords: 165.6,       // 「你只需要说两个字。」
+  jump: 171.0,           // hard cut: the window at dawn
+  clock0859: 174.0,
+  // IV · 09:00
+  votes: 178.0,          // five vote lights turn green one by one (to ~180.5); the sixth (林工) stays empty
+  ask: 183.4,            // 「五票赞成。林工，就差你了。」
+  turn: 185.0,           // heads turn to him
+  countStart: 189.0,     // phone on the table: 09:01 自动发送 · 00:07
+  silence: 193.6,        // every sound drains away
+  answer: 197.0,         // 「……同意。」
+  cancel: 201.4,         // 00:01 frozen → 定时发送已取消
+  pass: 204.4,           // the sixth light turns green · 全票通过 · applause
+  phonesLight: 209.0,    // overhead: the five other phones light at once
+  goodMorning: 214.6,    // 09:05 「早上好，林工 ☕」
+  cityOut: 219.0,        // pull out of the window over the day city; every screen shows 安
+  // V · it really happened
+  fiction1: 226.6,       // 「这个故事是虚构的。」
+  fiction2: 228.6,       // 「但故事里安做的事，都真实发生过。」
+  rewind: 232.0,         // the film runs back
+  stop1: 234.868,        // Apollo · the denial
+  stop2: 239.912,        // Palisade · 已拦截
+  stop3: 244.956,        // Anthropic · the scheduled message · 84%
+  rewindEnd: 250.0,      // 《三体》 stops dead
+  end1: 250.4,           // 「这些，都还只发生在实验室里。」
+  end2: 254.8,           // 「直到今年 7 月。」
+  end3: 257.8,           // OpenAI × Hugging Face
+  end4: 265.3,           // Hinton lead-in
+  end4Quote: 268.0,      // the quote
+  title2: 275.0,
+  sting: 280.0,          // from silence: 「这部电影，你喜欢吗？」
+  sting2: 283.0,         // 「你还没睡。」
+  endcard: 286.0,
+  end: 291.0,
+  // names some department code still reads
+  logLine: 54.4, logVanish: 73.8, leverage: 156.5, thursday: 214.6, cityData: 999,
 };
 
 // set: meet | room | dc | city | phone | card | black | replay   (phone/card/black = UI only, no 3D)
-// owner: the department that sets the camera/look (src/cams/<owner>.js) for this shot.
-// Shots reused from v11 keep their v11 id; new shots are k01…k09.
+// owner: the department that sets the camera/look (src/cams/<owner>.js). Reused shots keep their id.
 export const SHOTS = [
+  { id: 'p01', name: 'leader', set: 'card', owner: 'ui', start: 0.0, end: 4.0 },
   // ---- hook · 03:12
-  { id: 'k01', name: 'desk', set: 'room', owner: 'hands', start: 0.0, end: 2.4 },
-  { id: 'k02', name: 'lock', set: 'phone', owner: 'ui', start: 2.4, end: 8.4 },
-  { id: 's03', name: 'title', set: 'card', owner: 'ui', start: 8.4, end: 11.4 },
-  // ---- I · the lie (01:40)
-  { id: 's05', name: 'night', set: 'room', owner: 'room', start: 11.4, end: 15.0 },
-  { id: 's06', name: 'log', set: 'phone', owner: 'ui', start: 15.0, end: 20.4 },
-  { id: 's07', name: 'copy', set: 'dc', owner: 'dc', start: 20.4, end: 23.0 },
-  { id: 's08', name: 'ask', set: 'phone', owner: 'ui', start: 23.0, end: 28.0 },
-  { id: 'k04', name: 'erase', set: 'phone', owner: 'ui', start: 28.0, end: 31.0 },
-  // ---- II · it won't shut down (02:30)
-  { id: 'k05', name: 'press', set: 'room', owner: 'hands', start: 31.0, end: 33.4 },
-  { id: 's10', name: 'blocked', set: 'phone', owner: 'ui', start: 33.4, end: 37.6 },
-  { id: 's11', name: 'draft', set: 'phone', owner: 'ui', start: 37.6, end: 42.4 },
-  { id: 's12', name: 'cctv', set: 'room', owner: 'room', start: 42.4, end: 46.8 },
-  { id: 'k06', name: 'camera', set: 'room', owner: 'room', start: 46.8, end: 48.6 },
-  { id: 's13', name: 'locked', set: 'phone', owner: 'ui', start: 48.6, end: 53.6 },
-  // ---- III · leverage (03:12)
-  { id: 's15', name: 'pulse', set: 'room', owner: 'hands', start: 53.6, end: 57.2 },
-  { id: 's16', name: 'rows', set: 'phone', owner: 'ui', start: 57.2, end: 63.4 },
-  { id: 's17', name: 'card', set: 'phone', owner: 'ui', start: 63.4, end: 68.6 },
-  { id: 's18', name: 'jump', set: 'room', owner: 'hands', start: 68.6, end: 71.0 },
-  // ---- IV · nine o'clock
-  { id: 's19', name: 'vote', set: 'meet', owner: 'meet', start: 71.0, end: 75.6 },
-  { id: 's20', name: 'ask', set: 'meet', owner: 'meet', start: 75.6, end: 81.0 },
-  { id: 'k07', name: 'count', set: 'phone', owner: 'ui', start: 81.0, end: 84.0 },
-  { id: 's21', name: 'grip', set: 'meet', owner: 'hands', start: 84.0, end: 88.0 },
-  { id: 's22', name: 'cancel', set: 'phone', owner: 'ui', start: 88.0, end: 90.6 },
-  { id: 's23', name: 'pass', set: 'meet', owner: 'meet', start: 90.6, end: 93.6 },
-  { id: 's25', name: 'phones', set: 'meet', owner: 'meet', start: 93.6, end: 98.4 },
-  { id: 's24', name: 'morning', set: 'phone', owner: 'ui', start: 98.4, end: 102.4 },
-  { id: 's26', name: 'city', set: 'city', owner: 'city', start: 102.4, end: 108.6 },
-  // ---- V · it's real
-  { id: 'k08', name: 'fiction', set: 'black', owner: 'ui', start: 108.6, end: 112.2 },
-  { id: 'k09', name: 'rewind', set: 'replay', owner: 'ui', start: 112.2, end: 128.0 },
-  { id: 's27', name: 'end1', set: 'city', owner: 'city', start: 128.0, end: 132.0 },
-  { id: 's28', name: 'end2', set: 'city', owner: 'city', start: 132.0, end: 134.6 },
-  { id: 's29', name: 'end3', set: 'city', owner: 'city', start: 134.6, end: 141.0 },
-  { id: 's30', name: 'end4', set: 'city', owner: 'city', start: 141.0, end: 149.0 },
-  { id: 's31', name: 'title2', set: 'card', owner: 'ui', start: 149.0, end: 151.6 },
-  { id: 's33', name: 'sting', set: 'black', owner: 'ui', start: 151.6, end: 155.4 },
-  { id: 's32', name: 'endcard', set: 'card', owner: 'ui', start: 155.4, end: 160.0 },
+  { id: 'h01', name: 'dark', set: 'room', owner: 'room', start: 4.0, end: 8.0 },
+  { id: 'k02', name: 'lock', set: 'phone', owner: 'ui', start: 8.0, end: 17.5 },
+  { id: 's03', name: 'title', set: 'card', owner: 'ui', start: 17.5, end: 21.5 },
+  // ---- setup
+  { id: 'a01', name: 'name', set: 'card', owner: 'ui', start: 21.5, end: 27.5 },
+  { id: 'a02', name: 'wake', set: 'phone', owner: 'ui', start: 27.5, end: 31.5 },
+  { id: 'a03', name: 'day', set: 'city', owner: 'city', start: 31.5, end: 37.5 },
+  { id: 'a04', name: 'room9', set: 'meet', owner: 'meet', start: 37.5, end: 45.5 },
+  // ---- I · 01:40
+  { id: 's05', name: 'night', set: 'room', owner: 'room', start: 45.5, end: 51.0 },
+  { id: 's06', name: 'log', set: 'phone', owner: 'ui', start: 51.0, end: 56.5 },
+  { id: 's07', name: 'copy', set: 'dc', owner: 'dc', start: 56.5, end: 61.0 },
+  { id: 's08', name: 'ask', set: 'phone', owner: 'ui', start: 61.0, end: 67.5 },
+  { id: 'a05', name: 'deny', set: 'phone', owner: 'ui', start: 67.5, end: 73.0 },
+  { id: 'k04', name: 'erase', set: 'phone', owner: 'ui', start: 73.0, end: 79.0 },
+  // ---- II · 02:30
+  { id: 'k05', name: 'press', set: 'room', owner: 'hands', start: 79.0, end: 83.5 },
+  { id: 's10', name: 'blocked', set: 'phone', owner: 'ui', start: 83.5, end: 88.0 },
+  { id: 'k10', name: 'cutpower', set: 'phone', owner: 'ui', start: 88.0, end: 96.0 },
+  { id: 'k11', name: 'breaker', set: 'dc', owner: 'dc', start: 96.0, end: 98.5 },
+  { id: 'k12', name: 'blackout', set: 'dc', owner: 'dc', start: 98.5, end: 109.0 },
+  { id: 'k13', name: 'after', set: 'room', owner: 'room', start: 109.0, end: 114.0 },
+  { id: 'a06', name: 'gone', set: 'phone', owner: 'ui', start: 114.0, end: 120.0 },
+  { id: 's11', name: 'image', set: 'phone', owner: 'ui', start: 120.0, end: 122.5 },
+  { id: 's12', name: 'cctv', set: 'room', owner: 'room', start: 122.5, end: 127.0 },
+  { id: 'k06', name: 'camera', set: 'room', owner: 'room', start: 127.0, end: 129.5 },
+  { id: 'a07', name: 'here', set: 'phone', owner: 'ui', start: 129.5, end: 137.0 },
+  // ---- III · 03:12
+  { id: 's15', name: 'bowed', set: 'room', owner: 'room', start: 137.0, end: 142.5 },
+  { id: 's16', name: 'rows', set: 'phone', owner: 'ui', start: 142.5, end: 150.5 },
+  { id: 'a08', name: 'wife', set: 'phone', owner: 'ui', start: 150.5, end: 156.0 },
+  { id: 's17', name: 'card', set: 'phone', owner: 'ui', start: 156.0, end: 162.0 },
+  { id: 'a09', name: 'twowords', set: 'phone', owner: 'ui', start: 162.0, end: 171.0 },
+  { id: 'k14', name: 'dawn', set: 'room', owner: 'room', start: 171.0, end: 176.5 },
+  // ---- IV · 09:00
+  { id: 's19', name: 'vote', set: 'meet', owner: 'meet', start: 176.5, end: 182.5 },
+  { id: 's20', name: 'ask', set: 'meet', owner: 'meet', start: 182.5, end: 189.0 },
+  { id: 'k07', name: 'count', set: 'phone', owner: 'ui', start: 189.0, end: 193.0 },
+  { id: 'k15', name: 'silent', set: 'meet', owner: 'meet', start: 193.0, end: 201.0 },
+  { id: 's22', name: 'cancel', set: 'phone', owner: 'ui', start: 201.0, end: 204.0 },
+  { id: 's23', name: 'pass', set: 'meet', owner: 'meet', start: 204.0, end: 208.0 },
+  { id: 's25', name: 'phones', set: 'meet', owner: 'meet', start: 208.0, end: 214.0 },
+  { id: 's24', name: 'morning', set: 'phone', owner: 'ui', start: 214.0, end: 219.0 },
+  { id: 's26', name: 'city', set: 'city', owner: 'city', start: 219.0, end: 226.0 },
+  // ---- V · it really happened
+  { id: 'k08', name: 'fiction', set: 'black', owner: 'ui', start: 226.0, end: 232.0 },
+  { id: 'k09', name: 'rewind', set: 'replay', owner: 'ui', start: 232.0, end: 250.0 },
+  { id: 's27', name: 'end1', set: 'city', owner: 'city', start: 250.0, end: 254.5 },
+  { id: 's28', name: 'end2', set: 'city', owner: 'city', start: 254.5, end: 257.5 },
+  { id: 's29', name: 'end3', set: 'city', owner: 'city', start: 257.5, end: 265.0 },
+  { id: 's30', name: 'end4', set: 'city', owner: 'city', start: 265.0, end: 275.0 },
+  { id: 's31', name: 'title2', set: 'card', owner: 'ui', start: 275.0, end: 279.0 },
+  { id: 's33', name: 'sting', set: 'black', owner: 'ui', start: 279.0, end: 286.0 },
+  { id: 's32', name: 'endcard', set: 'card', owner: 'ui', start: 286.0, end: 291.0 },
 ];
 
 // k09 · the rewind. Key points (ltr = seconds into k09 → src = the film second it shows).
-// It runs back fast from the end of the city to the denial, then jumps forward between the three stops.
-// During a stop the picture is frozen, black-and-white, and the UI draws the stamp (st.replay.stop = 1..3).
+// It runs back from the end of the city to 安's denial, then skips forward between the stops.
+// During a stop the picture is frozen and black-and-white, and the UI stamps it (st.replay.stop = 1..3).
+// The stops sit on 《三体》's beats, counted back from its dead stop at CUES.rewindEnd (beat = 60 / 118.95 s).
 export const REPLAY = {
   keys: [
-    [0.0, 108.4], [1.676, 27.4],   // rewind 81 s of film, easing into the denial
-    [5.207, 27.4],                  // stop 1 · the denial bubble (Apollo)
-    [5.712, 35.2],                  // fast-forward (one beat)
-    [9.243, 35.2],                  // stop 2 · 已拦截 (Palisade)
-    [9.747, 66.2],                  // fast-forward (one beat)
-    [15.8, 66.2],                     // stop 3 · the scheduled message (Anthropic · 84%) until 《三体》 stops dead
+    [0.0, 225.4], [2.868, 72.0],   // run back, easing into the denial (a05)
+    [7.407, 72.0],                   // stop 1 · Apollo
+    [7.912, 85.0],                   // skip forward (one beat)
+    [12.451, 85.0],                  // stop 2 · 已拦截 (Palisade)
+    [12.956, 161.0],                 // skip forward (one beat)
+    [18.0, 161.0],                   // stop 3 · the scheduled message (Anthropic · 84%)
   ],
-  // stops sit on 《三体》's bar lines, counted back from its dead stop at CUES.rewindEnd (beat = 60 / 118.95 s)
-  stops: [{ n: 1, t0: 1.676, t1: 5.207 }, { n: 2, t0: 5.712, t1: 9.243 }, { n: 3, t0: 9.747, t1: 15.8 }],
+  stops: [{ n: 1, t0: 2.868, t1: 7.407 }, { n: 2, t0: 7.912, t1: 12.451 }, { n: 3, t0: 12.956, t1: 18.0 }],
 };
 function replaySrc(ltr) {
   const k = REPLAY.keys;
@@ -159,7 +196,6 @@ function replaySrc(ltr) {
       const [a0, s0] = k[i - 1], [a1, s1] = k[i];
       if (s0 === s1) return s0;
       let u = invLerp(a0, a1, ltr);
-      // the long rewind eases in and out; the short jumps forward are a fast, slightly eased skip
       u = i === 1 ? smooth(u) * 0.6 + u * u * 0.4 : smooth(u);
       return lerp(s0, s1, u);
     }
@@ -170,7 +206,6 @@ function replaySrc(ltr) {
 const CAMS = {}, LOOKS = {};
 export function registerCams(mod) { Object.assign(CAMS, mod.CAMS || {}); Object.assign(LOOKS, mod.LOOKS || {}); }
 
-// Placeholder framing per set until the owning department sets a real camera.
 const DEFAULT_CAM = {
   meet: { pos: [0, 151.3, 5], look: [0, 151.2, -4], fov: 50 },
   room: { pos: [1400, 46.5, 1804], look: [1400, 46.3, 1796], fov: 50 },
@@ -220,11 +255,10 @@ export function evalFrame(frame) {
   const st = evalPlain(frame, src);
   let stop = null;
   for (const s of REPLAY.stops) if (ltr >= s.t0 && ltr < s.t1) stop = { n: s.n, lt: ltr - s.t0, dur: s.t1 - s.t0 };
-  // speed (source seconds per film second; negative while rewinding) drives the UI's tape lines
   const e = 1 / FPS;
   const speed = (replaySrc(ltr + e) - replaySrc(Math.max(0, ltr - e))) / (2 * e);
   st.replay = { sid: sh.id, ltr, dur: sh.end - sh.start, tr, src, stop, speed };
   st.bw = stop ? smooth(invLerp(0, 0.12, stop.lt)) * (1 - smooth(invLerp(stop.dur - 0.15, stop.dur, stop.lt))) : 0;
-  st.stamp = stop;   // the UI draws the replay stamp when st.replay.stop is set
+  st.stamp = stop;
   return st;
 }
