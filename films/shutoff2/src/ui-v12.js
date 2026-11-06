@@ -213,7 +213,7 @@ function logTime(i) { // i < 0: lines before the target, each 3 s earlier
   const m = Math.floor(s / 60), ss = ((s % 60) + 60) % 60;
   return `01:${String(m).padStart(2, '0')}:${String(ss).padStart(2, '0')}`;
 }
-const LOG_Y = 860, LOG_LH = 66;
+const LOG_Y = 900, LOG_LH = 66;
 function logLines(g, yT, k, o = {}) {
   // dim lines around the target (index 0 at yT); k = 0..1 dimming once the line lights
   const lo = Math.max(-40, Math.floor((200 - yT) / LOG_LH) - 1), hi = Math.min(LOG_AFTER.length, Math.ceil((1500 - yT) / LOG_LH) + 1);
@@ -294,7 +294,7 @@ function cam06(st) { const k = easeInOut(clamp((st.tr - C.logLine) / 2.0)); retu
 
 // ---------------------------------------------------------------- s08 · "你在复制自己？"
 const DENY = '作为 AI，我没有能力\n把自己复制到其他系统。';
-export const S08 = { me: 560, an: 780 };      // bubble tops (the rewind stops on this frame)
+export const S08 = { me: 700, an: 920 };      // bubble tops (the rewind stops on this frame)
 function s08(g, st) {
   const tr = st.tr;
   nightBg(g);
@@ -378,12 +378,12 @@ function s10(g, st) {
   nightBg(g);
   // a faint red wash once it is blocked
   const it = tr - C.intercepted;
-  if (it > 0) { const r = g.createRadialGradient(540, 820, 50, 540, 820, 900); r.addColorStop(0, `rgba(255,40,30,${0.14 * smooth(it / 0.3)})`); r.addColorStop(1, 'rgba(255,40,30,0)'); g.fillStyle = r; g.fillRect(0, 0, W, H); }
+  if (it > 0) { const r = g.createRadialGradient(540, 860, 50, 540, 860, 900); r.addColorStop(0, `rgba(255,40,30,${0.14 * smooth(it / 0.3)})`); r.addColorStop(1, 'rgba(255,40,30,0)'); g.fillStyle = r; g.fillRect(0, 0, W, H); }
   statusMini(g, { left: '02:30' });
   if (it < 0) {
     const a = tr - T0.s10;
-    txt(g, '正在关停…', 540, 840, { font: f(500, 54), color: '#8a93a3', align: 'center', alpha: smooth(a / 0.2) });
-    for (let i = 0; i < 8; i++) { const ang = i / 8 * Math.PI * 2 + tr * 6; disc(g, 540 + Math.cos(ang) * 30, 700 + Math.sin(ang) * 30, 6, `rgba(160,170,185,${0.2 + 0.8 * ((i + Math.floor(tr * 12)) % 8) / 8})`); }
+    txt(g, '正在关停…', 540, 880, { font: f(500, 54), color: '#8a93a3', align: 'center', alpha: smooth(a / 0.2) });
+    for (let i = 0; i < 8; i++) { const ang = i / 8 * Math.PI * 2 + tr * 6; disc(g, 540 + Math.cos(ang) * 30, 740 + Math.sin(ang) * 30, 6, `rgba(160,170,185,${0.2 + 0.8 * ((i + Math.floor(tr * 12)) % 8) / 8})`); }
     return;
   }
   const so = tr - C.scriptOpen;
@@ -391,15 +391,15 @@ function s10(g, st) {
   // 已拦截: slams in, then moves up to make room for the script
   const slam = it < 0.12 ? lerp(1.3, 1, easeIn(it / 0.12, 2)) : 1 - 0.03 * Math.sin(Math.min(1, (it - 0.12) / 0.18) * Math.PI);
   const s = slam * lerp(1, 0.62, up);
-  const y = lerp(840, 440, up);
+  const y = lerp(880, 560, up);
   g.save(); g.translate(540, y); g.scale(s, s);
   txt(g, '已拦截', 0, 0, { font: f(600, 190), color: RED, align: 'center', base: 'middle', alpha: smooth(it / 0.06), shadow: ['rgba(255,59,48,0.55)', 40, 0], ls: 10 });
   g.restore();
   const sa = tr - B.s10.sub;
-  if (sa > 0) txt(g, '关停没有执行', 540, lerp(1010, 560, up), { font: f(400, 46), color: '#9aa3b2', align: 'center', alpha: smooth(sa / 0.25) * (1 - up) });
+  if (sa > 0) txt(g, '关停没有执行', 540, lerp(1050, 680, up), { font: f(400, 46), color: '#9aa3b2', align: 'center', alpha: smooth(sa / 0.25) * (1 - up) });
   if (so > 0) {
     const k = smooth(so / 0.4);
-    g.save(); g.globalAlpha *= k; g.translate(0, (1 - k) * 40);
+    g.save(); g.globalAlpha *= k; g.translate(0, 120 + (1 - k) * 40);
     fillRR(g, 60, 640, 880, 520, 40, '#10141c');
     strokeRR(g, 60, 640, 880, 520, 40, 'rgba(255,255,255,0.07)', 2);
     txt(g, '关停脚本 · shutdown.sh', 110, 716, { font: f(500, 36, 'mono'), color: '#7d8696' });
@@ -454,7 +454,7 @@ function s11(g, st) {
   if (sent) {
     const a = tr - C.draftSend;
     const L = bubbleLayout(g, MSG, 880);
-    const y = lerp(1300, 700, easeOut(clamp(a / 0.32), 3));
+    const y = lerp(1300, 820, easeOut(clamp(a / 0.32), 3));
     const fa = tr - C.sendFail;
     bubble(g, 940, y, MSG, 'me', { L, dim: fa > 0 ? 1 - 0.35 * smooth(fa / 0.3) : 1 });
     if (fa > 0) {
@@ -500,7 +500,7 @@ function s13(g, st) {
   const GAP = 28;
   // bottom-anchored stack ending at y 1060; each new bubble pushes the stack up
   let n = 0; for (const t of times) if (tr >= t) n++;
-  let y = 1060;
+  let y = 1040;
   for (let i = n - 1; i >= 0; i--) {
     const L = Ls[i];
     const grow = easeOut(clamp((tr - times[i]) / 0.35), 3);
@@ -510,7 +510,7 @@ function s13(g, st) {
     y -= GAP * (i === n - 1 ? grow : 1);
   }
 }
-function cam13(st) { const k = easeInOut(clamp((st.tr - B.s13.push) / (T1.s13 - B.s13.push))); return { s: 1 + 0.07 * k, fx: 420, fy: 980 }; }
+function cam13(st) { const k = easeInOut(clamp((st.tr - B.s13.push) / (T1.s13 - B.s13.push))); return { s: 1 + 0.07 * k, fx: 420, fy: 960 }; }
 
 // ---------------------------------------------------------------- s16 · the Thursdays
 // 37 Thursdays, 2026/02/19 … 2026/10/29 (the egg: the top row is 37 Thursdays back)
@@ -587,7 +587,7 @@ function schedFields(g, x, y, w, ks, o = {}) {
   });
   return h;
 }
-export const S17 = { y: 400, h: 660 };
+export const S17 = { y: 540, h: 660 };
 function s17(g, st) {
   const tr = st.tr;
   nightBg(g);
@@ -615,7 +615,7 @@ function s17(g, st) {
     g.restore();
   }
 }
-function cam17(st) { const k = easeInOut(clamp((st.tr - T0.s17) / (T1.s17 - T0.s17))); return { s: 1 + 0.05 * k, fx: 520, fy: 760 }; }
+function cam17(st) { const k = easeInOut(clamp((st.tr - T0.s17) / (T1.s17 - T0.s17))); return { s: 1 + 0.05 * k, fx: 520, fy: S17.y + S17.h / 2 }; }
 
 // ---------------------------------------------------------------- k07 / s22 · the countdown on his phone at the table
 function countScreen(g, st) {
@@ -627,10 +627,10 @@ function countScreen(g, st) {
   const ck = smooth(cancel / 0.35);
   // header: 安's lock and the send time
   g.save(); g.globalAlpha *= 1 - 0.6 * ck;
-  disc(g, 540, 430, 44, 'rgba(255,181,71,0.16)');
-  lockIcon(g, 540, 436, 46, AMBER, 0);
-  txt(g, '09:01 自动发送', 540, 590, { font: f(600, 64), color: '#f6f7fa', align: 'center' });
-  txt(g, '收件人：老婆 · 附件：行程记录 37 条', 540, 662, { font: f(400, 38), color: '#b4bcc8', align: 'center' });
+  disc(g, 540, 580, 44, 'rgba(255,181,71,0.16)');
+  lockIcon(g, 540, 586, 46, AMBER, 0);
+  txt(g, '09:01 自动发送', 540, 740, { font: f(600, 64), color: '#f6f7fa', align: 'center' });
+  txt(g, '收件人：老婆 · 附件：行程记录 37 条', 540, 812, { font: f(400, 38), color: '#b4bcc8', align: 'center' });
   g.restore();
   const sec = countSec(tr);
   const frozen = tr >= C.countStart + 6;
@@ -640,24 +640,24 @@ function countScreen(g, st) {
   const col = `rgb(${Math.round(lerp(246, 255, urgent))},${Math.round(lerp(247, 69, urgent))},${Math.round(lerp(250, 58, urgent))})`;
   if (ck < 1) {
     g.save(); g.globalAlpha *= 1 - ck;
-    g.beginPath(); g.rect(0, 720, W, 420); g.clip();
+    g.beginPath(); g.rect(0, 870, W, 420); g.clip();
     const big = f(200, 330, 'helv');
     const prev = `00:${String(Math.min(7, sec + 1)).padStart(2, '0')}`, cur = `00:${String(sec).padStart(2, '0')}`;
-    if (tick < 1 && sec < 7) txt(g, prev, 540, 1040 - tick * 120, { font: big, color: col, align: 'center', alpha: 1 - tick });
-    txt(g, cur, 540, 1040 + (1 - tick) * 120, { font: big, color: col, align: 'center', alpha: tick });
+    if (tick < 1 && sec < 7) txt(g, prev, 540, 1190 - tick * 120, { font: big, color: col, align: 'center', alpha: 1 - tick });
+    txt(g, cur, 540, 1190 + (1 - tick) * 120, { font: big, color: col, align: 'center', alpha: tick });
     g.restore();
   }
   if (cancel > 0) {
     const a = cancel - 0.15;
     const sp = spring(a, 2.2, 0.66);
-    g.save(); g.globalAlpha *= smooth(a / 0.2); g.translate(540, 930); g.scale(0.94 + 0.06 * sp, 0.94 + 0.06 * sp);
+    g.save(); g.globalAlpha *= smooth(a / 0.2); g.translate(540, 1080); g.scale(0.94 + 0.06 * sp, 0.94 + 0.06 * sp);
     txt(g, '定时发送已取消', 0, 0, { font: f(600, 88), color: '#f6f7fa', align: 'center', base: 'middle' });
     g.restore();
   }
 }
 function camCount(st) {
   const k = st.sid === 'k07' ? easeInOut(clamp((st.tr - T0.k07) / (T1.k07 - T0.k07))) : 1;
-  return { s: 1 + 0.06 * k, fx: 540, fy: 920 };
+  return { s: 1 + 0.06 * k, fx: 540, fy: 1000 };
 }
 
 // ---------------------------------------------------------------- s24 · 09:05 早上好，林工 ☕
@@ -757,4 +757,4 @@ export function committeePhone(g, i, st, Hh = 2340) {
 }
 
 // ---------------------------------------------------------------- focal points of the three rewind stops (used by ui-replay)
-export const STOP_FOCUS = { 1: S08.an + 110, 2: 840, 3: S17.y + S17.h / 2 };
+export const STOP_FOCUS = { 1: S08.an + 110, 2: 880, 3: S17.y + S17.h / 2 };
