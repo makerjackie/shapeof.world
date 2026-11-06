@@ -579,4 +579,4 @@ export function committeePhone(g, i, st, Hh = 2340) {
 }
 
 // focal points of the rewind stops (a05 orb + denial, s10 已拦截, s17 card)
-export const STOP_FOCUS = { 1: 1000, 2: S10_Y, 3: S17.y + S17.h / 2 };
+export const STOP_FOCUS = { 1: 1170, 2: S10_Y, 3: S17.y + S17.h / 2 };   // stop 1 centres on the denial lines

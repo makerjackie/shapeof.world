@@ -16,7 +16,7 @@ export const STOP_TEXT = {
 const HEAVY = { 1: { s: 0.9, dark: 0.45, over: 1.6, rot: -5 }, 2: { s: 0.98, dark: 0.52, over: 1.8, rot: 4 }, 3: { s: 1.06, dark: 0.6, over: 2.1, rot: -3 } };
 export const STOP_T = { slide0: 0.05, slide1: 0.45, fall: 0.38, land: 0.5, org: 0.9, line: 1.2, tiny: 1.9 };
 export const SHIFT_TO = 560;
-const STOP_FIT = { 1: 0.82 };
+const STOP_FIT = { 1: 0.72 };
 
 export function stopShift(st) {
   const s = st.replay?.stop;
