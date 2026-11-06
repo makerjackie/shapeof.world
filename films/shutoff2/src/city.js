@@ -146,7 +146,7 @@ export async function createCity(ctx) {
       // the HQ: hidden from inside the meeting room; in s26 the room's window is cut out of its north face
       // v12: 林工's window shows ordinary towers in rain — 安's HQ and its amber emblem only appear in the city shots
       hqMesh.visible = st.set === 'city';
-      emb.grp.visible = st.set === 'city';
+      emb.grp.visible = false;      // v13: no 「安」 character on the tower; 安 is the orb on the screens
       const inS26 = st.set === 'city';
       // HQ facade cut-out where the meeting room sits (the camera starts inside it in s26)
       CU.uHide.value.set(HQ.room.x, HQ.room.y0, HQ.room.y1, inS26 && tr < T_OUT + 2.4 ? 1 : 0);
@@ -160,9 +160,9 @@ export async function createCity(ctx) {
       scr.screens.forEach((s, i) => {
         const u = s.mat.uniforms;
         u.uBB.value = uiTex;
-        const k = inS26 && bb ? clamp((tr - flipT[i]) / 0.12) : 0;
-        u.uMix.value = k >= 1 ? 1 : k > 0 ? (Math.floor(tr * 30) % 2) : 0;
-        u.uFlash.value = inS26 ? Math.max(0, 1 - Math.abs(tr - flipT[i] - 0.05) / 0.12) * 0.8 : 0;
+        // v13: in the city shots every screen simply shows 安's orb (the UI adds 早上好 from cityOut on)
+        u.uMix.value = inS26 && bb ? 1 : 0;
+        u.uFlash.value = 0;
         u.uGain.value = inS26 ? 1.7 : 1.35 - 0.25 * night;
         u.uOn.value = 1;
       });
@@ -186,9 +186,9 @@ export async function createCity(ctx) {
           if (tr >= T_E1) I = 0.1 + 0.05 * Math.sin(tr * 1.1 + i * 1.7);
           beams.set(i, I, Math.max(0, age));
           // the link from the HQ lands on the screen as its ring leaves
-          const drawn = clamp((tr - (ringT0[i] - 0.7)) / 0.7);
-          const glow = drawn >= 1 ? 0.25 + 0.75 * Math.exp(-(tr - ringT0[i]) / 1.2) : 0.6;
-          links.set(i, drawn, glow * (tr >= T_E1 ? 0.6 : 1), tr * 0.8 + i * 0.37);
+          const drawn = tr >= T_E1 ? 1 : clamp((tr - (ringT0[i] - 0.7)) / 0.7);
+          const glow = drawn >= 1 ? 0.25 + 0.75 * Math.exp(-Math.max(0, tr - ringT0[i]) / 1.2) : 0.6;
+          links.set(i, drawn, tr >= T_E1 ? 0.15 : glow, tr * 0.8 + i * 0.37);
         });
         links.u.uTime.value = tr;
         CU.uDataAll.value = tr >= T_E1 ? 1 : 0;
@@ -202,7 +202,7 @@ export async function createCity(ctx) {
         CU.uPulse.value.set(0, 0, HQ.zc, pt > 0 ? ((pt % 6.5) * 700) : -1);
         // the sky and the hills turn with the grade (cams/city.js cityLook: day → data over cityData + 1.9 … + 4.4)
         const kLook = smooth(invLerp(T_DATA + 1.2, T_DATA + 2.6, tr));
-        sky.u.uData.value = tr > T_DATA + 0.9 ? 1 : 0;
+        sky.u.uData.value = tr > T_DATA + 0.9 || tr >= T_E1 ? 1 : 0;
         sky.u.uDataWipe.value = tr >= T_E1 ? 1 : 0;
         // once the sweep has crossed the whole city (≈7.5 km), the sky and the hills flip in ~0.25 s
         const farFlip = tr >= T_E1 ? 1 : clamp((CU.uSweep.value.w - 7500) / 2400);
