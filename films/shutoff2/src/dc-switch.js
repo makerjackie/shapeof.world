@@ -192,7 +192,7 @@ export function createSwitch(root, over) {
       const a = t - BREAKER;
       const redOn = a < 0.06 ? 0 : a < 0.2 ? (hash1(Math.floor(t * 30)) > 0.4 ? 1 : 0.2) : 1;
       DC.uLamp.value.set(a < 0.04 ? 1 : 0, redOn, a < 0 ? 1 : 0, 0);
-      flash.material.uniforms.uGain.value = 0.9 * arcAt(t);
+      flash.material.uniforms.uGain.value = 1.15 * arcAt(t);
     },
   };
 }

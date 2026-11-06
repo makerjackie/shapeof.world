@@ -225,7 +225,7 @@ export function createDC(ctx) {
   }
   // linear fixtures: few are on at 01:40 (s07); most are on in the normal-lit hall before the blackout (k12)
   const fixZ = [4.8, 2.4, 0.0, -2.4, -4.8, -7.2, -9.6, -12.0];
-  const FIX_A = [0, 1, 0, 0, 1, 0, 0, 1], FIX_B = [1, 1, 0, 1, 1, 1, 0, 1], FIX_I = 0.3;
+  const FIX_A = [0, 1, 0, 0, 1, 0, 0, 1], FIX_B = [1, 1, 1, 1, 1, 1, 1, 1], FIX_I = 0.3;
   const fixList = fixZ.map((z) => [0.45, CEIL - 0.1, z]);
   fixZ.forEach((z, i) => {
     part(mg, cbox(0.16, 0.07, 1.25, 0.012), M(0.45, CEIL - 0.06, z), '#2b313a', 34);
@@ -379,10 +379,11 @@ export function createDC(ctx) {
         DC.uDoor.value = doorAt(t);
         const em = emergAt(t);
         DC.uEmerg.value = em;
-        const pat = t < 80 ? FIX_A : FIX_B;
+        const pat = t < 80 ? FIX_A : FIX_B, fixI = t < 80 ? FIX_I : 0.46;
+        DC.uLedGain.value = t < 80 ? 1 : 1.5;   // the hall at full power before the blackout
         const ia = cones.geometry.attributes.aInt;
         fixZ.forEach((z, i) => {
-          const w = pat[i] * FIX_I * powerAt(z, t);
+          const w = pat[i] * fixI * powerAt(z, t);
           DC.uFix.value[i].w = w;
           for (let j = 0; j < 4; j++) ia.setX(i * 4 + j, w / FIX_I);
         });

@@ -126,7 +126,7 @@ export const anAt = (t) => smooth((t - (CS - 0.4)) / 0.35) * (1 - smooth((t - CD
 export function offTime(z) { return ROWS_OUT + WAVE.dur * clamp01((z - WAVE.zFar) / (WAVE.zNear - WAVE.zFar)); }
 export const powerAt = (z, t) => (t < offTime(z) ? 1 : 0);
 // the lit doorway beyond the containment doors: dim at 01:40 (s07), bright in the normal-lit hall before the blackout
-export const doorAt = (t) => (t < 80 ? 0.4 : 1) * powerAt(WAVE.zFar, t);
+export const doorAt = (t) => (t < 80 ? 0.4 : 1.6) * powerAt(WAVE.zFar, t);
 // red emergency lighting: flickers on, then holds
 export function emergAt(t) {
   const a = t - EMERG;

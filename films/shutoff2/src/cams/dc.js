@@ -44,9 +44,9 @@ const hallLook = (t, lit = 1, em = 0) => {
     // the key is the cold light at the far end of the aisle: it backlights the racks and makes the haze glow there
     sunElev: 30, sunAz: 8, sunStrength: 0.55,
     lights: dcLights(t),
-    ambient: mixHex(mixHex('#030405', '#16242e', lit), '#080203', em * (1 - lit)),
+    ambient: mixHex(mixHex('#030405', t > 80 ? '#1c2e3a' : '#16242e', lit), '#080203', em * (1 - lit)),
     fogDensity: 0.034,
-    fogWarm: mixHex(mixHex('#030506', '#3a8496', k), '#1e0508', em * (1 - k)),
+    fogWarm: mixHex(mixHex('#030506', t > 80 ? '#5aa8bc' : '#3a8496', k), '#1e0508', em * (1 - k)),
     fogCool: mixHex(mixHex('#020304', '#08151c', k), '#070203', em * (1 - k)),
     bloom: 1.3, threshold: 0.72, exposure: 1.12, vignette: 0.32 + 0.12 * (1 - k), grain: 0.025,
     inkWidth: 1.0, paintRadius: 3,
@@ -60,11 +60,11 @@ export const LOOKS = {
     const a = t - BREAKER, arc = arcAt(t);
     const zf = SW.z - 0.03;
     const L = [
-      { pos: [SW.x + 0.15, OY + 3.4, zf - 0.9], r: 3.4, color: '#bfe6ff', i: 0.75 },                      // the fixture above the switchgear
+      { pos: [SW.x, OY + 2.5, zf - 0.45], r: 1.65, color: '#bfe6ff', i: 1.4 },                      // the fixture above the switchgear
       { pos: [SW.x, OY + 1.56, zf - 0.3], r: 1.1, color: a < 0.04 ? '#3dff7a' : '#ff2a24', i: a < 0.04 ? 0.35 : (a < 0.2 ? 0.1 : 0.4) },
     ];
-    if (arc > 0.01) L.push({ pos: [SW.x, OY + 0.95, zf - 0.35], r: 3.0, color: '#cfe8ff', i: 1.1 * arc });
-    return { ...hallLook(t), sunElev: 48, sunAz: -42, sunStrength: 0.3, ambient: '#0c141a', lights: L, fogDensity: 0.03, exposure: 1.12 + 0.12 * arc, bloom: 1.3 + 0.25 * arc, vignette: 0.45 };
+    if (arc > 0.01) L.push({ pos: [SW.x, OY + 0.95, zf - 0.3], r: 2.3, color: '#d8eeff', i: 1.5 * arc });
+    return { ...hallLook(t), sunElev: 48, sunAz: -42, sunStrength: 0.07, ambient: '#04070a', fogWarm: '#0a1a20', fogCool: '#04090c', lights: L, fogDensity: 0.03, exposure: 1.12 + 0.08 * arc, bloom: 1.3 + 0.3 * arc, vignette: 0.55 };
   },
   k12: (lt, d, t) => hallLook(t, hallLit(t), emergAt(t)),
 };
