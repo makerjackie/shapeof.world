@@ -232,7 +232,8 @@ put(C['intercepted'], hit(3.0, 0.75))
 if NOEV: put(C['intercepted'], error_buzz(0.9))
 # the countdown: one tick a second, his pulse climbing under it, a riser into the breaker
 for k in range(5):
-    put(C['count5'] + k, clock_tick(0.9)); put(C['count5'] + k, boom(1.0, 0.18 + 0.05 * k))
+    put(C['count5'] + k, boom(1.0, 0.18 + 0.05 * k))
+    if NOEV: put(C['count5'] + k, clock_tick(0.9))
 hb = C['cutDialog']; k = 0
 while hb < C['breaker'] - 0.2:
     put(hb, heartbeat(0.4 + 0.06 * k)); hb += 60 / (96 + 7 * k); k += 1
@@ -347,6 +348,9 @@ for e in EV:
     elif ty == "type": put(t, key_thunk(1.0 * g))
     elif ty == "ui": put(t, ui_chime(0.9 * g))
     elif ty == "banner": put(t + 0.05, an_chime(1.2 * g))
+    elif ty == "orb":
+        if near(t, 'phoneWake', 0.4): put(t, an_chime(1.0))      # the ignite at orbOn has its own shimmer above
+    elif ty == "typing": put(t, tick(1250, 0.18 * g))
     elif ty == "del": put(t, tick(2600 + rng.uniform(-200, 200), 0.35 * g))
     elif ty == "boom": put(t, boom(3.0, 0.8 * g))
     elif ty == "rewind":
