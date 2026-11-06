@@ -856,10 +856,11 @@ export const createFilm5 = (S: Spec) => {
     ...COLD5.marks.map((m) => ({ t: m.at, kind: m.red ? "crash" : "mile", big: !!m.top || !!m.red, tone: m.red ? "red" : "gold", fw: !m.red })),
     ...EV.map((e) => ({ t: e.t0, kind: e.k, big: !!e.big, tone: KIND_TONE[e.k], e, fw: !!e.fx?.some((f) => f === "fw" || f === "fwBig") })),
   ];
+  const MONT = (S as unknown as { montage?: typeof MONTAGE }).montage ?? MONTAGE;
   const montShake = (t: number) => {
     if (t >= RW0) return 0;
     let m = 0;
-    for (const s of MONTAGE) m = Math.max(m, 0.35 * env(t, s.at, 0.01, 0.1), (s.tone === "red" ? 1.05 : 0.7) * env(t, s.at + SHOT_BEAT, 0.01, 0.2));
+    for (const s of MONT) m = Math.max(m, 0.35 * env(t, s.at, 0.01, 0.1), (s.tone === "red" ? 1.05 : 0.7) * env(t, s.at + SHOT_BEAT, 0.01, 0.2));
     return m;
   };
   const shakeAt = (t: number) =>
@@ -900,7 +901,9 @@ export const createFilm5 = (S: Spec) => {
     尼日利亚: [6, 5], 利比亚: [19, 29], 巴西: [-40, -22.5], 哈萨克斯坦: [53, 46], 卡塔尔: [51.3, 25.3], 阿尔及利亚: [6, 31],
     安哥拉: [12.5, -7], 特立尼达: [-61.3, 10.4], 阿根廷: [-68, -38], 哥伦比亚: [-73, 5], 埃及: [32, 28], 阿曼: [56, 21],
   };
+  const ZH_OF: Record<string, string> = Object.fromEntries(Object.entries(S.i18n ?? {}).map(([k, v]) => [v, k]));
   const placeOf = (n: string, y: number): [number, number] => {
+    n = ZH_OF[n] ?? n;
     if (n === "美国") {
       const k = clamp((y - 1900) / 30);
       return [-79.7 + (-98 + 79.7) * k, 41.6 + (31.5 - 41.6) * k];
@@ -1343,7 +1346,7 @@ export const createFilm5 = (S: Spec) => {
       rows.slice(0, 3).forEach((r, i) => {
         const [x, y] = P(...placeOf(r.n, c));
         ctx.globalAlpha = a * wz * maskAt(x, y);
-        text(ctx, r.n, x + 14, y - 14, i === 0 ? 28 : 24, 900, SERIF, i === 0 ? WHITE : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+        text(ctx, tr(r.n), x + 14, y - 14, i === 0 ? 28 : 24, 900, SERIF, i === 0 ? WHITE : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
         text(ctx, r.v.toFixed(0) + "%", x + 14, y + 14, 20, 700, SANS, r.c, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
       });
     // tankers out of the Gulf through Hormuz (from the 1950s); stopped while the strait is shut
@@ -1826,10 +1829,10 @@ export const createFilm5 = (S: Spec) => {
       text(ctx, s, x, y, 28, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
       ctx.globalAlpha = al;
     };
-    lab("竖着钻", WX + 22, G + 66, d - 0.1);
-    lab("拐弯，横着钻", WX + RB + 150, SY - 22, d - 0.55);
-    lab("压裂", FX[3] - 10, SY - 22, d - 1.05);
-    lab("油出来了", WX + 30, G - 16, d - 1.6);
+    lab(tr("竖着钻"), WX + 22, G + 66, d - 0.1);
+    lab(tr("拐弯，横着钻"), WX + RB + 150, SY - 22, d - 0.55);
+    lab(tr("压裂"), FX[3] - 10, SY - 22, d - 1.05);
+    lab(tr("油出来了"), WX + 30, G - 16, d - 1.6);
     text(ctx, place, px + PW - 18, py + 34, 24, 700, SERIF, SOFT, { align: "right" });
     ctx.restore();
   };
@@ -1857,12 +1860,12 @@ export const createFilm5 = (S: Spec) => {
   const drawMontage = (ctx: CanvasRenderingContext2D, t: number) => {
     if (t >= RW0 + 0.02) return;
     let i = -1;
-    MONTAGE.forEach((m, q) => {
+    MONT.forEach((m, q) => {
       if (t >= m.at - 1e-3) i = q;
     });
     if (i < 0) return;
     const k = camAt(t);
-    const m = MONTAGE[i];
+    const m = MONT[i];
     const d = t - m.at;
     const ds = d - SHOT_BEAT;
     const col = m.tone === "red" ? RED : GOLD;
@@ -1872,10 +1875,10 @@ export const createFilm5 = (S: Spec) => {
     ctx.globalAlpha = fade;
     // the moments behind: a dot and the year
     for (let q = 0; q < i; q++) {
-      const [x, y] = pt(MONTAGE[q].y);
-      const c = MONTAGE[q].tone === "red" ? RED : GOLD;
+      const [x, y] = pt(MONT[q].y);
+      const c = MONT[q].tone === "red" ? RED : GOLD;
       dotAt(ctx, x, y, c, 7);
-      text(ctx, MONTAGE[q].year, x, y + (MONTAGE[q].tone === "red" ? 40 : -20), 24, 900, SANS, c, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+      text(ctx, MONT[q].year, x, y + (MONT[q].tone === "red" ? 40 : -20), 24, 900, SANS, c, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
     }
     // the newest: its engraving at the point (above it when the point is low, below when it is high)
     const [px, py] = pt(m.y);
@@ -2536,6 +2539,7 @@ export const createFilm5 = (S: Spec) => {
   // or, for a new high, the old highs it is measured against
   const span1 = (yrs: number) => {
     const m = yrs * 12;
+    if (EN) return m < 12 ? `${m - Math.floor(m) >= 0.3 ? "over " : ""}${Math.floor(m)} months` : `${yrs < 10 ? yrs.toFixed(1) : Math.round(yrs)} years`;
     if (m < 12) return `${Math.floor(m)} 个${m - Math.floor(m) >= 0.3 ? "多" : ""}月`;
     return `${yrs < 10 ? yrs.toFixed(1) : Math.round(yrs)} 年`;
   };
@@ -2559,7 +2563,7 @@ export const createFilm5 = (S: Spec) => {
     const u = t - w.ws;
     ctx.save();
     ctx.globalAlpha = A;
-    text(ctx, `拉远看：${w.x0}—${Math.floor(w.e.y)} 年`, 60, 612, 30, 900, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+    text(ctx, EN ? `Zoom out: ${w.x0}–${Math.floor(w.e.y)}` : `拉远看：${w.x0}—${Math.floor(w.e.y)} 年`, 60, 612, 30, 900, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
     const yb = w.a !== undefined ? w.by : w.e.y;
     const vb = val(yb);
     const xb = X(k, yb);
@@ -2623,7 +2627,7 @@ export const createFilm5 = (S: Spec) => {
       const d = u - 0.55;
       if (d > 0) {
         const s = 1 + 0.35 * (1 - eo3(d / 0.16));
-        const big = vb <= 0 ? "跌穿 0" : `−${Math.round((1 - vb / va) * 100)}%`;
+        const big = vb <= 0 ? (EN ? "Below zero" : "跌穿 0") : `−${Math.round((1 - vb / va) * 100)}%`;
         ctx.save();
         ctx.translate(60, 752);
         ctx.scale(s, s);
@@ -2631,7 +2635,7 @@ export const createFilm5 = (S: Spec) => {
         text(ctx, big, 0, 0, 112, 900, SANS, RED, { glow: "rgba(255,59,47,0.6)", glowBlur: 30 });
         ctx.restore();
         ctx.globalAlpha = A * clamp((d - 0.12) / 0.15);
-        text(ctx, `${span1(yb - ya)}，从 ${fmtUsd(va)} 跌到 ${fmtUsd(vb)} 美元`, 62, 808, 30, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+        text(ctx, EN ? `In ${span1(yb - ya)}: $${fmtUsd(va)} → ${vb < 0 ? "−$" + fmtUsd(-vb) : "$" + fmtUsd(vb)}` : `${span1(yb - ya)}，从 ${fmtUsd(va)} 跌到 ${fmtUsd(vb)} 美元`, 62, 808, 30, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
       }
     } else if (w.refs.length) {
       // a new high against the old ones
@@ -2643,7 +2647,7 @@ export const createFilm5 = (S: Spec) => {
         const y = Yv(k, v);
         ctx.globalAlpha = A * clamp((u - 0.15 - i * 0.15) / 0.15);
         dotAt(ctx, x, y, GOLD);
-        text(ctx, `${Math.floor(ry)} 年 ${fmtUsd(v)}`, x, y - 26, 28, 900, SANS, GOLD, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+        text(ctx, EN ? `${Math.floor(ry)} · $${fmtUsd(v)}` : `${Math.floor(ry)} 年 ${fmtUsd(v)}`, x, y - 26, 28, 900, SANS, GOLD, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
       });
       const vt = val(top);
       const yt = Yv(k, vt);
@@ -2670,10 +2674,10 @@ export const createFilm5 = (S: Spec) => {
         ctx.translate(60, 752);
         ctx.scale(s, s);
         ctx.globalAlpha = A * clamp(d / 0.08);
-        text(ctx, `${fmtUsd(vb)} 美元`, 0, 0, 100, 900, SANS, WHITE, { glow: "rgba(255,255,255,0.35)", glowBlur: 24 });
+        text(ctx, EN ? `$${fmtUsd(vb)}` : `${fmtUsd(vb)} 美元`, 0, 0, 100, 900, SANS, WHITE, { glow: "rgba(255,255,255,0.35)", glowBlur: 24 });
         ctx.restore();
         ctx.globalAlpha = A * clamp((d - 0.12) / 0.15);
-        text(ctx, `比 ${Math.floor(top)} 年的最高点，还低 ${Math.round((1 - vb / vt) * 100)}%`, 62, 808, 30, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+        text(ctx, EN ? `Still ${Math.round((1 - vb / vt) * 100)}% below the ${Math.floor(top)} high` : `比 ${Math.floor(top)} 年的最高点，还低 ${Math.round((1 - vb / vt) * 100)}%`, 62, 808, 30, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
       }
     }
     ctx.restore();
@@ -2978,7 +2982,7 @@ export const createFilm5 = (S: Spec) => {
     ctx.globalAlpha *= clamp((t - TIN) / 0.05);
     ctx.translate(x + (w / 2) * (1 - pop) * (1 - k), y);
     ctx.scale(pop, pop);
-    text(ctx, S.brand, 0, 0, size, 900, SERIF, GOLD, { ls: 2 + 10 * (1 - k), glow: "rgba(255,201,77,0.55)", glowBlur: 40 * (1 - k) + 4 });
+    text(ctx, S.brand, 0, 0, size, 900, SERIF, GOLD, { ls: EN ? 0 : 2 + 10 * (1 - k), glow: "rgba(255,201,77,0.55)", glowBlur: 40 * (1 - k) + 4 });
     ctx.restore();
   };
 
@@ -3090,11 +3094,11 @@ export const createFilm5 = (S: Spec) => {
       const y = 214 + p * 50;
       ctx.fillStyle = r.c;
       ctx.fillRect(790, y - 22, 6, 28);
-      text(ctx, r.n, 806, y, 26, 900, SERIF, WHITE);
+      text(ctx, tr(r.n), 806, y, 26, 900, SERIF, WHITE);
       if (r.tag) {
         ctx.font = `900 26px ${SERIF}`;
-        if (r.tag === "*") text(ctx, "*", 810 + ctx.measureText(r.n).width, y + 2, 28, 900, SANS, GOLD);
-        else text(ctx, r.tag, 812 + ctx.measureText(r.n).width, y - 2, 16, 700, SANS, MUTED);
+        if (r.tag === "*") text(ctx, "*", 810 + ctx.measureText(tr(r.n)).width, y + 2, 28, 900, SANS, GOLD);
+        else text(ctx, r.tag, 812 + ctx.measureText(tr(r.n)).width, y - 2, 16, 700, SANS, MUTED);
       }
       text(ctx, r.v.toFixed(1) + "%", 1090, y, 25, 900, SANS, WHITE, { align: "right" });
       const w0 = was.find((x) => x.n === r.n);
@@ -3180,6 +3184,20 @@ export const createFilm5 = (S: Spec) => {
   const ICON_H = 128;
   const wrap2 = (ctx: CanvasRenderingContext2D, s: string, size: number, maxW: number) => {
     if (measure(ctx, s, size, 900, SERIF) <= maxW) return [s];
+    if (EN) {
+      // English: fill each line word by word, up to three lines (the last one is squeezed if it must be)
+      const out: string[] = [];
+      let cur = "";
+      for (const wd of s.split(" ")) {
+        const nx = cur ? cur + " " + wd : wd;
+        if (cur && measure(ctx, nx, size, 900, SERIF) > maxW && out.length < 2) {
+          out.push(cur);
+          cur = wd;
+        } else cur = nx;
+      }
+      out.push(cur);
+      return out;
+    }
     const cut = s.indexOf("，") > 0 ? s.indexOf("，") : s.indexOf("：");
     if (cut > 0 && cut < s.length - 1) return [s.slice(0, cut + 1), s.slice(cut + 1)];
     // English: after a comma or colon, else at the space nearest the middle
@@ -3191,7 +3209,7 @@ export const createFilm5 = (S: Spec) => {
     return [s];
   };
   const cardBox = (ctx: CanvasRenderingContext2D, e: P5, maxW: number) => {
-    const TS = e.n ? 60 : 72;
+    const TS = EN ? (e.n ? 54 : 62) : e.n ? 60 : 72;
     const lines = e.t ? wrap2(ctx, e.t, TS, maxW) : [];
     const NS = e.n ? (e.n.length > 8 ? 84 : 118) : 0;
     const h = 46 + lines.length * TS * 1.18 + (e.n ? NS * 1.02 : 0) + (e.s ? 46 : 0) + (e.icon ? ICON_H : 0);
