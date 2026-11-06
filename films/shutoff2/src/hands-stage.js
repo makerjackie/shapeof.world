@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { ROOM, ROOM_M } from './room-layout.js';
 import { onTwos, noise1, smooth, invLerp, clamp, lerp } from './util.js';
 import * as ML from './meet-layout.js';
+import { makeHandSculpt } from './hands-rig.js';
 
 let CTX = null;
 export function bindCtx(ctx) { CTX = ctx; }
@@ -40,9 +41,90 @@ function fingers(over, f, spread = {}) {
   return over;
 }
 
+// The phone in his left hand (k05): phone-local → hand-model. The phone's back lies against the palm and fingers,
+// screen facing away from the palm (hand −Y), its width along the fingers (+X, the right edge under the fingertips),
+// its top toward the thumb side (+Z). The thumb crosses the screen from the left edge.
+export const PHONE_IN_HAND = new THREE.Matrix4().makeRotationX(Math.PI).setPosition(0.092, -0.0175, -0.004);
+// k05: where the phone is in the room (screen toward his eyes), and the hand root derived from it
+function phoneWorldK05() {
+  const c = V(0.0, 0.93, -1.43), eye = V(0.04, 1.2, -1.14);
+  const n = eye.clone().sub(c).normalize();
+  const xr = V(1, 0, 0.0).normalize();
+  const top = new THREE.Vector3().crossVectors(n, xr).normalize();
+  const x = new THREE.Vector3().crossVectors(n, top.clone().negate()).normalize();
+  return new THREE.Matrix4().makeBasis(x, n, top.clone().negate()).setPosition(c.clone().addScaledVector(n, -0.008));
+}
+export const K05 = { phone: () => ROOM_M.clone().multiply(phoneWorldK05()) };
+
+// Solve the thumb (t1 Y/Z rotation + t2 flexion) so the thumb pad lands on a point (hand-model space) while the
+// thumb's middle joint stays in front of the screen plane (y < frontY), i.e. the thumb arches over the phone's edge.
+let _rig = null;
+const _thumbCache = {};
+function solveThumb(key, over, target, frontY) {
+  if (_thumbCache[key]) return _thumbCache[key];
+  _rig = _rig || makeHandSculpt({}).rig;
+  const pad = new THREE.Vector3(0.016, -0.0072, 0);       // the pad's underside, in the t3 frame
+  const i2 = _rig.index.t2, i3 = _rig.index.t3, J2 = new THREE.Vector3(), M3 = new THREE.Vector3(0.009, 0, 0);
+  const err = (a, b, c) => {
+    const o = { ...over, t1: { r: [over.t1.r[0], a, b] }, t2: { r: [0, 0, c] } };
+    const w = _rig.pose(o);
+    let e = pad.clone().applyMatrix4(w[i3]).distanceTo(target);
+    J2.setFromMatrixPosition(w[i2]);
+    e += Math.max(0, J2.y - frontY) * 3;
+    e += Math.max(0, M3.clone().applyMatrix4(w[i3]).y - (frontY + 0.004)) * 3;
+    return e;
+  };
+  let a = over.t1.r[1], b = over.t1.r[2], c = over.t2.r[2], step = 8, e = err(a, b, c);
+  for (let it = 0; it < 400 && step > 0.01; it++) {
+    let moved = false;
+    for (const [da, db, dc] of [[step, 0, 0], [-step, 0, 0], [0, step, 0], [0, -step, 0], [0, 0, step], [0, 0, -step]]) {
+      const e2 = err(a + da, b + db, c + dc);
+      if (e2 < e) { a += da; b += db; c += dc; e = e2; moved = true; break; }
+    }
+    if (!moved) step *= 0.5;
+  }
+  if (typeof location !== 'undefined' && location.search.includes('thumbdbg')) console.error(`[thumb ${key}] err ${(e * 1000).toFixed(1)} mm  a ${a.toFixed(1)} b ${b.toFixed(1)} c ${c.toFixed(1)}`);
+  return (_thumbCache[key] = { t1: [over.t1.r[0], a, b], t2: c });
+}
+
 // Per shot: { mesh: key of the base sculpt, h: build resolution, tendon, matrix (world), over(t) bone pose,
 //             pale, phone: { matrix, glow(t), canvasId } }
 export const STAGES = {
+  // k01: 03:12, the first frame. The dark desk; the phone face up lights; a still hand at the desk edge, the ring.
+  k01: {
+    mesh: 'desk', tendon: 0.4,
+    // the forearm along the desk edge, the hand still, fingers loosely curled toward his right
+    matrix() { return ROOM_M.clone().multiply(frame(V(-0.19, ROOM.desk.top + 0.0205, -1.34), V(1, -0.04, -0.06), V(0, 1, 0), -9)); },
+    over() { return STAGES.s15.over(0); },
+    pale: () => 0.1,
+    phone: { pos: [-0.06, ROOM.desk.top, -1.6], yaw: 6, canvas: 'phone-lin', glow: (lt, d, st) => smooth(invLerp(st.cues.deskLight - 0.02, st.cues.deskLight + 0.12, st.tr)), useCanvasGlow: true },
+  },
+  // k05: 02:30. The phone in his left hand, his thumb comes down on 执行关停.
+  k05: {
+    mesh: 'hold', tendon: 0.7, smoothK: 0.7,
+    matrix() { return K05.phone().multiply(PHONE_IN_HAND.clone().invert()); },
+    over(lt, d, st) {
+      const t = onTwos(st.tr);
+      // the thumb hovers, then presses at CUES.killPress and stays down
+      const kp = smooth(invLerp(st.cues.killPress - 0.25, st.cues.killPress + 0.04, t));
+      const o = fingers({}, { i: [-10, -62, -18], m: [-11, -64, -20], r: [-12, -66, -20], l: [-14, -64, -18] }, { i: -2, m: 0, r: 2, l: 4 });
+      o.hand = { r: [0, 0, 4] };
+      // screen centre in hand space: the phone's back is at PHONE_IN_HAND, the screen 8 mm below it (hand −Y)
+      const sc = new THREE.Vector3(0, 0.008, 0).applyMatrix4(PHONE_IN_HAND);
+      // the red button (ui-v12 killScreen) is centred 54.7 % down the screen: phone-local z +0.0067 → hand −Z;
+      // aimed a little below it so the thumb's bulk (2 cm above the glass) doesn't hide the button in the oblique view
+      const btn = sc.clone().add(V(-0.004, 0, -0.013));
+      const front = sc.y - 0.009;          // the thumb's joints stay this far in front of the glass
+      const up = solveThumb('up', { ...o, t1: { r: [-6, 30, -30] }, t2: { r: [0, 0, 10] }, t3: { r: [0, 0, -8] } }, btn.clone().add(V(-0.008, -0.02, -0.004)), front - 0.006);
+      const dn = solveThumb('dn', { ...o, t1: { r: [-6, 30, -30] }, t2: { r: [0, 0, 10] }, t3: { r: [0, 0, -24] } }, btn.clone().add(V(0.0, -0.0004, 0.0)), front);
+      o.t1 = { r: up.t1.map((v, i) => lerp(v, dn.t1[i], kp)) };
+      o.t2 = { r: [0, 0, lerp(up.t2, dn.t2, kp)] };
+      o.t3 = { r: [0, 0, lerp(-8, -24, kp)] };
+      return o;
+    },
+    pale: (lt, d, st) => 0.15 + 0.4 * smooth(invLerp(st.cues.killPress, st.cues.killPress + 0.3, st.tr)),
+    phone: { inHand: true, canvas: 'phone-lin', glow: () => 1 },
+  },
   // s02: 08:57, the meeting table. Forearm along the edge, the watch face up; the fingers tense as the pulse climbs.
   s02: {
     mesh: 'rest', tendon: 0.85, smoothK: 0.45,
@@ -123,5 +205,7 @@ export const STAGES = {
 export const MESHES = {
   rest: { tendon: 0.85, veins: 1, knuckle: 1.15, pose: () => STAGES.s02.over(1.3, 2.6) },
   desk: { tendon: 0.4, pose: () => STAGES.s15.over(0) },
+  flat: { tendon: 0.45, veins: 0.6, pose: () => STAGES.k01.over() },
+  hold: { tendon: 0.7, veins: 0.8, knuckle: 1.05, pose: () => STAGES.k05.over(0, 2.4, { tr: 32.5, cues: { killPress: 32.5 } }) },
   grip: { tendon: 1.0, veins: 1.2, knuckle: 1.1, pose: () => STAGES.s21.over(1.0, 3.2) },
 };

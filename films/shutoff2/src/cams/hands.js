@@ -1,8 +1,8 @@
 // Cameras and looks for the Hands department's shots: s02 wrist, s15 pulse, s18 jump, s21 grip.
 import * as THREE from 'three';
-import { STAGES } from '../hands-stage.js';
+import { STAGES, K05 } from '../hands-stage.js';
 import { WATCH_X, wristSection } from '../hands-rig.js';
-import { ROOM, rw, roomAz } from '../room-layout.js';
+import { ROOM, rw, rwDir, roomAz } from '../room-layout.js';
 import { smooth, smoother, invLerp, lerp } from '../util.js';
 
 const _m = new THREE.Matrix4();
@@ -20,7 +20,30 @@ function watchFrame(sid) {
 const A = (v) => [v.x, v.y, v.z];
 const add = (c, ...terms) => { const v = c.clone(); for (const [d, k] of terms) v.addScaledVector(d, k); return v; };
 
+// the k05 phone: centre, screen normal, top, right (world)
+function phoneK05() {
+  const m = K05.phone(), e = m.elements;
+  const x = new THREE.Vector3(e[0], e[1], e[2]), n = new THREE.Vector3(e[4], e[5], e[6]), top = new THREE.Vector3(-e[8], -e[9], -e[10]);
+  const c = new THREE.Vector3().setFromMatrixPosition(m).addScaledVector(n, 0.008);
+  return { c, n, top, x };
+}
+
 export const CAMS = {
+  // k01: the first frame. Low over the dark desk: the still hand at the edge, the phone beyond, the rain window above.
+  k01: (lt, d) => {
+    const k = smoother(lt / d);
+    return { pos: rw(-0.1, lerp(1.025, 1.01, k), lerp(-0.985, -1.03, k)), look: rw(-0.095, 0.70, -1.594), fov: 50, near: 0.01 };
+  },
+  // k05: close on his thumb over the red button, a slow push-in
+  k05: (lt, d) => {
+    const P = phoneK05();
+    const k = smoother(lt / d);
+    const dist = lerp(1.0, 0.85, k);
+    const pos = add(P.c, [P.n, 0.3 * dist], [P.top, -0.06 * dist], [P.x, 0.07 * dist]);
+    // rolled so the thumb comes in on the diagonal from the lower left
+    const up = P.top.clone().multiplyScalar(Math.cos(0.42)).addScaledVector(P.x, Math.sin(0.42));
+    return { pos: A(pos), look: A(add(P.c, [P.top, 0.0], [P.x, -0.035])), up: A(up), fov: 36, near: 0.01 };
+  },
   // close on the wrist at the table edge, from his side; the watch face reads upright
   s02: (lt, d) => {
     const w = watchFrame('s02');
@@ -33,8 +56,8 @@ export const CAMS = {
   // 03:12: from his eyes, down at the desk: the wrist at the bottom, the phone beyond, the rain window at the top
   s15: (lt, d) => {
     const k = smoother(lt / d);
-    const pos = rw(lerp(-0.11, -0.115, k), lerp(1.12, 1.08, k), lerp(-1.06, -1.12, k));
-    const look = rw(-0.1, 0.77, -1.49);
+    const pos = rw(lerp(-0.092, -0.094, k), lerp(1.13, 1.09, k), lerp(-1.05, -1.11, k));
+    const look = rw(-0.09, 0.77, -1.49);
     return { pos, look, fov: 40, near: 0.01 };
   },
   // macro on the watch face while the night turns to morning
@@ -62,6 +85,27 @@ const phoneLight = (sid, st, i) => {
 };
 
 export const LOOKS = {
+  // one light: the phone. Before CUES.deskLight only the rain window's faint blue.
+  k01: (lt, d, t, st) => {
+    const g = smooth(invLerp(st.cues.deskLight - 0.02, st.cues.deskLight + 0.12, st.tr));
+    const p = STAGES.k01.phone.pos;
+    return {
+      preset: 'night', sunElev: 9, sunAz: roomAz(0, -1), sunStrength: 0.14, ambient: '#05071a', fogDensity: 0.0007, rain: 0.8,
+      // anime key cheat: the key comes from the phone, so the ring catches a hard glint and the hand's lit side faces it
+      key: rwDir(0.22, 0.62, -0.75),
+      lights: [{ pos: rw(p[0], p[1] + 0.07, p[2]), r: 0.62, color: '#b9cfff', i: 1.25 * g }],
+      rainHaze: 0.85, rainBlur: 26, rainFall: 0.3, rainBokeh: 1.2, exposure: 1.05, bloom: 1.3,
+    };
+  },
+  // 02:30: the red screen washes his hand; the room is nearly black
+  k05: (lt, d, t, st) => {
+    const P = phoneK05();
+    return {
+      preset: 'night', sunElev: 9, sunAz: roomAz(0, -1), sunStrength: 0.12, ambient: '#05061a', fogDensity: 0.0007, rain: 0.8,
+      lights: [{ pos: A(add(P.c, [P.n, 0.05], [P.top, -0.02], [P.x, -0.045])), r: 0.17, color: '#ff4a44', i: 0.85 }, { pos: A(add(P.c, [P.n, 0.12], [P.top, 0.06])), r: 0.4, color: '#7d8cff', i: 0.25 }],
+      exposure: 1.05, bloom: 1.2,
+    };
+  },
   s02: (lt, d) => {
     const w = watchFrame('s02');
     // anime key cheat: a grazing key across the back of the hand so knuckles, tendons and veins catch the terminator
@@ -93,6 +137,6 @@ export const LOOKS = {
   s21: (lt, d) => {
     const m = STAGES.s21.matrix();
     const hp = new THREE.Vector3(0.05, 0, 0).applyMatrix4(m);
-    return { preset: 'morning', sunElev: 24, sunAz: 120, shadow: { center: A(hp), radius: 0.35, depth: 4 }, exposure: 1.06 };
+    return { preset: 'morning', sunElev: 24, sunAz: 120, shadow: { center: A(hp), radius: 0.35, depth: 4 }, exposure: 0.94, bloom: 0.75 };
   },
 };

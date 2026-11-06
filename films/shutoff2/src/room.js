@@ -1,8 +1,10 @@
 // Room department: 林工's flat at night (01:40–03:12, rain). The set, 林工 at his desk with the phone, rain on the
 // window glass (a screen-space glass pass over the City department's night city), and the CCTV view (s12).
 import * as THREE from 'three';
-import { ROOM, ROOM_M } from './room-layout.js';
+import { ROOM, ROOM_M, homeCamPose } from './room-layout.js';
+import { makeHomeCam } from './room-homecam.js';
 import { buildSet } from './room-set.js';
+import { buildTowers } from './room-towers.js';
 import { makeFigure, PHONE, J, HEAD_PITCH } from './room-figure.js';
 import { createRainGlass, createHalo } from './room-rain.js';
 import { onTwos, smoother, invLerp, clamp } from './util.js';
@@ -16,7 +18,12 @@ export function createRoom(ctx) {
   root.visible = false;
   ctx.scene.add(root);
   const set = buildSet(root);
+  buildTowers(root);                     // v12: ordinary neighbours across the street fill the window, no 安 tower
   ctx.shadowRoots.push(set.casters);     // the window frame, curtains, desk and chair cast the low sun's shadow (s18 sweep)
+  // the home camera on the shelf
+  const hc = makeHomeCam();
+  hc.root.position.copy(ROOM.homecam.base);
+  root.add(hc.root);
   const fig = makeFigure();
   fig.group.visible = false;
   root.add(fig.group);
@@ -42,7 +49,7 @@ export function createRoom(ctx) {
   const D2R = Math.PI / 180;
   const FACE = new THREE.Vector3(0, Math.sin(HEAD_PITCH * D2R), -Math.cos(HEAD_PITCH * D2R));
   const HC = new THREE.Vector3(0, 0.075, -0.02).applyAxisAngle(new THREE.Vector3(1, 0, 0), HEAD_PITCH * D2R);
-  const LENS = new THREE.Vector3(ROOM.cam.x - 0.03, ROOM.cam.y - 0.06, ROOM.cam.z + 0.03);
+  const LENS = homeCamPose().lens;
   const lookOver = (Y, P, kY, kP, breath = 0) => ({
     chest: { r: [breath + 0.12 * P * kP, 0.16 * Y * kY, 0] },
     neck: { r: [0.33 * P * kP, 0.3 * Y * kY, 0] },
@@ -86,6 +93,14 @@ export function createRoom(ctx) {
       rain.update(st, on);
       halo.hide();
       if (!on) return;
+      // the home camera: a few degrees off him until CUES.camTurn, then a servo step (fast, a hair of overshoot)
+      {
+        const u = clamp((st.tr - st.cues.camTurn) / 0.16, 0, 1);
+        const off = 5.5 * (1 - u * u * (3 - 2 * u)) - 0.35 * Math.sin(Math.PI * clamp((st.tr - st.cues.camTurn - 0.12) / 0.22, 0, 1));
+        const P = homeCamPose(st.sid === 'k06' ? off : 0, st.sid === 'k06' ? -off * 0.3 : 0);
+        hc.set(P.pan, P.tilt, st.sid === 'k06' ? (st.tr >= st.cues.camTurn + 0.1 ? 1 : 0) : 0);
+        hc.root.visible = st.sid !== 's12';
+      }
       const showFig = FIGURE_SHOTS.has(st.sid);
       // s12 is infrared video: hair and skin read light grey, so the shadowed face becomes a void
       const ir = st.sid === 's12';

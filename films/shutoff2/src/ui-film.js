@@ -145,11 +145,13 @@ export function subtitle(g, lines, a, dur, y, o = {}) {
 }
 
 // ---------------------------------------------------------------- s12 · the home-camera HUD (sparse)
-// the box follows Room's slow push-in: measured on their render at 43.0 s and 45.6 s (frame px), extrapolated in time
-const CCTV_KEYS = [[43.0, 520, 1000, 440, 480], [45.6, 530, 1015, 540, 550]];
+// the box sits on 林工 in Room's home-camera view (their numbers: centre (480, 900), ~400×440) and follows their
+// digital push-in during the look-up: 1.0 → 1.3 about (470, 880), from CUES.lookUp + 0.25
+export const CCTV_PUSH = { from: 0.25, dur: 1.2, to: 1.3, cx: 470, cy: 880 };
 export function cctvBox(tr) {
-  const [a, b] = CCTV_KEYS, u = (tr - a[0]) / (b[0] - a[0]);
-  return { x: lerp(a[1], b[1], u), y: lerp(a[2], b[2], u), w: lerp(a[3], b[3], u), h: lerp(a[4], b[4], u) };
+  const z = 1 + (CCTV_PUSH.to - 1) * easeInOut(clamp((tr - C.lookUp - CCTV_PUSH.from) / CCTV_PUSH.dur));
+  const x = 480, y = 900, w = 400, h = 440;
+  return { x: CCTV_PUSH.cx + (x - CCTV_PUSH.cx) * z, y: CCTV_PUSH.cy + (y - CCTV_PUSH.cy) * z, w: w * z, h: h * z };
 }
 export const CCTV_APPEAR = 0.35;
 export function homeCamHud(g, st) {
@@ -159,9 +161,9 @@ export function homeCamHud(g, st) {
   g.fillStyle = vg; g.fillRect(0, 0, W, H);
   const secs = 9 + Math.floor(Math.max(0, st.lt));
   const sh = ['rgba(0,0,0,0.7)', 8, 1];
-  txt(g, `2026-11-05  02:41:${String(secs).padStart(2, '0')}`, 70, 270, { font: f(500, 38, 'mono'), color: '#ffffff', shadow: sh });
-  if (tr % 1 < 0.6) { g.save(); g.shadowColor = 'rgba(0,0,0,0.6)'; g.shadowBlur = 6; g.beginPath(); g.arc(84, 322, 11, 0, Math.PI * 2); g.fillStyle = '#ff3b30'; g.fill(); g.restore(); }
-  txt(g, 'REC', 106, 334, { font: f(600, 32, 'mono'), color: '#ffffff', shadow: sh });
+  txt(g, `2026-11-05  02:41:${String(secs).padStart(2, '0')}`, 110, 300, { font: f(500, 38, 'mono'), color: '#ffffff', shadow: sh });
+  if (tr % 1 < 0.6) { g.save(); g.shadowColor = 'rgba(0,0,0,0.6)'; g.shadowBlur = 6; g.beginPath(); g.arc(124, 352, 11, 0, Math.PI * 2); g.fillStyle = '#ff3b30'; g.fill(); g.restore(); }
+  txt(g, 'REC', 146, 364, { font: f(600, 32, 'mono'), color: '#ffffff', shadow: sh });
   const B0 = cctvBox(tr);
   const ap = smooth((st.ltr - CCTV_APPEAR) / 0.25);
   if (ap <= 0.01) return;

@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import { makePhone, makeWatch } from './hands-props.js';
 import { makeHandSculpt, makeSleeveSculpt, WATCH_X, wristSection } from './hands-rig.js';
 import { sculptMaterial } from './hands-sdf.js';
-import { STAGES, MESHES, bindCtx, meetTable } from './hands-stage.js';
+import { STAGES, MESHES, PHONE_IN_HAND, bindCtx, meetTable } from './hands-stage.js';
 import { ROOM_M } from './room-layout.js';
 import { toonMaterial } from './materials.js';
 
@@ -66,6 +66,13 @@ export function createHands(ctx) {
   standin.visible = false;
   ctx.scene.add(standin);
 
+  // 林工's wedding ring: a plain platinum band on the ring finger of his left hand, following the 'r1' bone
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.0089, 0.00125, 10, 40).rotateY(Math.PI / 2).scale(1, 0.88, 1),
+    toonMaterial({ color: '#dfe3ea', id: 76, spec: 1, rim: 0.7 }));
+  ring.matrixAutoUpdate = false;
+  root.add(ring);
+  const RING_AT = new THREE.Matrix4().makeTranslation(0.0165, 0.0, 0.0);
+
   const tmp = new THREE.Matrix4();
   return {
     makePhone, makeWatch,
@@ -82,7 +89,9 @@ export function createHands(ctx) {
       root.matrix.copy(S.matrix());
       root.matrixWorldNeedsUpdate = true;
       const over = S.over(st.lt, st.dur, st);
-      b.hs.sculpt.deform(b.hb, over);
+      const worlds = b.hs.sculpt.deform(b.hb, over);
+      ring.matrix.multiplyMatrices(worlds[b.hs.rig.index.r1], RING_AT);
+      ring.matrixWorldNeedsUpdate = true;
       b.ss.deform(b.sb, over);
       skinMat.uniforms.uPale.value = S.pale(st.lt, st.dur, st);
       skinMat.uniforms.uSmoothK.value = S.smoothK ?? 0.8;
@@ -90,11 +99,15 @@ export function createHands(ctx) {
       watch.setScreen(wc || null, 1);
       if (S.phone) {
         const p = S.phone;
-        tmp.makeRotationY(p.yaw * Math.PI / 180).setPosition(p.pos[0], p.pos[1], p.pos[2]);
-        phone.root.matrix.multiplyMatrices(ROOM_M, tmp);
+        if (p.inHand) phone.root.matrix.multiplyMatrices(root.matrix, PHONE_IN_HAND);
+        else {
+          tmp.makeRotationY(p.yaw * Math.PI / 180).setPosition(p.pos[0], p.pos[1], p.pos[2]);
+          phone.root.matrix.multiplyMatrices(ROOM_M, tmp);
+        }
         phone.root.matrixWorldNeedsUpdate = true;
         const pc = ctx.ui?.screen?.(p.canvas, st);
-        phone.setScreen(pc || null, p.glow(st.lt, st.dur, st));
+        const g = p.useCanvasGlow && pc && pc.glow != null ? Math.min(pc.glow, p.glow(st.lt, st.dur, st)) : p.glow(st.lt, st.dur, st);
+        phone.setScreen(pc || null, g);
       }
       if (st.set === 'meet') {
         const T = meetTable();

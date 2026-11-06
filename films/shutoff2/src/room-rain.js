@@ -5,7 +5,7 @@
 // drawn cel-style with a bright crescent, a specular dot and a thin dark rim. Rain falls beyond the glass.
 // The same pass draws the s12 CCTV look: barrel distortion, black fisheye corners, desaturated low-light video.
 import * as THREE from 'three';
-import { ROOM, rw, rwDir } from './room-layout.js';
+import { ROOM, rw, rwDir, s12Zoom, S12_ZOOM_CENTRE } from './room-layout.js';
 
 const VS = /* glsl */ `
 varying vec2 vUv;
@@ -17,7 +17,7 @@ uniform vec2 uRes;
 uniform mat4 uInvProj, uCamWorld;
 uniform vec3 uCamPos, uGO, uGU, uGV, uGN;
 uniform vec2 uGSize;
-uniform float uTime, uGlass, uCCTV, uHaze, uFogDensity, uBlur, uDropK, uFall, uDropScale, uZoom, uHunt;
+uniform float uTime, uGlass, uCCTV, uHaze, uFogDensity, uBlur, uDropK, uFall, uDropScale, uZoom, uHunt, uBokeh;
 uniform vec2 uZoomOut;
 uniform vec3 uFogCool, uFogWarm, uTint;
 varying vec2 vUv;
@@ -95,7 +95,7 @@ vec3 blurBehind(vec2 uv, float radPx, float gd){
     float ok = step(gd + 0.05, dq);
     vec3 c = sceneAt(q);
     float lum = dot(c, vec3(0.3, 0.6, 0.1));
-    float ww = ok * (1.0 + 4.0 * smoothstep(0.35, 1.2, lum));   // bright lights spread into bokeh discs
+    float ww = ok * (1.0 + uBokeh * smoothstep(0.35, 1.2, lum));   // bright lights spread into bokeh discs
     acc += c * ww; w += ww;
   }
   return w > 0.0 ? acc / w : sceneAt(uv);
@@ -239,7 +239,7 @@ export function createRainGlass(ctx, glassZ) {
     uGSize: { value: new THREE.Vector2(x1 - x0, y1 - y0) },
     uTime: { value: 0 }, uGlass: { value: 0 }, uCCTV: { value: 0 },
     uHaze: { value: 0.55 }, uFogDensity: atm.uFogDensity, uBlur: { value: 9 }, uDropK: { value: 1 }, uFall: { value: 1 }, uDropScale: { value: 2.4 },
-    uZoom: { value: 1 }, uHunt: { value: 0 }, uZoomOut: { value: new THREE.Vector2(600 / 1080, 1 - 950 / 1920) },
+    uZoom: { value: 1 }, uHunt: { value: 0 }, uBokeh: { value: 4 }, uZoomOut: { value: new THREE.Vector2(S12_ZOOM_CENTRE[0] / 1080, 1 - S12_ZOOM_CENTRE[1] / 1920) },
     uFogCool: atm.uFogCool, uFogWarm: atm.uFogWarm, uTint: { value: new THREE.Color('#d6eee4') },
   };
   const mat = new THREE.ShaderMaterial({
@@ -271,11 +271,11 @@ export function createRainGlass(ctx, glassZ) {
       u.uDropK.value = L.rainDrop ?? 1;
       u.uFall.value = L.rainFall ?? 1;
       u.uDropScale.value = L.rainScale ?? 2.4;
+      u.uBokeh.value = L.rainBokeh ?? 4;
       if (cctv) {
         // as he looks up, the camera "notices": a focus hunt, then a slow digital push-in that holds
         const lu = st.cues.lookUp, tr = st.tr;
-        const kz = Math.min(1, Math.max(0, (tr - (lu + 0.25)) / 1.0));
-        u.uZoom.value = 1 + 0.3 * kz * kz * (3 - 2 * kz);
+        u.uZoom.value = s12Zoom(st);
         const kh = Math.min(1, Math.max(0, (tr - (lu - 0.05)) / 0.5));
         u.uHunt.value = 3.0 * Math.sin(Math.PI * kh) * (kh < 1 ? 1 : 0);
       } else { u.uZoom.value = 1; u.uHunt.value = 0; }

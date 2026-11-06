@@ -155,14 +155,6 @@ export function buildSet(parent) {
     for (let i = 0; i < 9; i++) add(new THREE.BoxGeometry(0.84, 0.004, 0.006), M.acDark, 0, -0.145, 0.0 + i * 0.012, ac);
     add(new THREE.BoxGeometry(0.03, 0.008, 0.002), M.ledB, 0.3, 0.02, 0.106, ac);
   }
-  // the ceiling dome camera (安's eye in this flat)
-  {
-    const cam = new THREE.Group(); cam.position.copy(ROOM.cam); g.add(cam);
-    add(new THREE.CylinderGeometry(0.075, 0.08, 0.025, 36), M.dome, 0, 0.1 - 0.0125, 0, cam).position.y = ceil - ROOM.cam.y - 0.0125;
-    const dome = add(new THREE.SphereGeometry(0.058, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), M.domeGlass, 0, ceil - ROOM.cam.y - 0.025, 0, cam);
-    void dome;
-    add(new THREE.TorusGeometry(0.06, 0.007, 8, 36).rotateX(Math.PI / 2), M.dome, 0, ceil - ROOM.cam.y - 0.026, 0, cam);
-  }
   // door (back wall, left), light switch, poster
   {
     add(RB(0.9, 2.05, 0.05, 0.01), M.door, -1.3, 1.025, z1 - 0.03);
@@ -199,9 +191,9 @@ export function buildSet(parent) {
     add(new THREE.PlaneGeometry(0.05, 0.05), noteM, -0.27, 0.2, 0.0125, mon).rotation.z = 0.06;
     add(new THREE.PlaneGeometry(0.05, 0.05), toonMaterial({ color: '#b9d8e8', id: 59 }), -0.21, 0.205, 0.0126, mon).rotation.z = -0.08;
     // keyboard + mouse
-    add(RB(0.44, 0.018, 0.135, 0.006), M.black, 0.18, D.top + 0.009, -1.5, desk).rotation.y = -0.05;
-    const kb = add(new THREE.PlaneGeometry(0.42, 0.12).rotateX(-Math.PI / 2), M.keys, 0.18, D.top + 0.0185, -1.5, desk); kb.rotation.y = -0.05;
-    add(new THREE.SphereGeometry(0.03, 20, 12).scale(1, 0.45, 1.6), M.mouse, 0.5, D.top + 0.008, -1.46, desk);
+    add(RB(0.44, 0.018, 0.135, 0.006), M.black, 0.4, D.top + 0.009, -1.56, desk).rotation.y = -0.05;
+    const kb = add(new THREE.PlaneGeometry(0.42, 0.12).rotateX(-Math.PI / 2), M.keys, 0.4, D.top + 0.0185, -1.56, desk); kb.rotation.y = -0.05;
+    add(new THREE.SphereGeometry(0.03, 20, 12).scale(1, 0.45, 1.6), M.mouse, 0.69, D.top + 0.008, -1.5, desk);
     // the mug (☕), cold coffee inside
     const mug = new THREE.Group(); mug.position.set(-0.34, D.top, -1.5); desk.add(mug);
     const prof = [[0, 0], [0.036, 0], [0.04, 0.004], [0.041, 0.09], [0.038, 0.095], [0.035, 0.09], [0.034, 0.008], [0, 0.008]].map(([x, y]) => new THREE.Vector2(x, y));
@@ -212,10 +204,10 @@ export function buildSet(parent) {
     add(RB(0.17, 0.012, 0.235, 0.003), M.cover, -0.55, D.top + 0.006, -1.62, desk).rotation.y = 0.2;
     add(new THREE.PlaneGeometry(0.155, 0.22).rotateX(-Math.PI / 2), M.page, -0.55, D.top + 0.0125, -1.62, desk).rotation.y = 0.2;
     add(new THREE.CylinderGeometry(0.0045, 0.0045, 0.14, 10).rotateZ(Math.PI / 2), M.pen, -0.47, D.top + 0.017, -1.54, desk).rotation.y = 0.9;
-    const badge = add(RB(0.054, 0.003, 0.086, 0.002), M.badge, -0.28, D.top + 0.0016, -1.68, desk); badge.rotation.y = 0.35;
-    add(new THREE.PlaneGeometry(0.05, 0.08).rotateX(-Math.PI / 2), M.badge, -0.28, D.top + 0.0034, -1.68, desk).rotation.y = 0.35;
+    const badge = add(RB(0.054, 0.003, 0.086, 0.002), M.badge, -0.5, D.top + 0.0016, -1.78, desk); badge.rotation.y = 0.35;
+    add(new THREE.PlaneGeometry(0.05, 0.08).rotateX(-Math.PI / 2), M.badge, -0.5, D.top + 0.0034, -1.78, desk).rotation.y = 0.35;
     {
-      const pts = [[-0.29, -1.635], [-0.33, -1.56], [-0.42, -1.53], [-0.5, -1.6], [-0.46, -1.7], [-0.36, -1.74], [-0.29, -1.72]].map(([x, z]) => new THREE.Vector3(x, D.top + 0.003, z));
+      const pts = [[-0.51, -1.735], [-0.55, -1.66], [-0.64, -1.63], [-0.72, -1.7], [-0.68, -1.8], [-0.58, -1.84], [-0.51, -1.82]].map(([x, z]) => new THREE.Vector3(x, D.top + 0.003, z));
       add(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 60, 0.003, 4, true).scale(1, 0.4, 1).translate(0, D.top * 0.6 + 0.0005, 0), M.lanyard, 0, 0, 0, desk);
     }
     // desk lamp (off): base, two arms, shade
@@ -226,9 +218,7 @@ export function buildSet(parent) {
     const shade = add(new THREE.ConeGeometry(0.07, 0.12, 28, 1, true), M.lamp, 0, 0.42, 0.33, lamp); shade.rotation.x = 2.3;
     add(new THREE.SphereGeometry(0.014, 10, 8), M.lampJ, 0, 0.36, 0.07, lamp);
     // cables: monitor + lamp → behind the desk → power strip on the floor
-    const strip = add(RB(0.3, 0.035, 0.055, 0.008), M.strip, 0.15, 0.0175, -1.86, desk);
-    void strip;
-    for (let i = 0; i < 4; i++) add(new THREE.SphereGeometry(0.003, 6, 4), M.ledR, 0.03 + i * 0.07, 0.036, -1.86, desk);
+
     const cable = (pts, r = 0.004) => add(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map((p) => new THREE.Vector3(...p))), 48, r, 6), M.cable, 0, 0, 0, desk);
     cable([[0.36, D.top + 0.15, -1.8], [0.34, D.top - 0.05, -1.9], [0.3, 0.35, -1.93], [0.2, 0.05, -1.9], [0.1, 0.03, -1.86]]);
     cable([[-0.66, D.top + 0.01, -1.85], [-0.6, D.top - 0.04, -1.92], [-0.4, 0.4, -1.94], [-0.1, 0.06, -1.92], [0.05, 0.03, -1.86]]);
@@ -315,6 +305,41 @@ export function buildSet(parent) {
     // router with LEDs on the middle shelf
     add(RB(0.2, 0.035, 0.13, 0.01), M.black, 0.25, 0.04 + 2 * 0.37 + 0.03, 0.0, sh);
     for (let i = 0; i < 4; i++) add(new THREE.SphereGeometry(0.0025, 6, 4), i === 2 ? M.ledB : M.ledG, 0.18 + i * 0.03, 0.04 + 2 * 0.37 + 0.04, 0.066, sh);
+  }
+
+  // ---------------------------------------------------------------- a tall narrow bookshelf on the right wall by the window
+  // (the home camera stands on top of it; see room-homecam.js)
+  {
+    const sh = new THREE.Group(); sh.position.set(x1 - 0.17, 0, -1.2); sh.rotation.y = -Math.PI / 2; g.add(sh);
+    const Wd = 0.66, H = 1.86, Dp = 0.3;
+    add(RB(0.022, H, Dp, 0.004), M.shelf, -Wd / 2, H / 2, 0, sh); add(RB(0.022, H, Dp, 0.004), M.shelf, Wd / 2, H / 2, 0, sh);
+    add(RB(Wd, 0.012, 0.004, 0.002), M.shelf, 0, H / 2, -Dp / 2 + 0.002, sh);
+    const r = new Rng(57);
+    const ys = [0.03, 0.39, 0.75, 1.11, 1.47, H - 0.011];
+    ys.forEach((y, k) => {
+      add(RB(Wd, 0.022, Dp, 0.004), M.shelf, 0, y, 0, sh);
+      if (k === ys.length - 1) return;
+      let x = -Wd / 2 + 0.025;
+      while (x < Wd / 2 - 0.07) {
+        if (r.next() < 0.16) { if (r.next() < 0.5) add(RB(0.1, 0.08, 0.13, 0.01), M.bag, x + 0.05, y + 0.05, 0.02, sh); x += r.range(0.1, 0.16); continue; }
+        const n = r.int(3, 9);
+        const bw = n * r.range(0.022, 0.032), bh = r.range(0.19, 0.29);
+        const bk = add(new THREE.BoxGeometry(bw, bh, 0.2), r.next() < 0.5 ? M.books : M.books2, x + bw / 2, y + 0.011 + bh / 2, 0.03, sh);
+        const uv = bk.geometry.attributes.uv; const u0 = r.range(0, 0.7);
+        for (let q = 0; q < uv.count; q++) uv.setX(q, u0 + uv.getX(q) * bw * 1.4);
+        x += bw + 0.005;
+      }
+    });
+    // on top: a stack of books lying flat, a small succulent in a pot, a framed photo turned to the wall
+    const top = H + 0.0;
+    add(RB(0.21, 0.035, 0.15, 0.004), M.cover, -0.2, top + 0.0175, 0.02, sh).rotation.y = 0.12;
+    add(RB(0.19, 0.03, 0.14, 0.004), toonMaterial({ color: '#8c3b3b', id: 62 }), -0.2, top + 0.05, 0.02, sh).rotation.y = -0.05;
+    add(RB(0.17, 0.026, 0.13, 0.004), toonMaterial({ color: '#d9d2c3', id: 63 }), -0.21, top + 0.078, 0.025, sh).rotation.y = 0.2;
+    add(new THREE.CylinderGeometry(0.035, 0.028, 0.06, 18), M.pot, 0.23, top + 0.03, 0.03, sh);
+    for (let q = 0; q < 6; q++) { const l = add(new THREE.SphereGeometry(0.016, 10, 8).scale(0.7, 1.3, 0.7), M.plant, 0.23 + Math.sin(q * 2.1) * 0.014, top + 0.075, 0.03 + Math.cos(q * 2.1) * 0.014, sh); l.rotation.set(Math.cos(q * 2.1) * 0.5, 0, -Math.sin(q * 2.1) * 0.5); }
+    const ph = add(RB(0.13, 0.17, 0.012, 0.004), M.posterF, 0.12, top + 0.085, -0.1, sh); ph.rotation.x = -0.18;
+    // the camera's power cable down the back of the shelf
+    add(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([[0.02, top + 0.01, 0.0], [0.05, top + 0.005, 0.12], [0.08, top - 0.05, 0.145], [0.1, 1.2, 0.148], [0.12, 0.05, 0.148]].map((a) => new THREE.Vector3(...a))), 40, 0.0022, 5), M.cable, 0, 0, 0, sh);
   }
 
   // ---------------------------------------------------------------- the bed (right, back)

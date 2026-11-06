@@ -121,6 +121,25 @@ def typing(t0, n, rate=8.0, g=0.9):
 
 
 
+def tape_whir(length, f0, f1, g=1.0):
+    """a tape transport winding: a whine sliding f0 → f1 over mechanical flutter"""
+    t = T(length)
+    f = f0 + (f1 - f0) * (t / length) ** 0.6
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    flutter = 1 + 0.4 * np.sin(2 * np.pi * 37 * t)
+    s = (np.sin(ph) * 0.25 + np.sin(2 * ph) * 0.1) + bp(rng.standard_normal(len(t)), 900, 6000) * 0.18 * flutter
+    env = np.minimum(1, t / 0.05) * np.minimum(1, (length - t) / 0.08)
+    return st(s * env * 0.6, 0.3) * g
+
+def tape_stop(g=1.0):
+    """the transport braking to a freeze: pitch falls away, then a thud"""
+    t = T(0.6)
+    f = 40 + 560 * np.exp(-t / 0.08)
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    s = np.sin(ph) * np.exp(-t / 0.18) * 0.4
+    thud = np.sin(2 * np.pi * (55 + 40 * np.exp(-t / 0.03)) * t) * np.exp(-t / 0.15) * 0.9
+    return verb(st(s + thud, 0.2), L.IR_ROOM, 0.2) * g
+
 # ---------------------------------------------------------------- music
 SCORE = json.load(open("public/audio/score.json")) if os.path.exists("public/audio/score.json") else {}
 def music(cue, t0, src0, length, g, fi=0.5, fo=0.5):
@@ -167,7 +186,6 @@ T_IN = 8.0                                                   # the take's soft o
 music_env('tension', S('s05'), T_IN, C['jump'] - S('s05'), 0.8, fi=1.6, fo=0.02,
           pts=[(0, 1), (C['draftType'] - 0.3, 1), (C['draftType'] + 0.3, 0.3), (C['imageArrives'] - 0.1, 0.3), (C['imageArrives'] + 0.1, 1), (C['pulse'], 1.0), (C['jump'], 1.5), (999, 1.5)])
 # 03:12 → 01:40: the clock spins back (a tape rewind, the film's last trick planted here)
-put(C['clockBack'], whoosh(C['clockBackEnd'] - C['clockBack'], 2600, 300, 0.35))
 for k in range(14):
     put(C['clockBack'] + (C['clockBackEnd'] - C['clockBack']) * (k / 14) ** 0.7, tick(2400 - 80 * k, 0.22))
 put(S('s05'), boom(2.2, 0.45))
@@ -182,7 +200,8 @@ for k in range(14):                                          # light racing alon
 if NOEV:
     typing(C['askType'], 7, 6.0); put(C['askSend'], whoosh(0.3, 2600, 900, 0.18))
     put(C['denyReply'], an_chime(1.0))
-put(C['eraseDone'] + 0.2, boom(3.0, 0.8)); put(C['eraseDone'] + 0.2, drone(2.6, 36.7, 0.4))
+put(C['eraseDone'] + 0.2, drone(2.6, 36.7, 0.4))
+if NOEV: put(C['eraseDone'] + 0.2, boom(3.0, 0.8))
 # II · it won't shut down
 put(S('k05') - 0.4, rev_swell(0.4, 0.3))
 put(C['killPress'], clunk(0.9))
@@ -256,9 +275,8 @@ B3 = 60 / 118.95                                             # 《三体》's be
 T3_STOP = 95.0
 bed(C['rewind'], C['rewindEnd'] + 0.05, "three-bodies.mp3", T3_STOP - (C['rewindEnd'] - C['rewind']), 1.25, fi=0.25, fo=0.05)
 # the stamps: each heavier than the last
-put(C['stop1'], shutter(1.0)); put(C['stop1'], hit(2.0, 0.5)); put(C['stop1'], boom(2.5, 0.55))
-put(C['stop2'], shutter(1.1)); put(C['stop2'], hit(2.2, 0.65)); put(C['stop2'], boom(3.0, 0.7))
-put(C['stop3'], shutter(1.2)); put(C['stop3'], braam(4.5, 36.7, 0.85)); put(C['stop3'], boom(4.0, 0.9))
+if NOEV:
+    for k in (1, 2, 3): put(C['stop%d' % k], tape_stop(0.8)); put(C['stop%d' % k] + 0.5, shutter(0.9 + 0.1 * k)); put(C['stop%d' % k] + 0.5, boom(2.5 + 0.6 * k, 0.4 + 0.15 * k))
 put(C['rewindEnd'] - 1.6, riser(1.6, 100, 9000, 0.6)); put(C['rewindEnd'], hit(1.5, 0.6))
 
 # ---- the real world: the breathing drone under the end texts; Hinton almost in silence
@@ -279,7 +297,6 @@ for k, f in enumerate((220.0, 196.0, 164.81, 146.83)):
 def near(t, cue, w=0.2): return abs(t - C[cue]) < w
 for e in EV:
     t, ty, g = e["t"], e["type"], e.get("g", 1.0)
-    if C['rewind'] <= t < C['rewindEnd']: continue          # the rewind's audio is built below
     if ty == "an":
         if near(t, 'phonesLight', 0.25): continue           # the five phones have their own chord above
         put(t, an_chime(1.25 * g if near(t, 'goodMorning', 0.4) else 1.0 * g))
@@ -296,6 +313,17 @@ for e in EV:
     elif ty == "type": put(t, key_thunk(1.0 * g))
     elif ty == "ui": put(t, ui_chime(0.9 * g))
     elif ty == "banner": put(t + 0.05, an_chime(1.2 * g))
+    elif ty == "del": put(t, tick(2600 + rng.uniform(-200, 200), 0.35 * g))
+    elif ty == "boom": put(t, boom(3.0, 0.8 * g))
+    elif ty == "rewind":
+        if near(t, 'rewind', 0.3): put(t, tape_whir(C['stop1'] - t, 300, 2600, 0.9 * g))
+        else: put(t, tape_whir(C['clockBackEnd'] - t, 2200, 500, 0.9 * g))
+    elif ty == "ffwd": put(t, tape_whir(0.5, 900, 3200, 0.7 * g))
+    elif ty == "freeze": put(t, tape_stop(1.0 * g)); put(t, hit(1.8, 0.35 * g))
+    elif ty == "stamp":
+        n = 1 if t < C['stop2'] else 2 if t < C['stop3'] else 3
+        put(t, shutter(1.0 + 0.1 * n)); put(t, boom(2.5 + 0.6 * n, 0.4 + 0.15 * n))
+        if n == 3: put(t, braam(4.5, 36.7, 0.85))
 
 # ---- hard silences
 # 「……同意。」: cut everything from the silence cue to the cancel, then put the ring back
