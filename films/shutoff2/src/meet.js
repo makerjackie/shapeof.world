@@ -226,11 +226,14 @@ export function createMeet(ctx) {
       for (let i = 0; i < 5; i++) {
         const ph = P.phones[i]; if (!ph) continue;
         const c = lit ? ctx.ui?.screen?.('phone-c' + i, st) : null;
-        ph.setScreen(c ?? null, c ? g * 1.15 * (c.glow ?? 1) : 0);
+        // overhead (until the descent at lt 3.0) the five screens glow as bright rectangles; the backlight eases off
+        // as the camera comes down so the card stays crisp in the close-up
+        const bl = lerp(4.2, 0.12, smooth(invLerp(2.9, 4.3, st.lt)));
+        ph.setScreen(c ?? null, c ? g * 1.15 * (c.glow ?? 1) : 0, c ? g * (c.glow ?? 1) * bl : 0);
       }
       // vote lights
       for (const u of P.units) {
-        const k = st.tr >= voteTime(u.id, CUES) ? 1 : 0;
+        const k = st.tr >= voteTime(u.id, CUES) && st.sid !== 's25' ? 1 : 0;   // s25: the vote is over, the lights are off
         const m = u.mat.uniforms;
         if (k) { m.uEmis.value.set('#46ff86'); m.uEmisGain.value = 2.4; }
         else { m.uEmis.value.set('#59606c'); m.uEmisGain.value = 0.6; }
@@ -240,7 +243,7 @@ export function createMeet(ctx) {
       cast.lin.root.visible = linOn;
       R.chairs.lin.visible = st.sid !== 's20';
       // the pendant bar would slice through the screen from the s19/s23 camera behind 林工
-      for (const m of R.pendant) m.visible = !(st.sid === 's19' || st.sid === 's23');
+      for (const m of R.pendant) m.visible = !(st.sid === 's19' || st.sid === 's23' || st.sid === 's25');
       // s25: the room's light falls away from the faces; the phones light them from below
       const PM = peopleMats(), s25 = st.sid === 's25';
       for (const k of ['face', 'skin', 'hair', 'suit', 'shirt', 'tie', 'lapel']) { const sk = k === 'face' || k === 'skin'; PM[k].uniforms.uPLGain.value = s25 ? (sk ? 3.4 : 1.6) : 1; PM[k].uniforms.uSil.value = s25 ? (sk ? 1.5 : 1.15) : 0.25; PM[k].uniforms.uUnder.value = s25 ? 1 : 0; }

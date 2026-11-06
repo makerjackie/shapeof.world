@@ -52,10 +52,12 @@ function placeholderPhone(M) {
   scr.userData.noShadow = true;
   return {
     root,
-    setScreen(canvas, glow = 1) {
+    setScreen(canvas, glow = 1, backlight = 0) {
       if (canvas && tex.image !== canvas) tex.image = canvas;
       if (canvas) tex.needsUpdate = true;
       sm.uniforms.uEmisGain.value = glow;
+      // LCD backlight: even the dark parts of a lit screen glow (reads as a lit rectangle from across the room)
+      sm.uniforms.uEmis.value.setRGB(0.16, 0.22, 0.36).multiplyScalar(backlight);
       sm.uniforms.uUseEmisMap.value = canvas ? 1 : 0;
     },
   };
@@ -69,7 +71,32 @@ function adoptPhone(p) {
   wrap.add(p.root);
   if (sz.z < sz.y && sz.z < sz.x) p.root.rotation.x = -Math.PI / 2;      // standing, screen +Z -> up
   else if (sz.x < sz.y && sz.x < sz.z) p.root.rotation.z = Math.PI / 2;
-  return { root: wrap, setScreen: (c, g) => p.setScreen(c, g) };
+  // our own screen face just above theirs: carries the same UI canvas plus an LCD backlight term, so a lit
+  // phone reads as a glowing rectangle even from across the room
+  wrap.updateMatrixWorld(true);
+  const b2 = new THREE.Box3().setFromObject(p.root), s2 = b2.getSize(new THREE.Vector3()), c2 = b2.getCenter(new THREE.Vector3());
+  const c0 = document.createElement('canvas'); c0.width = 720; c0.height = 1560;
+  const tex = new THREE.CanvasTexture(c0); tex.colorSpace = THREE.SRGBColorSpace;
+  const sm = meetToon({ id: 102, unlit: true, emissiveMap: tex, emissiveGain: 0, color: '#000000' });
+  const long = Math.max(s2.x, s2.z), short = Math.min(s2.x, s2.z);
+  const plane = new THREE.PlaneGeometry(short * 0.93, long * 0.965).rotateX(-Math.PI / 2);
+  if (s2.x > s2.z) plane.rotateY(Math.PI / 2);
+  const scr = new THREE.Mesh(paint(plane.translate(c2.x, b2.max.y + 0.0004, c2.z), '#ffffff'), sm);
+  scr.userData.noShadow = true; scr.frustumCulled = false; scr.visible = false;
+  wrap.add(scr);
+  return {
+    root: wrap,
+    setScreen(c, g = 1, b = 0) {
+      p.setScreen(c, g);
+      scr.visible = !!c && g > 0.001;
+      if (!scr.visible) return;
+      if (tex.image !== c) tex.image = c;
+      tex.needsUpdate = true;
+      sm.uniforms.uEmisGain.value = g;
+      sm.uniforms.uUseEmisMap.value = 1;
+      sm.uniforms.uEmis.value.setRGB(0.16, 0.22, 0.36).multiplyScalar(b);
+    },
+  };
 }
 
 export function buildProps(ctx) {

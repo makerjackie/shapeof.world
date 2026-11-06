@@ -35,18 +35,19 @@ export const CAMS = {
     const k = smooth(lt / d);
     return { pos: mixA([0.3, Y(1.5), 4.9], [0.31, Y(1.52), 5.15], k), look: [0.02, Y(2.15), -6], fov: 43 };
   },
-  // s25 phones: a low slide along the table centre; the five phones light at once; end close on 张主任's card
+  // s25 phones: straight down on the long table (screen end at the top of frame). At CUES.phonesLight the five phones
+  // light at once — five glowing rectangles, the members only dark heads and hands at the edges. Then a descending,
+  // rolling move down onto 张主任's phone until 定时发送已取消 reads (the roll brings its top to the top of frame).
   s25: (lt, d) => {
     const ph = seatFrame('zhang').at(0.2, 0.13);
-    const k = smoother(invLerp(0.0, d, lt));
-    const k2 = smoother(invLerp(2.6, d - 0.2, lt));
-    // along the right-hand row: 张主任's phone near, 苏晴's beyond, their faces above them
-    const pos0 = mixA([0.24, TOP + 0.3, 1.25], [0.28, TOP + 0.28, 0.75], smooth(invLerp(0, 2.8, lt)));
-    const pos = mixA(pos0, [ph[0] - 0.2, TOP + 0.24, ph[2] + 0.03], k2);
-    const look0 = [1.2, Y(0.9), -2.3];
-    const look = mixA(look0, [ph[0] + 0.01, TOP, ph[2]], k2);
-    void k;
-    return { pos, look, fov: lerp(52, 40, k2), near: 0.02 };
+    const T = 3.0;                                              // 96.6: start the descent
+    const k = smoother(invLerp(T, d - 0.15, lt));
+    const drift = smooth(invLerp(0, T, lt));
+    const hi = [0.0, TOP + lerp(3.36, 3.2, drift), -0.42];
+    const lo = [ph[0], TOP + 0.27, ph[2]];
+    const pos = mixA(hi, lo, k);
+    const roll = lerp(0.04 * drift, Math.PI / 2 - 0.22, k);   // brings 张主任's phone top (≈ +X, turned ~0.22 rad) to the top of frame
+    return { pos, look: [pos[0], TOP, pos[2]], up: [Math.sin(roll), 0, -Math.cos(roll)], fov: lerp(66, 40, k), near: 0.02 };
   },
 };
 
@@ -58,7 +59,7 @@ export const LOOKS = {
     const c = st.cues.phonesLight;
     const on = st.tr >= c ? smooth(invLerp(c, c + 0.08, st.tr)) : 0;
     const ids = ['bun', 'bob', 'zhang', 'heavy', 'young'];
-    const lights = ids.map((id) => ({ pos: phonePos(id), r: 0.85, color: '#a9c6ff', i: 0.95 * on }));
-    return base({ lights, exposure: 0.94, bloom: 0.35, threshold: 1.5, shafts: 0.0, ambient: '#3c4252' });
+    const lights = ids.map((id) => ({ pos: phonePos(id), r: 0.42, color: '#a9c6ff', i: 0.5 * on }));
+    return base({ lights, exposure: 0.94, bloom: 0.6, threshold: 1.0, shafts: 0.0, ambient: '#3c4252' });
   },
 };
