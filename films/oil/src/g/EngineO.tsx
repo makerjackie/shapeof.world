@@ -723,8 +723,8 @@ export const createFilm5 = (S: Spec) => {
   });
   const CWX0 = 70;
   const CWX1 = SAFE_R - 56;
-  const CWT = 640;
-  const CWB = 1330;
+  const CWT = 690;
+  const CWB = 1250;
   const L0 = Math.log10(S.log[0]);
   const L1 = Math.log10(S.log[1]);
   const X = (k: Cam, y: number) => {
@@ -828,7 +828,7 @@ export const createFilm5 = (S: Spec) => {
         hi += (thi - hi) * (thi > hi ? 0.3 : 0.08);
       }
       lgK = t < RW1 ? 1 : t < B0 ? 1 - ease(clamp((t - RW1) / (B0 - RW1))) : lgK + ((t >= END ? 1 : 0) - lgK) * 0.09;
-      const cw = 0;
+      const cw = t < RW0 ? 1 : t < RWM ? 1 - ease((t - RW0) / (RWM - RW0)) : 0;
       const pxd = ppy / 365.25;
       const wi = WIDES.findIndex((w) => t >= w.ws && t < w.we);
       if (wi >= 0) gi = wi;
@@ -1121,13 +1121,13 @@ export const createFilm5 = (S: Spec) => {
     // the cold open, and again under the ending's whole line (smaller, lower) until the credits
     const end = t >= END;
     const CR0 = S.ending.credits?.t0 ?? S.ending.card;
-    const a = end ? 0.75 * clamp((t - END - 0.3) / 0.8) * (1 - clamp((t - CR0 + 0.2) / 0.4)) : clamp((t - RW0) / 0.3) * (1 - clamp((t - (RW1 - 0.45)) / 0.45));
+    const a = end ? 0.75 * clamp((t - END - 0.3) / 0.8) * (1 - clamp((t - CR0 + 0.2) / 0.4)) : (t < RW0 ? 0.72 : 0.72 + 0.2 * clamp((t - RW0) / 0.3)) * (1 - clamp((t - (RW1 - 0.45)) / 0.45));
     const im = IMGS["art/fieldbg.png"];
     if (a <= 0.01 || !im) return;
-    const s = end ? 1 + 0.04 * clamp((t - END) / (CR0 - END)) : 1 + 0.05 * clamp((t - RW0) / (RW1 - RW0));
+    const s = end ? 1 + 0.04 * clamp((t - END) / (CR0 - END)) : 1 + 0.06 * clamp(t / RW1);
     const w = (end ? 1150 : 1420) * s;
     const h = (w * im.height) / im.width;
-    const HZ = end ? 1640 : 1400;
+    const HZ = end ? 1640 : t < RW0 ? 1500 : 1500 - 100 * ease(clamp((t - RW0) / 0.6));
     ctx.save();
     ctx.globalAlpha = a;
     ctx.drawImage(im, CX - w / 2, HZ - 0.585 * h, w, h);
@@ -1850,8 +1850,10 @@ export const createFilm5 = (S: Spec) => {
     }
   };
 
-  // ---------- the cold open: six moments, two beats each, cut on the beat. On the cut the year and the engraving land
-  // (punch-in, a white frame); on the second beat the word or number slams (shake, a flash in its colour, its effect)
+  // ---------- the cold open: the line races from 1973 to 2026 and is called out on the beat. The head lands on each
+  // moment on the first beat (its engraving pops up at the point, the year comes in at the top); on the second beat
+  // its word or number slams (shake, a flash, its effect at the point); then it races on to the next. Only the newest
+  // moment has its label; the ones behind keep a dot and their year.
   const drawMontage = (ctx: CanvasRenderingContext2D, t: number) => {
     if (t >= RW0 + 0.02) return;
     let i = -1;
@@ -1859,114 +1861,116 @@ export const createFilm5 = (S: Spec) => {
       if (t >= m.at - 1e-3) i = q;
     });
     if (i < 0) return;
+    const k = camAt(t);
     const m = MONTAGE[i];
     const d = t - m.at;
     const ds = d - SHOT_BEAT;
     const col = m.tone === "red" ? RED : GOLD;
-    const p = beatPulse(t);
+    const fade = 1 - clamp((t - (RW0 - 0.12)) / 0.14);
+    const pt = (y: number) => [X(k, y), Yv(k, val(y))];
     ctx.save();
-    // the room: a glow in the shot's colour, breathing on the beat, dust in the air
-    const g = ctx.createRadialGradient(CX, 980, 40, CX, 980, 1000);
-    g.addColorStop(0, m.tone === "red" ? `rgba(130,24,12,${0.5 + 0.25 * p})` : `rgba(130,88,18,${0.48 + 0.25 * p})`);
-    g.addColorStop(1, "rgba(0,0,0,0)");
-    ctx.fillStyle = g;
-    ctx.fillRect(...FULL);
-    motes(ctx, t, FULL[0], FULL[0] + FULL[2], 300, 1500, 0.9);
-    // the engraving: punches in on the cut, keeps pushing
+    ctx.globalAlpha = fade;
+    // the moments behind: a dot and the year
+    for (let q = 0; q < i; q++) {
+      const [x, y] = pt(MONTAGE[q].y);
+      const c = MONTAGE[q].tone === "red" ? RED : GOLD;
+      dotAt(ctx, x, y, c, 7);
+      text(ctx, MONTAGE[q].year, x, y + (MONTAGE[q].tone === "red" ? 40 : -20), 24, 900, SANS, c, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+    }
+    // the newest: its engraving at the point (above it when the point is low, below when it is high)
+    const [px, py] = pt(m.y);
+    const up = py > 900;
+    const IS = 230;
+    const iy = up ? py - IS * 0.62 : py + IS * 0.62;
+    const ix = clamp(px, IS / 2 + 30, SAFE_R - IS / 2);
     const im = IMGS[`art/i_${m.pic}.png`];
-    const AY = 960;
-    const AS = 720;
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = fade * 0.7 * clamp(d / 0.08);
+    ctx.beginPath();
+    ctx.moveTo(px, py);
+    ctx.lineTo(ix, up ? iy + IS * 0.42 : iy - IS * 0.42);
+    ctx.stroke();
     if (im) {
-      const s0 = 1 + 0.28 * (1 - eo3(d / 0.16)) + 0.06 * d;
+      const s0 = 0.4 + 0.6 * eo3(d / 0.14) + 0.25 * env(t, m.at + SHOT_BEAT, 0.01, 0.12);
       ctx.save();
-      ctx.translate(CX, AY);
+      ctx.translate(ix, iy);
       ctx.scale(s0, s0);
-      ctx.globalAlpha = clamp(d / 0.03);
-      ctx.drawImage(im, -AS / 2, -AS / 2, AS, AS);
+      ctx.globalAlpha = fade * clamp(d / 0.04);
+      ctx.drawImage(im, -IS / 2, -IS / 2, IS, IS);
       ctx.restore();
     }
-    // its effect, on the slam
-    if (m.anim === "fire") flames(ctx, CX - 20, AY + 150, 1.5, t, 31, 3, clamp((d - 0.05) / 0.2) * (ds > 0 ? 1 : 0.6));
-    if (m.anim === "fw" || m.anim === "rise") gusher(ctx, t, m.at + SHOT_BEAT, CX, AY - 120, 77 + i, m.anim === "fw", 0.7, 1600);
-    if (m.anim === "drip" && ds > -0.05) {
-      const r = rng(19);
-      for (let q = 0; q < 16; q++) {
-        const td = m.at + SHOT_BEAT + r() * 0.35;
-        const e = t - td;
-        if (e < 0) continue;
-        const x0 = CX + (r() - 0.5) * 380;
-        const yy = AY - 120 + 0.5 * 2600 * e * e;
-        drop(ctx, x0, yy, 0, 2600 * e + 40, 4 + r() * 4, clamp(1 - e / 0.7), 1600);
-      }
-      if (ds >= 0 && ds < 0.22) {
-        ctx.save();
-        ctx.globalAlpha = 1 - ds / 0.22;
-        ctx.strokeStyle = "#f2f7ff";
-        ctx.shadowColor = "#ff5a4a";
-        ctx.shadowBlur = 30;
-        bolt(ctx, CX + 120, VY0, CX + 10, AY - 60, 404 + Math.floor(ds * 30), 7);
-        ctx.restore();
-      }
+    ctx.globalAlpha = fade;
+    dotAt(ctx, px, py, col, 10);
+    // its effect, at the point
+    if (m.anim === "fire") flames(ctx, px, py, 0.9, t, 31, 3, fade * clamp(d / 0.2));
+    if ((m.anim === "fw" || m.anim === "rise") && ds > -0.2) gusher(ctx, t, m.at + SHOT_BEAT, px, py, 77 + i, m.anim === "fw", 0.75, 1500);
+    if (m.anim === "drip" && ds >= 0 && ds < 0.22) {
+      ctx.save();
+      ctx.globalAlpha = fade * (1 - ds / 0.22);
+      ctx.strokeStyle = "#f2f7ff";
+      ctx.shadowColor = "#ff5a4a";
+      ctx.shadowBlur = 30;
+      bolt(ctx, px + 140, VY0, px, py, 404 + Math.floor(ds * 30), 7);
+      ctx.restore();
     }
-    // the year and where
-    const ys = 1 + 0.45 * (1 - eo3(d / 0.12));
+    if (m.anim === "x" && ds >= 0) {
+      const kx = 1 + 0.6 * (1 - eo3(ds / 0.14));
+      const L = 92 * kx;
+      ctx.globalAlpha = fade * clamp(ds / 0.04);
+      ctx.strokeStyle = RED;
+      ctx.lineWidth = 14;
+      ctx.lineCap = "round";
+      ctx.shadowColor = RED;
+      ctx.shadowBlur = 24;
+      ctx.beginPath();
+      ctx.moveTo(ix - L, iy - L);
+      ctx.lineTo(ix + L, iy + L);
+      ctx.moveTo(ix + L, iy - L);
+      ctx.lineTo(ix - L, iy + L);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+    // the year and where, at the top
+    ctx.globalAlpha = fade;
+    const ys = 1 + 0.4 * (1 - eo3(d / 0.12));
     ctx.save();
-    ctx.translate(CX, 500);
+    ctx.translate(CX, 360);
     ctx.scale(ys, ys);
-    text(ctx, m.year, 0, 0, 176, 900, SANS, WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 22 });
+    text(ctx, m.year, 0, 0, 132, 900, SANS, WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 20 });
     ctx.restore();
-    ctx.globalAlpha = clamp((d - 0.04) / 0.08);
-    text(ctx, m.tag, CX, 572, 42, 900, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = fade * clamp((d - 0.04) / 0.08);
+    text(ctx, m.tag, CX, 424, 40, 900, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
     // the slam
     if (ds >= 0) {
-      const bs = 1 + 0.75 * (1 - eo3(ds / 0.13));
+      const bs = 1 + 0.7 * (1 - eo3(ds / 0.13));
       ctx.save();
-      ctx.translate(CX, 1400);
+      ctx.translate(CX, 556);
       ctx.scale(bs, bs);
-      ctx.globalAlpha = clamp(ds / 0.03);
+      ctx.globalAlpha = fade * clamp(ds / 0.03);
       if (m.anim === "stamp" || m.anim === "x") {
-        // a stamp: tilted, double-ruled, in red
-        ctx.rotate(-0.06);
-        const bw = measure(ctx, m.big, 128, 900, SANS) + 80;
+        ctx.rotate(-0.05);
+        const bw = measure(ctx, m.big, 104, 900, SANS) + 70;
         ctx.strokeStyle = RED;
-        ctx.lineWidth = 7;
-        rrect(ctx, -bw / 2, -128, bw, 160, 10);
+        ctx.lineWidth = 6;
+        rrect(ctx, -bw / 2, -104, bw, 132, 10);
         ctx.stroke();
         ctx.lineWidth = 2.5;
-        rrect(ctx, -bw / 2 + 12, -116, bw - 24, 136, 6);
+        rrect(ctx, -bw / 2 + 10, -94, bw - 20, 112, 6);
         ctx.stroke();
       }
-      text(ctx, m.big, 0, 0, 128, 900, SANS, col, { align: "center", glow: col + "99", glowBlur: 36, maxW: 960 });
+      text(ctx, m.big, 0, 0, 104, 900, SANS, col, { align: "center", glow: col + "99", glowBlur: 32, maxW: 960 });
       ctx.restore();
-      ctx.globalAlpha = clamp((ds - 0.08) / 0.1);
-      text(ctx, m.sub, CX, 1484, 42, 900, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
-      // the strait: a red X over the engraving
-      if (m.anim === "x") {
-        const k = 1 + 0.6 * (1 - eo3(ds / 0.14));
-        const L = 170 * k;
-        ctx.globalAlpha = clamp(ds / 0.04);
-        ctx.strokeStyle = RED;
-        ctx.lineWidth = 22;
-        ctx.lineCap = "round";
-        ctx.shadowColor = RED;
-        ctx.shadowBlur = 30;
-        ctx.beginPath();
-        ctx.moveTo(CX - L, AY - L);
-        ctx.lineTo(CX + L, AY + L);
-        ctx.moveTo(CX + L, AY - L);
-        ctx.lineTo(CX - L, AY + L);
-        ctx.stroke();
-        ctx.shadowBlur = 0;
+      if (m.sub && m.sub !== "1 桶") {
+        ctx.globalAlpha = fade * clamp((ds - 0.08) / 0.1);
+        text(ctx, m.sub, CX, 618, 36, 900, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
       }
-      // a flash in the shot's colour
-      ctx.globalAlpha = 0.42 * clamp(1 - ds / 0.12);
+      ctx.globalAlpha = fade * 0.32 * clamp(1 - ds / 0.12);
       ctx.fillStyle = m.tone === "red" ? "#ff5b45" : "#ffe39a";
       ctx.fillRect(...FULL);
     }
-    // the cut: one white frame
     if (d < 0.05) {
-      ctx.globalAlpha = 0.4 * (1 - d / 0.05);
+      ctx.globalAlpha = fade * 0.28 * (1 - d / 0.05);
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(...FULL);
     }
@@ -3660,7 +3664,7 @@ export const createFilm5 = (S: Spec) => {
       }
       // the next episode
       const na = clamp((t - S.ending.card - 0.5) / 0.4);
-      if (na > 0) {
+      if (na > 0 && NEXT.a) {
         ctx.globalAlpha = cardA * na;
         ctx.fillStyle = "rgba(255,201,77,0.5)";
         ctx.fillRect(CX - 40, 1150, 80, 2);
@@ -3877,7 +3881,7 @@ export const createFilm5 = (S: Spec) => {
     cb.setTransform(1, 0, 0, 1, 0, 0);
     cb.clearRect(0, 0, W, H);
     cb.setTransform(LS, 0, 0, LS, LX, LY);
-    const chartA = (1 - clamp((t - (OUT - 0.2)) / 0.8)) * clamp((t - RW0) / 0.2);
+    const chartA = 1 - clamp((t - (OUT - 0.2)) / 0.8);
     drawChart(cb, t, chartA);
     drawRibbon(cb, t, chartA);
     drawPegs(cb, t);

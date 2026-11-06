@@ -164,28 +164,26 @@ const schedule2 = (evs: Ev5[], m: Music, startSrc: number, endSrc: number): P5[]
 // ---------------- cold open: six moments, two beats each, cut on the beat (the number slams on the second beat), then
 // the title lands over the whole 160-year line and it rewinds to 1859. COLD5 keeps its shape for the engine's cursor,
 // but nothing of the old window is drawn.
-export type Shot = { at: number; year: string; tag: string; pic: Icon; big: string; sub: string; tone: "gold" | "red"; fx: string; anim: "stamp" | "fire" | "fw" | "drip" | "x" | "rise" };
+export type Shot = { at: number; y: number; year: string; tag: string; pic: Icon; big: string; sub: string; tone: "gold" | "red"; fx: string; anim: "stamp" | "fire" | "fw" | "drip" | "x" | "rise" };
 export const MONTAGE: Shot[] = [
-  { at: A(0), year: "1973", tag: "第四次中东战争", pic: "pump", big: "石油禁运", sub: "加油站排长队", tone: "red", fx: "stamp", anim: "stamp" },
-  { at: A(2), year: "1991", tag: "海湾战争", pic: "flame", big: "油井大火", sub: "科威特", tone: "red", fx: "bolt", anim: "fire" },
-  { at: A(4), year: "2008", tag: "历史最高", pic: "exchange", big: "145 美元", sub: "1 桶", tone: "gold", fx: "pop", anim: "fw" },
-  { at: A(6), year: "2020", tag: "油库爆满", pic: "tank", big: "−37.63 美元", sub: "卖油的倒贴钱", tone: "red", fx: "ceil", anim: "drip" },
-  { at: A(8), year: "2022", tag: "制裁俄罗斯", pic: "pipeline", big: "123.70 美元", sub: "1 桶", tone: "gold", fx: "pop", anim: "rise" },
-  { at: A(10), year: "2026", tag: "伊朗战争", pic: "strait", big: "封锁海峡", sub: "霍尔木兹", tone: "red", fx: "closed", anim: "x" },
+  { at: A(0), y: 1973.79, year: "1973", tag: "第四次中东战争", pic: "pump", big: "石油禁运", sub: "加油站排长队", tone: "red", fx: "stamp", anim: "stamp" },
+  { at: A(2), y: DY(1991, 1, 17), year: "1991", tag: "海湾战争", pic: "flame", big: "油井大火", sub: "科威特", tone: "red", fx: "bolt", anim: "fire" },
+  { at: A(4), y: DY(2008, 7, 3), year: "2008", tag: "历史最高", pic: "exchange", big: "145 美元", sub: "1 桶", tone: "gold", fx: "pop", anim: "fw" },
+  { at: A(6), y: DY(2020, 4, 20), year: "2020", tag: "油库爆满", pic: "tank", big: "−37.63 美元", sub: "卖油的倒贴钱", tone: "red", fx: "ceil", anim: "drip" },
+  { at: A(8), y: DY(2022, 3, 8), year: "2022", tag: "制裁俄罗斯", pic: "pipeline", big: "123.70 美元", sub: "1 桶", tone: "gold", fx: "pop", anim: "rise" },
+  { at: A(10), y: DY(2026, 3, 4), year: "2026", tag: "伊朗战争", pic: "strait", big: "封锁海峡", sub: "霍尔木兹", tone: "red", fx: "closed", anim: "x" },
 ];
 export const SHOT_BEAT = BEAT;
 export const COLD5 = {
   titleIn: A(12),
   title: [A(14.4), A(15.3)] as [number, number],
   era: "",
-  win: [2017.95, 2026.95] as [number, number],
+  win: [1964, 2027.6] as [number, number],
   vmin: -45,
-  vmax: 150,
-  floor: { v: 0, y: DY(2020, 4, 20), at: -9 },
-  keys: [
-    [0, DY(2026, 11, 4)],
-    [A(12), DY(2026, 11, 4)],
-  ] as [number, number][],
+  vmax: 160,
+  floor: { v: 0, y: DY(2020, 4, 20), at: A(6) }, // the $0 line: the price breaks through it when the head lands on 2020
+  // the head lands on each moment on its first beat, holds through the slam, then races to the next
+  keys: MONTAGE.flatMap((m) => [[m.at, m.y], [m.at + BEAT + 0.12, m.y]]).concat([[A(12), DY(2026, 11, 4)]]) as [number, number][],
   marks: [] as { y: number; at: number; a: string; b: string; red?: boolean; top?: boolean }[],
   neg: { at: -9, until: -9, a: "", b: "", c: "" },
 };
@@ -199,7 +197,7 @@ export const WIDE: { y: number; from: number; a?: number; ref?: number[] }[] = [
   { y: 2020.301, from: 1975, a: 2020.014 },
   { y: 2026.263, from: 1975, ref: [2008.503, 2022.181] },
 ];
-export const NEXT = { a: "下一集 · 中美 GDP", b: "中国经济，离美国还有多远？" };
+export const NEXT = { a: "", b: "" };
 export const SWEEP = { t0: BAR(88), dur: 1.3 };
 export const RATES = { t0: 1e9, t1: 1e9, split: 1973.8, a: ["", ""], b: ["", ""] };
 const COLD_LINES: { t0: number; t1: number; a: string; b: string; bBeats: number; tone: "white" }[] = [];
