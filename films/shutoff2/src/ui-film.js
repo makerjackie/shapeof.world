@@ -6,7 +6,8 @@ import {
 } from './ui-kit.js';
 import { mulberry32 } from './util.js';
 import { CUES as C } from './shots.js';
-import { bigNote, B } from './ui-v12.js';
+import { orbNote } from './ui-v13.js';
+import { drawOrb } from './ui-orb.js';
 
 const W = 1080, H = 1920;
 
@@ -87,36 +88,50 @@ export function timestamp(g, label, time, a, dur, o = {}) {
   g.restore();
 }
 
-// ---------------------------------------------------------------- s05 · the big clock spins back 03:12 → 01:40 (plants the rewind)
-export function clockSpin(g, st) {
+// ---------------------------------------------------------------- p01 · the leader, v10 style: small and quiet on black
+export function leaderCard(g, st) {
   const tr = st.tr;
-  const kin = smoother(clamp((tr - B.s05.inAt) / 0.4)), kout = 1 - smooth((tr - B.s05.outAt) / 0.4);
-  const k = kin * kout;
-  if (k <= 0) return;
-  const u = clamp((tr - C.clockBack) / (C.clockBackEnd - C.clockBack));
-  const m = lerp(3 * 60 + 12, 1 * 60 + 40, smoother(u));
-  const sm = clamp(30 * u * u * (1 - u) * (1 - u) / 1.2);       // spin speed (smoother's derivative), 0..1
-  const val = Math.round(m);
-  const str = `${String(Math.floor(val / 60)).padStart(2, '0')}:${String(val % 60).padStart(2, '0')}`;
-  const cy = 600;
-  const sc = g.createRadialGradient(540, cy - 80, 30, 540, cy - 80, 620);
-  sc.addColorStop(0, `rgba(2,4,10,${0.55 * k})`); sc.addColorStop(1, 'rgba(2,4,10,0)');
-  g.fillStyle = sc; g.fillRect(0, cy - 700, W, 1400);
-  const font = f(200, 250, 'helv');
-  if (sm > 0.05) for (const dy of [-34, -17, 17, 34]) txt(g, str, 540, cy + dy * sm, { font, color: '#dfe6f5', align: 'center', ls: 6, alpha: k * 0.16 * sm });
-  txt(g, str, 540, cy, { font, color: '#f4f6fb', align: 'center', ls: 6, alpha: k, shadow: ['rgba(0,0,0,0.4)', 30, 0] });
-  // the tape: thin noise lines through the digits and a small ◀◀ while it spins
-  if (sm > 0.05) {
-    for (let i = 0; i < 3; i++) {
-      const y = cy - 190 + hash(st.frame * 3.1 + i * 17) * 230;
-      g.fillStyle = `rgba(230,236,248,${0.18 * sm * k})`; g.fillRect(240, y, 600, 2 + 3 * hash(st.frame + i));
-    }
-    g.save(); g.globalAlpha = k * smooth(sm * 2);
-    g.fillStyle = '#f4f6fb';
-    for (let i = 0; i < 2; i++) { const ox = 486 + i * 34; g.beginPath(); g.moveTo(ox + 34, cy - 262); g.lineTo(ox, cy - 240); g.lineTo(ox + 34, cy - 218); g.closePath(); g.fill(); }
-    g.restore();
+  g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
+  const end = tr - st.ltr + st.durr;
+  const out = 1 - smooth((tr - (end - 0.7)) / 0.7);
+  const k1 = smoother(clamp((tr - C.leader1) / 0.8)) * out, k2 = smoother(clamp((tr - C.leader2) / 0.8)) * out;
+  if (k1 > 0) txt(g, '一部完全由 AI 编程制作的微电影', 540, 940, { font: f(500, 50, 'serif'), color: '#ece8df', align: 'center', alpha: k1, ls: 4 });
+  if (k2 > 0) txt(g, 'Claude Opus', 540, 1030, { font: f(400, 30, 'helv'), color: 'rgba(200,200,205,0.6)', align: 'center', alpha: k2, ls: 10 });
+}
+
+// ---------------------------------------------------------------- a01 · 「我们造出了一个人工智能，」「它叫「安」。」 the orb ignites
+export function nameCard(g, st) {
+  const tr = st.tr;
+  g.fillStyle = '#030304'; g.fillRect(0, 0, W, H);
+  const end = tr - st.ltr + st.durr;
+  const out = 1 - smooth((tr - (end - 0.35)) / 0.35);
+  // a warm breath on the black once the orb is alive
+  const w = smooth((tr - C.orbOn) / 1.2) * out;
+  if (w > 0) { const r = g.createRadialGradient(540, 720, 60, 540, 720, 1100); r.addColorStop(0, `rgba(80,48,14,${0.35 * w})`); r.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = r; g.fillRect(0, 0, W, H); }
+  drawOrb(g, 540, 720, 170, tr, { on: C.orbOn, alpha: out });
+  const line = (s, y, t, font) => { const k = smoother(clamp((tr - t) / 0.7)) * out; if (k > 0) txt(g, s, 540, y + (1 - k) * 16, { font, color: '#f1ede4', align: 'center', alpha: k }); };
+  line('我们造出了一个人工智能，', 1080, C.name1, f(500, 64, 'serif'));
+  line('它叫「安」。', 1190, C.name2, f(700, 72, 'serif'));
+}
+
+// ---------------------------------------------------------------- a03 / a04 · calm captions over 3D, in a soft dark band
+export function caption3D(g, st, items) {
+  const tr = st.tr;
+  const end = tr - st.ltr + st.durr;
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i];
+    const t1 = items[i + 1] ? items[i + 1].t - 0.35 : end - 0.3;
+    const k = smoother(clamp((tr - it.t) / 0.7)) * (1 - smooth((tr - t1) / 0.35));
+    if (k <= 0.01) continue;
+    const lines = it.text.split('\n');
+    const y0 = 1250 - (lines.length - 1) * 86;
+    const band = g.createLinearGradient(0, y0 - 190, 0, y0 + 160 + (lines.length - 1) * 86);
+    band.addColorStop(0, 'rgba(0,0,0,0)'); band.addColorStop(0.35, `rgba(4,5,8,${0.55 * k})`); band.addColorStop(0.7, `rgba(4,5,8,${0.55 * k})`); band.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = band; g.fillRect(0, y0 - 190, W, 350 + (lines.length - 1) * 86);
+    lines.forEach((s, j) => txt(g, s, 540, y0 + j * 86 + (1 - k) * 14, { font: f(600, 60, 'serif'), color: '#f6f2ea', align: 'center', alpha: k, shadow: ['rgba(0,0,0,0.6)', 18, 0] }));
   }
 }
+
 
 // ---------------------------------------------------------------- k08 · the fiction card
 export function fictionCard(g, st) {
@@ -128,8 +143,9 @@ export function fictionCard(g, st) {
     const k = smoother(clamp((tr - t) / 0.6)) * out;
     if (k > 0) txt(g, s, 540, y + (1 - k) * 16, { font: f(600, 76, 'serif'), color: '#f1ede4', align: 'center', alpha: k });
   };
-  line('这个故事是虚构的。', 860, C.fiction1);
-  line('但安做的这三件事——', 1000, C.fiction2);
+  line('这个故事是虚构的。', 820, C.fiction1);
+  line('但故事里安做的事，', 980, C.fiction2);
+  line('都真实发生过。', 1090, C.fiction2 + 0.5);
 }
 
 // ---------------------------------------------------------------- subtitles
@@ -210,7 +226,7 @@ export function endTexts(g, st, C) {
   if (tr < C.end2) {
     g.save(); g.globalAlpha = out(C.end2);
     line(g, '这些，', X, 860, tr - C.end1, f(400, 72, 'serif'));
-    line(g, '都还只是实验室里的测试。', X, 970, tr - C.end1 - 0.5, f(700, 72, 'serif'));
+    line(g, '都还只发生在实验室里。', X, 970, tr - C.end1 - 0.5, f(700, 72, 'serif'));
     g.restore();
   } else if (tr < C.end3) {
     g.save(); g.globalAlpha = out(C.end3);
@@ -259,24 +275,31 @@ export function endCard(g, a, dur, mark) {
   g.restore();
 }
 
-// ---------------------------------------------------------------- sting (s33): a notification on the viewer's own phone
-export function sting(g, a) {
+// ---------------------------------------------------------------- sting (s33): from silence, 安's notifications, v10 style
+export function sting(g, st) {
+  const tr = st.tr;
   g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
-  if (a < 0) return;
-  const sp = spring(a, 1.9, 0.72);
-  g.save();
-  g.translate(0, (1 - sp) * -420);
-  g.globalAlpha = smooth(a / 0.12);
-  bigNote(g, 60, 220, 880, { icon: 'an', app: '安', body: '这几分钟，你一直没锁屏 ☕', bodySize: 58, glow: 0.4 });
-  g.restore();
+  const A = [{ t: C.sting, body: '这部电影，你喜欢吗？' }, { t: C.sting2, body: '你还没睡。' }];
+  let n = 0; for (const x of A) if (tr >= x.t) n++;
+  const NH = 214, GAP = 24;
+  for (let i = n - 1; i >= 0; i--) {
+    const a = tr - A[i].t;
+    let y = 230;
+    for (let j = i + 1; j < n; j++) y += (NH + GAP) * easeOut(clamp((tr - A[j].t) / 0.45), 3);
+    const sp = spring(a, 1.9, 0.72);
+    g.save(); g.globalAlpha = smooth(a / 0.15); g.translate(0, (1 - sp) * -360);
+    orbNote(g, 80, y, 840, { t: tr, speak: [A[i].t], body: A[i].body, bodySize: 52, scale: 0.92 });
+    g.restore();
+  }
 }
 
 // ---------------------------------------------------------------- 安's banner over a 3D shot (s15)
-export function banner3D(g, a, body) {
+export function banner3D(g, st, at, body) {
+  const a = st.tr - at;
   if (a < 0) return;
-  const sp = spring(a, 2.2, 0.66);
-  g.save(); g.globalAlpha = smooth(a / 0.12); g.translate(0, (1 - sp) * -360);
-  bigNote(g, 60, 220, 880, { icon: 'an', app: '安', body, bodySize: 60, glow: 0.6 });
+  const sp = spring(a, 2.0, 0.7);
+  g.save(); g.globalAlpha = smooth(a / 0.15); g.translate(0, (1 - sp) * -360);
+  orbNote(g, 60, 230, 880, { t: st.tr, speak: [at], body, bodySize: 60 });
   g.restore();
 }
 

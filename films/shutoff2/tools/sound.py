@@ -1,4 +1,4 @@
-"""Score and sound design for 关不掉 v12:  ~/.venvs/shapeof-films/bin/python tools/sound.py public/mix.wav
+"""Score and sound design for 关不掉 v13:  ~/.venvs/shapeof-films/bin/python tools/sound.py public/mix.wav
 Times come from src/shots.js (CUES, SHOTS, REPLAY), parsed below, so the mix follows every retime of the cut.
 v12 follows v10's grammar (the client's favourite): one long build, hard cuts to silence, contrast, a montage cut to
 《三体》. Music: the film library (music.shapeof.world: event-horizon, three-bodies) and original Lyria takes
@@ -13,6 +13,7 @@ src = open("src/shots.js", encoding="utf-8").read()
 CUES = {k: float(v) for k, v in re.findall(r"(\w+):\s*([\d.]+),?(?:\s*//[^\n]*)?", src.split("export const CUES")[1].split("};")[0])}
 SHOTS = {m[0]: (float(m[2]), float(m[3])) for m in re.findall(r"id: '(\w+)', name: '(\w+)'.*?start: ([\d.]+), end: ([\d.]+)", src)}
 L.DUR = float(re.search(r"DURATION = ([\d.]+)", src)[1])     # the buffer in sound_lib has 8 s of headroom
+L.BUF = np.zeros((int((L.PRE + L.DUR) * SR) + SR * 8, 2)); BUF = L.BUF   # size the mix to the cut
 S = lambda sid: SHOTS[sid][0]
 E = lambda sid: SHOTS[sid][1]
 print("cues", len(CUES), "shots", len(SHOTS), "dur", L.DUR)
@@ -161,135 +162,168 @@ def music_env(cue, t0, src0, length, g, pts, fi=0.5, fo=0.5):
     env = np.interp(tt, [p[0] for p in pts], [p[1] for p in pts])
     put(t0, y * env[:, None], g)
 
-# ================================================================= the mix (v10's grammar: build, cut, silence, contrast)
-# ---- hook · 03:12 (0 – 11.4): the dark desk, rain, the phone, three messages; the title stutters on
-bed(0.0, S('s03') + 0.2, "event-horizon.mp3", 0.0, 1.15, fi=1.0, fo=0.1)
-loopbed(0.0, S('s03'), "ambience-rain-03.wav", 0.85, fi=0.6, fo=0.05)
+# ================================================================= the mix (v10's grammar: room to breathe, hard cuts, silence, contrast)
+def bird(g=1.0):
+    """one small dawn chirp: two quick falling sine sweeps"""
+    t = T(0.25); out = np.zeros(len(t))
+    for k0, f0, f1 in ((0, 4200, 3100), (int(0.09 * SR), 4600, 3400)):
+        n = int(0.07 * SR); tt = np.arange(n) / SR
+        f = f0 + (f1 - f0) * tt / 0.07
+        out[k0:k0 + n] += np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * tt / 0.07) ** 2
+    return verb(st(out * 0.12, 0.6), L.IR_HALL, 0.4) * g
+
+def orb_on(g=1.0):
+    """安's orb igniting: a soft rising shimmer that settles into a warm tone"""
+    t = T(3.0)
+    f = 220 * (1 + 0.5 * np.minimum(1, t / 0.8))
+    tone = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.5 + np.sin(2 * np.pi * np.cumsum(2 * f) / SR) * 0.2
+    env = np.minimum(1, t / 0.6) * np.exp(-np.maximum(0, t - 0.8) / 1.2)
+    return verb(st(tone * env * 0.25, 0.5), L.IR_HALL, 0.55) * g
+
+# ---- leader (0 – 4): a low tone and one piano note, as v10
+put(0.05, fade(drone(4.0, 41.2, 0.3), 0.6, 0.8))
+put(C['leader1'], piano_note(110.0, 3.4, 0.35))
+# ---- hook · 03:12 (4 – 21.5): rain, the phone, three messages with room between them, the title
+bed(S('h01'), S('s03') + 0.3, "event-horizon.mp3", 0.0, 1.15, fi=1.6, fo=0.1)
+loopbed(S('h01'), S('s03'), "ambience-rain-03.wav", 0.85, fi=1.4, fo=0.05)
 put(C['deskLight'], vibrate(0.6))
 if NOEV:
     for k in (1, 2, 3): put(C['lock%d' % k], an_chime(1.0))
-put(C['lock3'] + 0.2, riser(C['titleType'] - C['lock3'] - 0.2, 60, 1500, 0.32))
+put(C['lock3'] + 0.6, riser(C['titleType'] - C['lock3'] - 0.6, 60, 1500, 0.3))
 if NOEV:
     put(C['titleType'], key_thunk(1.0)); put(C['titleType'] + 0.32, key_thunk(0.95))
     put(C['titleInsert'] - 0.45, tick(2200, 0.25)); put(C['titleInsert'], key_thunk(1.1))
-put(C['titleInsert'], braam(3.4, 41.2, 0.8)); put(C['titleInsert'], boom(2.6, 0.6))
-for k, dt in enumerate((0.0, 0.1, 0.2)):
-    put(C['titleInsert'] + 0.3 + dt, glitch(0.06, 0.25 + 0.1 * k))
+put(C['titleInsert'], braam(3.6, 41.2, 0.8)); put(C['titleInsert'], boom(2.8, 0.6))
+# ---- setup (21.5 – 45.5): the felt piano, warm but not quite right; a soft hit under each card
+bed(S('a01'), E('a04') - 0.4, "lib-felt-piano-suspense.mp3", 0.0, 1.1, fi=0.6, fo=1.6)
+put(C['orbOn'], orb_on(1.0))
+if NOEV: put(C['wake'], an_chime(1.1))
+for cue in ('name1', 'never', 'vote9'):
+    put(C[cue] - 0.5, rev_swell(0.5, 0.2)); put(C[cue], boom(2.2, 0.32))
+put(C['oneVote'] - 0.5, rev_swell(0.5, 0.3)); put(C['oneVote'], boom(3.0, 0.55)); put(C['oneVote'], drone(3.2, 41.2, 0.45))
+loopbed(S('a03'), E('a03'), "ambience-wind-05.wav", 0.2, fi=0.6, fo=0.4)
+loopbed(S('a04'), E('a04'), "ambience-room-02.wav", 0.3, fi=0.3, fo=0.4)
 
-# ---- the night (11.4 – 68.6): one long build. Rain under every night shot; the score's clock-pulse grows from
-# a tick to its 16th-note plateau and is cut dead on 「你只需要说两个字。」
-NIGHT = [x for x in ('s05', 's06', 's08', 'k04', 'k05', 's10', 's11', 's12', 'k06', 's13', 's15', 's16', 's17')]
+# ---- the night: rain under every night shot; the data centre's hum in its shots
+NIGHT = ['s05', 's06', 's08', 'a05', 'k04', 'k05', 's10', 'k10', 'k13', 'a06', 's11', 's12', 'k06', 'a07',
+         's15', 's16', 'a08', 's17', 'a09']
 for sid in NIGHT:
-    loopbed(S(sid), E(sid), "ambience-rain-03.wav", 0.8 if sid in ('s05', 'k05', 's12', 'k06', 's15') else 0.42, fi=0.04, fo=0.04)
-loopbed(S('s07'), E('s07'), "ambience-machine-02.wav", 0.95, fi=0.05, fo=0.1)
-T_IN = 8.0                                                   # the take's soft opening (tick + arpeggio)
-music_env('tension', S('s05'), T_IN, C['jump'] - S('s05'), 0.8, fi=1.6, fo=0.02,
-          pts=[(0, 1), (C['draftType'] - 0.3, 1), (C['draftType'] + 0.3, 0.3), (C['imageArrives'] - 0.1, 0.3), (C['imageArrives'] + 0.1, 1), (C['pulse'], 1.0), (C['jump'], 1.5), (999, 1.5)])
-# 03:12 → 01:40: the clock spins back (a tape rewind, the film's last trick planted here)
-for k in range(14):
-    put(C['clockBack'] + (C['clockBackEnd'] - C['clockBack']) * (k / 14) ** 0.7, tick(2400 - 80 * k, 0.22))
-put(S('s05'), boom(2.2, 0.45))
-# I · the lie
+    loud = sid in ('s05', 'k05', 'k13', 's12', 'k06', 's15')
+    loopbed(S(sid), E(sid), "ambience-rain-03.wav", 0.8 if loud else 0.4, fi=0.05, fo=0.05)
+for sid in ('s07', 'k11'):
+    loopbed(S(sid), E(sid), "ambience-machine-02.wav", 0.95, fi=0.05, fo=0.05)
+# I · 01:40, the lie: event-horizon low under the night (v10 used it for the machine room)
+bed(S('s05'), E('k04') - 0.6, "event-horizon.mp3", 35.0, 1.0, fi=2.0, fo=1.2)
 if NOEV:
-    put(C['calendar'], whoosh(0.35, 2500, 900, 0.12))
-    put(C['logLine'], ui_chime(1.0))
-put(C['logLine'], hit(2.5, 0.35))
-put(S('s07'), whoosh(1.0, 300, 3000, 0.45)); put(C['copyStart'], riser(E('s07') - C['copyStart'], 180, 3000, 0.4))
-for k in range(14):                                          # light racing along the trays: relays clicking past
-    put(C['copyStart'] + 2.2 * (k / 14) ** 0.8, tick(700 + 45 * k, 0.3), pan=-0.6 + 1.2 * k / 14)
+    for k in range(18): put(C['logType'] + k * 0.15, tap(0.5))
+put(C['logDone'], hit(2.5, 0.45))
+put(S('s07'), whoosh(1.2, 300, 3000, 0.45)); put(C['copyStart'], riser(C['copyDone'] - C['copyStart'], 180, 3000, 0.35))
+for k in range(16):
+    put(C['copyStart'] + 3.0 * (k / 16) ** 0.8, tick(700 + 45 * k, 0.3), pan=-0.6 + 1.2 * k / 16)
 if NOEV:
-    typing(C['askType'], 7, 6.0); put(C['askSend'], whoosh(0.3, 2600, 900, 0.18))
-    put(C['denyReply'], an_chime(1.0))
-put(C['eraseDone'] + 0.2, drone(2.6, 36.7, 0.4))
-if NOEV: put(C['eraseDone'] + 0.2, boom(3.0, 0.8))
-# II · it won't shut down
-put(S('k05') - 0.4, rev_swell(0.4, 0.3))
-put(C['killPress'], clunk(0.9))
-put(C['intercepted'], hit(3.0, 0.7))
+    typing(C['askType'], 7, 5.5); put(C['askSend'], whoosh(0.3, 2600, 900, 0.18))
+    put(C['deny1'], an_chime(1.0))
+put(C['denyReply'], drone(3.5, 36.7, 0.35))
+put(C['eraseDone'] + 0.4, boom(3.2, 0.8)); put(C['eraseDone'] + 0.4, drone(2.6, 36.7, 0.4))
+# II · 02:30, the shutdown
+put(S('k05') - 0.5, rev_swell(0.5, 0.3)); put(S('k05'), boom(2.0, 0.35))
+put(C['killPress'], clunk(0.9)); put(C['killPress'], hit(2.5, 0.5))
+put(C['intercepted'], hit(3.0, 0.75))
+if NOEV: put(C['intercepted'], error_buzz(0.9))
+# the countdown: one tick a second, his pulse climbing under it, a riser into the breaker
+for k in range(5):
+    put(C['count5'] + k, clock_tick(0.9)); put(C['count5'] + k, boom(1.0, 0.18 + 0.05 * k))
+hb = C['cutDialog']; k = 0
+while hb < C['breaker'] - 0.2:
+    put(hb, heartbeat(0.4 + 0.06 * k)); hb += 60 / (96 + 7 * k); k += 1
+put(C['breaker'] - 2.4, riser(2.4, 100, 6000, 0.55))
+# the breaker slams; the hall dies row by row toward us; the fans spin down; then nothing
+put(C['breaker'], clunk(1.2)); put(C['breaker'], boom(3.5, 0.9)); put(C['breaker'], glitch(0.15, 0.5))
+put(C['rowsOut'], spin_down(5.0, 0.9))
+for k in range(26):
+    put(C['rowsOut'] + 2.6 * (k / 26) ** 0.6, tick(900 + rng.uniform(-200, 200), 0.5 * (0.4 + k / 26)), pan=rng.uniform(-0.6, 0.6))
+put(C['rowsOut'] + 2.6, powerdown(0.8))
+put(C['emergency'], drone(E('k12') - C['emergency'], 32.7, 0.35))
+# back in his room; the phone wakes; 安 is somewhere else, and here
+put(C['phoneWake'], vibrate(0.8, 2))
 if NOEV:
-    put(C['intercepted'], error_buzz(0.9))
-    typing(C['draftType'], 11, 5.5); put(C['draftSend'], whoosh(0.3, 2600, 900, 0.18)); put(C['sendFail'], error_buzz(0.7))
-    put(C['imageArrives'], an_chime(1.0))
-put(C['imageArrives'], drone(3.0, 27.5, 0.6)); put(C['imageArrives'], boom(2.0, 0.5))
+    put(C['phoneWake'] + 0.05, an_chime(1.0)); put(C['gone1'], an_chime(0.9)); put(C['gone2'], an_chime(1.0))
+    put(C['imageArrives'], an_chime(1.0)); put(C['here1'], an_chime(1.0)); put(C['rain1'], an_chime(0.9))
+put(C['gone2'], boom(3.5, 0.75)); put(C['gone2'], drone(3.0, 30.9, 0.5))
+bed(C['gone2'] + 0.3, E('a07') - 0.4, "event-horizon.mp3", 70.0, 1.1, fi=2.5, fo=1.5)
 put(S('s12'), cctv_buzz(E('s12') - S('s12'), 0.8))
-put(C['lookUp'] - 0.8, riser(0.8, 200, 2500, 0.25)); put(C['lookUp'], hit(2.5, 0.55))
+put(C['lookUp'] - 0.8, riser(0.8, 200, 2500, 0.25)); put(C['lookUp'], hit(2.5, 0.6))
 put(C['camTurn'], servo(0.7, 0.9))
-if NOEV:
-    for k in (1, 2, 3): put(C['locked%d' % k], an_chime(0.95))
-put(C['locked1'] + 0.05, iron_lock(0.8))
-# III · leverage: his pulse comes in at 03:12 and never leaves the night
+put(C['here1'], boom(3.0, 0.7)); put(C['here1'], drone(3.4, 27.5, 0.6))
+# III · 03:12, leverage: his pulse under everything; the score climbs to 「你只需要说两个字。」 and is cut dead
 put(C['pulse'], vibrate(0.7, 2))
-hb = S('s15'); k = 0
+hb = S('s15') + 0.3; k = 0
 while hb < C['jump'] - 0.3:
-    put(hb, heartbeat(0.42 + 0.2 * (hb - S('s15')) / (C['jump'] - S('s15')))); hb += 60 / (128 + 0.8 * k); k += 1
+    put(hb, heartbeat(0.38 + 0.25 * (hb - S('s15')) / (C['jump'] - S('s15')))); hb += 60 / (126 + 0.6 * k); k += 1
+bed(S('s15'), C['jump'], "event-horizon.mp3", 88.0, 1.15, fi=2.0, fo=0.02)
 if NOEV:
     put(C['pulse'] + 0.1, an_chime(1.0))
-    for k in range(3): put(C['rows'] + k * 0.6, tick(1500, 0.35))
-    put(C['wife'], an_chime(1.0))
-    put(C['twoWords'], an_chime(1.1))
-put(C['rows'] + 1.8, whoosh(1.2, 3000, 500, 0.2))           # the list scrolling up through 37 Thursdays
-put(C['cardBuild'], riser(C['jump'] - C['cardBuild'], 100, 7000, 0.55))
-put(C['cardDone'], boom(2.0, 0.6))
-put(C['twoWords'], braam(2.0, 36.7, 0.5))
-# the hard cut: everything stops at 03:12 → 08:59; only the watch's digits roll
-i0 = int(C['jump'] * SR); BUF[i0:int(E('s18') * SR)] *= 0.0
-for k in range(16):
-    put(C['jump'] + 0.15 + k * 0.08, tick(2600, 0.2))
-put(E('s18') - 0.6, whoosh(0.7, 400, 3000, 0.22))
+    for k in range(3): put(C['rows'] + k * 1.4, tick(1500, 0.35))
+    put(C['wife1'], an_chime(1.0)); put(C['two1'], an_chime(1.0)); put(C['twoWords'], an_chime(1.1))
+put(C['rowsScroll'], whoosh(1.6, 3000, 500, 0.22))
+put(C['wife'], boom(2.5, 0.5))
+put(C['cardDone'], boom(2.0, 0.55))
+put(C['two1'], riser(C['jump'] - C['two1'], 100, 8000, 0.6))
+put(C['twoWords'], braam(3.0, 36.7, 0.55))
+i0 = int(C['jump'] * SR); BUF[i0:int(E('k14') * SR)] *= 0.0           # the hard cut into dawn
+put(C['jump'] + 0.4, fade(drone(E('k14') - C['jump'], 55.0, 0.12), 1.5, 1.0))
+for k, dt in enumerate((0.9, 1.25, 2.6, 3.8, 4.4)):
+    put(C['jump'] + dt, bird(0.6 + 0.2 * (k % 2)), pan=rng.uniform(-0.6, 0.6))
 
-# ---- nine o'clock (71 – 102.4): daylight, a quiet room, then his pulse again
-for sid in ('s19', 's20', 'k07', 's21', 's22', 's23', 's25', 's24'):
+# ---- 09:00 (176.5 – 219): daylight, a quiet room, then his pulse again
+for sid in ('s19', 's20', 'k07', 'k15', 's22', 's23', 's25', 's24'):
     loopbed(S(sid), E(sid), "ambience-room-02.wav", 0.38, fi=0.05, fo=0.05)
-loopbed(S('s19'), C['ask'], "ambience-wind-05.wav", 0.12, fi=1.0, fo=1.0)
 for k in range(5):
     put(C['votes'] + k * 0.6, ui_chime(0.7), pan=-0.6 + k * 0.3)
 hb = C['ask'] + 0.6; k = 0
 while hb < C['silence']:
-    put(hb, heartbeat(0.5 + 0.5 * (hb - C['ask']) / (C['silence'] - C['ask']))); hb += 60 / (118 + 3.5 * k); k += 1
+    put(hb, heartbeat(0.5 + 0.5 * (hb - C['ask']) / (C['silence'] - C['ask']))); hb += 60 / (112 + 3.0 * k); k += 1
 put(C['turn'], whoosh(0.8, 250, 900, 0.12))
 if NOEV:
-    for k in range(7): put(C['countStart'] + k * 1.0, clock_tick(0.8))
+    for k in range(5): put(C['countStart'] + k * 1.0, clock_tick(0.8))
 put(C['silence'] - 1.8, riser(1.8, 200, 8000, 0.5))
 put(C['ask'], drone(C['silence'] - C['ask'], 36.7, 0.35))
-# 「……同意。」: everything drains away; only the ring in his ears
-put(C['silence'], tinnitus(C['cancel'] - C['silence'], 1.0))
 put(C['cancel'], piano_note(73.4, 4.0, 0.5))
 if NOEV: put(C['pass'], ui_chime(1.0))
-put(C['pass'] + 0.2, applause(2.8, 0.75))
+put(C['pass'] + 0.2, applause(3.0, 0.7))
 for k in range(5):                                          # five phones at once: one chord
     put(C['phonesLight'] + k * 0.012, an_chime(0.75), pan=-0.8 + k * 0.4)
     put(C['phonesLight'] + k * 0.012, vibrate(0.35, 1), pan=-0.8 + k * 0.4)
-put(C['phonesLight'], boom(3.0, 0.55)); put(C['phonesLight'], drone(4.0, 36.7, 0.5))
+put(C['phonesLight'], boom(3.0, 0.55)); put(C['phonesLight'], drone(4.5, 36.7, 0.5))
 if NOEV: put(C['goodMorning'], an_chime(1.25))
-# the celesta lullaby swells from the pass through the city
+# the celesta lullaby from the pass through the city
 CAL = 40.0                                                   # where the take's swell begins
-music('calm', C['pass'] + 0.4, CAL - (C['cityOut'] - C['pass'] - 0.4), E('s26') - C['pass'] - 0.4, 0.85, fi=1.0, fo=0.4)
+music('calm', C['pass'] + 0.4, CAL - (C['cityOut'] - C['pass'] - 0.4), E('s26') - C['pass'] - 0.4, 0.85, fi=1.0, fo=1.0)
 put(C['cityOut'], whoosh(2.4, 200, 1800, 0.45))
-loopbed(C['cityOut'], E('s26'), "ambience-wind-05.wav", 0.35, fi=1.0, fo=0.3)
-put(C['cityData'], shimmer(E('s26') - C['cityData'], 1.0))
+loopbed(C['cityOut'], E('s26'), "ambience-wind-05.wav", 0.35, fi=1.0, fo=1.0)
 
-# ---- it's real (108.6 – ): black, two lines, then the rewind cut to 《三体》
+# ---- it really happened: black, two lines, then the rewind cut to 《三体》
 put(C['fiction1'], boom(2.5, 0.5))
-put(C['fiction2'], boom(2.0, 0.45)); put(C['fiction2'] + 0.2, riser(C['rewind'] - C['fiction2'] - 0.2, 80, 4000, 0.45))
+put(C['fiction2'], boom(2.5, 0.5)); put(C['fiction2'] + 1.0, riser(C['rewind'] - C['fiction2'] - 1.0, 80, 4000, 0.45))
 B3 = 60 / 118.95                                             # 《三体》's beat; its dead stop is at 95.0 s into the track
 T3_STOP = 95.0
 bed(C['rewind'], C['rewindEnd'] + 0.05, "three-bodies.mp3", T3_STOP - (C['rewindEnd'] - C['rewind']), 1.25, fi=0.25, fo=0.05)
-# the stamps: each heavier than the last
 if NOEV:
     for k in (1, 2, 3): put(C['stop%d' % k], tape_stop(0.8)); put(C['stop%d' % k] + 0.5, shutter(0.9 + 0.1 * k)); put(C['stop%d' % k] + 0.5, boom(2.5 + 0.6 * k, 0.4 + 0.15 * k))
 put(C['rewindEnd'] - 1.6, riser(1.6, 100, 9000, 0.6)); put(C['rewindEnd'], hit(1.5, 0.6))
-
-# ---- the real world: the breathing drone under the end texts; Hinton almost in silence
+# the real world: the breathing drone under the end texts; Hinton almost in silence
 music('after', C['end1'] - 0.2, 0.0, C['title2'] - C['end1'] + 0.6, 0.5, fi=1.5, fo=0.6)
 for t, g in ((C['end1'], 0.4), (C['end2'], 0.55), (C['end3'], 0.5)):
     put(t, boom(2.5, g))
 put(C['end4'], drone(C['title2'] - C['end4'], 30.9, 0.5))
 put(C['end4Quote'], hit(3.0, 0.7))
 put(C['title2'], braam(4.0, 36.7, 0.75))
-# the viewer's notification, from silence
-put(C['sting'], vibrate(0.9, 2))
-if NOEV: put(C['sting'] + 0.05, an_chime(1.2))
-# end card: four quiet piano notes
+# the sting from silence (v10): two notifications
+for cue in ('sting', 'sting2'):
+    put(C[cue], vibrate(0.9, 2))
+    if NOEV: put(C[cue] + 0.05, an_chime(1.2))
+# end card: four quiet piano notes over the last of event-horizon
+bed(C['endcard'], L.DUR, "event-horizon.mp3", 134.0, 1.0, fi=1.5, fo=1.4)
 for k, f in enumerate((220.0, 196.0, 164.81, 146.83)):
     put(C['endcard'] + 0.3 + k * 1.0, piano_note(f, 4.0, 0.45))
 
@@ -317,7 +351,7 @@ for e in EV:
     elif ty == "boom": put(t, boom(3.0, 0.8 * g))
     elif ty == "rewind":
         if near(t, 'rewind', 0.3): put(t, tape_whir(C['stop1'] - t, 300, 2600, 0.9 * g))
-        else: put(t, tape_whir(C['clockBackEnd'] - t, 2200, 500, 0.9 * g))
+        else: put(t, tape_whir(1.0, 2200, 500, 0.9 * g))
     elif ty == "ffwd": put(t, tape_whir(0.5, 900, 3200, 0.7 * g))
     elif ty == "freeze": put(t, tape_stop(1.0 * g)); put(t, hit(1.8, 0.35 * g))
     elif ty == "stamp":

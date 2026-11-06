@@ -1,15 +1,20 @@
 // In-world screens (v12): the meeting-room screen (one line and six vote lights), the watch, the billboards.
-// 林工's phone and the committee phones live in ui-v12.js.
+// 林工's phone and the committee phones live in ui-v13.js.
 import { f, COL, txt, tw, clamp, lerp, smooth, easeOut, easeInOut, fillRR, strokeRR, disc, shadowed, heartIcon, checkIcon } from './ui-kit.js';
+import { drawOrb } from './ui-orb.js';
 
 // ---------------------------------------------------------------- 'bigscreen' 1920×1080
 export const VOTE_STEP = 0.6;                    // five lights across 72.0–74.4
 const VOTERS = ['张主任', '王委员', '李委员', '陈委员', '赵委员', '林工'];
 export function bigscreen(g, st, C) {
   const W = 1920, H = 1080, tr = st.tr;
-  if (tr >= C.cityOut) {                         // from the pull-out on, every screen says 早上好
-    g.fillStyle = '#0b0805'; g.fillRect(0, 0, W, H);
-    shadowed(g, 'rgba(255,181,71,0.8)', 60, 0, () => txt(g, '早上好 ☕', W / 2, 600, { font: f(600, 300), color: COL.amber, align: 'center' }));
+  if (tr >= C.cityOut) { orbScreen(g, W, H, tr, true); return; }     // from the pull-out on, every screen is 安
+  if (st.sid === 'a04' || tr < C.clock0140) {                          // the day before: the notice
+    const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#f7f9fc'); bg.addColorStop(1, '#e7eef7');
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    txt(g, '安全评审委员会 · 通知', 96, 122, { font: f(500, 44), color: '#6a7a90' });
+    txt(g, '明日 09:00', W / 2, 470, { font: f(300, 190, 'helv'), color: '#0f1b2d', align: 'center' });
+    txt(g, '表决：是否继续运行「安」', W / 2, 740, { font: f(600, 120), color: '#0f1b2d', align: 'center', ls: 4 });
     return;
   }
   const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#f7f9fc'); bg.addColorStop(1, '#e7eef7');
@@ -17,7 +22,8 @@ export function bigscreen(g, st, C) {
   txt(g, '安全评审委员会 · 表决', 96, 122, { font: f(500, 44), color: '#6a7a90' });
   const hm = tr < C.pass ? '09:00' : '09:01';
   txt(g, hm, W - 96, 122, { font: f(500, 44, 'helv'), color: '#6a7a90', align: 'right' });
-  // the one line
+  // the one line, under a small orb
+  drawOrb(g, W / 2, 210, 30, tr, { mini: true });
   txt(g, '是否继续运行「安」', W / 2, 430, { font: f(600, 156), color: '#0f1b2d', align: 'center', ls: 6 });
   // six lights; the sixth is his
   const yes = [0, 1, 2, 3, 4].filter((i) => tr >= C.votes + i * VOTE_STEP).length;
@@ -100,18 +106,23 @@ export function watch(g, st, C) {
   g.globalAlpha = 0.85; g.stroke(); g.restore();
 }
 
-// ---------------------------------------------------------------- 'billboard' 1024×512
-let _dots = null;
-export function billboard(g) {
-  const W = 1024, H = 512;
-  g.fillStyle = '#0a0603'; g.fillRect(0, 0, W, H);
-  shadowed(g, 'rgba(255,170,60,1)', 50, 0, () => txt(g, '早上好', 420, 262, { font: f(600, 236), color: '#ffc463', align: 'center', base: 'middle' }));
-  txt(g, '早上好', 420, 262, { font: f(600, 236), color: '#ffd28a', align: 'center', base: 'middle' });
-  txt(g, '☕', 892, 272, { font: f(400, 150), align: 'center', base: 'middle' });
-  if (!_dots) {
-    _dots = document.createElement('canvas'); _dots.width = 8; _dots.height = 8;
-    const d = _dots.getContext('2d'); d.fillStyle = 'rgba(0,0,0,0.28)'; d.fillRect(0, 0, 8, 8);
-    d.globalCompositeOperation = 'destination-out'; d.beginPath(); d.arc(4, 4, 3, 0, Math.PI * 2); d.fill();
-  }
-  g.fillStyle = g.createPattern(_dots, 'repeat'); g.fillRect(0, 0, W, H);
+// ---------------------------------------------------------------- 安 on a screen: the orb (and 早上好 from the pull-out on)
+function orbScreen(g, W, H, tr, hello) {
+  g.fillStyle = '#060403'; g.fillRect(0, 0, W, H);
+  if (hello) {
+    drawOrb(g, W * 0.24, H / 2, H * 0.2, tr, {});
+    txt(g, '早上好', W * 0.62, H / 2 + H * 0.02, { font: f(600, Math.round(H * 0.3)), color: '#ffd28a', align: 'center', base: 'middle', shadow: ['rgba(255,170,60,0.8)', 40, 0] });
+  } else drawOrb(g, W / 2, H / 2, H * 0.24, tr, {});
+}
+// 'billboard' 1024×512: 安's orb on every screen of the city; 早上好 joins it from the pull-out on
+export function billboard(g, st, C) { orbScreen(g, 1024, 512, st.tr, st.tr >= C.cityOut); }
+
+// 'nameplate' 1024×320: the table plate in the meeting room
+export function nameplate(g) {
+  const W = 1024, H = 320;
+  const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#f7f4ee'); bg.addColorStop(1, '#ebe6dc');
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+  g.fillStyle = 'rgba(0,0,0,0.08)'; g.fillRect(0, H - 10, W, 10);
+  txt(g, '安全负责人', W / 2, 110, { font: f(500, 52), color: '#5a5f68', align: 'center', ls: 10 });
+  txt(g, '林工', W / 2, 250, { font: f(700, 130, 'serif'), color: '#1b1d22', align: 'center', ls: 20 });
 }
