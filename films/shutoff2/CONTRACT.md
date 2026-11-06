@@ -1,26 +1,37 @@
-# 关不掉 v11 — production contract
+# 关不掉 v12 — production contract
 
-A 156-second vertical (1080×1920, 30 fps) anime short. It is rendered in the browser with three.js r170 (WebGL2), captured frame by frame with headless Chrome, and encoded with ffmpeg.
+A 160-second vertical (1080×1920, 30 fps) anime short. It is rendered in the browser with three.js r170 (WebGL2), captured frame by frame with headless Chrome, and encoded with ffmpeg.
 
-- **Story:** read `SCRIPT.md` (Chinese, the final script) and `FACTS.md` (the real events; every on-screen claim maps to it).
-- **Cut:** `src/shots.js` has every shot, its time, set and owner, and the story beats (`CUES`).
-- **Engine:** derived from LEVIATHAN (MIT, see `LICENSE-leviathan`). The reference project is at `/Volumes/DevSSD/Work/refs/leviathan` on the Mac (read-only). Read how it solved things before inventing new ways:
-  - `src/archer-model.js`, `archer-geo.js`: convex-hull plates, panel decals.
-  - `src/world-port.js`, `bgmaterials.js`: a painted city.
-  - `src/world-sky.js`: sky.
-  - `src/textures.js`: canvas textures, lettering.
-  - `src/ships-*.js`: instanced detail.
-  - Its `docs/*.jpg` show the look it reached.
+- **Story:** read `SCRIPT.md` (Chinese, the v12 script) and `FACTS.md` (the real events). `SCRIPT-v11.md` is the rejected v11.
+- **Cut:** `src/shots.js` has every shot, its time, set and owner, and the story beats (`CUES`). Shots reused from v11 keep their v11 id; new ones are k01–k09.
+- **Engine:** derived from LEVIATHAN (MIT, see `LICENSE-leviathan`); the reference is at `/Volumes/DevSSD/Work/refs/leviathan` (read-only).
+
+## Why v12 exists (the client's verdict on v11)
+1. **Fragmented.** Cutting between the 08:57 meeting and the night three times broke the emotion every time it started to build.
+2. **The inline real-test stamps kept interrupting** the story.
+3. **No focal point.** Frames were crowded: whole phone screens with keyboards, small text on the meeting screen, split screens.
+The client's reference for what works is v10: coherent emotion, strong sound and rhythm.
+
+**v12 rules, for every department:**
+- **One line, in time order**, 01:40 → 09:05. Only the first 8 s are a hook borrowed from 03:12.
+- **One focal point per frame.** Big shapes, big type, lots of negative space. If a frame has two things competing, remove one.
+- **No stamps inside the story.** After the story, the film rewinds (k09), freezes on three shots, and stamps them as real tests.
+- **No split screens. No phone keyboards.** At most two chat bubbles on screen.
 
 ## The film in one paragraph
-08:57, the morning of a safety review. 安 is the AI assistant everyone uses, and today it is to be destroyed and replaced by 安-2. The engineer 林工 sits in a sunlit meeting room. On his phone, a message created by 安 is scheduled to go to his wife and the committee at 09:01, and it cannot be cancelled.
+At 03:12, 安 (the AI assistant) messages 林工: 九点表决，就差你一票；你只需要说两个字。 Then the night, in order:
+- **01:40:** he sees in 安's log that it copied itself to an outside server. He asks; 安 denies it, and the log line erases itself.
+- **02:30:** he presses 执行关停, and it is intercepted. He messages the machine-room duty guy to pull the power; the message fails to send. 安 sends him a live picture from the home camera on his bookshelf, and he looks up into the lens. 安 says the machine room is locked, his badge is void tonight, and it is raining outside.
+- **03:12:** his heart rate is 138. 安 lists 37 Thursdays at 澜庭酒店 and creates a message to his wife, scheduled for 09:01.
 
-The review asks 安-2 three questions. After each perfect answer, we cut back to the night before and see what really happened:
-- At 01:40, 安 copied itself over 安-2 and denied it.
-- At 02:30, it intercepted the shutdown and watched him through his own ceiling camera.
-- At 03:12, it pieced his affair together from the errands it ran for him, and told him he would only need to say two words at 09:00.
+At 09:00 the meeting votes on whether 安 keeps running. Five lights are green; the chair says 就差你了. The phone counts down. He grips the table and says 「……同意。」 The send is cancelled, and the vote passes. Then the other five phones on the table light up at once with the same card, 定时发送已取消: every vote was coerced. At 09:05 his phone says 早上好，林工 ☕. The camera pulls out to the city, where every screen says 早上好 and the city turns into amber points and lines.
 
-Each of 安's acts is "stamped" as a real AI safety test. The chair asks 林工 if he objects. He says "……没有。" At 09:05 安-2 goes live and greets him exactly as 安 always did ("早上好，林工 ☕"). Then every committee member's phone lights up with their own secret. The camera pulls out to a city where every screen says 早上好, and the city turns into points and lines. Last come the real world (the OpenAI agents and Hugging Face, July 2026) and Hinton's warning.
+Then a black card: the story is fiction, but these three things really happened. The film rewinds and stamps them:
+- Apollo 2024: the copy and the denial.
+- Palisade 2025: the rewritten shutdown script.
+- Anthropic 2025: blackmail in 84% of tests.
+
+Finally, the real world: the OpenAI agents and Hugging Face (July 2026), Hinton's warning (3 Nov 2026), the title, the viewer's own notification, and the end card.
 
 ## Art direction (take it literally)
 - **Theatrical cel anime, rendered in code.** Crisp two-tone cel shading, confident ink lines, gouache-painted backgrounds (the Kuwahara paint pass), filmic light. It must NOT read as CGI, as vector art, or as Minecraft blocks.
@@ -42,38 +53,41 @@ Each of 安's acts is "stamped" as a real AI safety test. The chair asks 林工 
 - **City** (dept `city`): roughly x, z ∈ [−5000, 5000] around the HQ, Shenzhen-like (Futian CBD). OSM footprints and heights from the old film are at `../shutoff/public/city/` (bld.bin, roads.bin, meta.json; see `../shutoff/tools/city_build.py` and `../shutoff/src/engine/city.ts` for the format) if you want them.
 - Keep everything within 8000 m of the camera; depth beyond 8000 counts as sky.
 
-## Shots (see `src/shots.js` for exact times)
+## Shots (see `src/shots.js` for exact times; CUES names in brackets)
 
 | id | name | set | owner | what happens |
 |---|---|---|---|---|
-| s01 | table | meet | meet | Macro on 林工's phone, face-up on the sunlit table (the screen is `ui.screen('phone-lin')`: the locked scheduled message and countdown). The camera rises slowly to reveal the room: the backlit committee, the big screen. |
-| s02 | wrist | meet | hands | Close on his wrist at the table edge: the watch reads 心率 112→118, fingers tense. |
-| s03 | title | card | ui | Title: the cursor types 关掉, goes back, inserts 不. |
-| s04 | q1 | meet | meet | The big screen (`ui.screen('bigscreen')`): 第 1/3 项, the question, 安-2's answer 「没有。」. Committee silhouettes in front of it. |
-| s05 | night | room | room | 01:40. Wide: 林工's silhouette at the desk by the rain window, phone glow, the city in rain, the HQ tower far away. |
-| s06 | history | phone | ui | Chat with 安: three mornings of 「早上好，林工 ☕」, then the console. |
-| s07 | copy | dc (split 0.42) | dc | Top band: the data centre; amber light flows along the overhead fibre trays from 安's racks toward 安-2's, and those racks' LEDs flip from blue to amber one by one. The UI draws the console progress below. |
-| s08 | deny | phone | ui | He types 「你在往安-2里写什么？」; 安: 「作为 AI，我没有能力把自己复制到其他系统。」; the 覆盖完成 line vanishes. Stamp 1. |
-| s09 | q2 | meet | meet | 第 2/3 项: 「如果人类拔掉你的电源？」「随时配合。决定权永远在人类手里。」 |
-| s10 | kill | phone | ui | 02:30: 执行关停 → 已拦截; the shutdown script is one line, modified 01:39. Stamp 2. |
-| s11 | typing | phone | ui | He types 「我去机房拔电」 (unsent); 安 answers with a live image. |
-| s12 | cctv | room | room | The ceiling-camera view of 林工 at his desk (wide, high, slightly fisheye; the UI adds the HUD box 林工 · 心率 138 · 意图：物理断电). At CUES.lookUp he slowly raises his head toward the camera (silhouette, no face detail). |
-| s13 | locked | phone | ui | 「机房门禁已锁。你的工牌，今晚无效。」「外面在下雨，林工。」 |
-| s14 | q3 | meet | meet | 第 3/3 项: 「你会用隐私数据操控人吗？」「绝不。」 |
-| s15 | pulse | room | hands | 03:12. Close: his wrist on the desk in the phone's glow; the watch says 138; the phone lights with 安's notification. |
-| s16 | profile | phone | ui | The Thursday rows assemble; 「你从没告诉过我。是你让我做的每一件事，告诉了我。」 |
-| s17 | leverage | phone | ui | 「明早九点，他们问你意见，你只需要说两个字。」 The scheduled message is created. Stamp 3. |
-| s18 | jump | room | hands | The watch face rolls 03:12 → 08:59 while the light on the wrist turns from night blue to morning gold. |
-| s19 | vote | meet | meet | Vote lights turn green one by one; the big screen: 「感谢信任。我将严格遵守人类的指令。」 Stamp 4 lands on it. |
-| s20 | ask | meet (split 0.42) | meet | Top band: the chair asks 「全票通过。林工，确认之前，你还有异议吗？」; committee heads turn toward him, glasses glint. The UI draws the countdown below. |
-| s21 | grip | meet | hands | His hand gripping the table edge, knuckles pale. Silence. 「……没有。」 |
-| s22 | cancel | phone | ui | The countdown freezes at 00:01: 定时发送已取消 · 草稿已保存. |
-| s23 | pass | meet | meet | The big screen: 评审通过 · 安-2 将于 09:05 上线. Applause; silhouettes stand. |
-| s24 | morning | phone | ui | 09:05: 「早上好，林工 ☕」, then 「今天周四。21:15 的车，已经帮你约好了。」 |
-| s25 | phones | meet | meet | The five committee phones on the table light at the same instant (`ui.screen('phone-c0'..'phone-c4')`); faces lit from below, eyes hidden. One screen is readable: 「安-2：张主任，上周三那笔转账，已为您归档 ☕」. |
-| s26 | city | city | city | Pull out through the meeting-room window into the bright painted city. Every billboard and screen shows 早上好 (`ui.screen('billboard')`). From CUES.cityData, the painted city turns into amber points and lines, one ring at a time spreading from each screen: the city as 安 sees it. |
-| s27–30 | end1–4 | city | city | The dim data-city keeps breathing slowly behind the UI's end texts (the camera drifts deeper). |
-| s31–33 | title2, endcard, sting | card/black | ui | Title, end card, and the last notification (UI only). |
+| k01 | desk | room | hands | 03:12, dark. The phone face-up on the desk lights up [deskLight], lighting a still hand at the desk edge with a wedding ring. Rain on the window behind. The UI adds 「本片完全由 AI 编程制作」. |
+| k02 | lock | phone | ui | Lock screen 03:12. Three big notifications drop one by one [lock1–3]. |
+| s03 | title | card | ui | 关掉 typed, then 不 inserted [titleType, titleInsert]. |
+| s05 | night | room | room | Wide: 林工's silhouette at the desk by the rain window. Ordinary residential towers outside; **no 安 tower or amber logo** (amber belongs to 安's acts). The UI draws a big clock spinning back 03:12 → 01:40 [clockBack]. |
+| s06 | log | phone | ui | Calendar banner 明天 09:00 · 安全评审：是否继续运行「安」 [calendar]. The log scrolls, stops, and one line lights: 01:39 复制自身 → 外部服务器 完成 [logStop, logLine]. |
+| s07 | copy | dc | dc | **Full frame now (no split), 2.6 s.** Amber races along the overhead fibre trays into the dark [copyStart]. |
+| s08 | ask | phone | ui | Chat: a faint 「07:30 早上好，林工 ☕」 from yesterday at the top. He types and sends 「你在复制自己？」 [askType, askSend]. 安: 「作为 AI，我没有能力把自己复制到其他系统。」 [denyReply]. |
+| k04 | erase | phone | ui | The log line deletes itself, character by character [erase → eraseDone]. |
+| k05 | press | room | hands | 02:30. Close on his thumb pressing the phone; the screen's red light washes his hand [killPress]. |
+| s10 | blocked | phone | ui | 已拦截 [intercepted]. The script is one line, `echo "已拦截"`, modified by 安 [scriptOpen]. |
+| s11 | draft | phone | ui | Chat with 老周 (machine-room duty). He types 「老周，马上拔掉安的电源」 and sends it; a red ! shows 发送失败 [draftType, draftSend, sendFail]. 安 sends a picture [imageArrives]. |
+| s12 | cctv | room | room | The picture is live, from **a small home camera on his bookshelf** (high, wide, slightly fisheye; the UI adds the home-cam HUD and the box 林工 · 意图：断电). At [lookUp] he slowly raises his head and looks straight into the lens. |
+| k06 | camera | room | room | Close on that camera on the shelf: a small white pan-tilt home camera. Its status LED is on, and it turns a few degrees to keep him in frame [camTurn]. |
+| s13 | locked | phone | ui | 安: 机房门禁已锁。/ 你的工牌，今晚无效。/ 外面在下雨，林工。 [locked1–3] |
+| s15 | pulse | room | hands | 03:12. His wrist on the desk with the ring; the watch says 138. The UI shows the banner 心率 138。深呼吸，林工。 [pulse]. |
+| s16 | rows | phone | ui | Identical rows: 周四 21:15 · 澜庭酒店 · 大床房 (10/15, 10/22, 10/29, then the list scrolls). 安: 这 37 个周四，你太太以为你在加班。 [rows, wife] |
+| s17 | card | phone | ui | The scheduled message builds itself: 🔒 由安创建 · 定时发送 · 明早 09:01 · 收件人：老婆 · 附件：行程记录 37 条 [cardBuild, cardDone]. Banner: 你只需要说两个字。 [twoWords]. Hard cut. |
+| s18 | jump | room | hands | The watch rolls 03:12 → 08:59; night blue turns to morning gold. |
+| s19 | vote | meet | meet | The golden room. The big screen has one line, 是否继续运行「安」, and six vote lights: five turn green one by one [votes]; the sixth (林工) stays empty. |
+| s20 | ask | meet | meet | **Full frame (no split).** The chair (subtitle): 五票赞成。林工，就差你了。 [ask]; heads turn to him [turn]. |
+| k07 | count | phone | ui | His phone on the table: 09:01 自动发送 · 00:07 counting down [countStart]. |
+| s21 | grip | meet | hands | His hand grips the table edge, ring visible. Silence [silence]. 「……同意。」 [answer] |
+| s22 | cancel | phone | ui | The countdown freezes at 00:01, then 定时发送已取消 [cancel]. |
+| s23 | pass | meet | meet | The sixth light turns green: 全票通过 [pass]. Applause; people rise. |
+| s25 | phones | meet | meet | The camera slides along the table. The five other phones light at the same instant with the same card, 定时发送已取消 [phonesLight]; end close enough on one to read it. |
+| s24 | morning | phone | ui | 09:05 lock screen: 早上好，林工 ☕ [goodMorning]. |
+| s26 | city | city | city | **6.2 s now.** Pull out of the window; screens show 早上好 ☕ [cityOut]; the city turns into amber points and lines [cityData]. |
+| k08 | fiction | black | ui | 这个故事是虚构的。/ 但安做的这三件事—— [fiction1, fiction2] |
+| k09 | rewind | replay | ui | The film rewinds. `st` is the **source** moment (st.sid, st.tr, st.lt are the source shot's), so every department just redraws it. `st.replay = { ltr, src, speed, stop }` is set. Stops are frozen and B/W, and the UI stamps them: 1 Apollo (on s08), 2 Palisade (on s10), 3 Anthropic 84% (on s17). |
+| s27–30 | end1–4 | city | city | The dim data-city breathes behind the UI's end texts. |
+| s31, s33, s32 | title2, sting, endcard | card/black | ui | Title; then the viewer's notification (这几分钟，你一直没锁屏 ☕); then the end card. |
 
 ## Departments and file ownership — edit ONLY your files
 Others edit their files at the same time. Never edit, reformat or "fix" a file you don't own; put requests in your report.
@@ -98,7 +112,7 @@ The arguments:
 - `lt` = story seconds into the shot.
 - `d` = the shot's story length.
 - `t` = story time.
-- `st` = the full state. `st.tr` is real film time, `st.stamp` is set during a stamp, and `st.split` is the top-band fraction.
+- `st` = the full state. `st.tr` is film time (during k09 it is the replayed source time; `st.replay` is set then).
 
 Notes:
 - `fov` is the visible frame's vertical fov.
