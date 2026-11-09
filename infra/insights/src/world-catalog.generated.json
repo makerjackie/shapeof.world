@@ -174,12 +174,6 @@
     "poster": "/assets/posters/thumb/human-atlas.webp"
   },
   {
-    "id": "fire-gravity",
-    "title": "烛火里面，发生了什么？",
-    "titleEn": "What happens inside a candle flame?",
-    "poster": "/assets/posters/thumb/fire-gravity.webp"
-  },
-  {
     "id": "flybody",
     "title": "果蝇的脑内世界",
     "titleEn": "Inside a Fly’s Brain",
@@ -256,6 +250,12 @@
     "title": "尤克里里的四根弦，怎么弹出一首歌？",
     "titleEn": "How do four ukulele strings play a whole song?",
     "poster": "/assets/posters/thumb/ukulele.webp"
+  },
+  {
+    "id": "campfire",
+    "title": "一团火，里面有什么？",
+    "titleEn": "What is inside a fire?",
+    "poster": "/assets/posters/thumb/campfire.webp"
   },
   {
     "id": "agent-cutaway",
@@ -795,6 +795,13 @@
     "title": "游戏海面由许多正弦波叠加而成",
     "titleEn": "Game oceans are built by combining many sine waves",
     "poster": "/assets/posters/thumb/fft-ocean.webp",
+    "retired": true
+  },
+  {
+    "id": "fire-gravity",
+    "title": "烛火里面，发生了什么？",
+    "titleEn": "What happens inside a candle flame?",
+    "poster": "/assets/posters/thumb/fire-gravity.webp",
     "retired": true
   },
   {
