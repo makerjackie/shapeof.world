@@ -1,0 +1,213 @@
+{
+  "schema": 1,
+  "columns": [
+    "model_number",
+    "star_age",
+    "star_mass",
+    "log_Teff",
+    "log_L",
+    "log_R",
+    "log_center_T",
+    "log_center_Rho",
+    "center_h1",
+    "center_he4",
+    "center_c12",
+    "center_o16",
+    "center_ne20",
+    "center_si28",
+    "he_core_mass",
+    "c_core_mass",
+    "o_core_mass",
+    "si_core_mass",
+    "fe_core_mass",
+    "log_LH",
+    "log_LHe",
+    "log_LZ",
+    "log_Lnuc"
+  ],
+  "source": "doi:10.5281/zenodo.3707670",
+  "license": "CC-BY-4.0",
+  "adaptation": "selected columns; discarded obsolete restart rows; bounded-error linear simplification; float64 ages; other columns at 10 significant digits",
+  "tolerances": [
+    0,
+    0,
+    0.002,
+    0.004,
+    0.008,
+    0.006,
+    0.008,
+    0.012,
+    0.006,
+    0.006,
+    0.006,
+    0.006,
+    0.006,
+    0.006,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.003,
+    0.09,
+    0.09,
+    0.09,
+    0.09
+  ],
+  "tracks": [
+    {
+      "initialMass": 1,
+      "sourceRows": 52469,
+      "retainedRows": 2072,
+      "sourceFile": "1p0_msun_history.data.xz",
+      "sourceMD5": "66976957c64a0e01fe132c9d3a2ba94f",
+      "sourceSHA256": "438dc0867468de626a3b7977a5cc83300268cb95db1b91c80f9700cedab9e341",
+      "phases": [
+        {
+          "id": "pms",
+          "index": 0
+        },
+        {
+          "id": "main",
+          "index": 708
+        },
+        {
+          "id": "giant",
+          "index": 778
+        },
+        {
+          "id": "helium",
+          "index": 1639
+        },
+        {
+          "id": "agb",
+          "index": 1720
+        },
+        {
+          "id": "postagb",
+          "index": 1965
+        },
+        {
+          "id": "white",
+          "index": 2029
+        },
+        {
+          "id": "endpoint",
+          "index": 2071
+        }
+      ]
+    },
+    {
+      "initialMass": 3,
+      "sourceRows": 39792,
+      "retainedRows": 3688,
+      "sourceFile": "3p0_msun_history.data.xz",
+      "sourceMD5": "e0447b8384a3ab8775e40dd1a2a0c136",
+      "sourceSHA256": "7367e7401109d715eff267f13f741752356f982050d9cccad848f2e1ef068364",
+      "phases": [
+        {
+          "id": "pms",
+          "index": 0
+        },
+        {
+          "id": "main",
+          "index": 692
+        },
+        {
+          "id": "giant",
+          "index": 717
+        },
+        {
+          "id": "helium",
+          "index": 758
+        },
+        {
+          "id": "agb",
+          "index": 783
+        },
+        {
+          "id": "postagb",
+          "index": 1343
+        },
+        {
+          "id": "white",
+          "index": 3635
+        },
+        {
+          "id": "endpoint",
+          "index": 3687
+        }
+      ]
+    },
+    {
+      "initialMass": 15,
+      "sourceRows": 38091,
+      "retainedRows": 4824,
+      "sourceFile": "15p0_msun_history.data.xz",
+      "sourceMD5": "28200bfca82dea0ca6f3e609b65204f6",
+      "sourceSHA256": "49fdf7731dff0f0eb7625a11df4557572a74e8a673aebd7277edddbcf19be1a3",
+      "phases": [
+        {
+          "id": "pms",
+          "index": 0
+        },
+        {
+          "id": "main",
+          "index": 261
+        },
+        {
+          "id": "giant",
+          "index": 286
+        },
+        {
+          "id": "helium",
+          "index": 388
+        },
+        {
+          "id": "advanced",
+          "index": 422
+        },
+        {
+          "id": "endpoint",
+          "index": 4823
+        }
+      ]
+    },
+    {
+      "initialMass": 25,
+      "sourceRows": 16702,
+      "retainedRows": 2269,
+      "sourceFile": "25p0_msun_history.data.xz",
+      "sourceMD5": "7fe264f6da9ee20cfa7c2e83e12b28e7",
+      "sourceSHA256": "3efe57391cfbfa559fc51e18e9d00c1ef08a9c6f773af7ec64f7a1d66d365624",
+      "phases": [
+        {
+          "id": "pms",
+          "index": 0
+        },
+        {
+          "id": "main",
+          "index": 197
+        },
+        {
+          "id": "giant",
+          "index": 234
+        },
+        {
+          "id": "helium",
+          "index": 256
+        },
+        {
+          "id": "advanced",
+          "index": 318
+        },
+        {
+          "id": "endpoint",
+          "index": 2268
+        }
+      ]
+    }
+  ],
+  "sha256": "82348a61528c48d5bd805d49a02ee7997c43bd1ceb5d5ffdb614773fe7a5b92b",
+  "uncompressedBytes": 3576621,
+  "gzipBytes": 1030761
+}

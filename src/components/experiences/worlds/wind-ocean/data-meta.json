@@ -1,0 +1,50 @@
+{
+  "format": "signed-int16-le-u-plane-v-plane",
+  "scale": 0.01,
+  "missing": 32767,
+  "upstreamCommit": "5f091f0c3b60aa38a996a886985bacb3673d16c3",
+  "fields": [
+    {
+      "id": "wind",
+      "product": "NOAA/NCEP GFS",
+      "path": "/assets/wind-ocean/wind-20140131.i16.gz",
+      "nx": 360,
+      "ny": 181,
+      "lon0": 0,
+      "lat0": 90,
+      "dx": 1,
+      "dy": 1,
+      "radius": 6371229,
+      "referenceTime": "2014-01-31T00:00:00.000Z",
+      "forecastHours": 3,
+      "validTime": "2014-01-31T03:00:00.000Z",
+      "height": 10,
+      "source": "https://raw.githubusercontent.com/cambecc/earth/5f091f0c3b60aa38a996a886985bacb3673d16c3/public/data/weather/current/current-wind-surface-level-gfs-1.0.json",
+      "sourceSha256": "e3c37671f43e2550c4f420bd398d36400a927342fa0aba1a951d1bda17dc8995",
+      "binarySha256": "e174b7e0907104a6894f52e7a3a08fe353ddbe07ce61d9272d25186138c41ed1",
+      "validVectorCount": 65160,
+      "compressedBytes": 203958
+    },
+    {
+      "id": "ocean",
+      "product": "ESR OSCAR third degree, version 1",
+      "path": "/assets/wind-ocean/ocean-20140131.i16.gz",
+      "nx": 1080,
+      "ny": 481,
+      "lon0": 20,
+      "lat0": 80,
+      "dx": 0.3333333333333333,
+      "dy": 0.3333333333333333,
+      "radius": 6367470,
+      "referenceTime": "2014-01-31T00:00:00.000Z",
+      "forecastHours": 0,
+      "validTime": "2014-01-31T00:00:00.000Z",
+      "height": 15,
+      "source": "https://raw.githubusercontent.com/cambecc/earth/5f091f0c3b60aa38a996a886985bacb3673d16c3/public/data/oscar/20140131-surface-currents-oscar-0.33.json",
+      "sourceSha256": "6b64e9826e790a150a24efde8d7bca2962881cee466139042f0b5c065a31c700",
+      "binarySha256": "9c8f5b390dc7aa7224c522259af9550a35854975cfb6e207fcd139e6015abbc9",
+      "validVectorCount": 313589,
+      "compressedBytes": 384519
+    }
+  ]
+}
