@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { HomeDiscovery } from '~/components/HomeDiscovery'
+import { HOME_FILM_LIMIT } from '~/data/films'
 import { heroPoster, heroWorldId } from '~/lib/home-hero'
 import { languageDiscoveryLinks, localeFromRouteMatches } from '~/i18n/seo'
 import { homeStructuredData, jsonLdScript } from '~/lib/structured-data'
@@ -11,8 +12,8 @@ const getHomeBootstrap = createServerFn({ method: 'GET' }).handler(async () => {
 })
 
 const getHomeFilms = createServerFn({ method: 'GET' }).handler(async () => {
-  const { loadFilms } = await import('~/data/films.server')
-  return loadFilms()
+  const { loadFilmCatalog } = await import('~/data/films.server')
+  return loadFilmCatalog().slice(0, HOME_FILM_LIMIT)
 })
 
 export const Route = createFileRoute('/')({

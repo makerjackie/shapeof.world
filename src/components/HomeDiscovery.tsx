@@ -24,7 +24,7 @@ import {
 import { compareDefaultCatalogOrder } from '~/data/world-default-rank'
 import { getRootCategory, rootCategories, type CategoryId } from '~/data/content-graph'
 import { recommendedWorldIds } from '~/data/home-recommended'
-import type { FilmSummary } from '~/data/films'
+import type { FilmCatalogItem } from '~/data/films'
 import type { WorldSummary } from '~/data/world-summaries'
 import { useI18n } from '~/i18n'
 import { useLocalizedRouteSeo } from '~/i18n/seo'
@@ -95,7 +95,7 @@ function HomeWorldCard({
   )
 }
 
-export function HomeDiscovery({ bootstrap, films }: { bootstrap: HomeBootstrapArtifact; films: FilmSummary[] }) {
+export function HomeDiscovery({ bootstrap, films }: { bootstrap: HomeBootstrapArtifact; films: FilmCatalogItem[] }) {
   const { locale, t, categoryText, worldText } = useI18n()
   useLocalizedRouteSeo('home')
   const navigate = useNavigate()

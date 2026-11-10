@@ -1,7 +1,7 @@
 import bilibiliVideos from './bilibili-videos.json'
 import entries from './films.json'
 import { bilibiliBvid } from '~/lib/film-player'
-import { FILM_MEDIA_ORIGIN, type BilibiliVideo, type FilmDetail, type FilmEntry, type FilmSummary } from './films'
+import { FILM_MEDIA_ORIGIN, type BilibiliVideo, type FilmCatalogItem, type FilmDetail, type FilmEntry, type FilmSummary } from './films'
 
 type PressKit = {
   video: { key: string; duration: string }
@@ -43,13 +43,25 @@ export function loadFilms(): FilmSummary[] {
   return published().map(summarize)
 }
 
-export function loadFilmCatalog() {
+export function loadFilmCatalog(): FilmCatalogItem[] {
   const siteFilms = published()
   const siteBvids = new Set(siteFilms.map((film) => bilibiliBvid(film.watch.bilibili)))
-  return {
-    films: siteFilms.map(summarize),
-    bilibili: bilibiliVideos.filter((video: BilibiliVideo) => !siteBvids.has(video.bvid)),
-  }
+  const videos: BilibiliVideo[] = bilibiliVideos
+  const dates = new Map(videos.map((video) => [video.bvid, video.publishedAt]))
+  const siteCards = siteFilms.map((entry) => {
+    const bvid = bilibiliBvid(entry.watch.bilibili)
+    return {
+      id: entry.slug,
+      kind: 'site' as const,
+      film: summarize(entry),
+      publishedAt: (bvid && dates.get(bvid)) || entry.publishedAt,
+    }
+  })
+  const bilibiliCards = videos
+    .filter((video) => !siteBvids.has(video.bvid))
+    .map((film) => ({ id: film.bvid, kind: 'bilibili' as const, film, publishedAt: film.publishedAt }))
+
+  return [...siteCards, ...bilibiliCards].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
 }
 
 /** Published films that point viewers to this world, newest first. */

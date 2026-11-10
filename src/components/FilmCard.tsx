@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Play } from '@phosphor-icons/react'
 
-import { filmCopy, type BilibiliVideo, type FilmSummary } from '~/data/films'
+import { filmCopy, type BilibiliVideo, type FilmCatalogItem, type FilmSummary } from '~/data/films'
 import { useI18n } from '~/i18n'
 
 function FilmCardContent({
@@ -31,7 +31,7 @@ export function FilmCard({ film, eager = false }: { film: FilmSummary; eager?: b
   )
 }
 
-export function BilibiliFilmCard({ video, eager = false }: { video: BilibiliVideo; eager?: boolean }) {
+function BilibiliFilmCard({ video, eager = false }: { video: BilibiliVideo; eager?: boolean }) {
   const { locale, t } = useI18n()
   const minutes = Math.floor(video.durationSeconds / 60)
   const seconds = String(video.durationSeconds % 60).padStart(2, '0')
@@ -46,4 +46,10 @@ export function BilibiliFilmCard({ video, eager = false }: { video: BilibiliVide
       />
     </a>
   )
+}
+
+export function FilmCatalogCard({ item, eager }: { item: FilmCatalogItem; eager?: boolean }) {
+  return item.kind === 'site'
+    ? <FilmCard film={item.film} eager={eager} />
+    : <BilibiliFilmCard video={item.film} eager={eager} />
 }

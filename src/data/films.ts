@@ -12,6 +12,7 @@ import { SOURCE_REPOSITORY_URL } from '~/lib/site'
 export const FILM_MEDIA_ORIGIN = 'https://press.shapeof.world'
 
 export const BILIBILI_CHANNEL_URL = 'https://space.bilibili.com/3546733244058560/upload/video'
+export const HOME_FILM_LIMIT = 3
 
 export type BilibiliVideo = {
   bvid: string
@@ -40,6 +41,11 @@ export type FilmSummary = Pick<FilmEntry, 'slug' | 'zh' | 'en'> & {
   duration: string
   poster: string
 }
+
+export type FilmCatalogItem = { id: string; publishedAt: string } & (
+  | { kind: 'site'; film: FilmSummary }
+  | { kind: 'bilibili'; film: BilibiliVideo }
+)
 
 export type FilmDetail = FilmSummary & Pick<FilmEntry, 'relatedWorldIds' | 'watch'> & {
   video: string

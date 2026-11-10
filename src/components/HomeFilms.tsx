@@ -1,14 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight } from '@phosphor-icons/react'
 
-import type { FilmSummary } from '~/data/films'
+import type { FilmCatalogItem } from '~/data/films'
 import { useI18n } from '~/i18n'
-import { FilmCard } from './FilmCard'
+import { FilmCatalogCard } from './FilmCard'
 import '~/styles/films.css'
 
-const HOME_FILM_LIMIT = 3
-
-export function HomeFilms({ films }: { films: FilmSummary[] }) {
+export function HomeFilms({ films }: { films: FilmCatalogItem[] }) {
   const { t } = useI18n()
   if (!films.length) return null
   return (
@@ -18,7 +16,7 @@ export function HomeFilms({ films }: { films: FilmSummary[] }) {
         <Link to="/films" className="home-section-more">{t('films.viewAll')}<ArrowRight aria-hidden="true" /></Link>
       </header>
       <ul className="film-grid">
-        {films.slice(0, HOME_FILM_LIMIT).map((film) => <li key={film.slug}><FilmCard film={film} /></li>)}
+        {films.map((film) => <li key={film.id}><FilmCatalogCard item={film} /></li>)}
       </ul>
     </section>
   )

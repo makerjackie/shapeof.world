@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 
-import { BilibiliFilmCard, FilmCard } from '~/components/FilmCard'
+import { FilmCatalogCard } from '~/components/FilmCard'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteHeader } from '~/components/SiteHeader'
 import { BILIBILI_CHANNEL_URL } from '~/data/films'
@@ -20,7 +20,7 @@ const getFilms = createServerFn({ method: 'GET' }).handler(async () => {
 })
 
 export const Route = createFileRoute('/films/')({
-  loader: async ({ context }) => ({ ...(await getFilms()), locale: context.locale }),
+  loader: async ({ context }) => ({ films: await getFilms(), locale: context.locale }),
   head: ({ loaderData, matches }) => {
     const locale = loaderData?.locale ?? localeFromRouteMatches(matches)
     const pageUrl = 'https://shapeof.world/films'
@@ -28,7 +28,7 @@ export const Route = createFileRoute('/films/')({
       meta: seo({
         title: formatMessage(locale, 'films.title'),
         description: formatMessage(locale, 'films.metaDescription'),
-        image: loaderData?.films[0]?.poster ?? 'https://shapeof.world/assets/oneworld-og.jpg',
+        image: loaderData?.films[0]?.film.poster ?? 'https://shapeof.world/assets/oneworld-og.jpg',
         locale,
         url: localizedPublicUrl(pageUrl, locale),
       }),
@@ -39,7 +39,7 @@ export const Route = createFileRoute('/films/')({
 })
 
 function FilmsIndexPage() {
-  const { films, bilibili } = Route.useLoaderData()
+  const { films } = Route.useLoaderData()
   const { t } = useI18n()
   return (
     <main className="home-page path-routes-page film-page">
@@ -50,22 +50,11 @@ function FilmsIndexPage() {
             <h1 id="films-title" className="page-title">{t('films.title')}</h1>
             <p>{t('films.lead')}</p>
           </div>
+          <a className="home-section-more" href={BILIBILI_CHANNEL_URL}>{t('films.bilibiliChannel')}</a>
         </header>
-        <section aria-labelledby="films-bilibili">
-          <header className="home-section-head">
-            <h2 id="films-bilibili" className="section-title">{t('films.bilibiliUploads')}</h2>
-            <a className="home-section-more" href={BILIBILI_CHANNEL_URL}>{t('films.bilibiliChannel')}</a>
-          </header>
-          <ul className="film-grid">
-            {bilibili.map((video, index) => <li key={video.bvid}><BilibiliFilmCard video={video} eager={index < 2} /></li>)}
-          </ul>
-        </section>
-        <section className="film-related" aria-labelledby="films-site">
-          <h2 id="films-site" className="section-title">{t('films.siteCollection')}</h2>
-          <ul className="film-grid">
-            {films.map((film) => <li key={film.slug}><FilmCard film={film} /></li>)}
-          </ul>
-        </section>
+        <ul className="film-grid">
+          {films.map((film, index) => <li key={film.id}><FilmCatalogCard item={film} eager={index < 2} /></li>)}
+        </ul>
       </section>
       <SiteFooter />
     </main>
