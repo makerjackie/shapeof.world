@@ -11,6 +11,17 @@ import { SOURCE_REPOSITORY_URL } from '~/lib/site'
 /** The press Worker serves the kits' videos and covers from R2 with byte ranges. */
 export const FILM_MEDIA_ORIGIN = 'https://press.shapeof.world'
 
+export const BILIBILI_CHANNEL_URL = 'https://space.bilibili.com/3546733244058560/upload/video'
+
+export type BilibiliVideo = {
+  bvid: string
+  title: string
+  titleEn: string
+  publishedAt: string
+  durationSeconds: number
+  poster: string
+}
+
 export type FilmCopy = { title: string; subtitle: string; summary: string; making: string }
 
 export type FilmEntry = {

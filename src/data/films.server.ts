@@ -1,5 +1,7 @@
+import bilibiliVideos from './bilibili-videos.json'
 import entries from './films.json'
-import { FILM_MEDIA_ORIGIN, type FilmDetail, type FilmEntry, type FilmSummary } from './films'
+import { bilibiliBvid } from '~/lib/film-player'
+import { FILM_MEDIA_ORIGIN, type BilibiliVideo, type FilmDetail, type FilmEntry, type FilmSummary } from './films'
 
 type PressKit = {
   video: { key: string; duration: string }
@@ -39,6 +41,15 @@ function published(): (FilmEntry & { publishedAt: string })[] {
 /** Published films, newest first. */
 export function loadFilms(): FilmSummary[] {
   return published().map(summarize)
+}
+
+export function loadFilmCatalog() {
+  const siteFilms = published()
+  const siteBvids = new Set(siteFilms.map((film) => bilibiliBvid(film.watch.bilibili)))
+  return {
+    films: siteFilms.map(summarize),
+    bilibili: bilibiliVideos.filter((video: BilibiliVideo) => !siteBvids.has(video.bvid)),
+  }
 }
 
 /** Published films that point viewers to this world, newest first. */

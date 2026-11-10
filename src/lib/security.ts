@@ -9,7 +9,7 @@ export const contentSecurityPolicy = [
   "form-action 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://static.cloudflareinsights.com https://s3.tradingview.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://epic.gsfc.nasa.gov https://cdn.esahubble.org https://api.nga.gov https://a.basemaps.cartocdn.com https://annotations.allmaps.org https://iiif.digitalcommonwealth.org https://commons.wikimedia.org https://upload.wikimedia.org https://press.shapeof.world",
+  "img-src 'self' data: blob: https://epic.gsfc.nasa.gov https://cdn.esahubble.org https://api.nga.gov https://a.basemaps.cartocdn.com https://annotations.allmaps.org https://iiif.digitalcommonwealth.org https://commons.wikimedia.org https://upload.wikimedia.org https://press.shapeof.world https://i0.hdslb.com https://i1.hdslb.com https://i2.hdslb.com",
   "connect-src 'self' blob: https://libraryimage.nga.gov https://api.nga.gov https://a.basemaps.cartocdn.com https://annotations.allmaps.org https://iiif.digitalcommonwealth.org https://music-cdn.shapeof.world",
   "media-src 'self' https://music-cdn.shapeof.world https://press.shapeof.world blob:",
   "font-src 'self' data:",
