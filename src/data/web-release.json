@@ -1,5 +1,7 @@
 {
-  "version": "2026.10.17.1",
-  "date": "2026-10-17",
-  "changelogIds": []
+  "version": "2026.11.13.1",
+  "date": "2026-11-13",
+  "changelogIds": [
+    "2026-11-13-science-previews-and-films"
+  ]
 }

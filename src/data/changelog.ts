@@ -24,6 +24,15 @@ export type ChangelogRelease = {
 
 export const changelogReleases: readonly ChangelogRelease[] = [
   {
+    id: '2026-11-13-science-previews-and-films',
+    date: '2026-11-13',
+    title: '十个科学世界开放预览，短片列表更新',
+    titleEn: 'Ten science previews and an updated film catalog',
+    body: '制作中的世界新增涡扇发动机、空调、城市供水、手机拆解、机械表、风力发电、恒星、风与洋流、病毒入侵和大模型内部十个互动主题。首页与短片页现在共用按发布时间排序的列表，补齐已核实的 B 站公开短片；已有站内播放与资料来源继续保留。',
+    bodyEn: 'Ten works in progress explore turbofan engines, air conditioners, city water, phone systems, mechanical watches, wind turbines, stars, winds and currents, viral entry and language models. The homepage and films page now share a newest-first catalog including verified public Bilibili uploads, while existing on-site players and sources remain available.',
+    previewWorldIds: ['turbofan-engine', 'air-conditioner', 'city-water', 'iphone-teardown', 'watch-movement', 'wind-turbine', 'stellar-life', 'wind-ocean', 'virus-entry', 'llm-inside'],
+  },
+  {
     id: '2026-10-13-songxi-free-flight',
     date: '2026-10-13',
     title: '松溪入画：直接自由飞行',
