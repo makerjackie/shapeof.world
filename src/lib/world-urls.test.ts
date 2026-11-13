@@ -27,7 +27,7 @@ describe('world URLs and route ownership', () => {
   })
   it('rejects reserved, mounted, duplicate, and prefix-shadowed world IDs in compilation', () => {
     expect(() => assertWorldRouteNames(worldCatalog.map(world => world.id))).not.toThrow()
-    for (const id of ['about', 'en', 'zh', 't', 'w', 'assets', 'media', 'api', 'robots.txt']) {
+    for (const id of ['about', 'en', 'zh', 't', 'w', 'assets', 'generated', 'media', 'api', 'robots.txt']) {
       expect(reservedRouteNames.has(id), id).toBe(true)
       expect(() => assertWorldRouteNames([id])).toThrow()
     }
@@ -49,6 +49,7 @@ describe('world URLs and route ownership', () => {
       const names = collectRouteReservations(root)
       expect(names.topLevelRoutes).toEqual(['from-tree', 'new-page'])
       expect(names.staticNames).toContain('new-static')
+      expect(names.staticNames).toContain('generated')
       expect(names.legacyEntryNames).toContain('old')
     } finally { rmSync(root, { recursive: true, force: true }) }
   })

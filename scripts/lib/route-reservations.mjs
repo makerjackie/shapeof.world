@@ -31,7 +31,9 @@ export function collectRouteReservations(root) {
     exactPagePaths: sorted(paths.filter(path => !path.includes('$') && !/^\/(?:api|media|\.well-known)(?:\/|$)/.test(path)).map(path => path.length > 1 ? path.replace(/\/$/, '') : path)),
     languagePrefixes: sorted(settings.locales),
     legacyEntryNames: sorted([...variable('legacyHomeEntryNames'), variable('legacyWorldEntryPrefix'), variable('legacyChineseEntryPrefix')]),
-    staticNames: sorted(readdirSync(join(root, 'public')).filter(name => !name.startsWith('_'))),
+    // This output root is created later in build:prepare, after reservations.
+    // Reserve it even on a clean checkout so first and later builds agree.
+    staticNames: sorted(['generated', ...readdirSync(join(root, 'public')).filter(name => !name.startsWith('_'))]),
   }
 }
 
