@@ -24,6 +24,14 @@ export type ChangelogRelease = {
 
 export const changelogReleases: readonly ChangelogRelease[] = [
   {
+    id: '2026-11-14-film-sources',
+    date: '2026-11-14',
+    title: '短片详情页可展开完整资料来源',
+    titleEn: 'Full research sources on film pages',
+    body: '在站内短片的详情页展开「完整数据来源」，可以查看研究、统计资料和出处。',
+    bodyEn: 'Expand Full sources on a film page to see the research, statistics, and references behind it.',
+  },
+  {
     id: '2026-11-13-science-previews-and-films',
     date: '2026-11-13',
     title: '十个科学世界开放预览，短片列表更新',
