@@ -81,17 +81,7 @@
 }
 .film-body h2 { margin: 0 0 12px; }
 .film-body p { margin: 0 0 12px; color: var(--text-2); line-height: 1.75; }
-.film-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--home-font-ui);
-  font-size: var(--home-type-support);
-}
-.film-links a { color: var(--home-ink); }
+.film-source-details summary { cursor: pointer; margin-bottom: 12px; }
 .film-sources {
   margin: 0;
   color: var(--text-2);

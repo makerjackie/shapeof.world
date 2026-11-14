@@ -1,6 +1,6 @@
 # 世界的形状 · 品牌
 
-网站、片子、封面共用的品牌：标志、颜色、字体、名字。片子怎么做（字的出现方式、画风、声音、封面版式、片尾）只看 [`films/DIRECTOR.md`](films/DIRECTOR.md)。品牌包在 `public/assets/brand/kit/`，网站样式在 `src/styles/app.css`。
+网站、片子、封面共用的品牌：标志、颜色、字体、名字。影片制作规则见影片私仓。品牌包在 `public/assets/brand/kit/`，网站样式在 `src/styles/app.css`。
 
 ## 一、标志怎么用
 
@@ -38,7 +38,7 @@
 | 用途 | 字体 | 说明 |
 |---|---|---|
 | 品牌字：标志旁的"世界的形状"、片尾卡、封面品牌条 | **Noto Serif SC**（英文 Cormorant Garamond） | 品牌包已规定；网站 `--serif` 已含 |
-| 片中的叙述句 | **Noto Serif SC** Bold 或 **Noto Sans SC** Black | 怎么放由导演定，见 `films/DIRECTOR.md`「画面」 |
+| 片中的叙述句 | **Noto Serif SC** Bold 或 **Noto Sans SC** Black | 见影片私仓的画面规范 |
 | 片中标签、封面大字 | **Noto Sans SC** | |
 | 数字、英文 | **Inter**，等宽数字 | |
 | 数据小字（代码感的标注） | JetBrains Mono，少用 | |
@@ -46,8 +46,8 @@
 
 ## 四、名字和口号
 
-- 中文名"世界的形状"，口号"看见世界如何运行"。英文 Shape of the World 只在 YouTube 和网站英文版用。口号用在网站和封面品牌条上；片子里怎么用见 `films/DIRECTOR.md`。
-- 网址 `shapeof.world` 出现在网站本身；片子、封面和各平台简介里放不放，见 `films/DIRECTOR.md`。需要引导时写"搜索：世界的形状"。
+- 中文名"世界的形状"，口号"看见世界如何运行"。英文 Shape of the World 只在 YouTube 和网站英文版用。口号用在网站和封面品牌条上；片内用法见影片私仓。
+- 网址 `shapeof.world` 出现在网站本身；片子、封面和各平台简介里放不放，见影片私仓。需要引导时写"搜索：世界的形状"。
 - 商标：先在中国商标网查第 41、9、38 类有没有相近的商标。要注册的话，优先注册"球 + 世界的形状"的组合或单独的球，图形比纯文字容易通过。不急。
 
 ## 五、网站

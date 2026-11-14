@@ -6,13 +6,12 @@ import { FilmPlayer } from '~/components/FilmPlayer'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteHeader } from '~/components/SiteHeader'
 import { WorldCard } from '~/components/WorldCard'
-import { filmCopy, filmSourceUrl } from '~/data/films'
+import { filmCopy } from '~/data/films'
 import type { WorldSummary } from '~/data/world-summaries'
 import { useI18n } from '~/i18n'
 import { languageDiscoveryLinks, localeFromRouteMatches } from '~/i18n/seo'
 import { trackEvent } from '~/lib/analytics'
 import { type FilmPlayerKind, parseFilmPlayer } from '~/lib/film-player'
-import { SOURCE_REPOSITORY_URL } from '~/lib/site'
 import { localizedPublicUrl } from '~/lib/share-url'
 import { seo } from '~/utils/seo'
 
@@ -98,15 +97,16 @@ function FilmPage() {
           <section aria-labelledby="film-making">
             <h2 id="film-making" className="section-title">{t('films.makingTitle')}</h2>
             <p>{copy.making}</p>
-            <ul className="film-links">
-              <li><a href={filmSourceUrl(film.slug)} target="_blank" rel="noreferrer">{t('films.code')}</a></li>
-              <li><a href={filmSourceUrl(film.slug, 'DESCRIPTION.md')} target="_blank" rel="noreferrer">{t('films.fullSources')}</a></li>
-              <li><a href={`${SOURCE_REPOSITORY_URL}/blob/main/films/METHOD.md`} target="_blank" rel="noreferrer">{t('films.method')}</a></li>
-            </ul>
           </section>
           <section aria-labelledby="film-sources">
             <h2 id="film-sources" className="section-title">{t('films.sourcesTitle')}</h2>
             <p className="film-sources">{film.sources}</p>
+            {film.fullSources && (
+              <details className="film-source-details">
+                <summary>{t('films.fullSources')}</summary>
+                <p className="film-sources">{film.fullSources}</p>
+              </details>
+            )}
           </section>
         </div>
         {worlds.length > 0 && (

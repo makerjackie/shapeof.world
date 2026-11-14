@@ -89,14 +89,3 @@ infra/press/kits/*/covers/
 # Local private folder (topic plans, internal notes, release records).
 # Never committed; see AGENTS.md.
 /private/
-
-# Film renders, audio and review frames stay local; finished videos live in R2
-# (bucket shapeof-press). The 17 MB Noto Sans SC font is downloaded, see
-# films/README.md.
-films/**/out/
-films/**/*.mp4
-films/**/*.mov
-films/**/*.wav
-films/**/*.mp3
-films/**/NotoSansSC-VF.ttf
-films/**/*.log

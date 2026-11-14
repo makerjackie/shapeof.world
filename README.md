@@ -41,8 +41,7 @@ Production is Cloudflare Workers: Worker `shape-of-the-world` serves
 at `v2.shapeof.world`. Analytics (`infra/insights`) and the video press kits
 (`infra/press`) deploy as their own Workers.
 
-The short films are code too: `films/` holds the source that renders each
-frame and its music. See `films/README.md`.
+The [film catalog](https://shapeof.world/en/films) includes videos, production notes, and research sources.
 
 ```sh
 pnpm check

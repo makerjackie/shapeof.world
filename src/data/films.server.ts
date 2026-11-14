@@ -8,6 +8,7 @@ type PressKit = {
   coversKey: string
   covers: { id: string; recommended?: boolean }[]
   sourcesShort: string
+  sourcesFull?: string
 }
 
 // Server only: the kits carry long press copy the pages never show.
@@ -79,5 +80,6 @@ export function loadFilm(slug: string): FilmDetail | undefined {
     watch: entry.watch,
     video: `${FILM_MEDIA_ORIGIN}/media/${kit.video.key}`,
     sources: kit.sourcesShort,
+    fullSources: kit.sourcesFull,
   }
 }

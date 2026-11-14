@@ -1,5 +1,4 @@
 import type { Locale } from '~/i18n'
-import { SOURCE_REPOSITORY_URL } from '~/lib/site'
 
 /**
  * Short films shown at /films. What the site says about a film lives in
@@ -50,12 +49,9 @@ export type FilmCatalogItem = { id: string; publishedAt: string } & (
 export type FilmDetail = FilmSummary & Pick<FilmEntry, 'relatedWorldIds' | 'watch'> & {
   video: string
   sources: string
+  fullSources?: string
 }
 
 export function filmCopy(film: Pick<FilmEntry, 'zh' | 'en'>, locale: Locale): FilmCopy {
   return locale === 'en' ? film.en : film.zh
-}
-
-export function filmSourceUrl(slug: string, file = ''): string {
-  return `${SOURCE_REPOSITORY_URL}/${file ? 'blob' : 'tree'}/main/films/${slug}${file ? `/${file}` : ''}`
 }
