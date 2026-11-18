@@ -427,3 +427,8 @@ h1 { text-wrap: balance; }
   .license-bar { padding: 8px 20px; font-size: 11px; }
   .film-uses { padding: 18px; }
 }
+.prompt-block { margin: 28px 0; }
+.prompt-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 8px; }
+.prompt-head h2 { font-size: 24px; margin: 0; }
+.prompt-note { color: var(--muted); font-size: 12px; margin: 6px 0 10px; max-width: 780px; }
+.prompt-block .prompt { color: var(--ink); background: var(--paper-deep); max-height: none; margin: 0; }

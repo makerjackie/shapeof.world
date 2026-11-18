@@ -40,7 +40,7 @@ export function TrackPage({ trackId }: { trackId: string }) {
       .catch(error => { if (error.name !== 'AbortError') setDetailError(trackId) })
     return () => controller.abort()
   }, [trackId])
-  const [openPrompt, setOpenPrompt] = useState(false)
+  const [promptCopied, setPromptCopied] = useState(false)
 
   if (!track) {
     return (
@@ -173,12 +173,19 @@ export function TrackPage({ trackId }: { trackId: string }) {
         </details>
       ) : null}
 
-      {track.prompt ? (
-        <section className="prompt-block">
-          <button type="button" className="btn-text" onClick={() => setOpenPrompt((open) => !open)}>
-            {openPrompt ? t('track.promptHide') : t('track.prompt')}
-          </button>
-          {openPrompt ? <pre className="prompt">{track.prompt}</pre> : null}
+      {track.prompt && track.model !== 'procedural-dsp' ? (
+        <section className="prompt-block" aria-labelledby="generation-prompt">
+          <div className="prompt-head">
+            <h2 id="generation-prompt">Generation prompt / 生成提示词</h2>
+            <button type="button" className="btn-ghost" onClick={() => {
+              navigator.clipboard?.writeText(track.prompt).then(() => { setPromptCopied(true); window.setTimeout(() => setPromptCopied(false), 1600) }, () => setPromptCopied(false))
+            }}>{promptCopied ? t('handoff.copied') : t('track.copyPrompt')}</button>
+          </div>
+          <p className="prompt-note">{t('track.promptNote', { model: modelLabel(track.generation?.model || track.model, locale) })}</p>
+          <pre className="prompt">{track.prompt}</pre>
+          {track.generation?.imageInputs?.count ? (
+            <p className="prompt-note">{t('track.promptImages', { n: track.generation.imageInputs.count, s: track.generation.imageInputs.filmSeconds.join(', ') })}</p>
+          ) : null}
         </section>
       ) : null}
 

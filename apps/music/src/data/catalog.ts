@@ -39,6 +39,7 @@ export type TrackGeneration = {
   sha256?: string
   aiGenerated?: boolean
   tool?: string
+  imageInputs?: { count: number; filmSeconds: number[] }
 }
 
 export type Track = {
@@ -161,6 +162,9 @@ export function parseTrack(value: unknown): Track | null {
         sha256: typeof generationRaw.sha256 === 'string' ? generationRaw.sha256 : undefined,
         aiGenerated: generationRaw.aiGenerated === true ? true : undefined,
         tool: typeof generationRaw.tool === 'string' ? generationRaw.tool : undefined,
+        imageInputs: isRecord(generationRaw.imageInputs) && Number(generationRaw.imageInputs.count) > 0
+          ? { count: Number(generationRaw.imageInputs.count), filmSeconds: Array.isArray(generationRaw.imageInputs.filmSeconds) ? generationRaw.imageInputs.filmSeconds.map(Number).filter(Number.isFinite) : [] }
+          : undefined,
       }
     : undefined
   return {
