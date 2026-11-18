@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { HomeDiscovery } from '~/components/HomeDiscovery'
 import { HOME_FILM_LIMIT } from '~/data/films'
+import type { Locale } from '~/i18n'
 import { heroPoster, heroWorldId } from '~/lib/home-hero'
 import { languageDiscoveryLinks, localeFromRouteMatches } from '~/i18n/seo'
 import { homeStructuredData, jsonLdScript } from '~/lib/structured-data'
@@ -11,9 +12,9 @@ const getHomeBootstrap = createServerFn({ method: 'GET' }).handler(async () => {
   return loadHomeBootstrap()
 })
 
-const getHomeFilms = createServerFn({ method: 'GET' }).handler(async () => {
+const getHomeFilms = createServerFn({ method: 'GET' }).validator((locale: Locale) => locale).handler(async ({ data }) => {
   const { loadFilmCatalog } = await import('~/data/films.server')
-  return loadFilmCatalog().slice(0, HOME_FILM_LIMIT)
+  return loadFilmCatalog(data).slice(0, HOME_FILM_LIMIT)
 })
 
 export const Route = createFileRoute('/')({
@@ -23,7 +24,7 @@ export const Route = createFileRoute('/')({
     ...(typeof search.q === 'string' && search.q.trim() ? { q: search.q } : {}),
   }),
   loader: async ({ context }) => {
-    const [bootstrap, films] = await Promise.all([getHomeBootstrap(), getHomeFilms()])
+    const [bootstrap, films] = await Promise.all([getHomeBootstrap(), getHomeFilms({ data: context.locale })])
     if (!bootstrap) throw notFound()
     return { bootstrap, films, locale: context.locale }
   },

@@ -1,4 +1,6 @@
 import bilibiliVideos from './bilibili-videos.json'
+import youtubeVideos from './youtube-videos.json'
+import type { Locale } from '~/i18n'
 import entries from './films.json'
 import { bilibiliBvid } from '~/lib/film-player'
 import { FILM_MEDIA_ORIGIN, type BilibiliVideo, type FilmCatalogItem, type FilmDetail, type FilmEntry, type FilmSummary } from './films'
@@ -44,7 +46,12 @@ export function loadFilms(): FilmSummary[] {
   return published().map(summarize)
 }
 
-export function loadFilmCatalog(): FilmCatalogItem[] {
+export function loadFilmCatalog(locale: Locale = 'zh'): FilmCatalogItem[] {
+  if (locale === 'en') {
+    return youtubeVideos
+      .map((film) => ({ id: film.videoId, kind: 'youtube' as const, film, publishedAt: film.publishedAt }))
+      .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+  }
   const siteFilms = published()
   const siteBvids = new Set(siteFilms.map((film) => bilibiliBvid(film.watch.bilibili)))
   const videos: BilibiliVideo[] = bilibiliVideos

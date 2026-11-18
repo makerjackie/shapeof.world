@@ -19,6 +19,7 @@ export function SiteFooter() {
           <Link to="/" hash="home-worlds">{t('nav.worlds')}</Link>
           <Link to="/routes">{t('nav.routes')}</Link>
           <Link to="/films">{t('nav.films')}</Link>
+          <a href="https://music.shapeof.world">{t('nav.music')}</a>
         </div>
         <div className="footer-group">
           <h2>{t('footer.creation')}</h2>

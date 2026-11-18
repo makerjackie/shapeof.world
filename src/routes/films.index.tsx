@@ -4,7 +4,8 @@ import { createServerFn } from '@tanstack/react-start'
 import { FilmCatalogCard } from '~/components/FilmCard'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteHeader } from '~/components/SiteHeader'
-import { BILIBILI_CHANNEL_URL } from '~/data/films'
+import { BILIBILI_CHANNEL_URL, YOUTUBE_CHANNEL_URL } from '~/data/films'
+import type { Locale } from '~/i18n'
 import { formatMessage, useI18n } from '~/i18n'
 import { languageDiscoveryLinks, localeFromRouteMatches } from '~/i18n/seo'
 import { localizedPublicUrl } from '~/lib/share-url'
@@ -14,13 +15,13 @@ import '~/components/HomeDiscovery.css'
 import '~/styles/path-routes.css'
 import '~/styles/films.css'
 
-const getFilms = createServerFn({ method: 'GET' }).handler(async () => {
+const getFilms = createServerFn({ method: 'GET' }).validator((locale: Locale) => locale).handler(async ({ data }) => {
   const { loadFilmCatalog } = await import('~/data/films.server')
-  return loadFilmCatalog()
+  return loadFilmCatalog(data)
 })
 
 export const Route = createFileRoute('/films/')({
-  loader: async ({ context }) => ({ films: await getFilms(), locale: context.locale }),
+  loader: async ({ context }) => ({ films: await getFilms({ data: context.locale }), locale: context.locale }),
   head: ({ loaderData, matches }) => {
     const locale = loaderData?.locale ?? localeFromRouteMatches(matches)
     const pageUrl = 'https://shapeof.world/films'
@@ -40,7 +41,7 @@ export const Route = createFileRoute('/films/')({
 
 function FilmsIndexPage() {
   const { films } = Route.useLoaderData()
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   return (
     <main className="home-page path-routes-page film-page">
       <SiteHeader />
@@ -50,7 +51,7 @@ function FilmsIndexPage() {
             <h1 id="films-title" className="page-title">{t('films.title')}</h1>
             <p>{t('films.lead')}</p>
           </div>
-          <a className="home-section-more" href={BILIBILI_CHANNEL_URL}>{t('films.bilibiliChannel')}</a>
+          <a className="home-section-more" href={locale === 'en' ? YOUTUBE_CHANNEL_URL : BILIBILI_CHANNEL_URL}>{t(locale === 'en' ? 'films.youtubeChannel' : 'films.bilibiliChannel')}</a>
         </header>
         <ul className="film-grid">
           {films.map((film, index) => <li key={film.id}><FilmCatalogCard item={film} eager={index < 2} /></li>)}

@@ -24,6 +24,14 @@ export type ChangelogRelease = {
 
 export const changelogReleases: readonly ChangelogRelease[] = [
   {
+    id: '2026-11-18-home-films-music-community',
+    date: '2026-11-18',
+    title: '最新短片、音乐与交流群',
+    titleEn: 'Latest films, music and community',
+    body: '中文首页与短片页更新 B 站全部 16 条公开作品，英文页面展示 YouTube 上的世界的形状短片。顶部导航增加音乐站入口，交流群可直接打开。',
+    bodyEn: 'The Chinese homepage and films page now include all 16 public Bilibili videos. English pages feature Shape of the World films on YouTube. Music is linked in the main navigation, with direct access to the WeChat group on Chinese pages.',
+  },
+  {
     id: '2026-11-14-film-sources',
     date: '2026-11-14',
     title: '短片详情页可展开完整资料来源',

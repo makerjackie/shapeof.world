@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Play } from '@phosphor-icons/react'
 
-import { filmCopy, type BilibiliVideo, type FilmCatalogItem, type FilmSummary } from '~/data/films'
+import { filmCopy, type BilibiliVideo, type FilmCatalogItem, type FilmSummary, type YoutubeVideo } from '~/data/films'
 import { useI18n } from '~/i18n'
 
 function FilmCardContent({
@@ -31,17 +31,18 @@ export function FilmCard({ film, eager = false }: { film: FilmSummary; eager?: b
   )
 }
 
-function BilibiliFilmCard({ video, eager = false }: { video: BilibiliVideo; eager?: boolean }) {
+function PlatformFilmCard({ video, eager = false }: { video: BilibiliVideo | YoutubeVideo; eager?: boolean }) {
   const { locale, t } = useI18n()
+  const isBilibili = 'bvid' in video
   const minutes = Math.floor(video.durationSeconds / 60)
   const seconds = String(video.durationSeconds % 60).padStart(2, '0')
   return (
-    <a href={`https://www.bilibili.com/video/${video.bvid}/`} className="work-card work-card--film">
+    <a href={isBilibili ? `https://www.bilibili.com/video/${video.bvid}/` : `https://www.youtube.com/watch?v=${video.videoId}`} className="work-card work-card--film">
       <FilmCardContent
         poster={video.poster}
         duration={`${minutes}:${seconds}`}
-        title={locale === 'en' ? video.titleEn : video.title}
-        subtitle={t('films.watchBilibili')}
+        title={isBilibili && locale === 'en' ? video.titleEn : video.title}
+        subtitle={t(isBilibili ? 'films.watchBilibili' : 'films.watchYoutube')}
         eager={eager}
       />
     </a>
@@ -51,5 +52,5 @@ function BilibiliFilmCard({ video, eager = false }: { video: BilibiliVideo; eage
 export function FilmCatalogCard({ item, eager }: { item: FilmCatalogItem; eager?: boolean }) {
   return item.kind === 'site'
     ? <FilmCard film={item.film} eager={eager} />
-    : <BilibiliFilmCard video={item.film} eager={eager} />
+    : <PlatformFilmCard video={item.film} eager={eager} />
 }

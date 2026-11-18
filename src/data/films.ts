@@ -11,12 +11,21 @@ import type { Locale } from '~/i18n'
 export const FILM_MEDIA_ORIGIN = 'https://press.shapeof.world'
 
 export const BILIBILI_CHANNEL_URL = 'https://space.bilibili.com/3546733244058560/upload/video'
+export const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@makerjackie/videos'
 export const HOME_FILM_LIMIT = 3
 
 export type BilibiliVideo = {
   bvid: string
   title: string
   titleEn: string
+  publishedAt: string
+  durationSeconds: number
+  poster: string
+}
+
+export type YoutubeVideo = {
+  videoId: string
+  title: string
   publishedAt: string
   durationSeconds: number
   poster: string
@@ -44,6 +53,7 @@ export type FilmSummary = Pick<FilmEntry, 'slug' | 'zh' | 'en'> & {
 export type FilmCatalogItem = { id: string; publishedAt: string } & (
   | { kind: 'site'; film: FilmSummary }
   | { kind: 'bilibili'; film: BilibiliVideo }
+  | { kind: 'youtube'; film: YoutubeVideo }
 )
 
 export type FilmDetail = FilmSummary & Pick<FilmEntry, 'relatedWorldIds' | 'watch'> & {

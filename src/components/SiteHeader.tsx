@@ -113,6 +113,45 @@ export function SiteHeader() {
           </Link>
           <Link to="/routes" onClick={closeNavigation}>{t('nav.routes')}</Link>
           <Link to="/films" onClick={closeNavigation}>{t('nav.films')}</Link>
+          <a className="site-header-music" href="https://music.shapeof.world">{t('nav.music')}</a>
+          {showCommunity && (
+            <div className="site-community" ref={communityRef}>
+              <button
+                type="button"
+                className={communityOpen ? 'site-community-trigger is-open' : 'site-community-trigger'}
+                ref={communityTriggerRef}
+                aria-label={t('nav.community')}
+                aria-expanded={communityOpen}
+                aria-controls={panelId}
+                onClick={() => { setNavigationOpen(false); setCommunityOpen((open) => !open) }}
+              >
+                <UsersThree aria-hidden="true" weight="thin" />
+                <span>{t('nav.community')}</span>
+              </button>
+              {communityOpen && (
+                <div id={panelId} className="site-community-panel" role="dialog" aria-label={t('nav.community')}>
+                  <button
+                    type="button"
+                    className="site-community-close"
+                    onClick={() => setCommunityOpen(false)}
+                    aria-label={t('community.close')}
+                  >
+                    <X aria-hidden="true" weight="bold" />
+                  </button>
+                  <p className="site-community-title">{t('community.title')}</p>
+                  <p className="site-community-body">{t('community.body')}</p>
+                  <img
+                    className="site-community-qr"
+                    src="/assets/community/wechat-group.jpg"
+                    alt={t('community.qrAlt')}
+                    width={220}
+                    height={262}
+                    decoding="async"
+                  />
+                </div>
+              )}
+            </div>
+          )}
           <div className="site-header-tools" onPointerDownCapture={closeNavigation}>
             <SiteSearchButton />
             <LocaleToggle compact />
@@ -142,47 +181,9 @@ export function SiteHeader() {
               <Link to="/" hash="home-worlds" activeOptions={{ exact: true }} onClick={closeNavigation}>{t('nav.worlds')}</Link>
               <Link to="/routes" onClick={closeNavigation}>{t('nav.routes')}</Link>
               <Link to="/films" onClick={closeNavigation}>{t('nav.films')}</Link>
-                </div>
+            </div>
             <Link to="/about" onClick={closeNavigation}>{t('nav.about')}</Link>
             <Link to="/feedback" onClick={closeNavigation}>{t('feedback.nav')}</Link>
-            {showCommunity && (
-              <div className="site-community" ref={communityRef}>
-                <button
-                  type="button"
-                  className={communityOpen ? 'site-community-trigger is-open' : 'site-community-trigger'}
-                  ref={communityTriggerRef}
-                  aria-label={t('nav.community')}
-                  aria-expanded={communityOpen}
-                  aria-controls={panelId}
-                  onClick={() => setCommunityOpen((open) => !open)}
-                >
-                  <UsersThree aria-hidden="true" weight="thin" />
-                  <span>{t('nav.community')}</span>
-                </button>
-                {communityOpen && (
-                  <div id={panelId} className="site-community-panel" role="dialog" aria-label={t('nav.community')}>
-                    <button
-                      type="button"
-                      className="site-community-close"
-                      onClick={() => setCommunityOpen(false)}
-                      aria-label={t('community.close')}
-                    >
-                      <X aria-hidden="true" weight="bold" />
-                    </button>
-                    <p className="site-community-title">{t('community.title')}</p>
-                    <p className="site-community-body">{t('community.body')}</p>
-                    <img
-                      className="site-community-qr"
-                      src="/assets/community/wechat-group.jpg"
-                      alt={t('community.qrAlt')}
-                      width={220}
-                      height={262}
-                      decoding="async"
-                    />
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </nav>
       </div>

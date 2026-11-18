@@ -71,8 +71,7 @@
 
 .site-header .site-navigation-links[data-open='true'] { display: block; }
 
-.site-header .site-navigation-links a,
-.site-header .site-navigation-links .site-community-trigger {
+.site-header .site-navigation-links a {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -90,16 +89,6 @@
 
 
 .site-header .site-community-trigger span { display: inline; }
-
-.site-header .site-community-panel {
-  position: relative;
-  top: auto;
-  right: auto;
-  width: 100%;
-  margin-top: 4px;
-  box-shadow: none;
-  white-space: normal;
-}
 
 .site-header .site-community-close { width: 44px; height: 44px; top: 0; right: 0; }
 
@@ -136,4 +125,48 @@
 @media (max-width: 600px) {
   .site-header .wordmark > span { display: none; }
   .site-header .site-nav { gap: 4px; }
+}
+
+.site-header .site-nav > .site-header-music {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-header .site-community-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.site-header .site-community-trigger svg { width: 18px; height: 18px; }
+
+.site-header .site-community-panel {
+  position: fixed;
+  top: calc(76px + env(safe-area-inset-top, 0px));
+  right: max(16px, 5vw);
+  width: min(300px, calc(100vw - 32px));
+  max-height: calc(100dvh - 92px - env(safe-area-inset-top, 0px));
+  overflow-y: auto;
+  margin: 0;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+}
+
+@media (max-width: 1250px) {
+  .site-header .site-nav { gap: 12px; }
+}
+
+@media (max-width: 600px) {
+  .site-header .site-nav { gap: 4px; }
+  .site-header .site-community-trigger { padding-inline: 8px; }
+  .site-header .site-header-github { display: none; }
 }

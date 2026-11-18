@@ -2,12 +2,23 @@ import { describe, expect, it } from 'vitest'
 
 import entries from './films.json'
 import bilibiliVideos from './bilibili-videos.json'
+import youtubeVideos from './youtube-videos.json'
 import { bilibiliBvid } from '~/lib/film-player'
 import type { FilmEntry } from './films'
 import { loadFilm, loadFilmCatalog, loadFilms, loadFilmsForWorld } from './films.server'
 import { getWorld } from './worlds'
 
 describe('films', () => {
+  it('uses the YouTube collection on English pages', () => {
+    const catalog = loadFilmCatalog('en')
+    expect(catalog).toHaveLength(youtubeVideos.length)
+    expect(new Set(catalog.map((item) => item.id)).size).toBe(catalog.length)
+    for (const item of catalog) {
+      expect(item.kind).toBe('youtube')
+      expect(Number.isFinite(Date.parse(item.publishedAt))).toBe(true)
+    }
+    expect(catalog.map((item) => item.publishedAt)).toEqual(catalog.map((item) => item.publishedAt).sort().reverse())
+  })
   it('combines Bilibili and site films once, newest first', () => {
     const catalog = loadFilmCatalog()
     expect(new Set(catalog.map((film) => film.id)).size).toBe(catalog.length)
