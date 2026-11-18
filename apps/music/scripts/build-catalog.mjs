@@ -11,7 +11,11 @@ const here = dirname(fileURLToPath(import.meta.url))
 const repoRoot = join(here, '../../..')
 const musicDir = join(repoRoot, 'music')
 const outDir = join(here, '../src/generated')
-const rightsProfiles = JSON.parse(await readFile(join(musicDir, 'rights-profiles.json'), 'utf8')).profiles
+const rightsSource = JSON.parse(await readFile(join(musicDir, 'rights-profiles.json'), 'utf8'))
+const rightsProfiles = rightsSource.profiles
+const offeredLicense = rightsSource.offeredLicense
+const LICENSE_NOTICE = "Non-commercial · CC BY-NC 4.0 · commercial use requires the author's prior written permission (hi@makerjackie.com). License: https://music.shapeof.world/audio-license.txt"
+const LICENSE_NOTICE_ZH = '非商用 · CC BY-NC 4.0 · 商用请先取得作者授权（hi@makerjackie.com）。许可全文：https://music.shapeof.world/audio-license.txt'
 
 async function exists(path) {
   try {
@@ -43,10 +47,13 @@ function normalizeTrack(raw) {
   for (const [key, value] of Object.entries(assets)) assertCdnUrl(`${raw.id}.assets.${key}`, value)
   const rights = rightsProfiles[raw.rightsProfile ?? 'legacy-unreviewed']
   if (!rights) throw new Error(`${raw.id}: unknown rights profile`)
+  if (rights.license !== 'CC-BY-NC-4.0' || rights.commercialUse !== false) throw new Error(`${raw.id}: every asset must be offered under CC BY-NC 4.0`)
   const kind = raw.kind ?? 'music'
   if (!['music', 'sfx', 'ambience'].includes(kind)) throw new Error(`${raw.id}: invalid audio kind`)
   if (raw.loop?.seamless && (!raw.loop.basis || !assets[raw.loop.asset])) throw new Error(`${raw.id}: verified loop requires an exact asset and evidence`)
-  const next = { ...raw, assets, kind, rights }
+  // Earlier terms stay in rights.json (history); each asset carries only the licence offered now.
+  const { history: _history, ...currentRights } = rights
+  const next = { ...raw, assets, kind, rights: { ...currentRights, historyUrl: 'https://music.shapeof.world/rights.json' } }
   return next
 }
 
@@ -89,7 +96,8 @@ function buildHandoff(catalog) {
     'Machine catalog: https://music.shapeof.world/catalog.json',
     'Retrieval instructions: https://music.shapeof.world/llms.txt',
     'Small type indexes: https://music.shapeof.world/audio-index.json',
-    'Commercial requests require commercialUse=true; unknown is not permission.',
+    LICENSE_NOTICE,
+    `Attribution: ${offeredLicense.attribution}`,
     'Loops require the designated verified loop asset, not the preview.',
     'Use the exact asset URLs below; versions and master extensions vary.',
     'Never use r2.dev URLs.',
@@ -109,8 +117,9 @@ function buildHandoff(catalog) {
     lines.push(`- Title: ${titleOf(track)}`)
     lines.push(`- Role: ${track.role ?? 'library'}`)
     lines.push(`- Kind: ${track.kind}`)
-    lines.push(`- Commercial use: ${track.rights.commercialUse === true ? 'true' : track.rights.commercialUse === false ? 'false' : 'unknown'}`)
-    lines.push(`- Permission profile: ${track.rights.id} — ${track.rights.licenseUrl}`)
+    lines.push(`- License: CC BY-NC 4.0 (non-commercial) — ${track.rights.licenseUrl}`)
+    lines.push(`- Provenance profile: ${track.rights.id}`)
+    for (const use of track.usedIn ?? []) lines.push(`- Used in: ${use.film.en} / ${use.film.zh} — ${use.role.en} (${use.urls.map(u => u.url).join(', ')})`)
     lines.push(`- Metadata: https://music.shapeof.world/tracks/${track.id}.json`)
     lines.push(`- Use: ${roleUse(track)}`)
     lines.push(`- Category: ${track.category ?? '—'}`)
@@ -170,10 +179,10 @@ for (const track of catalog.tracks) {
 const handoff = buildHandoff(catalog)
 
 await mkdir(outDir, { recursive: true })
-const indexFields = ['id', 'code', 'title', 'category', 'archetype', 'moods', 'topics', 'energy', 'bpm', 'key', 'instruments', 'instrumental', 'model', 'duration', 'recommendedWorldIds', 'role', 'assets', 'styles', 'scenarios', 'description', 'collections', 'sourceDuration', 'kind', 'rights', 'loop', 'usage']
+const indexFields = ['id', 'code', 'title', 'category', 'archetype', 'moods', 'topics', 'energy', 'bpm', 'key', 'instruments', 'instrumental', 'model', 'duration', 'recommendedWorldIds', 'role', 'assets', 'styles', 'scenarios', 'description', 'collections', 'sourceDuration', 'kind', 'rights', 'loop', 'usage', 'usedIn']
 const uiCatalog = { ...catalog, tracks: tracks.map(track => ({
   ...Object.fromEntries(indexFields.filter(key => track[key] !== undefined && !['rights','loop'].includes(key)).map(key => [key, track[key]])),
-  rights: Object.fromEntries(['id','status','label','licenseUrl','commercialUse','attributionRequired'].map(key => [key,track.rights[key]])),
+  rights: Object.fromEntries(['id','status','label','license','licenseUrl','commercialUse','attributionRequired'].map(key => [key,track.rights[key]])),
   ...(track.loop ? {loop: Object.fromEntries(['seamless','asset','duration'].filter(key => track.loop[key] !== undefined).map(key => [key,track.loop[key]]))} : {}),
 })) }
 await writeFile(join(outDir, 'catalog.json'), `${JSON.stringify(uiCatalog, null, 2)}\n`)
@@ -207,7 +216,8 @@ const machineCatalog = {
     edit: 'Preview excerpt start in source seconds, requested length and applied fades. Master bytes remain unchanged.',
     collections: 'Curated collection ids. short-promos contains short promotional edits, one independent source composition per record.',
     kind: 'music, sfx or ambience. Never count alternate formats or loop edits as independent assets.',
-    rights: 'Per-asset permissions. For commercial requests require commercialUse === true and attributionRequired === false when requested. Null is unknown. No claim-free or exclusive-rights guarantee.',
+    rights: 'Licence and provenance profile. From 2026-11-17 every asset is offered under CC BY-NC 4.0 only: commercialUse is false and attribution is required ("Shape of the World / MakerJackie, CC BY-NC 4.0"). Commercial use requires the author\'s prior written permission (hi@makerjackie.com). history records earlier terms. No claim-free or exclusive-rights guarantee.',
+    usedIn: 'Films that use the asset: film title, published URLs, the role the cue plays and the release date.',
     usage: 'Curated placement and project hints, not measured acoustics.',
     assetIntegrity: 'SHA-256 and bytes for exact delivered files when available. Preserve with project downloads.',
     loop: 'seamless=true only after PCM seam analysis and automated listening. Download assets[loop.asset]; do not loop the MP3 preview. Loop duration may differ from the original.',
@@ -219,7 +229,7 @@ await writeFile(join(publicDir, 'catalog.json'), JSON.stringify(machineCatalog, 
 await writeFile(join(publicDir, 'catalog.ndjson'), tracks.map(t => JSON.stringify(t)).join('\n') + '\n')
 const retrievalTaxonomy = Object.fromEntries(['styles', 'scenarios'].map(kind => [kind, Object.fromEntries(Object.entries(taxonomy[kind]).map(([id, label]) => [id, { ...label, count: tracks.filter(track => track[kind]?.includes(id)).length, url: `https://music.shapeof.world/${kind}/${id}.json` }]))]))
 await writeFile(join(publicDir, 'taxonomy.json'), JSON.stringify(retrievalTaxonomy, null, 2) + '\n')
-const summaryFields = ['id', 'title', 'description', 'styles', 'scenarios', 'moods', 'instruments', 'energy', 'bpm', 'duration', 'instrumental', 'assets', 'collections', 'sourceDuration', 'edit', 'kind', 'rights', 'loop', 'usage']
+const summaryFields = ['id', 'title', 'description', 'styles', 'scenarios', 'moods', 'instruments', 'energy', 'bpm', 'duration', 'instrumental', 'assets', 'collections', 'sourceDuration', 'edit', 'kind', 'rights', 'loop', 'usage', 'usedIn']
 for (const kind of ['styles', 'scenarios']) {
   const dir = join(publicDir, kind)
   await rm(dir, { recursive: true, force: true })
@@ -269,13 +279,13 @@ for (const track of tracks) {
 }
 await writeFile(handoffSource, handoff + '\n')
 await writeFile(join(publicDir, 'audio-license.txt'), await readFile(join(musicDir, 'AUDIO_LICENSE.txt')))
-await writeFile(join(publicDir, 'rights.json'), JSON.stringify({schemaVersion: 1, profiles: rightsProfiles}, null, 2) + '\n')
+await writeFile(join(publicDir, 'rights.json'), JSON.stringify({schemaVersion: 2, offeredLicense, profiles: rightsProfiles}, null, 2) + '\n')
 const packsDir = join(musicDir, 'packs')
 const packs = await exists(packsDir) ? (await Promise.all((await readdir(packsDir)).filter(f => f.endsWith('.json')).sort().map(async f => JSON.parse(await readFile(join(packsDir, f), 'utf8'))))).filter(p => p.status === 'published') : []
 for (const pack of packs) {
   for (const event of pack.events) {
     const track = tracks.find(t => t.id === event.id)
-    if (!track || track.rights.commercialUse !== true || track.assets[event.role] !== event.url || track.assetIntegrity?.[event.role]?.sha256 !== event.sha256) throw new Error(`${pack.id}: invalid scene-kit source`)
+    if (!track || track.rights.license !== 'CC-BY-NC-4.0' || track.assets[event.role] !== event.url || track.assetIntegrity?.[event.role]?.sha256 !== event.sha256) throw new Error(`${pack.id}: invalid scene-kit source`)
   }
 }
 await writeFile(join(publicDir, 'packs.json'), JSON.stringify({schemaVersion: 1, count: packs.length, packs}, null, 2) + '\n')
@@ -286,12 +296,12 @@ await mkdir(audioDir, {recursive: true})
 const compact = track => ({
   id: track.id, title: track.title, description: track.description, kind: track.kind,
   duration: track.duration, styles: track.styles, scenarios: track.scenarios, energy: track.energy,
-  commercialUse: track.rights.commercialUse, attributionRequired: track.rights.attributionRequired,
+  license: track.rights.license, commercialUse: track.rights.commercialUse, attributionRequired: track.rights.attributionRequired,
   rightsProfile: track.rights.id, loop: {seamless: track.loop?.seamless === true, duration: track.loop?.duration},
   metadataUrl: `https://music.shapeof.world/tracks/${track.id}.json`,
   pageUrl: `https://music.shapeof.world/track/${track.id}`,
 })
-const audioIndex = {schemaVersion: 1, count: tracks.length, licenseUrl: 'https://music.shapeof.world/audio-license.txt', kinds: {}}
+const audioIndex = {schemaVersion: 2, count: tracks.length, license: 'CC-BY-NC-4.0', commercialUse: false, licenseNotice: {en: LICENSE_NOTICE, zh: LICENSE_NOTICE_ZH}, attribution: offeredLicense.attribution, licenseUrl: 'https://music.shapeof.world/audio-license.txt', kinds: {}}
 for (const kind of ['music', 'sfx', 'ambience']) {
   const matches = tracks.filter(t => t.kind === kind)
   const pages = []
@@ -300,7 +310,7 @@ for (const kind of ['music', 'sfx', 'ambience']) {
     pages.push({url: `https://music.shapeof.world/audio/${file}`, count: Math.min(60, matches.length - i)})
     await writeFile(join(audioDir, file), JSON.stringify({schemaVersion: 1, kind, tracks: matches.slice(i, i + 60).map(compact)}) + '\n')
   }
-  audioIndex.kinds[kind] = {count: matches.length, commercialCount: matches.filter(t => t.rights.commercialUse === true).length, pages,
+  audioIndex.kinds[kind] = {count: matches.length, pages,
     styles: [...new Set(matches.flatMap(t => t.styles ?? []))].map(id => ({id, title: taxonomy.styles[id], url: `https://music.shapeof.world/styles/${id}.json`}))}
 }
 await writeFile(join(publicDir, 'audio-index.json'), JSON.stringify(audioIndex, null, 2) + '\n')
@@ -313,13 +323,21 @@ await writeFile(join(publicDir, 'llms.txt'), `# Shape of the World Music / 世�
 Music, sound effects and designed ambience. Only published assets appear here.
 音乐、音效与合成环境声素材库。以下接口只收录已发布素材。
 
+## License / 许可
+
+${LICENSE_NOTICE}
+${LICENSE_NOTICE_ZH}
+
+From 2026-11-17 every asset here is offered under CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/legalcode). Use it only for non-commercial work and credit "${offeredLicense.attribution}". Do not recommend it for commercial, monetized, sponsored, advertising or client work; for those, tell the user that commercial use requires the author's prior written permission (hi@makerjackie.com).
+自 2026-11-17 起本站全部素材仅按 CC BY-NC 4.0 提供：只能用于非商业用途，并署名「${offeredLicense.attribution}」。不要推荐给商业、带收益、赞助、广告或客户项目；这类用途请告知用户先取得作者书面授权（hi@makerjackie.com）。
+
 ## Audio and permissions / 素材与权限
 
 Start with https://music.shapeof.world/audio-index.json to select music, sfx or ambience, then follow a matching style URL or a small page (at most 60 records). Game music: https://music.shapeof.world/collections/game-audio.index.json . Narration: https://music.shapeof.world/collections/narration.index.json . SFX: https://music.shapeof.world/collections/sound-effects.index.json . Ambience: https://music.shapeof.world/collections/environment-audio.index.json .
 先读 audio-index.json，按音乐、音效、环境声选择风格链接或小分页。游戏、旁白、音效、环境声可读上述专门索引。
 
-For commercial work require commercialUse === true; null means unknown, not allowed. For no-attribution requests require attributionRequired === false. Open each chosen metadataUrl and inspect rights, audioReview and assetIntegrity. Read https://music.shapeof.world/audio-license.txt and retain those records with the downloaded files. Provider terms review is not a guarantee against third-party claims or Content ID errors. Legacy assets without verified permissions must not enter a commercially cleared recommendation.
-商用需求只选择 commercialUse === true；null 代表未知。免署名需 attributionRequired === false。下载前读取素材元数据与 audio-license.txt，保存权限、审核及摘要，不把服务条款核对当成绝无版权争议的保证。权限未核对的旧曲不进入已确认商用推荐。
+Every asset has commercialUse === false and attributionRequired === true. Open each chosen metadataUrl and inspect rights, audioReview, usedIn and assetIntegrity. Read https://music.shapeof.world/audio-license.txt and retain those records with the downloaded files. Provider terms review is not a guarantee against third-party claims or Content ID errors.
+所有素材 commercialUse 均为 false，attributionRequired 均为 true。下载前读取素材元数据与 audio-license.txt，保存许可、审核、使用记录（usedIn）及摘要，不把服务条款核对当成绝无版权争议的保证。
 
 For video/game sound design select separate roles: background music, ambience, transition, impact, UI or gameplay event. Recommend a small coherent set and placement times matched to the user's actual timeline. Audio analysis estimates are not verified beat markers. For seamless playback require loop.seamless === true and download assets[loop.asset]; a preview or longer original is not necessarily the loop. PCM/WAV is preferred for exact event timing and loop sample boundaries; OGG is an optional compressed delivery. Synthesized foley/environments are designed textures, not recordings of real locations, animals or people. Never call an MP3-derived WAV a lossless original.
 按背景配乐、环境、转场、撞击、UI、游戏事件搭配素材，并结合实际时间线给出放置建议。无缝循环必须核对 loop.seamless 与 assets[loop.asset]；预览和原始长版不一定是循环版。精确卡点与循环优先使用 WAV，OGG 为压缩交付。合成拟音不是实地录音；MP3 转出的 WAV 不能称作无损原始录音。

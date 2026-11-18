@@ -58,5 +58,32 @@
     "synthid": true,
     "c2pa": "urn:c2pa:caa2b7db-a550-29e5-9b0e-4bdf5d310d4b",
     "sha256": "3cc9709fcd9d64b9f36aa943a0f05a1bb8fadc6804e45e376b60c7a11533a0d9"
-  }
+  },
+  "usedIn": [
+    {
+      "film": {
+        "zh": "俄乌战争，究竟是什么样的？",
+        "en": "The Russia–Ukraine War: What Is It Really Like?"
+      },
+      "urls": [
+        {
+          "platform": "bilibili",
+          "lang": "zh",
+          "url": "https://www.bilibili.com/video/BV1qbWC61ENR/",
+          "publishedAt": "2026-11-14"
+        },
+        {
+          "platform": "youtube",
+          "lang": "en",
+          "url": "https://www.youtube.com/watch?v=ijMNghQUnXs",
+          "publishedAt": "2026-11-16"
+        }
+      ],
+      "role": {
+        "zh": "代价，直到片尾。",
+        "en": "The cost and the end."
+      },
+      "date": "2026-11-14"
+    }
+  ]
 }

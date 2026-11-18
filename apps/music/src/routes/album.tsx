@@ -1,3 +1,4 @@
+import { LicenseNotice } from '~/components/LicenseNotice'
 import { TrackCard } from '~/components/TrackCard'
 import { album, albumTracks as tracks } from '~/data/catalog'
 import { useI18n } from '~/i18n'
@@ -30,6 +31,7 @@ export function AlbumPage() {
           </a>
         ) : null}
       </div>
+      <LicenseNotice compact />
       {tracks.length === 0 ? (
         <p className="empty">{t('home.empty')}</p>
       ) : (

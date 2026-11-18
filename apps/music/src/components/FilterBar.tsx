@@ -54,7 +54,6 @@ export function FilterBar({
         </label>
       </div>
       <div className="audio-options">
-        <label><input type="checkbox" checked={filters.commercialOnly === true} onChange={e => set({commercialOnly:e.target.checked})} />{t('audio.commercialOnly')}</label>
         <label><input type="checkbox" checked={filters.loopOnly === true} onChange={e => set({loopOnly:e.target.checked})} />{t('audio.loopOnly')}</label>
         <label><input type="checkbox" checked={filters.narrationOnly === true} onChange={e => set({narrationOnly:e.target.checked})} />{t('audio.narrationOnly')}</label>
       </div>

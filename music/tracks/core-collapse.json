@@ -58,5 +58,32 @@
     "synthid": true,
     "c2pa": "urn:c2pa:a955a113-1c43-08f0-d3eb-41d63c875c0a",
     "sha256": "ff76e0bf1908c9018c8ab623f602ffd0e2f5813e80605bababf5ba3b9c4dae48"
-  }
+  },
+  "usedIn": [
+    {
+      "film": {
+        "zh": "俄乌战争，究竟是什么样的？",
+        "en": "The Russia–Ukraine War: What Is It Really Like?"
+      },
+      "urls": [
+        {
+          "platform": "bilibili",
+          "lang": "zh",
+          "url": "https://www.bilibili.com/video/BV1qbWC61ENR/",
+          "publishedAt": "2026-11-14"
+        },
+        {
+          "platform": "youtube",
+          "lang": "en",
+          "url": "https://www.youtube.com/watch?v=ijMNghQUnXs",
+          "publishedAt": "2026-11-16"
+        }
+      ],
+      "role": {
+        "zh": "从蓄势到击中安德烈的那一下，再到机器人、最后一夜和撤出。",
+        "en": "From the build into the hit on Andrii, then the robot, the last night and the way out."
+      },
+      "date": "2026-11-14"
+    }
+  ]
 }

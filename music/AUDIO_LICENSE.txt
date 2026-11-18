@@ -1,73 +1,93 @@
-Shape of the World audio permissions / 世界的形状音频使用说明
-Version 1.0 — 2026-09-22
+Shape of the World audio licence / 世界的形状音频许可
+Version 2.0 — applies from 2026-11-17
 
-Scope
-This notice applies only to published audio whose individual metadata links to
-a rights profile in music/rights-profiles.json. It does not license the website
-software, Google models, logos, unrelated media, or legacy tracks without a
-reviewed rights profile. Preserve the asset id, source URL and downloaded
-metadata as a record of which terms apply.
+非商用 · CC BY-NC 4.0 · 商用请先取得作者授权
+Non-commercial · CC BY-NC 4.0 · Commercial use requires the author's permission
 
-1. Shape Audio Permission 1.0 — designated Lyria output
-To the extent the project owns or controls rights in designated recordings, it
-grants everyone a worldwide, non-exclusive, royalty-free permission to download,
-copy, edit, synchronize, distribute and use those recordings in commercial and
-noncommercial videos, games, applications and other creative works. Attribution
-is optional. Redistribution of the designated audio as standalone files is also
-permitted by the project; retain the source metadata and this notice when
-redistributing standalone files so subsequent users can identify applicable terms.
-This is not an exclusive assignment, a promise of copyrightability, a license
-to a Google model, or an indemnity. Do not represent these shared recordings as
-exclusively yours or enroll them in an exclusive rights-management program.
-Nothing here supersedes applicable upstream terms or grants rights held by others.
+1. Licence
+From 2026-11-17, all audio published on https://music.shapeof.world (music,
+sound effects, ambience, loops, previews, masters and scene-kit files) is
+offered under Creative Commons Attribution-NonCommercial 4.0 International
+(CC BY-NC 4.0), to the extent the project owns or controls rights in it:
+https://creativecommons.org/licenses/by-nc/4.0/legalcode
 
-Provider basis checked 2026-09-22:
-https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/lyria/lyria-3
-https://cloud.google.com/terms/service-terms
-The Lyria model documentation permits commercial/production use and disclosure
-to third parties subject to the customer's Google Cloud agreement. The service
-terms do not assert Google ownership in new intellectual property in output.
-These facts do not establish that any particular recording is free of all
-third-party claims. No provider IP indemnity is asserted for preview models.
+You may copy, redistribute, edit and build on the audio for non-commercial
+purposes, provided you give attribution:
 
-2. CC0-1.0 — designated original procedural audio
-For the rendered audio marked original-synthesis-cc0, the project dedicates its
-copyright and related rights, to the extent it controls them, under CC0 1.0:
-https://creativecommons.org/publicdomain/zero/1.0/legalcode
-Commercial use, editing and redistribution are allowed; attribution is not
-required. The source generator is software with its own license. Its license
-does not replace the separately designated audio permission. Designed natural
-textures and foley are synthesis, not authentic field recordings.
+  Shape of the World / MakerJackie, CC BY-NC 4.0
 
-3. Legacy recordings
-needs-review or missing rights information means unknown. It does not mean
-prohibited use, public domain, or verified commercial permission. Such recordings
-remain discoverable, but agents must exclude them when confirmed permission is
-a project requirement. Current terms are not automatically applied retroactively.
+where practical with a link to https://music.shapeof.world/track/<id> and an
+indication of any changes you made.
 
-4. Boundaries
-Audio is supplied as is. No guarantee of uniqueness, third-party clearance,
-copyright protection, fitness, platform acceptance or absence of automated claims
-is made. Trademark, privacy and publicity rights are not granted. Keep the exact
-asset metadata and hashes with a project so any claim can be traced to its source.
+2. Commercial use
+No audio on this site is licensed for commercial use. This includes, among
+others, monetized or sponsored videos, advertising, paid products, games and
+apps, client work, and resale or redistribution of the files for payment.
+Commercial use requires the author's prior written permission. To ask, write
+to hi@makerjackie.com (the contact shown on https://makerjackie.com/, which
+also lists his WeChat).
+
+3. Earlier terms
+Before 2026-11-17 some assets were offered under other terms: designated Lyria
+3 (Vertex AI) music under "Shape Audio Permission 1.0" (commercial use allowed,
+attribution optional), and original procedural sounds under CC0 1.0. Those
+terms are recorded as history in https://music.shapeof.world/rights.json. From
+2026-11-17 the project no longer offers them; the offered licence for every
+asset is CC BY-NC 4.0. This notice does not decide what rights anyone already
+holds under terms that applied to a copy obtained earlier.
+
+4. Provenance (unchanged facts)
+- Lyria 3 music generated through Google Cloud Vertex AI: provider terms
+  reviewed on 2026-09-22. The Lyria model documentation permits production use
+  and disclosure to third parties subject to the customer's Google Cloud
+  agreement; the service terms do not assert Google ownership in new IP in
+  output.
+  https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/lyria/lyria-3
+  https://cloud.google.com/terms/service-terms
+- Lyria 3.5 music generated through the Gemini API (from 2026-11-04): made for
+  the project's own films; the Gemini API output terms have not been reviewed
+  for this library.
+- Original procedural sounds: deterministic oscillator/noise synthesis
+  (music/scripts/synthesize-sounds.py), no external samples or recordings.
+  Designed natural textures and foley are synthesis, not field recordings.
+- Each asset's metadata (https://music.shapeof.world/tracks/<id>.json) records
+  its generator, model, prompt, dates, hashes and, where known, the films that
+  use it. Keep it with your download.
+
+5. Boundaries
+Audio is supplied as is. No guarantee of uniqueness, copyrightability,
+third-party clearance, fitness, platform acceptance or absence of automated
+claims is made. AI-generated output may not be protected by copyright in every
+jurisdiction; the licence covers only rights the project controls. Do not
+represent shared recordings as exclusively yours or enroll them in a
+rights-management or content-identification system. Trademark, privacy and
+publicity rights are not granted. Google models, the website software and
+unrelated media are not licensed by this notice.
 
 中文
-本说明仅适用于逐条元数据明确引用授权档案的已发布音频，不覆盖网站代码、模型、
-品牌或权限未核对的旧曲。请保存素材 id、下载地址、元数据与文件摘要。
+自 2026-11-17 起，世界的形状曲库（https://music.shapeof.world）发布的全部音频——
+音乐、音效、环境声、循环版、试听版、原始音频和场景套件中的文件——在项目方有权授权
+的范围内，按「知识共享 署名-非商业性使用 4.0 国际」（CC BY-NC 4.0）提供：
+https://creativecommons.org/licenses/by-nc/4.0/legalcode.zh-hans
 
-标记 Shape Audio Permission 1.0 的 Lyria 音频：在项目方有权授权的范围内，允许
-全球、非独占、免版税地下载、复制、修改、配入商业或非商业视频、游戏、应用及其他
-创作作品，也允许单独分发。署名可选；单独分发时应保留来源元数据与本说明。
-不得将共享录音声称为自己独占，或以独占权利加入版权识别系统。本授权不取代上游
-条款，不承诺输出必然具有著作权，也不转授项目方不拥有的第三方权利。
+非商业用途可以复制、转发、剪辑和改编，但须署名：
+  Shape of the World / MakerJackie, CC BY-NC 4.0
+尽量附上曲目页链接并注明改动。
 
-标记 original-synthesis-cc0 的程序合成音频：项目方将其可控制的著作权及相关权利
-按 CC0 1.0 贡献，允许商用、修改、再分发，无需署名。生成器代码仍适用自身软件
-许可证。合成拟音和自然氛围不是实地录音。
+本站音乐一律不授权商用，包括但不限于：带广告或收益的视频、商业推广、付费产品、
+游戏与应用、为客户制作的作品、付费转售或分发音频文件。商用请先取得作者书面授权：
+邮件 hi@makerjackie.com（作者网站 https://makerjackie.com/ 上也有微信）。
 
-旧曲标记 needs-review 或缺少权限信息代表尚未核对，不代表禁止使用，也不代表
-已获商用许可。需要确认商用权限的 AI 检索必须排除这些记录；不能把现行服务条款
-自动追溯应用到过去的生成记录。
+2026-11-17 之前，部分素材曾以其他条款提供：Vertex AI 生成的 Lyria 3 音乐标为
+「Shape Audio Permission 1.0」（可商用、署名可选），原创程序合成音效标为 CC0 1.0。
+这些旧条款作为历史记录保存在 rights.json 中。自 2026-11-17 起项目方不再按旧条款提供，
+所有素材现行许可均为 CC BY-NC 4.0。本说明不判定此前取得的副本已依当时条款享有哪些权利。
 
-音频按现状提供，不保证独一无二、绝无第三方权利争议或平台自动误报，不授予品牌、
-隐私或肖像权益。自动音质审核不能证明版权清白；Lyria 预览模型不在此承诺侵权赔偿。
+来源记录不变：Lyria 3（Vertex AI）的服务条款已于 2026-09-22 核对；Lyria 3.5（Gemini API）
+为项目自己的影片生成，其输出条款尚未为曲库核对；程序合成音效未使用外部采样或录音，
+合成拟音和自然氛围不是实地录音。每个素材的元数据记录生成工具、模型、提示词、日期、
+文件摘要以及使用它的影片，请随下载一并保存。
+
+音频按现状提供，不保证独一无二、可受著作权保护、绝无第三方争议或平台自动误报；
+AI 生成内容在部分法域可能不受著作权保护，许可仅限项目方可控制的权利。不得将共享
+录音声称为自己独占，或加入版权识别系统；不授予品牌、隐私或肖像权益。

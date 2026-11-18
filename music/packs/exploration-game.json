@@ -90,11 +90,27 @@
       "bytes": 601382
     },
     "download": {
-      "url": "https://music-cdn.shapeof.world/kits/exploration-game/427c1e47966f11c8/kit.zip",
-      "sha256": "427c1e47966f11c8241da9b0f904061ca3aeb3ca7739e28f69e117e0ca8d926a",
-      "bytes": 13162321
+      "url": "https://music-cdn.shapeof.world/kits/exploration-game/8a94faa309c0007f/kit.zip",
+      "sha256": "8a94faa309c0007f8a94ace89ed7e6b5a737048a901770f1c07c2b22a19123a7",
+      "bytes": 13163217
     }
   },
   "status": "published",
-  "verifiedAt": "2026-09-22T09:55:45.366090+00:00"
+  "verifiedAt": "2026-09-22T09:55:45.366090+00:00",
+  "licenseHistory": [
+    {
+      "until": "2026-11-16",
+      "download": {
+        "url": "https://music-cdn.shapeof.world/kits/exploration-game/427c1e47966f11c8/kit.zip",
+        "sha256": "427c1e47966f11c8241da9b0f904061ca3aeb3ca7739e28f69e117e0ca8d926a",
+        "bytes": 13162321
+      },
+      "license": "per-asset profiles (Shape Audio Permission 1.0 / CC0 1.0)"
+    },
+    {
+      "from": "2026-11-17",
+      "license": "CC-BY-NC-4.0",
+      "reissuedAt": "2026-11-18T03:01:29.813772+00:00"
+    }
+  ]
 }

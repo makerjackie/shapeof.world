@@ -17,9 +17,9 @@ export function HandoffPage() {
         <a href="/llms.txt"><span>01 / llms.txt ↗</span><h2>{t('handoff.instructions')}</h2><p>{t('handoff.guideDesc')}</p></a>
         <a href="/catalog.json"><span>02 / catalog.json ↗</span><h2>{t('handoff.json')}</h2><p>{t('handoff.dataDesc')}</p></a>
         <a href="/taxonomy.json"><span>03 / taxonomy.json ↗</span><h2>{t('handoff.taxonomy')}</h2><p>{t('handoff.taxonomyDesc')}</p></a>
-        <a href="/audio-index.json"><span>04 / audio-index.json ↗</span><h2>{locale === 'zh' ? '音乐、音效与环境声' : 'Music, effects & ambience'}</h2><p>{locale === 'zh' ? '按类型与风格读取小分页，筛选商用权限。' : 'Small pages by type and style, with commercial-use permissions.'}</p></a>
+        <a href="/audio-index.json"><span>04 / audio-index.json ↗</span><h2>{locale === 'zh' ? '音乐、音效与环境声' : 'Music, effects & ambience'}</h2><p>{locale === 'zh' ? '按类型与风格读取小分页，附许可信息。' : 'Small pages by type and style, with licence details.'}</p></a>
         <a href="/packs.json"><span>05 / packs.json ↗</span><h2>{t('audio.packs')}</h2><p>{t('audio.packsLede')}</p></a>
-        <a href="/rights.json"><span>06 / rights.json ↗</span><h2>{t('audio.permissions')}</h2><p>{locale === 'zh' ? '逐条权限档案；未知权限不会默认为可商用。' : 'Per-asset permission profiles. Unknown is never treated as commercially cleared.'}</p></a>
+        <a href="/rights.json"><span>06 / rights.json ↗</span><h2>{t('audio.permissions')}</h2><p>{locale === 'zh' ? '许可与来源档案：全部 CC BY-NC 4.0，仅限非商用。' : 'Licence and provenance profiles: all CC BY-NC 4.0, non-commercial only.'}</p></a>
       </div>
       <div className="action-row">
         <CopyAssign className="btn-solid" />

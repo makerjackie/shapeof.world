@@ -55,5 +55,32 @@
     "synthid": true,
     "c2pa": "urn:c2pa:20c2b5b1-1d4e-179d-32ac-4b3377c0674f",
     "sha256": "8eb8cb3693d7c1d653e45b8b383e0d0b7ec7dcdf2f4a4231e31347acabd28497"
-  }
+  },
+  "usedIn": [
+    {
+      "film": {
+        "zh": "俄乌战争，究竟是什么样的？",
+        "en": "The Russia–Ukraine War: What Is It Really Like?"
+      },
+      "urls": [
+        {
+          "platform": "bilibili",
+          "lang": "zh",
+          "url": "https://www.bilibili.com/video/BV1qbWC61ENR/",
+          "publishedAt": "2026-11-14"
+        },
+        {
+          "platform": "youtube",
+          "lang": "en",
+          "url": "https://www.youtube.com/watch?v=ijMNghQUnXs",
+          "publishedAt": "2026-11-16"
+        }
+      ],
+      "role": {
+        "zh": "从开场冷启动一直铺到整场战争的全景。",
+        "en": "From the cold open through the whole-war overview."
+      },
+      "date": "2026-11-14"
+    }
+  ]
 }

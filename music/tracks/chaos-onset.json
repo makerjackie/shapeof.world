@@ -58,5 +58,32 @@
     "synthid": true,
     "c2pa": "urn:c2pa:978dba1b-5bba-e2f2-1296-4cea16ddd025",
     "sha256": "86b86853be3bfdcafcc19b03b21e14605d232e2b7dfd5721ae0fd6d563437054"
-  }
+  },
+  "usedIn": [
+    {
+      "film": {
+        "zh": "俄乌战争，究竟是什么样的？",
+        "en": "The Russia–Ukraine War: What Is It Really Like?"
+      },
+      "urls": [
+        {
+          "platform": "bilibili",
+          "lang": "zh",
+          "url": "https://www.bilibili.com/video/BV1qbWC61ENR/",
+          "publishedAt": "2026-11-14"
+        },
+        {
+          "platform": "youtube",
+          "lang": "en",
+          "url": "https://www.youtube.com/watch?v=ijMNghQUnXs",
+          "publishedAt": "2026-11-16"
+        }
+      ],
+      "role": {
+        "zh": "「矛与盾」：攻防不断升级的那一段。",
+        "en": "The “spear and shield” escalation ladder."
+      },
+      "date": "2026-11-14"
+    }
+  ]
 }

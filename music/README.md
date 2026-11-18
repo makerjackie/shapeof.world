@@ -7,8 +7,13 @@ runtime records stay in `music/.cache/`; published MP3s and waveforms are served
 - `tracks/*.json`: source of truth for tracks; only `status: published` is public.
 - `batches/*.json`: production requests, not proof that audio exists.
 - `taxonomy.json`: stable bilingual style/scenario labels.
-- `rights-profiles.json` and `AUDIO_LICENSE.txt`: per-asset usage permissions;
-  missing legacy rights stay unknown, not implicitly commercially cleared.
+- `rights-profiles.json` and `AUDIO_LICENSE.txt`: the licence and per-asset provenance profiles.
+  From 2026-11-17 every asset is offered under CC BY-NC 4.0 only (non-commercial, attribution
+  "Shape of the World / MakerJackie, CC BY-NC 4.0"); commercial use needs the author's written
+  permission. Earlier terms stay in each profile's `history`. The catalog build refuses a profile
+  that is not CC BY-NC 4.0.
+- `usedIn` on a track: the films that use it (`film` {zh,en}, `urls`, `role` {zh,en}, `date`);
+  shown on the track page and card. `scripts/import-ukraine-scores.py` is the example.
 - `packs/*.json`: verified scene kits with exact source files and timeline examples;
   mixes and alternate formats are not additional compositions.
 - `scripts/plan-library.py`: example diverse production plan (no API calls).
@@ -31,8 +36,8 @@ master formats and immutable versions differ between tracks. Do not assume `v1/m
 Descriptions are bilingual. Style, scenario, BPM and key describe production intent; energy uses the audio reviewer estimate
 when available and targetEnergy preserves the request.
 `kind` is `music`, `sfx` or `ambience`. `/audio-index.json` provides small type pages
-and style links; `/rights.json` exposes permission profiles. A commercial request
-must require `rights.commercialUse === true`; null is unknown. `/sounds`, `/ambience`
+and style links; `/rights.json` exposes the licence and provenance profiles. Every asset has
+`rights.commercialUse === false` (CC BY-NC 4.0). `/sounds`, `/ambience`
 and `/games` share the same playback and retrieval source. Designed natural sounds
 are clearly labeled synthesis, not field recordings.
 

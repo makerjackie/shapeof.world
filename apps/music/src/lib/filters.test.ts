@@ -4,11 +4,11 @@ import { tracks, type Track } from '../data/catalog'
 
 const cue: Track = { ...tracks[0], id: 'test-cue', styles: ['lofi'], scenarios: ['focus'], duration: 120, energy: 2, instruments: ['French horn'], description: { en: 'Warm piano for quiet study', zh: '适合安静学习的温暖钢琴' } }
 describe('library retrieval', () => {
-  it('excludes unknown rights and unverified loops from constrained selection', () => {
-    const unknown = { ...cue, kind: 'music' as const, rights: undefined, loop: {seamless:false} }
-    const cleared = {...unknown, id:'cleared', kind:'sfx' as const, rights:{id:'cc0',status:'original-source-reviewed',label:{en:'CC0',zh:'CC0'},licenseUrl:'https://creativecommons.org/publicdomain/zero/1.0/',commercialUse:true,attributionRequired:false},loop:{seamless:true}}
-    expect(filterTracks([unknown,cleared],{commercialOnly:true,loopOnly:true,kind:'sfx'})).toEqual([cleared])
-    expect(filterTracks([unknown],{commercialOnly:true})).toEqual([])
+  it('excludes unverified loops from constrained selection', () => {
+    const unknown = { ...cue, kind: 'music' as const, loop: {seamless:false} }
+    const cleared = {...unknown, id:'cleared', kind:'sfx' as const, loop:{seamless:true}}
+    expect(filterTracks([unknown,cleared],{loopOnly:true,kind:'sfx'})).toEqual([cleared])
+    expect(filterTracks([unknown],{loopOnly:true})).toEqual([])
     expect(filterTracks([cleared],{kind:'music'})).toEqual([])
     expect(filtersActive({loopOnly:true})).toBe(true)
   })

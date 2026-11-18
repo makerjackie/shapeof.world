@@ -402,3 +402,28 @@ h1 { text-wrap: balance; }
 .scene-kit li { margin: 12px 0; overflow-wrap: anywhere; }
 .scene-kit li span { display: block; }
 @media (max-width: 860px) { .scene-kit-grid { grid-template-columns: 1fr; } .scene-kit p:not(.kicker) { min-height: 0; } }
+
+/* Licence notice (CC BY-NC 4.0, from 2026-11-17) */
+.license-bar { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 18px; padding: 9px max(32px, calc((100vw - 1200px) / 2)); border-bottom: 1px solid var(--hairline); background: var(--paper-deep); font-size: 12px; }
+.license-bar a, .license-notice a { text-decoration: none; }
+.license-bar a:first-child, .license-notice a:first-child { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+.license-bar strong, .license-notice strong { color: var(--accent); font-weight: 600; letter-spacing: .02em; }
+.license-bar span, .license-notice span { color: var(--muted); }
+.license-bar a:hover strong, .license-notice a:hover strong { text-decoration: underline; }
+.license-contact { color: var(--muted); white-space: nowrap; }
+.license-contact:hover { color: var(--ink); }
+.license-notice { margin: 14px 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; font-size: 12px; }
+.scene-kit .license-notice { margin: 4px 0 12px; }
+.asset-badges .license-badge { border: 1px solid var(--hairline); border-radius: 4px; padding: 1px 6px; text-decoration: none; color: var(--accent); }
+.asset-badges .film-badge { color: var(--ink); }
+.film-uses { border: 1px solid var(--hairline); border-radius: 10px; padding: 24px; margin: 20px 0; }
+.film-uses article + article { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--hairline); }
+.film-uses h2 { font-size: 24px; margin-bottom: 2px; }
+.film-uses p { color: var(--muted); max-width: 780px; margin-bottom: 8px; }
+.film-uses .film-alt { font-size: 12px; }
+.film-uses .film-role-label { color: var(--ink); font-weight: 600; margin-right: 6px; }
+.film-uses .action-row { flex-wrap: wrap; font-size: 12px; }
+@media (max-width: 700px) {
+  .license-bar { padding: 8px 20px; font-size: 11px; }
+  .film-uses { padding: 18px; }
+}

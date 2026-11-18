@@ -89,11 +89,27 @@
       "bytes": 301497
     },
     "download": {
-      "url": "https://music-cdn.shapeof.world/kits/product-15/2ab3c1fbc848c673/kit.zip",
-      "sha256": "2ab3c1fbc848c673b15d7d88a39c748e1f64e78f97fcf6af1282e22596320269",
-      "bytes": 932424
+      "url": "https://music-cdn.shapeof.world/kits/product-15/9a790d1f92f5d27a/kit.zip",
+      "sha256": "9a790d1f92f5d27a499309c0a282df4f4f21780848c74d0c59ad61211fee3f6f",
+      "bytes": 933320
     }
   },
   "status": "published",
-  "verifiedAt": "2026-09-22T09:54:59.756218+00:00"
+  "verifiedAt": "2026-09-22T09:54:59.756218+00:00",
+  "licenseHistory": [
+    {
+      "until": "2026-11-16",
+      "download": {
+        "url": "https://music-cdn.shapeof.world/kits/product-15/2ab3c1fbc848c673/kit.zip",
+        "sha256": "2ab3c1fbc848c673b15d7d88a39c748e1f64e78f97fcf6af1282e22596320269",
+        "bytes": 932424
+      },
+      "license": "per-asset profiles (Shape Audio Permission 1.0 / CC0 1.0)"
+    },
+    {
+      "from": "2026-11-17",
+      "license": "CC-BY-NC-4.0",
+      "reissuedAt": "2026-11-18T03:01:33.560202+00:00"
+    }
+  ]
 }

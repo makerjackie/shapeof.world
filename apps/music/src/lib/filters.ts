@@ -3,7 +3,6 @@ import { archetypeLetter, type ArchetypeLetter, type Track } from '~/data/catalo
 
 export type TrackFilters = {
   kind?: 'music' | 'sfx' | 'ambience'
-  commercialOnly?: boolean
   loopOnly?: boolean
   narrationOnly?: boolean
   category?: string
@@ -29,7 +28,6 @@ export function filterTracks(tracks: Track[], filters: TrackFilters): Track[] {
   const query = filters.q?.trim().toLowerCase() ?? ''
   return tracks.filter((track) => {
     if (filters.kind && track.kind !== filters.kind) return false
-    if (filters.commercialOnly && track.rights?.commercialUse !== true) return false
     if (filters.loopOnly && track.loop?.seamless !== true) return false
     if (filters.narrationOnly && !track.usage?.narrationFriendly) return false
     if (filters.category && track.category !== filters.category) return false
@@ -72,7 +70,6 @@ export function filterTracks(tracks: Track[], filters: TrackFilters): Track[] {
 export function filtersActive(filters: TrackFilters): boolean {
   return Boolean(
     filters.category
-      || filters.commercialOnly
       || filters.loopOnly
       || filters.narrationOnly
       || filters.archetype

@@ -1,0 +1,154 @@
+{
+  "id": "ukraine-war-at-night",
+  "code": "UKR-N10",
+  "title": {
+    "en": "The War at Night",
+    "zh": "夜里的战争"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "flagship",
+  "kind": "music",
+  "moods": [
+    "tense",
+    "nocturnal",
+    "restrained",
+    "cold"
+  ],
+  "topics": [
+    "war documentary",
+    "night",
+    "Russia–Ukraine war"
+  ],
+  "energy": 2,
+  "bpm": 120,
+  "key": "D minor",
+  "instruments": [
+    "ticking clock",
+    "soft analog synth pulse",
+    "low drone",
+    "dark string pad",
+    "distant low booms",
+    "solo cello"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 70,
+  "prompt": "Original film score for a serious, cinematic documentary about modern war (drones, minefields, artillery, the front in Ukraine). Instrumental only: absolutely no vocals, no choir, no humming, no spoken words. Restrained, grounded and real, never cheesy, no trailer cliches, no braams, no heroic fanfares, no happy major-key moments. One coherent piece with one mood that develops gradually: no sudden genre changes, no splices, no sudden stops. High production quality, wide stereo, natural dynamics. The film's recurring motif: a simple, slow, descending four-note phrase in D minor (D, C, A, F), played by a solo cello.\n\nAbout 70 seconds. D minor, on a steady 120 bpm grid felt as slow half-time. It continues a dark electronic documentary score made of a ticking clock, a soft analogue synth pulse in eighth notes and a low drone. Night falls over a map of a whole country at war: drones and missiles cross it, cities burn far from the front, refineries, the sea, money, soldiers being called up. Start from only the ticking clock and the soft low pulse, quiet and cold. A dark, wide string pad enters after about 12 seconds; distant low booms now and then; the solo cello plays the four-note motif once, around 30 seconds, very quietly. Keep it restrained and steady, tension without release: no drum kit, no risers, no drops, no big hits. From about 50 seconds it thins and sinks lower; the last 12 seconds are only a low sustained D and the ticking fading away, ending almost in silence.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient",
+    "orchestral"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "Written for the film 《俄乌战争，究竟是什么样的？》: night falls over a whole country at war. A ticking clock and a soft analog pulse, a dark string pad, distant low booms and the film's four-note cello motif (D C A F), sinking to a low D and the fading tick. D minor on a 120 BPM grid felt as half-time; restrained tension with no release. AI-generated with Google Lyria 3.5.",
+    "zh": "为纪录片《俄乌战争，究竟是什么样的？》而写：夜色落在整个交战的国家上。滴答的钟声和柔和的模拟合成器脉冲，暗色弦乐铺底、远处低沉的闷响，大提琴奏出全片的四音动机（D C A F），最后沉到一个低音 D 和渐弱的滴答声。D 小调，120 BPM 网格、半速感；克制的紧张，不释放。由 Google Lyria 3.5 AI 生成。"
+  },
+  "batch": "film-ukraine-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "documentary",
+      "war",
+      "night",
+      "tension"
+    ]
+  },
+  "duration": 70.034,
+  "targetEnergy": 2,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-07T16:59:16Z",
+  "generation": {
+    "generator": "Google Lyria 3.5",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+    "apiRevision": "2026-05-20",
+    "completedAt": "2026-11-07T16:59:16Z",
+    "aiGenerated": true,
+    "tool": "films/ukraine-battle/tools/score.py gen n10",
+    "promptSource": "films/ukraine-battle/score/cues11.json (cue n10) at 64da27ed",
+    "promptComposition": "common + \" \" + motif + \"\\n\\n\" + cue prompt (score.py gen_one)",
+    "imageInputs": {
+      "count": 6,
+      "filmSeconds": [
+        200,
+        214,
+        226,
+        240,
+        252,
+        260
+      ],
+      "format": "JPEG stills of the picture, 1024 px wide",
+      "note": "sent after the text prompt; the picture file they came from is not recorded"
+    },
+    "take": "n10_0.mp3",
+    "modelText": [
+      "[[A0]]\n[[B1]]\n[[C2]]\n[[D3]]"
+    ],
+    "interactionIdRecorded": false,
+    "sha256": "ffc66f7e53ceec285faf78b6742a779a9f88ae243bf3ec535fee8d83287c6104"
+  },
+  "usedIn": [
+    {
+      "film": {
+        "zh": "俄乌战争，究竟是什么样的？",
+        "en": "The Russia–Ukraine War: What Is It Really Like?"
+      },
+      "urls": [
+        {
+          "platform": "bilibili",
+          "lang": "zh",
+          "url": "https://www.bilibili.com/video/BV1qbWC61ENR/",
+          "publishedAt": "2026-11-14"
+        },
+        {
+          "platform": "youtube",
+          "lang": "en",
+          "url": "https://www.youtube.com/watch?v=ijMNghQUnXs",
+          "publishedAt": "2026-11-16"
+        }
+      ],
+      "role": {
+        "zh": "夜里的战争：整个国家在夜色里挨打，直到镜头切到两名士兵。",
+        "en": "Under the war at night, until the cut to the two soldiers."
+      },
+      "date": "2026-11-14"
+    }
+  ],
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, tempo, key, moods, instruments and energy are prompt intent; duration is measured; generatedAt is the take file's write time; no library audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ukraine-war-at-night/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ukraine-war-at-night/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ukraine-war-at-night/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "8825035a88b909a1260321af3403c225fec2347d62c50d74640ad35732542fd0",
+      "bytes": 981254,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ffc66f7e53ceec285faf78b6742a779a9f88ae243bf3ec535fee8d83287c6104",
+      "bytes": 1688930,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "c450ef5377ef581c79709ace4a7e633262ba542b5210011022efc11a6ba3ca67",
+      "bytes": 2772,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-18T02:56:24.605592+00:00"
+}

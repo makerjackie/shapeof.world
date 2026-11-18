@@ -5,6 +5,7 @@ import type { LocaleText } from '~/data/catalog'
 import { useI18n } from '~/i18n'
 import { usePlayer } from '~/state/player'
 import { cleanSearch } from '~/lib/locale'
+import { LicenseNotice } from '~/components/LicenseNotice'
 
 type Pack = {id:string;title:LocaleText;description:LocaleText;duration:number;assets:{preview:{url:string};download:{url:string;bytes:number}};events:Array<{id:string;use:string;atSeconds:number;gainDb:number}>}
 const packs = rawPacks as Pack[]
@@ -24,6 +25,7 @@ export function PacksPage() {
       <p className="kicker">{pack.duration}s / {new Set(pack.events.map(e=>e.id)).size} {t('audio.assets')}</p>
       <h2>{pack.title[locale]}</h2><p>{pack.description[locale]}</p>
       <audio controls preload="none" src={pack.assets.preview.url} aria-label={pack.title[locale]} ref={element=>{if(element) refs.current.set(pack.id,element); else refs.current.delete(pack.id)}} onPlay={()=>{if(player.playing) player.toggle(); for(const [id,audio] of refs.current) if(id!==pack.id) audio.pause()}} />
+      <LicenseNotice compact />
       <a className="btn-solid" href={pack.assets.download.url} download={`${pack.id}.zip`}>{t('audio.downloadKit')} · {(pack.assets.download.bytes/1024/1024).toFixed(1)} MB</a>
       <details><summary>{t('audio.timeline')}</summary><ul>{pack.events.map((event,i)=><li key={i}><span>{event.atSeconds}s · {event.gainDb} dB</span><Link to="/track/$trackId" params={{trackId:event.id}} search={cleanSearch}>{event.id}</Link></li>)}</ul></details>
     </article>)}</div>

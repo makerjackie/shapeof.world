@@ -21,8 +21,7 @@ function lineFor(track: Track): string {
     `- ${bits.join(' · ')}`,
     ...(track.description ? [`  description: ${track.description.en} / ${track.description.zh}`] : []),
     `  preview: ${track.assets.preview}`,
-    `  commercialUse: ${track.rights?.commercialUse === true ? 'true' : 'unknown'}`,
-    `  permissions: ${track.rights?.licenseUrl ?? 'https://music.shapeof.world/audio-license.txt'}`,
+    `  license: CC BY-NC 4.0, non-commercial (${track.rights?.licenseUrl ?? 'https://music.shapeof.world/audio-license.txt'})`,
     `  metadata: https://music.shapeof.world/tracks/${track.id}.json`,
     ...(track.loop?.seamless && track.loop.asset ? [`  verifiedLoop: ${track.assets[track.loop.asset]}`] : []),
     `  page: https://music.shapeof.world/track/${track.id}`,
@@ -36,7 +35,7 @@ export function assignPackText(locale: 'en' | 'zh' = 'zh'): string {
         '# 世界的形状原声 — 按分类选用',
         '',
         '把这一段交给做主题的助手：按学科给每个世界选配乐。',
-        '试听使用 preview。需要商用时只选 commercialUse 为 true 的素材；unknown 代表待核对。循环使用 verifiedLoop 指定文件。不要用 r2.dev。',
+        '全部素材按 CC BY-NC 4.0 仅限非商用，署名「Shape of the World / MakerJackie, CC BY-NC 4.0」；商用请先取得作者书面授权（hi@makerjackie.com）。试听使用 preview。循环使用 verifiedLoop 指定文件。不要用 r2.dev。',
         '主题曲：`hidden-shapes`（世界的形状）。',
         '',
       ]
@@ -44,7 +43,7 @@ export function assignPackText(locale: 'en' | 'zh' = 'zh'): string {
         '# Shape of the World OST — pick by category',
         '',
         'Give this block to a theme agent so each world can choose a piece.',
-        'Audition the preview. Commercial requests require commercialUse=true; unknown is not permission. Use the designated verifiedLoop for loops. Never use r2.dev.',
+        'All audio is non-commercial under CC BY-NC 4.0; credit "Shape of the World / MakerJackie, CC BY-NC 4.0". Commercial use requires the author’s prior written permission (hi@makerjackie.com). Audition the preview. Use the designated verifiedLoop for loops. Never use r2.dev.',
         'Main theme: `hidden-shapes` (Shape of the World).',
         '',
       ]

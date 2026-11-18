@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { useI18n, type Locale } from '~/i18n'
 import { useTheme } from '~/state/theme'
 import { cleanSearch } from '~/lib/locale'
+import { LicenseNotice } from './LicenseNotice'
 
 export function Header() {
   const { locale, setLocale, t } = useI18n()
@@ -10,6 +11,7 @@ export function Header() {
   const other: Locale = locale === 'zh' ? 'en' : 'zh'
 
   return (
+    <>
     <header className="site-header">
       <Link to="/" search={cleanSearch} className="brand">
         <img className="brand-emblem" src="/brand/app-icon-112.webp" width={40} height={40} alt="" aria-hidden="true" />
@@ -39,5 +41,7 @@ export function Header() {
         </button>
       </nav>
     </header>
+    <LicenseNotice className="license-bar" />
+    </>
   )
 }

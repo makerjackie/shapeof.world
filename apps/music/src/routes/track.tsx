@@ -3,6 +3,7 @@ import { useEffect, useState, type CSSProperties } from 'react'
 
 import { Waveform } from '~/components/Waveform'
 import { DownloadAudio } from '~/components/DownloadAudio'
+import { COMMERCIAL_CONTACT, LicenseNotice, LICENSE_URL } from '~/components/LicenseNotice'
 import { IconPause, IconPlay } from '~/components/Icons'
 import { archetypeLetter, getTrack, parseTrack, trackTitle, type Track } from '~/data/catalog'
 import { categoryAccent, categoryLabel } from '~/data/domains'
@@ -94,6 +95,7 @@ export function TrackPage({ trackId }: { trackId: string }) {
           <DownloadAudio url={track.assets.master} filename={`${track.id}-master.${track.assets.master.endsWith('.wav') ? 'wav' : 'mp3'}`} label={t('track.downloadWav')} />
           {track.assets.game ? <DownloadAudio url={track.assets.game} filename={`${track.id}.ogg`} label={t('audio.downloadOgg')} /> : null}
         </div>
+        <LicenseNotice compact />
         {track.sourceDuration ? <p className="shorts-note">{t('shorts.edit')} · {formatTime(track.duration)} / {t('shorts.source')} · {formatTime(track.sourceDuration)}. {t('shorts.note')}</p> : null}
         <p className="attribution">{t('track.attribution', { model: modelLabel(track.model, locale) })}</p>
       </div>
@@ -103,9 +105,23 @@ export function TrackPage({ trackId }: { trackId: string }) {
         <div className="action-row"><button className="btn-ghost" type="button" onClick={() => loopPlaying ? player.toggle() : player.playTrack({...track, duration:track.loop?.duration ?? track.duration, assets:{...track.assets, preview:loopUrl, waveform:track.assets.loop ? undefined : track.assets.waveform}}, [])}>{loopPlaying && player.playing ? t('player.pause') : t('audio.playLoop')}</button><DownloadAudio url={loopUrl} filename={`${track.id}-loop.wav`} label={t('audio.downloadLoop')} />{track.assets.loopOgg ? <DownloadAudio url={track.assets.loopOgg} filename={`${track.id}-loop.ogg`} label={t('audio.downloadOgg')} /> : null}</div>
       </section> : null}
       <section className="audio-rights-panel">
-        <div><p className="kicker">{t('audio.permissions')}</p><h2>{track.rights?.label[locale] ?? t('audio.unknown')}</h2><p>{track.rights?.commercialUse === true ? t('audio.permissionNote') : t('audio.unknownNote')}</p></div>
-        <div className="action-row"><Link to="/rights" search={cleanSearch}>{t('audio.readTerms')} ↗</Link><a href={`/tracks/${encodeURIComponent(track.id)}.json`} download={`${track.id}.json`}>{t('audio.downloadMetadata')}</a></div>
+        <div><p className="kicker">{t('audio.permissions')}</p><h2>{t('license.short')}</h2><p>{t('audio.licenseNote')}</p><p>{t('audio.permissionNote')}</p></div>
+        <div className="action-row"><a href={LICENSE_URL}>{t('license.read')} ↗</a><a href={COMMERCIAL_CONTACT}>{t('license.contact')} ↗</a><Link to="/rights" search={cleanSearch}>{t('audio.readTerms')} ↗</Link><a href={`/tracks/${encodeURIComponent(track.id)}.json`} download={`${track.id}.json`}>{t('audio.downloadMetadata')}</a></div>
       </section>
+
+      {track.usedIn?.length ? (
+        <section className="film-uses">
+          <p className="kicker">{t('film.usedIn')}</p>
+          {track.usedIn.map(use => (
+            <article key={use.film.en}>
+              <h2>{locale === 'zh' ? `《${use.film.zh}》` : use.film.en}</h2>
+              <p className="film-alt" lang={locale === 'zh' ? 'en' : 'zh-CN'}>{locale === 'zh' ? use.film.en : `《${use.film.zh}》`}</p>
+              <p><span className="film-role-label">{t('film.role')}</span> {use.role[locale]}</p>
+              <div className="action-row">{use.urls.map(u => <a key={u.url} href={u.url} rel="noopener">{t('film.watch')} · {u.platform === 'bilibili' ? (locale === 'zh' ? 'B 站' : 'Bilibili') : u.platform === 'youtube' ? 'YouTube' : u.platform}{u.publishedAt ? ` · ${u.publishedAt}` : ''} ↗</a>)}</div>
+            </article>
+          ))}
+        </section>
+      ) : null}
 
       <dl className="spec-grid">
         <Spec label={t('meta.code')} value={track.code} />
@@ -126,6 +142,8 @@ export function TrackPage({ trackId }: { trackId: string }) {
         <details className="generation-block">
           <summary>{t('track.generation')}</summary>
           <dl className="spec-grid">
+            {track.generation.aiGenerated ? <Spec label={t('meta.aiGenerated')} value={track.generation.generator ?? modelLabel(track.model, locale)} /> : null}
+            {track.generation.tool ? <Spec label={t('meta.tool')} value={track.generation.tool} /> : null}
             {track.generation.generator || track.generation.model ? (
               <Spec label={t('meta.model')} value={modelLabel(track.generation.model || track.model, locale)} />
             ) : null}

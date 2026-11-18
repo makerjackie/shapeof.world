@@ -27,7 +27,7 @@ export function TrackCard({ track, queue }: { track: Track; queue: Track[] }) {
       <div className="music-row-title">
         <Link to="/track/$trackId" params={{ trackId: track.id }} search={cleanSearch}>{title}</Link>
         <p>{track.description?.[locale] || track.moods.map(id => (taxonomy.tags as Record<string, LocaleText>)[id]?.[locale] ?? id).join(' · ')}</p>
-        <div className="asset-badges"><span>{track.rights?.commercialUse === true ? (track.rights.id === 'original-synthesis-cc0' ? 'CC0' : t('audio.commercial')) : t('audio.unknown')}</span>{track.loop?.seamless ? <span>↻ {t('audio.loopOnly')}</span> : null}</div>
+        <div className="asset-badges"><a className="license-badge" href="/audio-license.txt">{t('license.short')}</a>{track.usedIn?.map(use => <span key={use.film.en} className="film-badge">{t('film.badge', { film: use.film[locale] })}</span>)}{track.loop?.seamless ? <span>↻ {t('audio.loopOnly')}</span> : null}</div>
       </div>
       <div className="row-tags"><span>{track.styles.map(id => label(id, 'styles')).join(' · ') || t('nav.album')}</span><small>{track.scenarios.map(id => label(id, 'scenarios')).join(' · ')}</small></div>
       <span className="energy-meter" title={`${t('meta.energy')}: ${track.energy}/5`} aria-label={`${t('meta.energy')}: ${track.energy}/5`}>{[1,2,3,4,5].map(n => <i key={n} className={n <= track.energy ? 'filled' : ''} />)}</span>

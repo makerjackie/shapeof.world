@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
-import { album, albumTracks, catalog, tracks } from './catalog'
+import { album, albumTracks, catalog, getTrack, tracks } from './catalog'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const tracksDir = join(here, '../../../../music/tracks')
@@ -42,9 +42,10 @@ describe('soundtrack catalog', () => {
   it('publishes permissions and loop URLs only with corresponding evidence', () => {
     const full = JSON.parse(readFileSync(join(here,'../../public/catalog.json'),'utf8'))
     for (const track of full.tracks) {
-      if (!track.rightsProfile) expect(track.rights.commercialUse).toBeNull()
+      expect(track.rights.license).toBe('CC-BY-NC-4.0')
+      expect(track.rights.commercialUse).toBe(false)
+      expect(track.rights.attributionRequired).toBe(true)
       if (track.batch === 'sound-design-2026-09' || track.batch === 'scene-audio-2026-09') {
-        expect(track.rights.commercialUse).toBe(true)
         expect(track.rights.claimFreeGuarantee).toBe(false)
         expect(track.audioReview.suitableForLibrary).toBe(true)
         expect(track.audioReview.audibleDefect).toBe(false)
@@ -61,6 +62,25 @@ describe('soundtrack catalog', () => {
       }
     }
   })
+  it('records the films that use a track, and the AI provenance of cues made for them', () => {
+    const full = JSON.parse(readFileSync(join(here,'../../public/catalog.json'),'utf8'))
+    const byId = new Map(full.tracks.map((track: {id: string}) => [track.id, track]))
+    for (const id of ['charge-split', 'chaos-onset', 'core-collapse', 'event-horizon', 'ukraine-war-at-night', 'ukraine-the-hole']) {
+      const track = byId.get(id) as {usedIn: Array<{film: {zh: string; en: string}; urls: Array<{url: string}>; role: {zh: string; en: string}}>}
+      const use = track.usedIn.find(entry => entry.film.zh === '俄乌战争，究竟是什么样的？')!
+      expect(use.film.en).toBeTruthy()
+      expect(use.role.zh && use.role.en).toBeTruthy()
+      expect(use.urls.map(u => u.url)).toContain('https://www.bilibili.com/video/BV1qbWC61ENR/')
+      expect(getTrack(id)?.usedIn?.length).toBeGreaterThan(0)
+    }
+    for (const id of ['ukraine-war-at-night', 'ukraine-the-hole']) {
+      const track = byId.get(id) as {generation: {aiGenerated: boolean; model: string}; prompt: string}
+      expect(track.generation.aiGenerated).toBe(true)
+      expect(track.generation.model).toBe('lyria-3.5')
+      expect(track.prompt).toContain('four-note phrase in D minor')
+    }
+  })
+
   it('album zip uses the public CDN when present', () => {
     if (!album.zip) return
     expect(album.zip.startsWith('https://music-cdn.shapeof.world/')).toBe(true)

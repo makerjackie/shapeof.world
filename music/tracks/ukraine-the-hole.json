@@ -1,0 +1,157 @@
+{
+  "id": "ukraine-the-hole",
+  "code": "UKR-H10",
+  "title": {
+    "en": "The Hole",
+    "zh": "坑里"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "flagship",
+  "kind": "music",
+  "moods": [
+    "solemn",
+    "patient",
+    "sparse",
+    "tense"
+  ],
+  "topics": [
+    "war documentary",
+    "night",
+    "Russia–Ukraine war"
+  ],
+  "energy": 2,
+  "bpm": 60,
+  "key": "D minor",
+  "instruments": [
+    "low drone",
+    "high strings",
+    "solo cello",
+    "low strings",
+    "soft low pulses"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 160,
+  "prompt": "Original film score for a serious, cinematic documentary about modern war (drones, minefields, artillery, the front in Ukraine). Instrumental only: absolutely no vocals, no choir, no humming, no spoken words. Restrained, grounded and real, never cheesy, no trailer cliches, no braams, no heroic fanfares, no happy major-key moments. One coherent piece with one mood that develops gradually: no sudden genre changes, no splices, no sudden stops. High production quality, wide stereo, natural dynamics. The film's recurring motif: a simple, slow, descending four-note phrase in D minor (D, C, A, F), played by a solo cello.\n\nAbout 2 minutes 40 seconds. D minor, slow and free (around 60 bpm), no drums. Two middle-aged soldiers walk at night into an open field and hold one small hole for months, under drones that never stop flying; the field looks empty but is full of hidden men. It starts from almost nothing: a very low drone and distant air. After about 15 seconds, high, fragile sustained strings. Around 40 seconds the solo cello plays the four-note motif, quietly, then a slow, lonely line. The middle stays sparse and patient, with long held notes and space (dawn over an empty field, drones overhead, supplies dropped from the sky): soft low pulses now and then like distant artillery. From about 1:50 it grows darker and heavier as the weeks pass, a nearby town is bombed and the enemy creeps closer in the fog: low strings swell, more unease, but never loud. In the last 15 seconds it thins to a low, ominous rumble and ends suspended, unresolved, as if holding its breath.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient",
+    "orchestral"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "Written for the film 《俄乌战争，究竟是什么样的？》: two soldiers walk into a field at night and hold one small hole for months under drones. From almost nothing, fragile high strings and a lonely solo cello with the film's four-note motif; long held notes and distant low pulses, growing darker as the weeks pass and ending suspended. D minor, slow and free, no drums. AI-generated with Google Lyria 3.5.",
+    "zh": "为纪录片《俄乌战争，究竟是什么样的？》而写：两名士兵夜里走进一片空地，在无人机下守着一个小坑熬了几个月。从几乎无声开始，脆弱的高音弦乐和孤独的大提琴（全片的四音动机）；长音与远处低沉的脉冲，随着一周周过去越来越暗，最后悬着结束。D 小调，慢速自由节奏，无鼓。由 Google Lyria 3.5 AI 生成。"
+  },
+  "batch": "film-ukraine-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "documentary",
+      "war",
+      "night",
+      "tension"
+    ]
+  },
+  "duration": 150.047,
+  "targetEnergy": 2,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-07T17:00:06Z",
+  "generation": {
+    "generator": "Google Lyria 3.5",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+    "apiRevision": "2026-05-20",
+    "completedAt": "2026-11-07T17:00:06Z",
+    "aiGenerated": true,
+    "tool": "films/ukraine-battle/tools/score.py gen h10",
+    "promptSource": "films/ukraine-battle/score/cues11.json (cue h10) at 64da27ed",
+    "promptComposition": "common + \" \" + motif + \"\\n\\n\" + cue prompt (score.py gen_one)",
+    "imageInputs": {
+      "count": 10,
+      "filmSeconds": [
+        268,
+        285,
+        300,
+        318,
+        340,
+        360,
+        380,
+        395,
+        410,
+        420
+      ],
+      "format": "JPEG stills of the picture, 1024 px wide",
+      "note": "sent after the text prompt; the picture file they came from is not recorded"
+    },
+    "take": "h10_0.mp3",
+    "modelText": [
+      "[[A0]]\n[[B1]]\n[[C2]]\n[[D3]]\n[[E4]]\n[[F5]]"
+    ],
+    "interactionIdRecorded": false,
+    "sha256": "f10d2620f609856d2b74ef822288b76dad828475df5b008243f2046ab421f8bb"
+  },
+  "usedIn": [
+    {
+      "film": {
+        "zh": "俄乌战争，究竟是什么样的？",
+        "en": "The Russia–Ukraine War: What Is It Really Like?"
+      },
+      "urls": [
+        {
+          "platform": "bilibili",
+          "lang": "zh",
+          "url": "https://www.bilibili.com/video/BV1qbWC61ENR/",
+          "publishedAt": "2026-11-14"
+        },
+        {
+          "platform": "youtube",
+          "lang": "en",
+          "url": "https://www.youtube.com/watch?v=ijMNghQUnXs",
+          "publishedAt": "2026-11-16"
+        }
+      ],
+      "role": {
+        "zh": "从两人走进阵地，到在坑里熬过的一周又一周。",
+        "en": "From the walk-in through the weeks in the hole."
+      },
+      "date": "2026-11-14"
+    }
+  ],
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, tempo, key, moods, instruments and energy are prompt intent; duration is measured; generatedAt is the take file's write time; no library audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ukraine-the-hole/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ukraine-the-hole/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ukraine-the-hole/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7342e8df98de2c6f5db65e0a014170da41e5f3e30eae5c6acce1a771371c4bcf",
+      "bytes": 2101437,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f10d2620f609856d2b74ef822288b76dad828475df5b008243f2046ab421f8bb",
+      "bytes": 3610556,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "25c328c594e46f632cc5724c7973aab78281de3aa3eb4930e21023f13614aa4b",
+      "bytes": 2809,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-18T02:56:32.113281+00:00"
+}

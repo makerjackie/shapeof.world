@@ -14,7 +14,7 @@ export function readLibrary(key = 'music.library'): LibraryState {
     for (const key of ['energy', 'durationMin', 'durationMax'] as const) {
       if (typeof value.filters?.[key] === 'number' && Number.isFinite(value.filters[key])) filters[key] = value.filters[key]
     }
-    for (const key of ['commercialOnly', 'loopOnly', 'narrationOnly'] as const) {
+    for (const key of ['loopOnly', 'narrationOnly'] as const) {
       if (value.filters?.[key] === true) filters[key] = true
     }
     return { filters, sort: ['explore', 'short', 'long', 'title'].includes(value.sort) ? value.sort : 'explore', savedOnly: value.savedOnly === true, limit: Number.isInteger(value.limit) ? Math.max(40, Math.min(1000, value.limit)) : 40 }

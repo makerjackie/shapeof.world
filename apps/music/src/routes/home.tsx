@@ -34,7 +34,7 @@ export function HomePage({ kind = 'music', games = false, picks = false }: { kin
           <p className="kicker">{t('library.kicker')}</p>
           <h1>{t(picks ? 'audio.picksTitle' : games ? 'audio.gamesTitle' : kind === 'sfx' ? 'audio.sfxTitle' : kind === 'ambience' ? 'audio.ambienceTitle' : 'library.title')}</h1>
           <p className="lede">{t(picks ? 'audio.picksLede' : games ? 'audio.gamesLede' : kind === 'sfx' ? 'audio.sfxLede' : kind === 'ambience' ? 'audio.ambienceLede' : 'site.lede')}</p>
-          <p className="library-stats"><span>{library.length} <small>{t('audio.assets')}</small></span><span>{library.filter(track => track.rights?.commercialUse === true).length} <small>{t('audio.commercial')}</small></span><span>{library.filter(track => track.loop?.seamless).length} <small>{t('audio.loops')}</small></span></p>
+          <p className="library-stats"><span>{library.length} <small>{t('audio.assets')}</small></span><span>{library.filter(track => track.loop?.seamless).length} <small>{t('audio.loops')}</small></span></p>
         </div>
         {theme ? <button className="featured-record" type="button" onClick={() => player.current?.id === theme.id ? player.toggle() : player.playTrack(theme, tracks.filter(track => track.kind === 'music'))} aria-label={`${themePlaying ? t('player.pause') : t('home.playTheme')}`}>
           <img className="featured-emblem" src="/brand/mark-256.png" width={118} height={118} alt="" aria-hidden="true" />

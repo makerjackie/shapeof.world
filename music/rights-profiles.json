@@ -1,73 +1,109 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "offeredLicense": {
+    "id": "CC-BY-NC-4.0",
+    "name": "Creative Commons Attribution-NonCommercial 4.0 International",
+    "effectiveFrom": "2026-11-17",
+    "legalcode": "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+    "deed": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "attribution": "Shape of the World / MakerJackie, CC BY-NC 4.0",
+    "commercialUse": "Not licensed. Commercial use requires the author's prior written permission.",
+    "contact": {"email": "hi@makerjackie.com", "web": "https://makerjackie.com/"},
+    "decision": "The author decided on 2026-11-17 that no music on this site may be used commercially without his written permission."
+  },
   "profiles": {
     "lyria-commercial-2026-09": {
       "id": "lyria-commercial-2026-09",
       "status": "provider-terms-reviewed",
-      "label": {"en": "Commercial use · terms apply", "zh": "可商用 · 遵循使用条款"},
-      "license": "Shape Audio Permission 1.0",
+      "label": {"en": "Non-commercial · CC BY-NC 4.0", "zh": "非商用 · CC BY-NC 4.0"},
+      "license": "CC-BY-NC-4.0",
       "licenseUrl": "https://music.shapeof.world/audio-license.txt",
-      "commercialUse": true,
+      "legalcode": "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+      "effectiveFrom": "2026-11-17",
+      "commercialUse": false,
+      "commercialUseRequires": "the author's prior written permission (hi@makerjackie.com)",
       "modification": true,
       "standaloneRedistribution": true,
-      "attributionRequired": false,
+      "attributionRequired": true,
+      "attribution": "Shape of the World / MakerJackie, CC BY-NC 4.0",
       "exclusiveRights": false,
       "claimFreeGuarantee": false,
       "reviewedAt": "2026-09-22",
       "provider": "Google Cloud Vertex AI / Lyria 3",
-      "basis": "The Lyria 3 model documentation explicitly permits production/commercial use and disclosure of Generated Output to third parties, subject to the customer's Google Cloud agreement. The service terms do not assert Google ownership in new IP in generated output. The project grants only rights it can control; no third-party clearance or provider indemnity is represented.",
+      "basis": "Provenance: generated with Lyria 3 through Vertex AI. The Lyria 3 model documentation permits production use and disclosure of Generated Output to third parties, subject to the customer's Google Cloud agreement; the service terms do not assert Google ownership in new IP in generated output. The project grants only rights it can control; no third-party clearance or provider indemnity is represented.",
       "sources": [
         "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/lyria/lyria-3",
         "https://cloud.google.com/terms/service-terms"
+      ],
+      "history": [
+        {"until": "2026-11-16", "license": "Shape Audio Permission 1.0", "commercialUse": true, "attributionRequired": false, "label": {"en": "Commercial use · terms apply", "zh": "可商用 · 遵循使用条款"}}
       ]
     },
     "original-synthesis-cc0": {
       "id": "original-synthesis-cc0",
       "status": "original-source-reviewed",
-      "label": {"en": "CC0 · no attribution required", "zh": "CC0 · 无需署名"},
-      "license": "CC0-1.0",
-      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "commercialUse": true,
+      "label": {"en": "Non-commercial · CC BY-NC 4.0", "zh": "非商用 · CC BY-NC 4.0"},
+      "license": "CC-BY-NC-4.0",
+      "licenseUrl": "https://music.shapeof.world/audio-license.txt",
+      "legalcode": "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+      "effectiveFrom": "2026-11-17",
+      "commercialUse": false,
+      "commercialUseRequires": "the author's prior written permission (hi@makerjackie.com)",
       "modification": true,
       "standaloneRedistribution": true,
-      "attributionRequired": false,
+      "attributionRequired": true,
+      "attribution": "Shape of the World / MakerJackie, CC BY-NC 4.0",
       "exclusiveRights": false,
       "claimFreeGuarantee": false,
       "reviewedAt": "2026-09-22",
-      "basis": "Original deterministic oscillator/noise synthesis implemented in music/scripts/synthesize-sounds.py. No external recordings, samples, melodies or model-generated audio are inputs. CC0 applies only to designated rendered audio, to the extent the project controls rights; generator code retains its software license.",
-      "sources": ["https://creativecommons.org/publicdomain/zero/1.0/"]
+      "basis": "Provenance: original deterministic oscillator/noise synthesis implemented in music/scripts/synthesize-sounds.py. No external recordings, samples, melodies or model-generated audio are inputs. The generator code keeps its software license.",
+      "sources": ["https://creativecommons.org/licenses/by-nc/4.0/legalcode"],
+      "history": [
+        {"until": "2026-11-16", "license": "CC0-1.0", "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/", "commercialUse": true, "attributionRequired": false, "label": {"en": "CC0 · no attribution required", "zh": "CC0 · 无需署名"}}
+      ]
     },
     "lyria-gemini-api-2026-11": {
       "id": "lyria-gemini-api-2026-11",
       "status": "needs-review",
-      "label": {
-        "en": "Usage terms not yet verified",
-        "zh": "使用权限待核对"
-      },
-      "license": null,
+      "label": {"en": "Non-commercial · CC BY-NC 4.0", "zh": "非商用 · CC BY-NC 4.0"},
+      "license": "CC-BY-NC-4.0",
       "licenseUrl": "https://music.shapeof.world/audio-license.txt",
-      "commercialUse": null,
-      "modification": null,
-      "standaloneRedistribution": null,
-      "attributionRequired": null,
+      "legalcode": "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+      "effectiveFrom": "2026-11-17",
+      "commercialUse": false,
+      "commercialUseRequires": "the author's prior written permission (hi@makerjackie.com)",
+      "modification": true,
+      "standaloneRedistribution": true,
+      "attributionRequired": true,
+      "attribution": "Shape of the World / MakerJackie, CC BY-NC 4.0",
       "exclusiveRights": false,
       "claimFreeGuarantee": false,
       "provider": "Google Gemini API / Lyria 3.5",
-      "basis": "Generated on 2026-11-04 through the Gemini API (not Vertex AI), so the reviewed Vertex profile does not apply. The Gemini API terms for generated output have not been reviewed for this library yet. Used by the project's own films; exclude from requests requiring confirmed commercial-use permission until reviewed."
+      "basis": "Provenance: generated from 2026-11-04 through the Gemini API (not Vertex AI), so the reviewed Vertex profile does not apply; the Gemini API terms for generated output have not been reviewed for this library. Made for and used by the project's own films. Offered to others only under CC BY-NC 4.0, to the extent the project controls rights.",
+      "history": [
+        {"until": "2026-11-16", "license": null, "commercialUse": null, "attributionRequired": null, "label": {"en": "Usage terms not yet verified", "zh": "使用权限待核对"}}
+      ]
     },
     "legacy-unreviewed": {
       "id": "legacy-unreviewed",
       "status": "needs-review",
-      "label": {"en": "Usage terms not yet verified", "zh": "使用权限待核对"},
-      "license": null,
+      "label": {"en": "Non-commercial · CC BY-NC 4.0", "zh": "非商用 · CC BY-NC 4.0"},
+      "license": "CC-BY-NC-4.0",
       "licenseUrl": "https://music.shapeof.world/audio-license.txt",
-      "commercialUse": null,
-      "modification": null,
-      "standaloneRedistribution": null,
-      "attributionRequired": null,
+      "legalcode": "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+      "effectiveFrom": "2026-11-17",
+      "commercialUse": false,
+      "commercialUseRequires": "the author's prior written permission (hi@makerjackie.com)",
+      "modification": true,
+      "standaloneRedistribution": true,
+      "attributionRequired": true,
+      "attribution": "Shape of the World / MakerJackie, CC BY-NC 4.0",
       "exclusiveRights": false,
       "claimFreeGuarantee": false,
-      "basis": "A source generation record is not a license. No retrospective production-time agreement or rights grant has been verified for this asset. Exclude from requests requiring confirmed commercial-use permission."
+      "basis": "Provenance: earlier library recordings whose production-time provider terms were not re-verified per asset. A generation record is not a license. Offered to others only under CC BY-NC 4.0, to the extent the project controls rights.",
+      "history": [
+        {"until": "2026-11-16", "license": null, "commercialUse": null, "attributionRequired": null, "label": {"en": "Usage terms not yet verified", "zh": "使用权限待核对"}}
+      ]
     }
   }
 }

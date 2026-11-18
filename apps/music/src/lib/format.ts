@@ -10,6 +10,7 @@ export function formatTime(seconds: number): string {
 export function modelLabel(model: string, locale: 'en' | 'zh' = 'en'): string {
   if (model === 'procedural-dsp') return locale === 'zh' ? '程序合成' : 'Procedural synthesis'
   if (model.includes('lyria-3-pro')) return 'Google Lyria 3 Pro'
+  if (model.includes('lyria-3.5')) return 'Google Lyria 3.5'
   if (model.includes('lyria')) return 'Google Lyria 3'
   return model
 }

@@ -19,7 +19,8 @@ export type TrackAssets = {
 }
 
 export type AudioKind = 'music' | 'sfx' | 'ambience'
-export type AudioRights = { id: string; status: string; label: LocaleText; licenseUrl: string; commercialUse: boolean | null; attributionRequired: boolean | null }
+export type AudioRights = { id: string; status: string; label: LocaleText; license: string | null; licenseUrl: string; commercialUse: boolean | null; attributionRequired: boolean | null }
+export type FilmUse = { film: LocaleText; urls: Array<{ platform: string; lang: string; url: string; publishedAt?: string }>; role: LocaleText; date?: string }
 export type AudioLoop = { seamless: boolean; asset?: keyof TrackAssets; duration?: number; basis?: string }
 
 export type TrackGeneration = {
@@ -36,6 +37,8 @@ export type TrackGeneration = {
   synthid?: boolean
   c2pa?: string
   sha256?: string
+  aiGenerated?: boolean
+  tool?: string
 }
 
 export type Track = {
@@ -67,6 +70,7 @@ export type Track = {
   role: TrackRole
   assets: TrackAssets
   generation?: TrackGeneration
+  usedIn?: FilmUse[]
 }
 
 export type Album = {
@@ -155,6 +159,8 @@ export function parseTrack(value: unknown): Track | null {
         synthid: typeof generationRaw.synthid === 'boolean' ? generationRaw.synthid : undefined,
         c2pa: typeof generationRaw.c2pa === 'string' ? generationRaw.c2pa : undefined,
         sha256: typeof generationRaw.sha256 === 'string' ? generationRaw.sha256 : undefined,
+        aiGenerated: generationRaw.aiGenerated === true ? true : undefined,
+        tool: typeof generationRaw.tool === 'string' ? generationRaw.tool : undefined,
       }
     : undefined
   return {
@@ -162,7 +168,8 @@ export function parseTrack(value: unknown): Track | null {
     kind: value.kind === 'sfx' || value.kind === 'ambience' ? value.kind : 'music',
     rights: isRecord(value.rights) ? {
       id: String(value.rights.id ?? 'legacy-unreviewed'), status: String(value.rights.status ?? 'needs-review'),
-      label: localeText(value.rights.label, 'Usage terms not yet verified'),
+      label: localeText(value.rights.label, 'Non-commercial · CC BY-NC 4.0'),
+      license: typeof value.rights.license === 'string' ? value.rights.license : null,
       licenseUrl: typeof value.rights.licenseUrl === 'string' ? value.rights.licenseUrl : '/audio-license.txt',
       commercialUse: typeof value.rights.commercialUse === 'boolean' ? value.rights.commercialUse : null,
       attributionRequired: typeof value.rights.attributionRequired === 'boolean' ? value.rights.attributionRequired : null,
@@ -199,6 +206,14 @@ export function parseTrack(value: unknown): Track | null {
     generation: generation && Object.values(generation).some((value) => value !== undefined)
       ? generation
       : undefined,
+    usedIn: Array.isArray(value.usedIn) ? value.usedIn.filter(isRecord).map((use): FilmUse => ({
+      film: localeText(use.film, ''),
+      urls: (Array.isArray(use.urls) ? use.urls : []).filter(isRecord).filter(u => typeof u.url === 'string' && /^https:\/\//.test(u.url)).map(u => ({
+        platform: String(u.platform ?? ''), lang: String(u.lang ?? ''), url: String(u.url), publishedAt: typeof u.publishedAt === 'string' ? u.publishedAt : undefined,
+      })),
+      role: localeText(use.role, ''),
+      date: typeof use.date === 'string' ? use.date : undefined,
+    })).filter(use => use.film.en) : undefined,
   }
 }
 
