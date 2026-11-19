@@ -6,12 +6,12 @@ import { useI18n } from '~/i18n'
 
 function FilmCardContent({
   poster, duration, title, subtitle, eager,
-}: Pick<FilmSummary, 'poster' | 'duration'> & { title: string; subtitle: string; eager: boolean }) {
+}: Pick<FilmSummary, 'poster'> & { duration?: string; title: string; subtitle: string; eager: boolean }) {
   return (
     <>
       <span className="work-card-media">
         <img src={poster} alt="" width={1920} height={1080} loading={eager ? 'eager' : 'lazy'} decoding="async" referrerPolicy="no-referrer" />
-        <span className="film-card-duration"><Play aria-hidden="true" weight="fill" />{duration}</span>
+        {duration && <span className="film-card-duration"><Play aria-hidden="true" weight="fill" />{duration}</span>}
       </span>
       <span className="work-card-body">
         <strong className="work-card-title">{title}</strong>
@@ -34,13 +34,13 @@ export function FilmCard({ film, eager = false }: { film: FilmSummary; eager?: b
 function PlatformFilmCard({ video, eager = false }: { video: BilibiliVideo | YoutubeVideo; eager?: boolean }) {
   const { locale, t } = useI18n()
   const isBilibili = 'bvid' in video
-  const minutes = Math.floor(video.durationSeconds / 60)
-  const seconds = String(video.durationSeconds % 60).padStart(2, '0')
+  const seconds = video.durationSeconds
+  const duration = seconds ? `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}` : undefined
   return (
     <a href={isBilibili ? `https://www.bilibili.com/video/${video.bvid}/` : `https://www.youtube.com/watch?v=${video.videoId}`} className="work-card work-card--film">
       <FilmCardContent
         poster={video.poster}
-        duration={`${minutes}:${seconds}`}
+        duration={duration}
         title={isBilibili && locale === 'en' ? video.titleEn : video.title}
         subtitle={t(isBilibili ? 'films.watchBilibili' : 'films.watchYoutube')}
         eager={eager}

@@ -24,6 +24,14 @@ export type ChangelogRelease = {
 
 export const changelogReleases: readonly ChangelogRelease[] = [
   {
+    id: '2026-11-19-science-home',
+    date: '2026-11-19',
+    title: '首页同时展示四个科学领域',
+    titleEn: 'Four fields of science at a glance',
+    body: '首页首屏可直接进入黑洞、地理、果蝇和元素周期表。科学系列排在短片之前，两块使用相同的卡片布局。英文短片链接到世界的形状 YouTube 频道。',
+    bodyEn: 'Open a black hole, a geography lab, a fruit fly or the periodic table from the homepage. Science series appear before films in matching card layouts. English films link to the Shape of the World YouTube channel.',
+  },
+  {
     id: '2026-11-18-home-films-music-community',
     date: '2026-11-18',
     title: '最新短片、音乐与交流群',

@@ -3,7 +3,7 @@ import { createServerFn } from '@tanstack/react-start'
 import { HomeDiscovery } from '~/components/HomeDiscovery'
 import { HOME_FILM_LIMIT } from '~/data/films'
 import type { Locale } from '~/i18n'
-import { heroPoster, heroWorldId } from '~/lib/home-hero'
+import { HERO_WORLD_IDS, heroPoster } from '~/lib/home-hero'
 import { languageDiscoveryLinks, localeFromRouteMatches } from '~/i18n/seo'
 import { homeStructuredData, jsonLdScript } from '~/lib/structured-data'
 
@@ -33,7 +33,7 @@ export const Route = createFileRoute('/')({
     return {
       links: [
         ...languageDiscoveryLinks('https://shapeof.world/', locale),
-        { rel: 'preload', as: 'image', href: heroPoster(heroWorldId()), fetchPriority: 'high' },
+        { rel: 'preload', as: 'image', href: heroPoster(HERO_WORLD_IDS[0]), fetchPriority: 'high' },
       ],
       scripts: [jsonLdScript(homeStructuredData(locale))],
     }

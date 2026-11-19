@@ -11,7 +11,7 @@ import type { Locale } from '~/i18n'
 export const FILM_MEDIA_ORIGIN = 'https://press.shapeof.world'
 
 export const BILIBILI_CHANNEL_URL = 'https://space.bilibili.com/3546733244058560/upload/video'
-export const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@makerjackie/videos'
+export const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@Shape-of-World/videos'
 export const HOME_FILM_LIMIT = 3
 
 export type BilibiliVideo = {
@@ -27,7 +27,7 @@ export type YoutubeVideo = {
   videoId: string
   title: string
   publishedAt: string
-  durationSeconds: number
+  durationSeconds?: number
   poster: string
 }
 

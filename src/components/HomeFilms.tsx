@@ -15,7 +15,7 @@ export function HomeFilms({ films }: { films: FilmCatalogItem[] }) {
         <div><h2 id="home-films-title">{t('films.title')}</h2></div>
         <Link to="/films" className="home-section-more">{t('films.viewAll')}<ArrowRight aria-hidden="true" /></Link>
       </header>
-      <ul className="film-grid">
+      <ul className="home-story-grid">
         {films.map((film) => <li key={film.id}><FilmCatalogCard item={film} /></li>)}
       </ul>
     </section>

@@ -352,6 +352,6 @@ describe('asset loading policy', () => {
 
   it('preloads only the one hero poster on the homepage', () => {
     const route = readFileSync(resolve(root, 'src/routes/index.tsx'), 'utf8')
-    expect(route).toContain('heroPoster(heroWorldId())')
+    expect(route).toContain('heroPoster(HERO_WORLD_IDS[0])')
   })
 })

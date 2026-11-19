@@ -18,9 +18,27 @@ function SeriesCard({ path, members, compact }: { path: Path; members: WorldSumm
   const nextIndex = firstUnexploredWorldIndex(members, atlas.ready ? atlas.visited : [])
   const nextWorld = members[nextIndex]
   const preview = members.slice(0, 3)
+  if (compact) {
+    return (
+      <Link className="work-card" to="/routes/$slug" params={{ slug: path.slug }}>
+        <span className="work-card-media series-card-images" aria-hidden="true">
+          {preview.map((world) => (
+            <span key={world.id}>
+              <img src={worldThumbnail(world)} alt="" width={384} height={256} loading="lazy" decoding="async"
+                style={{ objectPosition: world.posterPosition ?? '50% 50%' }} />
+            </span>
+          ))}
+        </span>
+        <span className="work-card-body">
+          <strong className="work-card-title">{pathText(path, 'title')}</strong>
+          <span className="work-card-label">{homeSeriesDescriptions[path.id]?.[locale] ?? pathText(path, 'description')}</span>
+        </span>
+      </Link>
+    )
+  }
   const labeledStops = members.slice(0, 4)
   return (
-    <article className={`series-card${compact ? ' is-compact' : ''}`}>
+    <article className="series-card">
       <Link className="series-card-overview" to="/routes/$slug" params={{ slug: path.slug }}>
         <span className="series-card-images" aria-hidden="true">
           {preview.map((world, index) => (
@@ -33,9 +51,8 @@ function SeriesCard({ path, members, compact }: { path: Path; members: WorldSumm
         </span>
         <span className="series-card-meta">{t('home.paths.worldCount', { value: members.length })}<ArrowRight aria-hidden="true" /></span>
         <h3>{pathText(path, 'title')}</h3>
-        <p className="series-card-description">{compact ? homeSeriesDescriptions[path.id]?.[locale] ?? pathText(path, 'description') : pathText(path, 'description')}</p>
+        <p className="series-card-description">{pathText(path, 'description')}</p>
       </Link>
-      {!compact && <>
       <p className="series-card-stops">
         {labeledStops.map((world, index) => pathStopLabel(path, index, world, locale)).join(' → ')}
         {members.length > labeledStops.length && <span> · +{members.length - labeledStops.length}</span>}
@@ -49,7 +66,6 @@ function SeriesCard({ path, members, compact }: { path: Path; members: WorldSumm
           <ArrowRight aria-hidden="true" />
         </Link>
       </div>
-      </>}
     </article>
   )
 }
@@ -59,9 +75,8 @@ export function PathShowcase({ paths, worldById, compact = false }: {
   paths: readonly Path[]
   worldById: ReadonlyMap<string, WorldSummary>
 }) {
-  const { t } = useI18n()
   return (
-    <div role={compact ? 'region' : undefined} aria-label={compact ? t('home.paths.title') : undefined} className={`series-grid${compact ? ' series-rail' : ''}`} tabIndex={compact ? 0 : undefined}>
+    <div className={compact ? 'home-story-grid' : 'series-grid'}>
       {paths.map((path) => {
         const members = pathMembers(path, worldById)
         // A partial route would change the editorial order and mislabel its stops.

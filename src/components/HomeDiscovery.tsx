@@ -32,7 +32,7 @@ import { formatCompactMonthDay, HOME_FRESH_LIMIT } from '~/lib/path-progress'
 import { useResumeWorld } from '~/lib/use-resume-world'
 import { loadExplorationIds, selectUnvisitedId } from '~/lib/exploration'
 import { worldThumbnail } from '~/lib/posters'
-import { heroPoster, heroWorldId } from '~/lib/home-hero'
+import { HERO_WORLD_IDS, heroPoster } from '~/lib/home-hero'
 import { safeLocalStorage, safeSessionStorage } from '~/lib/storage'
 import { normalizeWorldSearch, worldMatchesSearch } from '~/lib/world-search'
 import { useWorldSearchIndex } from '~/lib/world-search-index'
@@ -119,7 +119,11 @@ export function HomeDiscovery({ bootstrap, films }: { bootstrap: HomeBootstrapAr
   const [progressAttempt, setProgressAttempt] = useState(0)
   const [newWorldCount, setNewWorldCount] = useState(0)
   const featuredPoolIds = useMemo(() => recommendedWorldIds.filter((id) => bootstrapWorldById.has(id)), [bootstrapWorldById])
-  const heroWorld = bootstrapWorldById.get(heroWorldId(Date.now(), new Set(bootstrapWorldById.keys()))) ?? bootstrap.worlds[0]
+  const heroWorld = bootstrapWorldById.get(HERO_WORLD_IDS[0])
+  const heroWorlds = HERO_WORLD_IDS.flatMap((id) => {
+    const world = bootstrapWorldById.get(id)
+    return world ? [world] : []
+  })
   const resumeWorld = useResumeWorld(atlasReady ? lastVisitedWorldId ?? visited.at(-1) : undefined, publicIds, bootstrapWorldById)
   useEffect(() => {
     if (!atlasReady) return
@@ -384,23 +388,31 @@ export function HomeDiscovery({ bootstrap, films }: { bootstrap: HomeBootstrapAr
           {newWorldCount > 0 && <p className="home-new-worlds">{t('home.newWorlds', { value: newWorldCount })}</p>}
         </div>
 
-        {heroWorld && <figure className="home-hero-media">
-          <Link to={worldRoute} params={{ worldId: heroWorld.id }} search={{ collection: 'featured' }}
-            className="home-hero-poster" aria-label={worldText(heroWorld, 'title')} {...worldIntentHandlers(heroWorld.id)}>
-            <img src={heroPoster(heroWorld.id)} alt="" width={2560} height={1600} fetchPriority="high" decoding="async" />
-          </Link>
-          <figcaption>
-            <span>{t('home.hero.today')}</span>
-            <Link to={worldRoute} params={{ worldId: heroWorld.id }} search={{ collection: 'featured' }}>{worldText(heroWorld, 'title')}</Link>
-          </figcaption>
-        </figure>}
+        <ul className="home-hero-media" aria-label={t('home.hero.fields')}>
+          {heroWorlds.map((world) => {
+            const category = getRootCategory(world.primaryCategoryId)
+            const featured = world.id === HERO_WORLD_IDS[0]
+            return (
+              <li key={world.id}>
+                <Link to={worldRoute} params={{ worldId: world.id }} search={{ collection: 'featured' }}
+                  className="home-hero-poster" {...worldIntentHandlers(world.id)}>
+                  <img src={featured ? heroPoster(world.id) : worldThumbnail(world)} alt=""
+                    width={featured ? 2560 : 384} height={featured ? 1600 : 256}
+                    fetchPriority={featured ? 'high' : undefined} decoding="async" />
+                  <span className="home-hero-tile-copy">
+                    <small>{categoryText(category, 'title')}</small>
+                    <strong>{worldText(world, 'title')}</strong>
+                  </span>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
       </section>
-
-      <HomeFilms films={films} />
 
       <HomeSeries worldById={bootstrapWorldById} />
 
-
+      <HomeFilms films={films} />
 
       <section className="home-section" id="home-worlds" aria-labelledby="home-worlds-title">
         <header className="home-section-head">

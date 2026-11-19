@@ -155,7 +155,7 @@ html[lang^='zh'] .home-page {
 }
 
 /* ------------------------------------------------------------------
- * Hero: copy on the left, today's world on the right
+ * Hero: introduction and four science exhibits
  * ---------------------------------------------------------------- */
 .home-page .home-hero {
   display: grid;
@@ -163,7 +163,7 @@ html[lang^='zh'] .home-page {
   align-items: center;
   column-gap: clamp(32px, 5vw, 88px);
   block-size: auto;
-  min-block-size: min(100svh, 860px);
+  min-block-size: min(76svh, 700px);
   padding: clamp(104px, 14vh, 140px) 7.5vw clamp(56px, 9vh, 104px);
   background:
     radial-gradient(70% 60% at 72% 48%, rgb(64 82 120 / 0.22) 0%, transparent 70%),
@@ -324,64 +324,84 @@ html[lang^='zh'] .home-page {
 }
 
 .home-hero-media {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
   min-inline-size: 0;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .home-hero-poster {
-  display: block;
+  position: relative;
+  display: flex;
+  align-items: end;
   overflow: hidden;
+  inline-size: 100%;
+  min-block-size: 112px;
   aspect-ratio: 16 / 10;
+  isolation: isolate;
   border: 1px solid var(--home-line);
   border-radius: var(--radius-card);
-  background: #000;
-  box-shadow: 0 40px 120px -40px rgb(0 0 0 / 0.9);
+  background: #0a0d10;
+  color: #fff;
+  text-decoration: none;
 }
 
 .home-hero-poster img {
-  display: block;
+  position: absolute;
+  inset: 0;
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;
-  transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 420ms ease-out;
 }
 
-.home-hero-poster:is(:hover, :focus-visible) img {
-  transform: scale(1.025);
+.home-hero-poster::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 28%, rgb(3 6 10 / .88) 94%);
+  content: '';
 }
 
-.home-hero-poster:focus-visible {
-  outline: 2px solid var(--home-gold);
-  outline-offset: 4px;
+.home-hero-poster:is(:hover, :focus-visible) img { transform: scale(1.045); }
+.home-hero-poster:focus-visible { outline: 2px solid var(--home-gold); outline-offset: 3px; }
+
+.home-hero-tile-copy {
+  z-index: 1;
+  display: grid;
+  gap: 2px;
+  padding: var(--space-3);
 }
 
-.home-hero-media figcaption {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  margin-top: 14px;
-  color: var(--home-muted);
-  font-size: var(--home-type-support);
+.home-hero-tile-copy small { color: var(--home-gold); font-size: var(--home-type-label); }
+.home-hero-tile-copy strong { font-size: var(--home-type-support); font-weight: 600; line-height: 1.35; }
+
+.home-story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.home-hero-media figcaption span {
-  flex: none;
-  color: var(--home-gold);
-  font-size: var(--home-type-label);
-  font-weight: 700;
-  letter-spacing: var(--home-label-tracking);
+.home-story-grid .work-card { height: 100%; }
+.home-story-grid .work-card-media { aspect-ratio: 16 / 9; }
+.home-story-grid .work-card-label { white-space: normal; }
+.home-story-grid .series-card-images { display: grid; }
+.home-story-grid .series-card-images > span { aspect-ratio: auto; min-height: 0; }
+
+@media (max-width: 720px) {
+  .home-story-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
-.home-hero-media figcaption a {
-  overflow: hidden;
-  color: var(--home-ink);
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.home-hero-media figcaption a:hover {
-  color: var(--home-gold);
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-poster img { transition: none; }
+  .home-hero-poster:is(:hover, :focus-visible) img { transform: none; }
 }
 
 @media (max-width: 900px) {
@@ -392,12 +412,7 @@ html[lang^='zh'] .home-page {
     padding: 84px 6vw 44px;
   }
 
-  .home-hero-media {
-    grid-row: 1;
-  }
-
   .home-page .home-hero-copy {
-    grid-row: 2;
     max-inline-size: none;
   }
 }
