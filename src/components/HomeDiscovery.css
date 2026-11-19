@@ -34,6 +34,7 @@
   --home-display-tracking: -.035em;
   --home-title-tracking: -.02em;
   --home-label-tracking: .16em;
+  --home-story-divider-inset: clamp(20px, 2.5vw, 36px);
 
   overflow-x: clip;
   background: var(--home-stage);
@@ -95,6 +96,14 @@ html[lang^='zh'] .home-page {
   .home-page > .home-section {
     padding: 64px 6vw;
   }
+}
+
+.home-page > .home-section.home-series-section {
+  padding-block-end: var(--home-story-divider-inset);
+}
+
+.home-page > .home-series-section + .home-films-section {
+  padding-block-start: var(--home-story-divider-inset);
 }
 
 /* Section heading: title block on the left, optional link on the right. */
