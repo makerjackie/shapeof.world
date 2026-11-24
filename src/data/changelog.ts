@@ -24,6 +24,14 @@ export type ChangelogRelease = {
 
 export const changelogReleases: readonly ChangelogRelease[] = [
   {
+    id: '2026-11-24-starship-film',
+    date: '2026-11-24',
+    title: '短片新增星舰',
+    titleEn: 'New short film about Starship',
+    body: '中文首页和短片页新增《被嘲5年，炸了10次，为什么还要造星舰？》，可前往 B 站观看。',
+    bodyEn: 'The Chinese homepage and films page now link to Five Years of Ridicule, Ten Explosions: Why Keep Building Starship? on Bilibili.',
+  },
+  {
     id: '2026-11-19-science-home',
     date: '2026-11-19',
     title: '首页同时展示四个科学领域',
